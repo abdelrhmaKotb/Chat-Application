@@ -1,18 +1,17 @@
 package gov.iti.jets;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Text txt = new Text("chat application");
-        VBox vb = new VBox(txt);
-        Scene sc = new Scene(vb,400,500);
+       Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
+        Scene sc = new Scene(root,855,503);
         primaryStage.setScene(sc);
         primaryStage.setTitle("Chat Application");
         primaryStage.setResizable(false);
