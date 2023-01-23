@@ -2,17 +2,19 @@ package gov.iti.jets.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
+import javafx.fxml.Initializable;
+import java.util.ResourceBundle;
+import java.net.URL;
+import java.util.regex.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 
-public class SignupController {
+public class SignupController implements Initializable {
 
     @FXML
     private TextField txtPhoneNumber;
@@ -46,9 +48,14 @@ public class SignupController {
 
     @FXML
     private TextField txtEmail;
-    
+
     @FXML
     private ImageView imageviewProfileImage;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 
     @FXML
     void clickBtnSignin(ActionEvent event) {
@@ -57,17 +64,38 @@ public class SignupController {
 
     @FXML
     void clickBtnSignup(ActionEvent event) {
-        
+        validatePassword();
+        confirmPass();
 
     }
 
     @FXML
     private void clickImageviewProfileImage(MouseEvent event) {
-        
-
 
     }
 
-   
+    public void validatePassword() {
+        String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$";
+        if (!isValidPass(txtPassword.getText(), regex)) {
+            System.out.println("Try Again");
+        } else {
+            System.out.println(txtPassword.getText());
+        }
+
+    }
+
+    public boolean isValidPass(String password, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
+
+    public void confirmPass() {
+        if (!txtPassword.getText().equals(txtConfirmPassword.getText())) {
+            System.out.println("Wrong pass" + txtConfirmPassword.getText());
+        } else {
+            System.out.println(txtConfirmPassword.getText());
+        }
+    }
 
 }
