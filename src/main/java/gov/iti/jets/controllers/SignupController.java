@@ -15,8 +15,10 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-
+import javafx.stage.FileChooser;
+import java.io.File;
 
 public class SignupController implements Initializable {
 
@@ -60,7 +62,6 @@ public class SignupController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         choiceboxGender.getItems().add("Female");
         choiceboxGender.getItems().add("Male");
-
     }
 
     @FXML
@@ -73,12 +74,22 @@ public class SignupController implements Initializable {
         validatePassword();
         confirmPass();
         validateDOB();
-
+        if (choiceboxGender.getValue() ==null){
+            System.out.println("Choose Gender");
+        }
     }
 
     @FXML
     private void clickImageviewProfileImage(MouseEvent event) {
-
+        final FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image files ", "*.PNG", "*.JPG",
+                "*.JPEG", "*.GIF", "*.SVG");
+        fileChooser.getExtensionFilters().addAll(extFilter);
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+            Image img = new Image(file.toURI().toString());
+            imageviewProfileImage.setImage(img);
+        }
     }
 
     public void validatePassword() {
@@ -110,13 +121,18 @@ public class SignupController implements Initializable {
         sdfrmt.setLenient(false);
 
         try {
-            System.out.println(datepickerDateOfBirth.getValue().getMonthValue() + "/"
-                    + datepickerDateOfBirth.getValue().getDayOfMonth() + "/"
-                    + datepickerDateOfBirth.getValue().getYear());
-            Date javaDate = sdfrmt.parse(datepickerDateOfBirth.getValue().getMonthValue() + "/"
-                    + datepickerDateOfBirth.getValue().getDayOfMonth() + "/"
-                    + datepickerDateOfBirth.getValue().getYear());
-            System.out.println(datepickerDateOfBirth + " is valid date format");
+            if (datepickerDateOfBirth.getValue() == null) {
+                System.out.println("Write Date");
+            } else {
+                System.out.println(datepickerDateOfBirth.getValue().getMonthValue() + "/"
+                        + datepickerDateOfBirth.getValue().getDayOfMonth() + "/"
+                        + datepickerDateOfBirth.getValue().getYear());
+                Date javaDate = sdfrmt.parse(datepickerDateOfBirth.getValue().getMonthValue() + "/"
+                        + datepickerDateOfBirth.getValue().getDayOfMonth() + "/"
+                        + datepickerDateOfBirth.getValue().getYear());
+                System.out.println(datepickerDateOfBirth + " is valid date format");
+            }
+
         } catch (ParseException e) {
             System.out.println(datepickerDateOfBirth + " is Invalid Date format");
         }
