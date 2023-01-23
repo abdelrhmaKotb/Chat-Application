@@ -39,7 +39,7 @@ public class SignupController implements Initializable {
     private DatePicker datepickerDateOfBirth;
 
     @FXML
-    private ChoiceBox<?> choiceboxGender;
+    private ChoiceBox<String> choiceboxGender;
 
     @FXML
     private ChoiceBox<?> choiceboxCountry;
@@ -58,6 +58,8 @@ public class SignupController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        choiceboxGender.getItems().add("Female");
+        choiceboxGender.getItems().add("Male");
 
     }
 
