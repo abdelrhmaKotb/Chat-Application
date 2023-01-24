@@ -75,7 +75,6 @@ public class SignupController implements Initializable {
     void clickBtnSignup(ActionEvent event) {
         validatePassword();
         confirmPass();
-        validateDOB();
         if (choiceboxGender.getValue() ==null){
             System.out.println("Choose Gender");
         }
