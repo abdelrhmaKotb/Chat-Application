@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.regex.*;
+
+import gov.iti.jets.App;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -113,28 +115,6 @@ public class SignupController implements Initializable {
             System.out.println("Wrong pass" + txtConfirmPassword.getText());
         } else {
             System.out.println(txtConfirmPassword.getText());
-        }
-    }
-
-    public void validateDOB() {
-        SimpleDateFormat sdfrmt = new SimpleDateFormat("MM/dd/yyyy");
-        sdfrmt.setLenient(false);
-
-        try {
-            if (datepickerDateOfBirth.getValue() == null) {
-                System.out.println("Write Date");
-            } else {
-                System.out.println(datepickerDateOfBirth.getValue().getMonthValue() + "/"
-                        + datepickerDateOfBirth.getValue().getDayOfMonth() + "/"
-                        + datepickerDateOfBirth.getValue().getYear());
-                Date javaDate = sdfrmt.parse(datepickerDateOfBirth.getValue().getMonthValue() + "/"
-                        + datepickerDateOfBirth.getValue().getDayOfMonth() + "/"
-                        + datepickerDateOfBirth.getValue().getYear());
-                System.out.println(datepickerDateOfBirth + " is valid date format");
-            }
-
-        } catch (ParseException e) {
-            System.out.println(datepickerDateOfBirth + " is Invalid Date format");
         }
     }
 
