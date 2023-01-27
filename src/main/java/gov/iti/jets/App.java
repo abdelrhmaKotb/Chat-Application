@@ -1,5 +1,4 @@
 package gov.iti.jets;
-
 import gov.iti.jets.persistence.utils.DBConnecttion;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
