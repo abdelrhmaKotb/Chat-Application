@@ -22,7 +22,7 @@
                 </ImageView>
                 <Label alignment="CENTER" layoutX="70.0" layoutY="262.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="65.0" prefWidth="275.0" text="YEKO Chat" textFill="#ec6f66">
                     <font>
-                        <Font name="Times New Roman" size="55.0" />
+                        <Font name="Times New Roman Bold" size="49.0" />
                     </font>
                 </Label>
             </children>
@@ -58,7 +58,7 @@
                 </Label>
             <Label alignment="CENTER" layoutY="-80.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="65.0" prefWidth="275.0" text="Login" textFill="#ec6f66">
                <font>
-                  <Font name="Times New Roman" size="55.0" />
+                  <Font name="Times New Roman Bold" size="42.0" />
                </font>
             </Label>
             </children>
