@@ -14,23 +14,18 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="505.0" prefWidth="790.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.SignupController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="850.0" style="-fx-background-color: linear-gradient(to right, #434343 0%, black 100%);;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.SignupController">
     <children>
         <AnchorPane prefHeight="503.0" prefWidth="382.0" style="-fx-background-color: linear-gradient(to bottom left,#141E30,#243B55);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <ImageView fitHeight="160.0" fitWidth="160.0" layoutX="120.0" layoutY="80.0" opacity="0.89" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="100.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../images/user.png" />
+                        <Image url="@../images/166258.png" />
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" layoutX="105.0" layoutY="262.0" prefHeight="23.0" prefWidth="173.0" text="Chat Application" textFill="WHITE">
+                <Label alignment="CENTER" layoutX="70.0" layoutY="262.0" prefHeight="65.0" prefWidth="275.0" text="YEKO Chat" textFill="#ec6f66">
                     <font>
-                        <Font name="Segoe UI" size="18.0" />
-                    </font>
-                </Label>
-                <Label alignment="CENTER" layoutX="89.0" layoutY="295.0" prefHeight="23.0" prefWidth="205.0" text="chat with yourself" textFill="WHITE">
-                    <font>
-                        <Font name="Segoe UI" size="12.0" />
+                        <Font name="Times New Roman" size="55.0" />
                     </font>
                 </Label>
             </children>
@@ -43,47 +38,47 @@
         </AnchorPane>
         <Pane layoutX="488.0" layoutY="20.0" prefHeight="483.0" prefWidth="283.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="20.0">
             <children>
-                <TextField fx:id="txtPhoneNumber" layoutX="7.0" prefHeight="34.0" prefWidth="275.0" promptText="phone number">
+                <TextField fx:id="txtPhoneNumber" alignment="CENTER" layoutX="7.0" prefHeight="34.0" prefWidth="275.0" promptText="Phone Number">
                <font>
-                  <Font name="Lucida Calligraphy Italic" size="12.0" />
+                  <Font name="Times New Roman" size="16.0" />
                </font></TextField>
-                <Button fx:id="btnSignup" layoutX="145.0" layoutY="396.0" stylesheets="@/css/fullpackstyling.css" mnemonicParsing="false" onAction="#clickBtnSignup" prefHeight="34.0" prefWidth="137.0" text="Sign up">
+                <Button fx:id="btnSignup" alignment="CENTER" layoutX="7.0" layoutY="396.0" mnemonicParsing="false" onAction="#clickBtnSignup" prefHeight="34.0" prefWidth="275.0" stylesheets="@/css/fullpackstyling.css" text="Sign Up">
                <font>
-                  <Font name="Lucida Calligraphy Italic" size="12.0" />
+                  <Font name="Times New Roman" size="16.0" />
                </font></Button>
-                <Button fx:id="btnSignin" layoutX="7.0" layoutY="440.0" stylesheets="@/css/fullpackstyling.css" mnemonicParsing="false" onAction="#clickBtnSignin" prefHeight="34.0" prefWidth="275.0" text="Sign in">
+                <Button fx:id="btnSignin" alignment="CENTER" layoutX="7.0" layoutY="440.0" mnemonicParsing="false" onAction="#clickBtnSignin" prefHeight="34.0" prefWidth="275.0" stylesheets="@/css/fullpackstyling.css" text="Sign In">
                <font>
-                  <Font name="Lucida Calligraphy Italic" size="12.0" />
+                  <Font name="Times New Roman" size="16.0" />
                </font></Button>
-                 <PasswordField fx:id="txtPassword" layoutX="7.0" layoutY="132.0" prefHeight="34.0" prefWidth="275.0" promptText="password">
+                 <PasswordField fx:id="txtPassword" alignment="CENTER" layoutX="7.0" layoutY="132.0" prefHeight="34.0" prefWidth="275.0" promptText="Password">
                <font>
-                  <Font name="Lucida Calligraphy Italic" size="12.0" />
+                  <Font name="Times New Roman" size="16.0" />
                </font></PasswordField>
-                <PasswordField fx:id="txtConfirmPassword" layoutX="7.0" layoutY="176.0" prefHeight="34.0" prefWidth="275.0" promptText="confirm password">
+                <PasswordField fx:id="txtConfirmPassword" alignment="CENTER" layoutX="7.0" layoutY="176.0" prefHeight="34.0" prefWidth="275.0" promptText="Confirm Password">
                <font>
-                  <Font name="Lucida Calligraphy Italic" size="12.0" />
+                  <Font name="Times New Roman" size="16.0" />
                </font></PasswordField>
-                <DatePicker fx:id="datepickerDateOfBirth" layoutX="7.0" layoutY="264.0" prefHeight="34.0" prefWidth="275.0" promptText="data of birth">
+                <DatePicker fx:id="datepickerDateOfBirth" editable="false" layoutX="7.0" layoutY="264.0" prefHeight="34.0" prefWidth="275.0" promptText="                              Data Of Dirth">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></DatePicker>
                 <ChoiceBox fx:id="choiceboxGender" cache="true" layoutX="7.0" layoutY="308.0" prefHeight="34.0" prefWidth="275.0" />
                 <ChoiceBox fx:id="choiceboxCountry" layoutX="7.0" layoutY="352.0" prefHeight="34.0" prefWidth="275.0" />
-                <TextField fx:id="txtUserName" layoutX="7.0" layoutY="44.0" prefHeight="34.0" prefWidth="275.0" promptText="user name">
+                <TextField fx:id="txtUserName" alignment="CENTER" layoutX="7.0" layoutY="44.0" prefHeight="34.0" prefWidth="275.0" promptText="User Name">
                <font>
-                  <Font name="Lucida Calligraphy Italic" size="12.0" />
+                  <Font name="Times New Roman" size="16.0" />
                </font></TextField>
-                <TextField fx:id="txtBio" layoutX="7.0" layoutY="220.0" prefHeight="34.0" prefWidth="275.0" promptText="bio">
+                <TextField fx:id="txtBio" alignment="CENTER" layoutX="7.0" layoutY="220.0" prefHeight="34.0" prefWidth="275.0" promptText="Bio">
                <font>
-                  <Font name="Lucida Calligraphy Italic" size="12.0" />
+                  <Font name="Times New Roman" size="16.0" />
                </font></TextField>
-                <TextField fx:id="txtEmail" layoutX="7.0" layoutY="88.0" prefHeight="34.0" prefWidth="275.0" promptText="email">
+                <TextField fx:id="txtEmail" alignment="CENTER" layoutX="7.0" layoutY="88.0" prefHeight="34.0" prefWidth="275.0" promptText="Email">
                <font>
-                  <Font name="Lucida Calligraphy Italic" size="12.0" />
+                  <Font name="Times New Roman" size="16.0" />
                </font></TextField>
             </children>
         </Pane>
-        <ImageView fx:id="imageviewProfileImage" fitHeight="43.0" fitWidth="70.0" layoutX="394.0" layoutY="14.0" onMouseClicked="#clickImageviewProfileImage" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="imageviewProfileImage" fitHeight="100.0" fitWidth="100.0" layoutX="394.0" layoutY="14.0" onMouseClicked="#clickImageviewProfileImage" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/person.png" />
          </image>

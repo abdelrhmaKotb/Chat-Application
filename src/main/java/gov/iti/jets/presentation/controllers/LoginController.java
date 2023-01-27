@@ -2,7 +2,6 @@ package gov.iti.jets.presentation.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import gov.iti.jets.business.dto.UserDto;
 import gov.iti.jets.business.services.LoginService;
 import javafx.fxml.FXML;
