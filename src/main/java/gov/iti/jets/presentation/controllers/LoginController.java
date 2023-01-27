@@ -41,6 +41,7 @@ public class LoginController implements Initializable{
             alert.setContentText("hello you must move to chat room later");
             alert.setHeaderText(null);
             alert.show();
+            System.out.println(user);
         }
     }
 

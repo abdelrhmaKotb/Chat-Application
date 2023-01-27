@@ -1,6 +1,7 @@
 package gov.iti.jets.business.services;
 
 import gov.iti.jets.business.dto.UserDto;
+import gov.iti.jets.business.mapper.UserMapper;
 import gov.iti.jets.persistence.dao.UserImpl;
 import gov.iti.jets.persistence.entities.User;
 
@@ -14,17 +15,7 @@ public class LoginService {
 
         if(user == null) return null;
 
-        return new UserDto(
-            user.getPhoneNumber(),
-            user.getName(),
-            user.getName(),
-            user.getGender(),
-            user.getCountry(),
-            user.getDateOfBirth(),
-            user.getBio(),
-            user.getStatus(),
-            user.isAdmin()
-        );
+        return new UserMapper().toDto(user);
     }
     
 }
