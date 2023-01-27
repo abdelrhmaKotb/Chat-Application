@@ -1,5 +1,6 @@
 package gov.iti.jets;
 
+import gov.iti.jets.persistence.utils.DBConnecttion;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,10 +11,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-       Parent root = FXMLLoader.load(getClass().getResource("/views/signUpPage.fxml"));
- //    Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
-     //   Parent root = FXMLLoader.load(getClass().getResource("/views/Phone.fxml"));
-        Scene sc = new Scene(root,855,503);
+
+        Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
+        // Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
+        DBConnecttion.getConnection();
+        Scene sc = new Scene(root, 855, 503);
         primaryStage.setScene(sc);
         primaryStage.setTitle("Chat Application");
         primaryStage.setResizable(false);

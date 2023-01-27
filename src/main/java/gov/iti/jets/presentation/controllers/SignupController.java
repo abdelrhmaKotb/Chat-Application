@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import java.net.URL;
 import java.util.regex.*;
 
+import gov.iti.jets.presentation.validation.SignUpValidation;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -74,6 +75,7 @@ public class SignupController implements Initializable {
         if (choiceboxGender.getValue() ==null){
             System.out.println("Choose Gender");
         }
+        applyValidations();
     }
 
     @FXML
@@ -111,6 +113,13 @@ public class SignupController implements Initializable {
         } else {
             System.out.println(txtConfirmPassword.getText());
         }
+    }
+    public void applyValidations() {
+        SignUpValidation validation=new SignUpValidation();
+        validation.validatePhoneNumber(txtPhoneNumber.getText());
+        validation.validateUserName(txtUserName.getText());
+        validation.validateEmail(txtEmail.getText());
+        
     }
 
 }
