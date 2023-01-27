@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="854.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="854.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.LoginController">
     <children>
         <AnchorPane prefHeight="503.0" prefWidth="382.0" style="-fx-background-color: #6E0093;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -36,7 +36,7 @@
             <children>
                 <TextField fx:id="txtUsername" layoutX="7.0" prefHeight="34.0" prefWidth="275.0" promptText="phone number" />
                 <PasswordField fx:id="txtPassword" layoutX="7.0" layoutY="61.0" prefHeight="34.0" prefWidth="275.0" promptText="password" stylesheets="@/css/fullpackstyling.css" />
-                <Button fx:id="btnSignin" layoutX="145.0" layoutY="125.0" mnemonicParsing="false"  prefHeight="34.0" prefWidth="137.0" stylesheets="@/css/fullpackstyling.css" text="Sign in" />
+                <Button fx:id="btnSignin" onAction="#handelLogin" layoutX="145.0" layoutY="125.0" mnemonicParsing="false"  prefHeight="34.0" prefWidth="137.0" stylesheets="@/css/fullpackstyling.css" text="Sign in" />
                 <Label fx:id="btnForgot" alignment="CENTER" layoutX="8.0" layoutY="131.0" prefHeight="23.0" prefWidth="93.0" text="Forgot Password" textFill="#5383ff">
                     <font>
                         <Font name="Segoe UI" size="12.0" />
