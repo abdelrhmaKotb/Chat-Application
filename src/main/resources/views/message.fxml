@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="678.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="678.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.MessageBoxController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -37,13 +37,13 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ChoiceBox prefHeight="31.0" prefWidth="116.0" GridPane.columnIndex="1" />
-            <ChoiceBox prefHeight="31.0" prefWidth="79.0" GridPane.columnIndex="2" />
-            <ColorPicker GridPane.columnIndex="3" />
-            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="51.0" style="-fx-font-weight: bold;" text="B" GridPane.columnIndex="5" />
-            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="51.0" style="-fx-font-style: italic;" text="I" GridPane.columnIndex="6" />
-            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="51.0" style="-fx-underline: true;" text="U" GridPane.columnIndex="7" />
-            <ColorPicker prefHeight="31.0" prefWidth="98.0" GridPane.columnIndex="4" />
+            <ChoiceBox fx:id="fontStyleChooser" prefHeight="31.0" prefWidth="116.0" GridPane.columnIndex="1" />
+            <ChoiceBox fx:id="fontSizeChooser" prefHeight="31.0" prefWidth="79.0" GridPane.columnIndex="2" />
+            <ColorPicker fx:id="fontColorPicker" GridPane.columnIndex="3" />
+            <Button fx:id="boldBtn" mnemonicParsing="false" prefHeight="31.0" prefWidth="51.0" style="-fx-font-weight: bold;" text="B" GridPane.columnIndex="5" />
+            <Button fx:id="italicBtn" mnemonicParsing="false" prefHeight="31.0" prefWidth="51.0" style="-fx-font-style: italic;" text="I" GridPane.columnIndex="6" />
+            <Button fx:id="underlineBtn" mnemonicParsing="false" prefHeight="31.0" prefWidth="51.0" style="-fx-underline: true;" text="U" GridPane.columnIndex="7" />
+            <ColorPicker fx:id="backgroundColorPicker" prefHeight="31.0" prefWidth="98.0" GridPane.columnIndex="4" />
          </children>
       </GridPane>
       <Separator prefWidth="200.0" GridPane.rowIndex="3" />
@@ -58,15 +58,15 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField prefHeight="50.0" prefWidth="569.0" GridPane.columnIndex="1" />
-            <ImageView fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+            <TextField fx:id="messageTextField" prefHeight="50.0" prefWidth="569.0" GridPane.columnIndex="1" />
+            <ImageView fx:id="attachImgView" fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2"  onMouseClicked="#clickAttachImgView">
                <image>
-                  <Image url="@../../../../../../../Downloads/attachment.png" />
+                  <Image url="@/images/attachment.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
+            <ImageView fx:id="sendImgView" fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" onMouseClicked="#clickSendImgView">
                <image>
-                  <Image url="@../../../../../../../Downloads/send.png" />
+                  <Image url="@/images/send.png" />
                </image>
             </ImageView>
          </children>
@@ -81,11 +81,12 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="70.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="receiverImgView" fitHeight="70.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../Desktop/5563.jpg" />
+                  <Image url="@/images/5563.jpg" />
                </image></ImageView>
-            <Label prefHeight="21.0" prefWidth="134.0" text="UserName" GridPane.columnIndex="1" />
+            <Label fx:id="receiverNameLabel" prefHeight="21.0" prefWidth="134.0" text="UserName" GridPane.columnIndex="1" />
+            <RadioButton fx:id="chatbotRadioBtn" mnemonicParsing="false" text="Open Chatbot" GridPane.columnIndex="2" />
          </children>
       </GridPane>
    </children>
