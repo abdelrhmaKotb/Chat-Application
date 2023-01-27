@@ -15,9 +15,9 @@ public class App extends Application {
        // Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
          Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
         DBConnecttion.getConnection();
-        Scene sc = new Scene(root, 855, 503);
+        Scene sc = new Scene(root, 850, 500);
         primaryStage.setScene(sc);
-        primaryStage.setTitle("Chat Application");
+        primaryStage.setTitle("Login");
         primaryStage.setResizable(false);
         primaryStage.show();
     }

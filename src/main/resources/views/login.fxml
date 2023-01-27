@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="854.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.LoginController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.LoginController">
     <children>
         <AnchorPane prefHeight="503.0" prefWidth="382.0" style="-fx-background-color: linear-gradient(to bottom left,#141E30,#243B55);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -29,7 +29,7 @@
         </AnchorPane>
         <Pane layoutX="488.0" layoutY="100.0" AnchorPane.bottomAnchor="73.0" AnchorPane.topAnchor="100.0">
             <children>
-                <TextField fx:id="txtUsername" alignment="CENTER" layoutX="7.0" prefHeight="34.0" prefWidth="275.0" promptText="Phone Number">
+                <TextField fx:id="txtPhonenumber" alignment="CENTER" layoutX="7.0" prefHeight="34.0" prefWidth="275.0" promptText="Phone Number">
                <font>
                   <Font name="Times New Roman" size="16.0" />
                </font></TextField>
@@ -41,7 +41,7 @@
                <font>
                   <Font name="Times New Roman" size="16.0" />
                </font></Button>
-                <Button fx:id="btnSignup" layoutX="4.0" layoutY="210.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="275.0" stylesheets="@/css/fullpackstyling.css" text="Sign Up">
+                <Button fx:id="btnSignup" layoutX="4.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleSignup" prefHeight="34.0" prefWidth="275.0" stylesheets="@/css/fullpackstyling.css" text="Sign Up">
                <font>
                   <Font name="Times New Roman" size="16.0" />
                </font></Button>
@@ -61,6 +61,10 @@
                   <Font name="Times New Roman Bold" size="42.0" />
                </font>
             </Label>
+            <Label fx:id="lblErrorPhoneNumber" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="34.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.0" text="Please Enter Phone Number" textFill="RED" />
+            <Label fx:id="lblErrorPassword" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="95.0" opacity="0.0" text="Please Enter Password" textFill="RED" />
+            <Label fx:id="lblErrorLogin" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="160.0" opacity="0.0" text="Wrong User Name or Password " textFill="RED" />
+            <Label fx:id="lblSuccessLogin" alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" layoutY="160.0" opacity="0.0" text="Login Successful!" textFill="GREEN" />
             </children>
         </Pane>
     </children>
