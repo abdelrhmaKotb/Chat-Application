@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="702.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="219.0" minWidth="10.0" prefWidth="110.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="463.0" minWidth="10.0" prefWidth="177.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="447.0" minWidth="10.0" prefWidth="402.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="404.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Pane prefHeight="376.0" prefWidth="115.0" style="-fx-background-color: #abcfed;">
+         <children>
+            <ImageView fitHeight="37.0" fitWidth="36.0" layoutX="37.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Downloads/contact.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="36.0" layoutX="36.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Downloads/add-user.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="36.0" layoutX="36.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Downloads/people.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="36.0" layoutX="37.0" layoutY="273.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Downloads/notification.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="36.0" layoutX="36.0" layoutY="332.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Downloads/edit.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="74.0" fitWidth="102.0" layoutX="19.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Downloads/car.png" />
+               </image>
+            </ImageView>
+            <Separator layoutX="2.0" layoutY="77.0" prefHeight="5.0" prefWidth="103.0" />
+         </children>
+      </Pane>
+   </children>
+</GridPane>
