@@ -2,7 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -27,20 +28,30 @@
         </AnchorPane>
         <Pane layoutX="488.0" layoutY="100.0" AnchorPane.bottomAnchor="73.0" AnchorPane.topAnchor="100.0">
             <children>
-                <PasswordField fx:id="txtPassword" alignment="CENTER" layoutX="7.0" layoutY="61.0" prefHeight="34.0" prefWidth="275.0" promptText="Password" stylesheets="@/css/fullpackstyling.css">
+                <TextField fx:id="txtPhonnumber" alignment="CENTER" layoutX="7.0" layoutY="61.0" prefHeight="34.0" prefWidth="275.0" promptText="Phone Number">
                <font>
-                  <Font name="Times New Roman" size="16.0" />
-               </font></PasswordField>
-                <Button fx:id="btnSignin" alignment="CENTER" layoutX="7.0" layoutY="125.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="275.0" stylesheets="@/css/fullpackstyling.css" text="Sign In">
+                  <Font size="16.0" />
+               </font></TextField>
+                <Button fx:id="btnContinue" alignment="CENTER" layoutX="7.0" layoutY="125.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="275.0" stylesheets="@/css/fullpackstyling.css" text="Continue">
                <font>
                   <Font name="Times New Roman" size="16.0" />
                </font></Button>
+                <Button fx:id="btnSignup" alignment="CENTER" layoutX="7.0" layoutY="216.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="275.0" stylesheets="@/css/fullpackstyling.css" text="Sign Up">
+               <font>
+                  <Font name="Times New Roman" size="16.0" />
+               </font></Button>
+                <Separator layoutX="8.0" layoutY="190.0" prefHeight="7.0" prefWidth="275.0" />
+                <Label alignment="CENTER" layoutX="126.0" layoutY="179.0" prefHeight="23.0" prefWidth="31.0" style="-fx-background-color: #fff;" text="Or">
+                    <font>
+                        <Font name="Times New Roman" size="16.0" />
+                    </font>
+                </Label>
                 <Label fx:id="lblErrors" alignment="CENTER" layoutX="8.0" layoutY="95.0" prefHeight="23.0" prefWidth="275.0" textFill="#ff6354">
                     <font>
                         <Font name="Segoe UI" size="10.0" />
                     </font>
                 </Label>
-            <Label alignment="CENTER" layoutX="7.0" layoutY="-20.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="65.0" prefWidth="275.0" text="Log in" textFill="#ec6f66">
+            <Label alignment="CENTER" layoutX="7.0" layoutY="-20.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="65.0" prefWidth="275.0" text="Log in" textFill="#eb7067">
                <font>
                   <Font name="Times New Roman" size="55.0" />
                </font>
