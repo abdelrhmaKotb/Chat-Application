@@ -10,9 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="702.0"
-   xmlns="http://javafx.com/javafx/19"
-   xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ChatController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ChatController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="219.0" minWidth="10.0" prefWidth="110.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="463.0" minWidth="10.0" prefWidth="177.0" />
@@ -48,7 +46,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView fx:id="notificationBtn" fitHeight="37.0" fitWidth="36.0" layoutX="37.0" layoutY="273.0" onMousePressed="#clickNotificationBtn" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="notificationBtn" fitHeight="36.0" fitWidth="36.0" layoutX="34.0" layoutY="325.0" onMousePressed="#clickNotificationBtn" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@/images/notification.png" />
                </image>
@@ -56,7 +54,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView fx:id="editProfileBtn" fitHeight="37.0" fitWidth="36.0" layoutX="36.0" layoutY="332.0" onMousePressed="#clickEditProfileBtn" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="editProfileBtn" fitHeight="37.0" fitWidth="36.0" layoutX="33.0" layoutY="384.0" onMousePressed="#clickEditProfileBtn" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@/images/edit.png" />
                </image>
@@ -70,9 +68,17 @@
                </image>
             </ImageView>
             <Separator layoutX="2.0" layoutY="77.0" prefHeight="5.0" prefWidth="115.0" />
-            <ImageView fx:id="signOutBtn" fitHeight="37.0" fitWidth="36.0" layoutX="36.0" layoutY="388.0" onMousePressed="#clickSignOutBtn" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="signOutBtn" fitHeight="36.0" fitWidth="36.0" layoutX="33.0" layoutY="440.0" onMousePressed="#clickSignOutBtn" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@/images/log-out.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="AddgroupBtn" fitHeight="51.0" fitWidth="58.0" layoutX="29.0" layoutY="258.0" onMousePressed="#clickAddGroupBtn" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/images/group.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
