@@ -1,24 +1,19 @@
-package gov.iti.jets.business.dto;
+package gov.iti.jets.persistence.entities;
 
-/**
- *
- * @author Esraa
- */
-public class ContactsDto {
-   private String user;
+public class Contact {
+    private String user;
     private String friendPhoneNumber;
     private String category;
     private boolean isBlocked;
 
 
-    public ContactsDto(){}
+    public Contact(){}
 
-    public ContactsDto(String user, String friendPhoneNumber, String category, boolean isBlocked) {
+    public Contact(String user, String friendPhoneNumber, String category, boolean isBlocked) {
         this.user = user;
         this.friendPhoneNumber = friendPhoneNumber;
         this.category = category;
         this.isBlocked = isBlocked;
- 
     }
 
     public String getUser() {
@@ -53,10 +48,4 @@ public class ContactsDto {
         this.isBlocked = isBlocked;
     }
 
-    @Override
-    public String toString() {
-        return "ContactsDto{" + "user=" + user + ", friendPhoneNumber=" + friendPhoneNumber + ", category=" + category + ", isBlocked=" + isBlocked + '}';
-    }
-
-    
 }

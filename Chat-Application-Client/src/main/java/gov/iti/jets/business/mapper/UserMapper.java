@@ -5,7 +5,7 @@ import gov.iti.jets.persistence.entities.User;
 
 public class UserMapper  implements Mapper<User,UserDto>{
     @Override
-    public UserDto toDto(User entity) {
+    public UserDto getContactDto(User entity) {
         
         return new UserDto(
             entity.getPhoneNumber(),
