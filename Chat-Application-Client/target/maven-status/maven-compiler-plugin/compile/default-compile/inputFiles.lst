@@ -1,5 +1,6 @@
 C:\Users\user\Documents\GitHub\Chat-Application\Chat-Application-Client\src\main\java\gov\iti\jets\business\services\LoginService.java
 C:\Users\user\Documents\GitHub\Chat-Application\Chat-Application-Client\src\main\java\gov\iti\jets\persistence\utils\DBConnecttion.java
+C:\Users\user\Documents\GitHub\Chat-Application\Chat-Application-Client\src\main\java\gov\iti\jets\presentation\controllers\MessageBoxController.java
 C:\Users\user\Documents\GitHub\Chat-Application\Chat-Application-Client\src\main\java\gov\iti\jets\business\services\PasswordHashing.java
 C:\Users\user\Documents\GitHub\Chat-Application\Chat-Application-Client\src\main\java\gov\iti\jets\persistence\dao\interfaces\UserDao.java
 C:\Users\user\Documents\GitHub\Chat-Application\Chat-Application-Client\src\main\java\gov\iti\jets\business\mapper\Mapper.java
@@ -12,3 +13,4 @@ C:\Users\user\Documents\GitHub\Chat-Application\Chat-Application-Client\src\main
 C:\Users\user\Documents\GitHub\Chat-Application\Chat-Application-Client\src\main\java\gov\iti\jets\presentation\controllers\LoginController.java
 C:\Users\user\Documents\GitHub\Chat-Application\Chat-Application-Client\src\main\java\gov\iti\jets\presentation\controllers\SignupController.java
 C:\Users\user\Documents\GitHub\Chat-Application\Chat-Application-Client\src\main\java\gov\iti\jets\persistence\dao\UserImpl.java
+C:\Users\user\Documents\GitHub\Chat-Application\Chat-Application-Client\src\main\java\gov\iti\jets\presentation\controllers\ChatController.java
