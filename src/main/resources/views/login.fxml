@@ -62,7 +62,7 @@
                </font>
             </Label>
             <Label fx:id="lblErrorPhoneNumber" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="34.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.0" text="Please Enter Phone Number" textFill="RED" />
-            <Label fx:id="lblErrorPassword" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="95.0" opacity="0.0" text="Please Enter Password" textFill="RED" />
+            <Label fx:id="lblErrorPassword" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.0" prefHeight="17.0" prefWidth="148.0" text="Please Enter Password" textFill="RED" />
             <Label fx:id="lblErrorLogin" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="160.0" opacity="0.0" text="Wrong User Name or Password " textFill="RED" />
             <Label fx:id="lblSuccessLogin" alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" layoutY="160.0" opacity="0.0" text="Login Successful!" textFill="GREEN" />
             </children>

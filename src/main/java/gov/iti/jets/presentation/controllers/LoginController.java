@@ -47,8 +47,8 @@ public class LoginController implements Initializable{
     @FXML
     private void handelLogin() throws IOException
     {
-        String phoneNumber = txtPhonenumber.getText();
-        String password = txtPassword.getText();
+        String phoneNumber = txtPhonenumber.getText().trim();
+        String password = txtPassword.getText().trim();
         
         if(phoneNumber.trim().equals(""))
             System.exit(0);
@@ -94,7 +94,7 @@ public class LoginController implements Initializable{
         Stage primarystage=new Stage();
         primarystage.setTitle("Sign Up");
         Parent root = FXMLLoader.load(getClass().getResource("/views/signUpPage.fxml"));
-        primarystage.setScene(new Scene(root,850,500));
+        primarystage.setScene(new Scene(root,880,530));
         primarystage.show();
 
 

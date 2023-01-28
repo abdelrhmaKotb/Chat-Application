@@ -15,7 +15,7 @@ public class App extends Application {
        // Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
          Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
         DBConnecttion.getConnection();
-        Scene sc = new Scene(root, 850, 500);
+        Scene sc = new Scene(root, 880, 530);
         primaryStage.setScene(sc);
         primaryStage.setTitle("Login");
         primaryStage.setResizable(false);
