@@ -68,4 +68,5 @@ public class ChatController implements Initializable {
     @FXML
     private void clickAddGroupBtn(MouseEvent event) {
     }
+    
 }
