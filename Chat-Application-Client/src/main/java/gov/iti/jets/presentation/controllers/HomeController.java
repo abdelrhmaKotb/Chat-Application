@@ -1,13 +1,19 @@
 package gov.iti.jets.presentation.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class HomeController implements Initializable {
 
@@ -30,6 +36,10 @@ public class HomeController implements Initializable {
     @FXML
     private ListView<?> contactList;
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Tooltip.install(contactBtn, new Tooltip("Contacts"));
@@ -47,6 +57,22 @@ public class HomeController implements Initializable {
 
     @FXML
     private void clickAddContactBtn(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/views/addcontacts.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage=new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("This is a pop up window");
+
+        //button1.setOnAction(e -> stage.close());
+
+        Scene scene1 = new Scene(root, 500, 300);
+
+        stage.setScene(scene1);
+        stage.setResizable(false);
+        stage.showAndWait();
     }
 
     @FXML

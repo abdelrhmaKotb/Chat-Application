@@ -15,7 +15,7 @@ public class LoginService {
 
         if(user == null) return null;
 
-        return new UserMapper().toDto(user);
+        return new UserMapper().getContactDto(user);
     }
     
 }
