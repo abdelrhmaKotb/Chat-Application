@@ -9,7 +9,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class ChatControllers {
+public class ChatController {
     @FXML
     private ImageView receiverImgView;
     @FXML
