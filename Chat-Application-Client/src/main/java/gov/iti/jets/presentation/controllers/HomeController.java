@@ -9,7 +9,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class ChatController implements Initializable {
+public class HomeController implements Initializable {
 
     @FXML
     private ImageView contactBtn;
