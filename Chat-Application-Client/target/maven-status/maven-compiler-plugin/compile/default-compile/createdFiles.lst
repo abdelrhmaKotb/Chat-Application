@@ -1,0 +1,16 @@
+gov\iti\jets\persistence\utils\DBConnecttion.class
+gov\iti\jets\business\services\PasswordHashing.class
+gov\iti\jets\presentation\controllers\LoginController.class
+gov\iti\jets\business\mapper\Mapper.class
+gov\iti\jets\presentation\controllers\ChatController.class
+gov\iti\jets\business\services\LoginService.class
+gov\iti\jets\persistence\dao\UserImpl.class
+gov\iti\jets\business\dto\UserDto.class
+gov\iti\jets\presentation\controllers\PhoneController.class
+gov\iti\jets\persistence\dao\interfaces\UserDao.class
+gov\iti\jets\presentation\controllers\MessageBoxController.class
+gov\iti\jets\persistence\entities\User.class
+gov\iti\jets\business\mapper\UserMapper.class
+gov\iti\jets\App.class
+gov\iti\jets\presentation\validation\SignUpValidation.class
+gov\iti\jets\presentation\controllers\SignupController.class
