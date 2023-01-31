@@ -2,10 +2,7 @@ package gov.iti.jets.persistence.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import java.util.Date;
 
 import gov.iti.jets.persistence.dao.interfaces.ReguestDao;
 import gov.iti.jets.persistence.entities.Request;
