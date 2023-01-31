@@ -36,8 +36,6 @@ public class HomeController implements Initializable {
     @FXML
     private ListView<?> contactList;
 
-    private Stage stage;
-    private Scene scene;
     private Parent root;
 
     @Override
