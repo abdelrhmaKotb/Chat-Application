@@ -14,7 +14,7 @@ public class RequestImpl implements ReguestDao {
     public int createRequests(Request request) {
         try (Connection con = DBConnecttion.getConnection();) {
 
-            PreparedStatement stmt = con.prepareStatement("INSERT INTO requests(sender,reciver,request_date) "
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO requests(sender,receiver,request_date) "
                     + "VALUES(?, ?,?);");
             stmt.setString(1, request.getSender());
             stmt.setString(2, request.getReceiver());
