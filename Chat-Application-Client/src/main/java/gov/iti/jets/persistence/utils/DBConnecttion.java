@@ -18,7 +18,7 @@ public class DBConnecttion {
     public static Connection getConnection() {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/chat_application", "root", "esraa");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/chat_application", "root", "");
             System.out.println("conected");
         } catch (SQLException e) {
             e.printStackTrace();

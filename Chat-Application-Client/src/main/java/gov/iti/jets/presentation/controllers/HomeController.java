@@ -38,6 +38,7 @@ public class HomeController implements Initializable {
 
     private Parent root;
 
+    @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Tooltip.install(contactBtn, new Tooltip("Contacts"));
