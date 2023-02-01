@@ -5,19 +5,15 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import gov.iti.jets.business.dto.UserDto;
 import gov.iti.jets.business.services.LoginService;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class LoginController implements Initializable{
@@ -52,9 +48,7 @@ public class LoginController implements Initializable{
         
         if(phoneNumber.trim().equals(""))
             System.exit(0);
-    //    if(phoneNumber.trim().equals(""))
-       //   showErrorMessage(lblErrorPhoneNumber, txtPhonenumber);
-        
+   
         if(password.trim().equals(""))
           showErrorMessage(lblErrorPassword, txtPassword);
         
@@ -64,10 +58,7 @@ public class LoginController implements Initializable{
 
                 if(user == null)
                 {
-                /*   Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setContentText("wrong username or password");
-                    alert.setHeaderText(null);
-                    alert.show();*/
+              
                     lblErrorPhoneNumber.setOpacity(0);
                     lblErrorPassword.setOpacity(0);
                     showErrorMessage(lblErrorLogin, txtPhonenumber);
@@ -75,11 +66,7 @@ public class LoginController implements Initializable{
 
 
                 }else{
-                /*    Alert alert = new Alert(AlertType.CONFIRMATION);
-                    alert.setContentText("hello you must move to chat room later");
-                    alert.setHeaderText(null);
-                    alert.show();
-                    System.out.println(user);*/
+               
                     showSuccessMessage();
 
                 }
