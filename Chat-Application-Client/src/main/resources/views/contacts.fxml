@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<VBox fx:id="contacts" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #f5f7fb;" GridPane.columnIndex="1" fx:controller="gov.iti.jets.presentation.controllers.ContactsController"  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+       <HBox alignment="BASELINE_LEFT" prefHeight="100.0" prefWidth="200.0">
+          <children>
+             <Text fill="#495057" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: 600; -fx-font-size: 30;" text="Contacts">
+                <font>
+                   <Font name="Lucida Sans Typewriter Bold" size="39.0" />
+                </font>
+             </Text>
+             <Pane maxWidth="1.7976931348623157E308" prefHeight="15.0" prefWidth="94.0" HBox.hgrow="ALWAYS" />
+             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                   <Image url="@../images/add-user.png" />
+                </image>
+             </ImageView>
+          </children>
+          <padding>
+             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+          </padding>
+       </HBox>
+       <TextField fx:id="txtSearch" focusTraversable="false" onKeyTyped="#handelShearch" prefHeight="34.0" prefWidth="234.0" promptText="Search User .....">
+          <VBox.margin>
+             <Insets bottom="20.0" />
+          </VBox.margin>
+       </TextField>
+       <ListView fx:id="listContacts" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+    </children>
+    <padding>
+       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+ </VBox>

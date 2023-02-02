@@ -28,7 +28,7 @@
                </image>
             </ImageView>
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-            <ImageView id="btnUser" fx:id="btnUser" fitHeight="24.0" fitWidth="24.0" onMouseClicked="#tt" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="btnUser" fx:id="btnUser" fitHeight="24.0" fitWidth="24.0" onMouseClicked="#openContacts" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/user.png" />
                </image>
