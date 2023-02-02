@@ -23,8 +23,8 @@ public class ContactImpl implements ContactDao {
      */
     @Override
     public List<Contact> getContactsForUser(String user) {
-        List <Contact> listOfContacts = new ArrayList<>();
-        try ( Connection con = DBConnecttion.getConnection();) {
+        List<Contact> listOfContacts = new ArrayList<>();
+        try (Connection con = DBConnecttion.getConnection();) {
 
             PreparedStatement stmt = con.prepareStatement("select * from contacts where user =  ?");
             stmt.setString(1, user);
@@ -32,17 +32,38 @@ public class ContactImpl implements ContactDao {
 
             while (result.next()) {
                 listOfContacts.add(new Contact(result.getString("user"), result.getString("friend_phone_number"),
-                result.getString("category_id"), result.getBoolean("is_blocked")));
+                        result.getString("category_id"), result.getBoolean("is_blocked")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return listOfContacts;
+    }
+
+    @Override
+    public boolean isContactExist(String currentUserNumber, String contactNumber) {
+        try (Connection con = DBConnecttion.getConnection();) {
+
+            PreparedStatement stmt = con
+                    .prepareStatement("select * from contacts where (user = ? and friend_phone_number = ?) " 
+                    + "or (user = ? and friend_phone_number = ?)");
+            stmt.setString(1, currentUserNumber);
+            stmt.setString(2, contactNumber);
+            stmt.setString(3, contactNumber);
+            stmt.setString(4, currentUserNumber);
+            ResultSet result = stmt.executeQuery();
+            if(result.next()){
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
     public int create(Contact contact) {
         return 0;
     }
+
 }

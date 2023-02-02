@@ -10,4 +10,5 @@ import gov.iti.jets.persistence.entities.Contact;
 public interface ContactDao {
     int create(Contact contact);
     List<Contact> getContactsForUser(String user);
+    boolean isContactExist(String currentUserNumber,String contactNumber);
 }
