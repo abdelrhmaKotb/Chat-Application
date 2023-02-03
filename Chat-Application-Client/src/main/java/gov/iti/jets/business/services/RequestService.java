@@ -26,7 +26,7 @@ public class RequestService {
         } else if (isContactExistInDB(currentUserNumber, contactNumber)) {
             errorMsg = "This contacts already in your contacts";
         } else if (isRequestExistInDB(currentUserNumber, contactNumber)) {
-            errorMsg = "request already exist";
+            errorMsg = "You have already sent a request before";
         }
         return errorMsg;
     }

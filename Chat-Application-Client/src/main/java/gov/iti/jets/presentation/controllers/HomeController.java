@@ -56,15 +56,18 @@ public class HomeController implements Initializable {
 
     @FXML
     private void clickAddContactBtn(MouseEvent event) {
+        InviteContactController inviteCont = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/views/addcontacts.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/inviteContact.fxml"));
+            root = fxmlLoader.load();
+            inviteCont = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
         Stage stage=new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("This is a pop up window");
-
+        inviteCont.setStage(stage);
         //button1.setOnAction(e -> stage.close());
 
         Scene scene1 = new Scene(root, 500, 300);
