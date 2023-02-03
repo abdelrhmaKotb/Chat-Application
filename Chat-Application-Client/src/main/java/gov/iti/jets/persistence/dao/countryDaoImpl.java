@@ -14,13 +14,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class countryDaoImpl implements  countryDao{
+public class countryDaoImpl implements countryDao {
 
     @Override
     public ArrayList<Country> getCountries() {
-        
-     Connection con = DBConnecttion.getConnection();
-     ArrayList<Country>countriesNames=new ArrayList<>();
+
+        Connection con = DBConnecttion.getConnection();
+        ArrayList<Country> countriesNames = new ArrayList<>();
         if (con == null)
             return null;
 
@@ -29,7 +29,7 @@ public class countryDaoImpl implements  countryDao{
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Country country=new Country(rs.getInt("country_id"),rs.getString("name"));
+                Country country = new Country(rs.getInt("country_id"), rs.getString("name"));
                 countriesNames.add(country);
 
             }
@@ -46,7 +46,6 @@ public class countryDaoImpl implements  countryDao{
         }
         return countriesNames;
 
-
     }
-    
+
 }
