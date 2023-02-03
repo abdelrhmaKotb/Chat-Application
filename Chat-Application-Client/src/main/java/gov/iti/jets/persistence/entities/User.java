@@ -1,7 +1,6 @@
 package gov.iti.jets.persistence.entities;
 
-import java.util.Date;
-
+import java.sql.Date;;
 public class User {
     private String phoneNumber;
     private String name;
@@ -84,8 +83,8 @@ public class User {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setDateOfBirth(Date localDate) {
+        this.dateOfBirth = localDate;
     }
 
     public String getBio() {

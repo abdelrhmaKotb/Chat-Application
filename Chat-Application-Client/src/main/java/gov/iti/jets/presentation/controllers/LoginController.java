@@ -55,8 +55,11 @@ public class LoginController implements Initializable {
          if (txtPhoneNumber.getText().trim().equals(""))
             System.exit(0);
 
-         if (lblPassword.getText().trim().equals(""))
+         if (lblPassword.getText().trim().equals("")){
                     lblErrorPassword.setOpacity(1);
+                    imgErrorPassword.setOpacity(1);
+
+         }
 
         if (!txtPhoneNumber.getText().trim().equals("") && !lblPassword.getText().trim().equals("")) {
             LoginService loginService = new LoginService();
@@ -65,17 +68,26 @@ public class LoginController implements Initializable {
             if (user == null) {
                 lblErrorPassword.setOpacity(0);
                 lblErrorPhoneNumber.setOpacity(0);
-
+                imgErrorPhoneNumber.setOpacity(0);
+                imgErrorPassword.setOpacity(0);
                 lblErrorOrSucessLogin.setOpacity(1);
                 lblErrorOrSucessLogin.setText("Incorrect phonenumber or password");
 
             } else {
-
+                lblErrorPassword.setOpacity(0);
+                imgErrorPassword.setOpacity(0);
                 lblErrorOrSucessLogin.setOpacity(1);
                 lblErrorOrSucessLogin.setStyle("-fx-text-fill:green");
-                lblErrorOrSucessLogin.setText("Login Success");
+             //   lblErrorOrSucessLogin.setText("Login Success");
 
-
+             Stage stage = (Stage) btnSignin.getScene().getWindow();
+             stage.close();
+             Stage primarystage = new Stage();
+             primarystage.setTitle("Chat");
+             Parent root = FXMLLoader.load(getClass().getResource("/views/chat.fxml"));
+             primarystage.setScene(new Scene(root, 800, 600));
+             primarystage.show();
+     
             }
         }
     }
@@ -87,8 +99,8 @@ public class LoginController implements Initializable {
         stage.close();
         Stage primarystage = new Stage();
         primarystage.setTitle("Sign Up");
-        Parent root = FXMLLoader.load(getClass().getResource("/views/signUpPage.fxml"));
-        primarystage.setScene(new Scene(root, 880, 530));
+        Parent root = FXMLLoader.load(getClass().getResource("/views/signup.fxml"));
+        primarystage.setScene(new Scene(root, 800, 600));
         primarystage.show();
 
     }
