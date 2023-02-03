@@ -19,4 +19,5 @@ public class UserMapper  implements Mapper<User,UserDto>{
             entity.isAdmin()
         );
     }
+    
 }

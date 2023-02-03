@@ -30,17 +30,17 @@
          <children>
             <TextField fx:id="txtPhoneNumber" alignment="CENTER" layoutX="40.0" layoutY="105.0" prefHeight="34.0" prefWidth="325.0" promptText="Phone Number">
                <font>
-                  <Font name="Times New Roman" size="16.0" />
+                  <Font name="Serif Regular" size="16.0" />
                </font>
             </TextField>
             <PasswordField fx:id="lblPassword" alignment="CENTER" layoutX="40.0" layoutY="200.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="325.0" promptText="Password" stylesheets="@/css/fullpackstyling.css">
                <font>
-                  <Font name="Times New Roman" size="16.0" />
+                  <Font name="Serif Regular" size="16.0" />
                </font>
             </PasswordField>
             <Button fx:id="btnSignin" alignment="CENTER" contentDisplay="CENTER" layoutX="40.0" layoutY="280.0" mnemonicParsing="false" onAction="#handelLogin" prefHeight="34.0" prefWidth="325.0" style="-fx-background-color: #7269EF;" text="Sign In" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="Times New Roman" size="16.0" />
+                  <Font name="Serif Regular" size="16.0" />
                </font>
             </Button>
             <Button fx:id="btnSignup" alignment="CENTER" contentDisplay="CENTER" layoutX="259.0" layoutY="318.0" mnemonicParsing="false" onAction="#handleSignup" prefHeight="24.0" prefWidth="114.0" style="-fx-border-color: white; -fx-background-color: white;" text="Signup now" textFill="#7269ef">
@@ -101,7 +101,7 @@
                   <Font name="Serif Regular" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="lblErrorPassword" layoutX="40.0" layoutY="238.0" opacity="0.0" prefHeight="17.0" prefWidth="325.0" text="Please Enter Your Phonenumber" textFill="RED">
+            <Label fx:id="lblErrorPassword" layoutX="40.0" layoutY="238.0" opacity="0.0" prefHeight="17.0" prefWidth="325.0" text="Please Enter Your Password" textFill="RED">
                <font>
                   <Font name="Serif Regular" size="16.0" />
                </font>
