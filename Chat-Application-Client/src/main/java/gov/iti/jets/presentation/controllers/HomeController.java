@@ -73,7 +73,7 @@ public class HomeController implements Initializable {
         Scene scene1 = new Scene(root, 501, 345);
 
         stage.setScene(scene1);
-        stage.setResizable(false);
+        //stage.setResizable(false);
         stage.showAndWait();
     }
 
@@ -109,7 +109,7 @@ public class HomeController implements Initializable {
         createGroupCont.setStage(stage);
         Scene scene1 = new Scene(root, 501, 400);
         stage.setScene(scene1);
-        stage.setResizable(false);
+        //stage.setResizable(false);
         stage.showAndWait();
     }
 

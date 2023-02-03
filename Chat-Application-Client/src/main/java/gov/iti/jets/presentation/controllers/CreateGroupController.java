@@ -38,6 +38,7 @@ public class CreateGroupController implements Initializable {
 
     @FXML
     private void closeAction(ActionEvent event) {
+        stage.close();
     }
 
     @FXML
