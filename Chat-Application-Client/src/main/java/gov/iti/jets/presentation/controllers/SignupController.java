@@ -1,16 +1,24 @@
 package gov.iti.jets.presentation.controllers;
 
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.net.URL;
 import java.rmi.registry.RegistryHandler;
 import java.util.regex.*;
 
 import javax.lang.model.util.ElementScanner14;
+import javax.swing.event.ChangeListener;
 
+import gov.iti.jets.business.services.SignupService;
+import gov.iti.jets.persistence.dao.countryDaoImpl;
+import gov.iti.jets.persistence.entities.Country;
+import gov.iti.jets.persistence.entities.User;
 import gov.iti.jets.presentation.validation.SignUpValidation;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -69,53 +77,126 @@ public class SignupController implements Initializable {
 
     @FXML
     private ImageView imageviewProfileImage;
-    
+
     @FXML
     private Label errorPhoneNumber,
-         errorUerName,errorEmail,errorPassword,
-         errofConfirmPassword,errorBio,errorDateOfBirth,errorGender
-         ,errorCountry,errorProfileImage,successMessage;
+            errorUerName, errorEmail, errorPassword,
+            errofConfirmPassword, errorBio, errorDateOfBirth, errorGender, errorCountry, errorProfileImage,
+            successMessage, errorSignup;
     @FXML
-     private Circle mycircle;
+    private Circle mycircle;
 
-     File file;
-
+    File file;
+    ArrayList<Country>countriesNames=null;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        choiceboxGender.getItems().add("Female");
-        choiceboxGender.getItems().add("Male");
-        choiceboxCountry.getItems().add("Egypt");
+         choiceboxGender.getItems().add("Female");
+       choiceboxGender.getItems().add("Male");
+       /*  choiceboxCountry.getItems().add("Egypt");
         choiceboxCountry.getItems().add("Saudi Arabi");
-        choiceboxCountry.getItems().add("Emrates");
-        Image img=new Image("/images/person.png",false);
-        mycircle.setFill(new ImagePattern(img));
+        choiceboxCountry.getItems().add("Emrates");*/
+        countryDaoImpl countryDao=new countryDaoImpl();
+             countriesNames=countryDao.getCountries();
+        for(Country c:countriesNames){
+
+          choiceboxCountry.getItems().add(c.getName());
         
-         
-    } 
+        }
+
+
+        Image img = new Image("/images/person.png", false);
+        mycircle.setFill(new ImagePattern(img));
+
+        txtPhoneNumber.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            isValidPhoneNumber();
+            errorSignup.setOpacity(0);
+
+        });
+
+        txtUserName.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            isValidUserName();
+
+        });
+
+        txtEmail.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            isValidEmail();
+
+        });
+
+        txtPassword.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            validatePassword();
+
+        });
+
+        txtConfirmPassword.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            confirmPass();
+
+        });
+
+        txtBio.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            isValidBio();
+
+        });
+
+        choiceboxGender.getSelectionModel().selectedItemProperty().addListener(
+                (ObservableValue<? extends String> observable, String oldValue, String newValue) -> isValidGeneder()
+        );
+
+        choiceboxCountry.getSelectionModel().selectedItemProperty().addListener(
+                (ObservableValue<? extends String> observable, String oldValue, String newValue) -> isValidCountry()
+        );
+        datepickerDateOfBirth.valueProperty().addListener((ov, oldValue, newValue) -> {
+            isValidDateOfBirth();
+        });
+
+    }
 
     @FXML
     void clickBtnSignin(ActionEvent event) throws IOException {
-        Stage stage=(Stage) btnSignup.getScene().getWindow();
+        Stage stage = (Stage) btnSignup.getScene().getWindow();
         stage.close();
-        Stage primarystage=new Stage();
+        Stage primarystage = new Stage();
         primarystage.setTitle("Login");
         Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
-        primarystage.setScene(new Scene(root,850,500));
+        primarystage.setScene(new Scene(root, 850, 600));
         primarystage.show();
 
     }
 
     @FXML
     void clickBtnSignup(ActionEvent event) {
-        if( validatePassword()&&confirmPass()&&
-        isValidGeneder()&&isValidCountry()&&
-        isValidPhoneNumber()&&isValidUserName()&&
-        isValidImage()&&isValidDateOfBirth()&&isValidBio()&&isValidEmail()
-        )
-        successMessage.setOpacity(1);
-        else{
+       
+        if (validatePassword() && confirmPass()
+                && isValidGeneder() && isValidCountry()
+                && isValidPhoneNumber() && isValidUserName()
+                && isValidImage() && isValidDateOfBirth() && isValidBio() && isValidEmail()) {
+            User user = new User();
+            user.setPhoneNumber(txtPhoneNumber.getText().trim());
+            user.setName(txtUserName.getText().trim());
+            user.setEmail(txtEmail.getText().trim());
+            user.setPassword(txtPassword.getText().trim());
+            user.setGender( choiceboxGender.getValue());
+              user.setFile(file);
+             user.setCountry(getIndex(choiceboxCountry.getValue()));
+            user.setBio(txtBio.getText().trim());
+            SignupService signup = new SignupService();
+            int result = signup.signupUser(user);
+            if (result == 1) {
+                successMessage.setOpacity(1);
+            } else {
+
+                errorSignup.setOpacity(1);
+            }
+
+        } else {
             validatePassword();
-            confirmPass();   
+            confirmPass();
             isValidGeneder();
             isValidCountry();
             isValidPhoneNumber();
@@ -133,7 +214,7 @@ public class SignupController implements Initializable {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image files ", "*.PNG", "*.JPG",
                 "*.JPEG", "*.GIF", "*.SVG");
         fileChooser.getExtensionFilters().addAll(extFilter);
-         file = fileChooser.showOpenDialog(null);
+        file = fileChooser.showOpenDialog(null);
         if (file != null) {
             mycircle.setStroke(null);
             Image img = new Image(file.toURI().toString());
@@ -142,15 +223,14 @@ public class SignupController implements Initializable {
     }
 
     public boolean validatePassword() {
-        boolean flag=false;
+        boolean flag = false;
         String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$";
         if (!isValidPass(txtPassword.getText().trim(), regex)) {
-            showErrorMessageLabel(errorPassword,txtPassword,"Not Valid");
-            flag= false;
-        }
-        else{
-           resetFields(errorPassword,txtPassword);
-           flag= true;
+            showErrorMessage(errorPassword, "Not Valid");
+            flag = false;
+        } else {
+            resetFields(errorPassword);
+            flag = true;
         }
         return flag;
     }
@@ -162,175 +242,158 @@ public class SignupController implements Initializable {
     }
 
     public boolean confirmPass() {
-        boolean flag=false;
+        boolean flag = false;
         if (!txtPassword.getText().trim().equals(txtConfirmPassword.getText().trim())) {
-            showErrorMessageLabel(errofConfirmPassword,txtConfirmPassword,"Not Matched");
-            flag=false;
-        }
-        else{
-          resetFields(errofConfirmPassword,txtConfirmPassword);
-          if(!txtPassword.getText().trim().equals("")&&!txtConfirmPassword.getText().trim().equals(""))
-                flag=true;
-          else
-                flag=false;
+            showErrorMessage(errofConfirmPassword, "Not Matched");
+            flag = false;
+        } else {
+            resetFields(errofConfirmPassword);
+            if (!txtPassword.getText().trim().equals("") && !txtConfirmPassword.getText().trim().equals("")) {
+                flag = true;
+            } else {
+                flag = false;
+            }
         }
         return flag;
     }
 
     public boolean isValidPhoneNumber() {
-        boolean flag=false;
-        SignUpValidation validation=new SignUpValidation();
-        if(validation.validatePhoneNumber(txtPhoneNumber.getText().trim()).equals("invalid phone")){
-                showErrorMessageLabel(errorPhoneNumber,txtPhoneNumber,"invalid phone");
-                flag=false;
+        boolean flag = false;
+        SignUpValidation validation = new SignUpValidation();
+        if (validation.validatePhoneNumber(txtPhoneNumber.getText().trim()).equals("invalid phone")) {
+            showErrorMessage(errorPhoneNumber, "invalid phone");
+            flag = false;
+        } else {
+            resetFields(errorPhoneNumber);
+            flag = true;
         }
-        else{
-                resetFields(errorPhoneNumber,txtPhoneNumber);
-                flag=true;
-            }
-       return flag;
+        return flag;
     }
 
-    public boolean isValidUserName(){
+    public boolean isValidUserName() {
 
-        boolean flag=false;
-        SignUpValidation validation=new SignUpValidation();
-        if(!validation.validateUserName(txtUserName.getText()).trim().equals("valid userName")){
-            showErrorMessageLabel(errorUerName,txtUserName,validation.validateUserName(txtUserName.getText().trim()));
-            flag=false;
-        }
-        else{
-            resetFields(errorUerName,txtUserName);
-            flag=true;
+        boolean flag = false;
+        SignUpValidation validation = new SignUpValidation();
+        if (!validation.validateUserName(txtUserName.getText()).trim().equals("valid userName")) {
+            showErrorMessage(errorUerName, validation.validateUserName(txtUserName.getText().trim()));
+            flag = false;
+        } else {
+            resetFields(errorUerName);
+            flag = true;
         }
 
         return flag;
 
-
-    }
-    public boolean isValidEmail(){
-
-        boolean flag=false;
-        SignUpValidation validation=new SignUpValidation();
-        if(!validation.validateEmail(txtEmail.getText().trim()).equals("valid email")){
-            showErrorMessageLabel(errorEmail,txtEmail,"invalid email");
-            flag=false;
-          }
-         else{
-            resetFields(errorEmail,txtEmail);
-            flag=true;
-        
-          }
-
-        return flag;
     }
 
-    public boolean isValidBio(){
+    public boolean isValidEmail() {
 
-        boolean flag=false;
-        if(txtBio.getText().trim().equals("")){
-            showErrorMessageLabel(errorBio,txtBio,"Required");
-            flag=false;
-         }
-        else{
-             resetFields(errorBio,txtBio);
-             flag=true;
-            }
+        boolean flag = false;
+        SignUpValidation validation = new SignUpValidation();
+        if (!validation.validateEmail(txtEmail.getText().trim()).equals("valid email")) {
+            showErrorMessage(errorEmail, "invalid email");
+            flag = false;
+        } else {
+            resetFields(errorEmail);
+            flag = true;
 
-        return flag;
-    }
-
-    public boolean isValidDateOfBirth(){
-
-        boolean flag=false;
-        if(datepickerDateOfBirth.getValue()==null){
-            showErrorMessageDatePicker(errorDateOfBirth,datepickerDateOfBirth,"Required");
-            flag=false;
         }
-        else{
+
+        return flag;
+    }
+
+    public boolean isValidBio() {
+
+        boolean flag = false;
+        if (txtBio.getText().trim().equals("")) {
+            showErrorMessage(errorBio, "Required");
+            flag = false;
+        } else {
+            resetFields(errorBio);
+            flag = true;
+        }
+
+        return flag;
+    }
+
+    public boolean isValidDateOfBirth() {
+
+        boolean flag = false;
+        if (datepickerDateOfBirth.getValue() == null) {
+            showErrorMessage(errorDateOfBirth, "Required");
+            flag = false;
+        } else {
             errorDateOfBirth.setOpacity(0);
             datepickerDateOfBirth.setStyle("-fx-border-color:derive(#2D75E8,80%)");
-            flag=true;
+            flag = true;
         }
 
         return flag;
     }
-    
-    public boolean isValidImage(){ 
 
-        boolean flag=false;
-        if(file==null){
-            flag=false;
+    public boolean isValidImage() {
+
+        boolean flag = false;
+        if (file == null) {
+            flag = false;
             errorProfileImage.setOpacity(1);
-            errorProfileImage.setStyle("-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 5;");
-         }
-
-        else{
-            flag=true;
-           errorProfileImage.setOpacity(0);
+        } else {
+            flag = true;
+            errorProfileImage.setOpacity(0);
         }
 
         return flag;
 
     }
-    public boolean isValidGeneder(){
 
-       boolean flag=false;
+    public boolean isValidGeneder() {
 
-        if (choiceboxGender.getValue() ==null){
-            showErrorMessageChoiceBox(errorGender, choiceboxGender,"Required");
-            flag=false;
-         }
-         else{
-             errorGender.setOpacity(0);
-             choiceboxGender.setStyle("-fx-border-color:derive(#2D75E8,80%)");
-             flag=true;
-         }
-         return flag;
-        
-    }
-    public boolean isValidCountry(){
-        boolean flag=false;
+        boolean flag = false;
 
-          
-        if (choiceboxCountry.getValue() ==null){
-            showErrorMessageChoiceBox(errorCountry, choiceboxCountry,"Required");
-            flag=false;
-         }
-         else{
-             errorCountry.setOpacity(0);
-             choiceboxCountry.setStyle("-fx-border-color:derive(#2D75E8,80%)");
-             flag=true;
-         }
-
-
-         return flag;
+        if (choiceboxGender.getValue() == null) {
+            showErrorMessage(errorGender, "Required");
+            flag = false;
+        } else {
+            errorGender.setOpacity(0);
+            choiceboxGender.setStyle("-fx-border-color:derive(#2D75E8,80%)");
+            flag = true;
+        }
+        return flag;
 
     }
-    public void showErrorMessageChoiceBox(Label errorName,ChoiceBox errorStyel,String str){                String errorStyle = String.format("-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 5;");
+
+    public boolean isValidCountry() {
+        boolean flag = false;
+
+        if (choiceboxCountry.getValue() == null) {
+            showErrorMessage(errorCountry, "Required");
+            flag = false;
+        } else {
+            errorCountry.setOpacity(0);
+            choiceboxCountry.setStyle("-fx-border-color:derive(#2D75E8,80%)");
+            flag = true;
+        }
+
+        return flag;
+
+    }
+
+    public void showErrorMessage(Label errorName, String str) {
         errorName.setOpacity(1.0);
-        errorStyel.setStyle(errorStyle);
         errorName.setText(str);
 
     }
 
-    public void showErrorMessageDatePicker(Label errorName,DatePicker errorStyel,String str){
-        String errorStyle = String.format("-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 5;");
-        errorName.setOpacity(1.0);
-        errorStyel.setStyle(errorStyle);
-        errorName.setText(str);
-
-    }
-
-    public void showErrorMessageLabel(Label errorName,TextField errorStyel,String str){
-        String errorStyle = String.format("-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 5;");
-        errorName.setOpacity(1.0);
-        errorStyel.setStyle(errorStyle);
-        errorName.setText(str);
-
-    }
-    public void resetFields(Label errorName,TextField errorStyle){
+    public void resetFields(Label errorName) {
         errorName.setOpacity(0);
-        errorStyle.setStyle("-fx-border-color:derive(#2D75E8,80%)");
+    }
+    public int getIndex(String name){
+              int index=0;
+        for(int i=0;i<countriesNames.size();i++){
+
+            if(countriesNames.get(i).getName()==name)
+                index= countriesNames.get(i).getId();
+        }
+        return index;
     }
 }
