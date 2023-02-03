@@ -56,18 +56,21 @@ public class HomeController implements Initializable {
 
     @FXML
     private void clickAddContactBtn(MouseEvent event) {
+        InviteContactController inviteCont = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/views/addcontacts.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/inviteContact.fxml"));
+            root = fxmlLoader.load();
+            inviteCont = fxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
         Stage stage=new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("This is a pop up window");
-
+        stage.setTitle("Invite Contacts");
+        inviteCont.setStage(stage);
         //button1.setOnAction(e -> stage.close());
 
-        Scene scene1 = new Scene(root, 500, 300);
+        Scene scene1 = new Scene(root, 501, 345);
 
         stage.setScene(scene1);
         stage.setResizable(false);
@@ -92,6 +95,23 @@ public class HomeController implements Initializable {
 
     @FXML
     private void clickAddGroupBtn(MouseEvent event) {
+        CreateGroupController createGroupCont = null;
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/createGroup.fxml"));
+            root = fxmlLoader.load();
+            createGroupCont = fxmlLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage=new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Create Group");
+        createGroupCont.setStage(stage);
+        Scene scene1 = new Scene(root, 501, 400);
+        stage.setScene(scene1);
+        stage.setResizable(false);
+        stage.showAndWait();
     }
+
     
 }
