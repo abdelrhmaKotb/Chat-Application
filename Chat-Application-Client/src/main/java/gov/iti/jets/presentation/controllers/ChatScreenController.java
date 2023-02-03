@@ -47,6 +47,13 @@ public class ChatScreenController implements Initializable {
     @FXML
     GridPane mainGrid;
 
+    @FXML
+    private ImageView addContactBtn;
+
+    @FXML
+    private ImageView addgroupBtn;
+
+    private Parent root;
   
 
 
@@ -58,6 +65,8 @@ public class ChatScreenController implements Initializable {
         Tooltip.install(btnGroups, new Tooltip("Groups"));
         Tooltip.install(btnContacts, new Tooltip("Contacts"));
         Tooltip.install(btnSettings, new Tooltip("Settings"));
+        Tooltip.install(addContactBtn, new Tooltip("Invite Contact"));
+        Tooltip.install(addgroupBtn, new Tooltip("Create Group"));
 
         openContacts();
 
@@ -75,6 +84,50 @@ public class ChatScreenController implements Initializable {
         }
 
     }
+
+    @FXML
+    private void clickAddContactBtn(MouseEvent event) {
+        InviteContactController inviteCont = null;
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/inviteContact.fxml"));
+            root = fxmlLoader.load();
+            inviteCont = fxmlLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage=new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Invite Contacts");
+
+        inviteCont.setStage(stage);
+
+        Scene scene1 = new Scene(root, 501, 345);
+
+        stage.setScene(scene1);
+        stage.setResizable(false);
+        stage.showAndWait();
+    }
+
+    @FXML
+    private void clickAddGroupBtn(MouseEvent event) {
+        CreateGroupController createGroupCont = null;
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/createGroup.fxml"));
+            root = fxmlLoader.load();
+            createGroupCont = fxmlLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage=new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Create Group");
+        createGroupCont.setStage(stage);
+        Scene scene1 = new Scene(root, 501, 400);
+        stage.setScene(scene1);
+        stage.setResizable(false);
+        stage.showAndWait();
+    }
+
 
 
 }
