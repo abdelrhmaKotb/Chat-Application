@@ -58,10 +58,13 @@ public class InviteContactController implements Initializable {
 
     @FXML
     private void saveRequest(ActionEvent event) {
-        if (!contactTextField.getText().isEmpty() && isValidPhone()) {
-            listOfContacts.getItems().add(contactTextField.getText());
-            requestService.sendRequests(currentUserNumber, listOfContacts.getItems());
-            stage.close();
+        if (!contactTextField.getText().isEmpty()) {
+            if (isValidPhone()) {
+                listOfContacts.getItems().add(contactTextField.getText());
+                requestService.sendRequests(currentUserNumber, listOfContacts.getItems());
+                stage.close();
+            }
+
         } else if (!listOfContacts.getItems().isEmpty()) {
             requestService.sendRequests(currentUserNumber, listOfContacts.getItems());
             stage.close();
@@ -107,7 +110,7 @@ public class InviteContactController implements Initializable {
 
     }
 
-    public void setStage(Stage popUp){
+    public void setStage(Stage popUp) {
         stage = popUp;
     }
 
