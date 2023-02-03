@@ -52,6 +52,12 @@ public class ChatScreenController implements Initializable {
     @FXML
     private ImageView addgroupBtn;
 
+    @FXML
+    private ImageView notifications;
+
+    @FXML
+    private ImageView invitations;
+
     private Parent root;
 
     @FXML
@@ -123,5 +129,27 @@ public class ChatScreenController implements Initializable {
         stage.setResizable(false);
         stage.showAndWait();
     }
+
+    @FXML
+    private void clkNotifications(MouseEvent event) {
+        try {
+            Parent f = (Parent) FXMLLoader.load(getClass().getResource("/views/notifications.fxml"));
+            mainGrid.add(f, 1, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }    
+
+    @FXML
+    private void clkInvitations(MouseEvent event) {
+
+        try {
+            Parent f = (Parent) FXMLLoader.load(getClass().getResource("/views/showInvitations.fxml"));
+            mainGrid.add(f, 1, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }  
 
 }
