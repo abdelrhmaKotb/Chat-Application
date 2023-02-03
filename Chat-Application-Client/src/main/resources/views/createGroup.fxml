@@ -14,9 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="501.0" style="-fx-background-color: #ffffff;"
-   xmlns="http://javafx.com/javafx/19"
-   xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.CreateGroupController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="501.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.CreateGroupController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
    </columnConstraints>
@@ -56,7 +54,7 @@
                   <Insets left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </Label>
-            <Label opacity="0.0" textFill="RED">
+            <Label fx:id="errorLabel" opacity="0.0" textFill="RED">
                <font>
                   <Font name="SansSerif Regular" size="12.0" />
                </font>

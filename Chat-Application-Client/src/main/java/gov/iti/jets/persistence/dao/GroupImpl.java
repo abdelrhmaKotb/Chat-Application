@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,21 +40,23 @@ public class GroupImpl implements GroupDao {
 
     @Override
     public int createGroup(Group group) {
+        int generatedKey = 0;
         try (Connection con = DBConnecttion.getConnection();) {
 
             PreparedStatement stmt = con.prepareStatement("INSERT INTO chat_application.group(name,created_at,admin) "
-                    + "VALUES(?, ?,?);");
+                    + "VALUES(?, ?,?);", Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, group.getName());
             stmt.setTimestamp(2, new java.sql.Timestamp(group.getDateOfCreation().getTime()));
             stmt.setString(3, group.getAdminPhoneNumber());
             int i = stmt.executeUpdate();
-            if (i > 0) {
-                System.out.println("Row is inserted");
-                return i;
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                generatedKey = rs.getInt(1);
             }
+            System.out.println("Inserted record's ID: " + generatedKey);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
+        return generatedKey;
     }
 }

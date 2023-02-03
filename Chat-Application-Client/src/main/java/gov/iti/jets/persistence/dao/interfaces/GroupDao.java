@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface GroupDao {
     public List<Group> getGroupById(List<Integer> groups_id);
+
     int createGroup(Group group);
 
 }

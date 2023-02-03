@@ -45,14 +45,14 @@ public class ContactImpl implements ContactDao {
         try (Connection con = DBConnecttion.getConnection();) {
 
             PreparedStatement stmt = con
-                    .prepareStatement("select * from contacts where (user = ? and friend_phone_number = ?) " 
-                    + "or (user = ? and friend_phone_number = ?)");
+                    .prepareStatement("select * from contacts where (user = ? and friend_phone_number = ?) "
+                            + "or (user = ? and friend_phone_number = ?)");
             stmt.setString(1, currentUserNumber);
             stmt.setString(2, contactNumber);
             stmt.setString(3, contactNumber);
             stmt.setString(4, currentUserNumber);
             ResultSet result = stmt.executeQuery();
-            if(result.next()){
+            if (result.next()) {
                 return true;
             }
         } catch (SQLException e) {

@@ -26,7 +26,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-
 public class ChatScreenController implements Initializable {
 
     @FXML
@@ -54,8 +53,6 @@ public class ChatScreenController implements Initializable {
     private ImageView addgroupBtn;
 
     private Parent root;
-  
-
 
     @FXML
     @Override
@@ -72,13 +69,12 @@ public class ChatScreenController implements Initializable {
 
     }
 
-
     @FXML
     public void openContacts() {
         try {
             Parent f = (Parent) FXMLLoader.load(getClass().getResource("/views/contacts.fxml"));
             mainGrid.add(f, 1, 0);
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,7 +91,7 @@ public class ChatScreenController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Stage stage=new Stage();
+        Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Invite Contacts");
 
@@ -118,7 +114,7 @@ public class ChatScreenController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Stage stage=new Stage();
+        Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Create Group");
         createGroupCont.setStage(stage);
@@ -127,7 +123,5 @@ public class ChatScreenController implements Initializable {
         stage.setResizable(false);
         stage.showAndWait();
     }
-
-
 
 }
