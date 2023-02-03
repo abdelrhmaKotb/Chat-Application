@@ -15,11 +15,11 @@ public class GroupImpl implements GroupDao {
 
     @Override
     public List<Group> getGroupById(List<Integer> groups_id) {
-        List<Group> groups=new ArrayList<>();
-        Connection con= DBConnecttion.getConnection();
-        String query="select * from group where group_id=?";
+        List<Group> groups = new ArrayList<>();
+        Connection con = DBConnecttion.getConnection();
+        String query = "select * from group where group_id=?";
         try {
-            for(int i=0;i<groups_id.size();i++) {
+            for (int i = 0; i < groups_id.size(); i++) {
                 PreparedStatement statement = con.prepareStatement(query);
                 statement.setInt(1, groups_id.get(i));
 
@@ -35,5 +35,25 @@ public class GroupImpl implements GroupDao {
         DBConnecttion.closeConnection(con);
         return groups;
 
+    }
+
+    @Override
+    public int createGroup(Group group) {
+        try (Connection con = DBConnecttion.getConnection();) {
+
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO chat_application.group(name,created_at,admin) "
+                    + "VALUES(?, ?,?);");
+            stmt.setString(1, group.getName());
+            stmt.setTimestamp(2, new java.sql.Timestamp(group.getDateOfCreation().getTime()));
+            stmt.setString(3, group.getAdminPhoneNumber());
+            int i = stmt.executeUpdate();
+            if (i > 0) {
+                System.out.println("Row is inserted");
+                return i;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

@@ -68,6 +68,22 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
+            <ImageView id="btnSettings" fx:id="addContactBtn" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#clickAddContactBtn" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/addCon.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView id="btnSettings" fx:id="addgroupBtn" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#clickAddGroupBtn" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/addGroup2.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
             <ImageView fitHeight="41.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
                <image>
