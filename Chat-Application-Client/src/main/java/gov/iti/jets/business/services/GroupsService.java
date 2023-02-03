@@ -1,7 +1,5 @@
 package gov.iti.jets.business.services;
 
-import gov.iti.jets.business.dto.GroupDto;
-import gov.iti.jets.business.mapper.ContactMapper;
 import gov.iti.jets.persistence.dao.ContactImpl;
 import gov.iti.jets.persistence.dao.GroupImpl;
 import gov.iti.jets.persistence.dao.GroupMembersImpl;
