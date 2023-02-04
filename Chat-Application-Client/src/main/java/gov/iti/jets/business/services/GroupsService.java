@@ -39,15 +39,17 @@ public class GroupsService {
         ContactImpl contactImpl = new ContactImpl();
         List<Contact> contacts = contactImpl.getContactsForUser(currentUserNumber);
         List<String> listOfNumbers = new ArrayList<>();
-        for (int i = 0; i < contacts.size(); i++) {
-            listOfNumbers.add(contacts.get(i).getFriendPhoneNumber());
+        if (contacts.size() > 0) {
+            for (int i = 0; i < contacts.size(); i++) {
+                listOfNumbers.add(contacts.get(i).getFriendPhoneNumber());
+            }
+            List<String> listOfNameContact = new ArrayList<>();
+            UserImpl userImp = new UserImpl();
+            List<User> listOfUsers = userImp.getUsersByNumbers(listOfNumbers);
+            for (int i = 0; i < listOfUsers.size(); i++) {
+                listOfNameContact.add(listOfUsers.get(i).getName() + " : " + listOfUsers.get(i).getPhoneNumber());
+            }
         }
-        List<String> listOfNameContact = new ArrayList<>();
-        UserImpl userImp = new UserImpl();
-        List<User> listOfUsers = userImp.getUsersByNumbers(listOfNumbers);
-        for (int i = 0; i < listOfUsers.size(); i++) {
-            listOfNameContact.add(listOfUsers.get(i).getName() + " : " + listOfUsers.get(i).getPhoneNumber());
-        }
-        return listOfNameContact;
+        return listOfNumbers;
     }
 }
