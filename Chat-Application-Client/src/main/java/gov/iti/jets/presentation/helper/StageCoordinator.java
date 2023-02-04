@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class StageCoordinator {
+
     private static StageCoordinator instance = null;
 
     private static final Map<String, SceneData> scenes = new HashMap<>();
@@ -48,7 +49,7 @@ public class StageCoordinator {
                 Parent view = loader.load();
                 Scene chatScene = new Scene(view);
                 SceneData logiSceneData = new SceneData(loader, view, chatScene);
-                System.out.println(scenes.put("login", logiSceneData));
+                scenes.put("login", logiSceneData);
                 primaryStage.setScene(chatScene);
             } catch (Exception e) {
                 e.printStackTrace();

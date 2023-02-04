@@ -46,7 +46,7 @@ public class ContactsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         createConatctsList();
-        System.out.println("init");
+        System.out.println("init"); 
       
         Tooltip.install(addContactBtn, new Tooltip("Invite Contact"));
     }

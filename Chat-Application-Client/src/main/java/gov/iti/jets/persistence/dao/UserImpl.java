@@ -27,6 +27,8 @@ public class UserImpl implements UserDao {
         if (tempUser != null) {
             return 0;
         }
+        System.out.println("after check");
+        System.out.println(user.getDateOfBirth());
         int rowInserted = 0;
         String query = new String(
                 "insert into user(phone_number,name,email,password,bio,status_id,is_deleted,is_admin,gender,date_of_birth,profile_image,country_id) values(?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -37,7 +39,8 @@ public class UserImpl implements UserDao {
             stmt.setString(3, user.getEmail());
             stmt.setString(4, PasswordHashing.doHahing(user.getPassword()));
             stmt.setString(5, user.getBio());
-            stmt.setString(6, user.getStatus());
+            // stmt.setString(6, user.getStatus());
+            stmt.setString(6, "1");
             stmt.setBoolean(7, user.isDeleted());
             stmt.setBoolean(8, user.isAdmin());
             stmt.setString(9, user.getGender());

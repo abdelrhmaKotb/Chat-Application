@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.net.URL;
+import java.sql.Date;
 import java.util.regex.*;
 
 import gov.iti.jets.business.services.SignupService;
@@ -83,22 +84,24 @@ public class SignupController implements Initializable {
     private Circle mycircle;
 
     File file;
-    ArrayList<Country>countriesNames=null;
+    ArrayList<Country> countriesNames = null;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-         choiceboxGender.getItems().add("Female");
-       choiceboxGender.getItems().add("Male");
-       /*  choiceboxCountry.getItems().add("Egypt");
-        choiceboxCountry.getItems().add("Saudi Arabi");
-        choiceboxCountry.getItems().add("Emrates");*/
-        countryDaoImpl countryDao=new countryDaoImpl();
-             countriesNames=countryDao.getCountries();
-        for(Country c:countriesNames){
+        choiceboxGender.getItems().add("Female");
+        choiceboxGender.getItems().add("Male");
+        /*
+         * choiceboxCountry.getItems().add("Egypt");
+         * choiceboxCountry.getItems().add("Saudi Arabi");
+         * choiceboxCountry.getItems().add("Emrates");
+         */
+        countryDaoImpl countryDao = new countryDaoImpl();
+        countriesNames = countryDao.getCountries();
+        for (Country c : countriesNames) {
 
-          choiceboxCountry.getItems().add(c.getName());
-        
+            choiceboxCountry.getItems().add(c.getName());
+
         }
-
 
         Image img = new Image("/images/person.png", false);
         mycircle.setFill(new ImagePattern(img));
@@ -141,12 +144,10 @@ public class SignupController implements Initializable {
         });
 
         choiceboxGender.getSelectionModel().selectedItemProperty().addListener(
-                (ObservableValue<? extends String> observable, String oldValue, String newValue) -> isValidGeneder()
-        );
+                (ObservableValue<? extends String> observable, String oldValue, String newValue) -> isValidGeneder());
 
         choiceboxCountry.getSelectionModel().selectedItemProperty().addListener(
-                (ObservableValue<? extends String> observable, String oldValue, String newValue) -> isValidCountry()
-        );
+                (ObservableValue<? extends String> observable, String oldValue, String newValue) -> isValidCountry());
         datepickerDateOfBirth.valueProperty().addListener((ov, oldValue, newValue) -> {
             isValidDateOfBirth();
         });
@@ -169,24 +170,29 @@ public class SignupController implements Initializable {
 
     @FXML
     void clickBtnSignup(ActionEvent event) {
-       
+     
         if (validatePassword() && confirmPass()
-                && isValidGeneder() && isValidCountry()
-                && isValidPhoneNumber() && isValidUserName()
-                && isValidImage() && isValidDateOfBirth() && isValidBio() && isValidEmail()) {
+        && isValidGeneder() && isValidCountry()
+        && isValidPhoneNumber() && isValidUserName()
+        && isValidImage() && isValidDateOfBirth() && isValidBio() && isValidEmail()) {
             User user = new User();
             user.setPhoneNumber(txtPhoneNumber.getText().trim());
             user.setName(txtUserName.getText().trim());
             user.setEmail(txtEmail.getText().trim());
             user.setPassword(txtPassword.getText().trim());
-            user.setGender( choiceboxGender.getValue());
-              user.setFile(file);
-             user.setCountry(getIndex(choiceboxCountry.getValue()));
+            user.setGender(choiceboxGender.getValue());
+            user.setFile(file);
+            user.setCountry(getIndex(choiceboxCountry.getValue()));
             user.setBio(txtBio.getText().trim());
+            user.setDateOfBirth(Date.valueOf(datepickerDateOfBirth.getValue()));
+            //user.setStatus("1");
             SignupService signup = new SignupService();
             int result = signup.signupUser(user);
             if (result == 1) {
                 successMessage.setOpacity(1);
+                StageCoordinator coordinator = StageCoordinator.getInstance();
+                coordinator.moveToChat();
+
             } else {
 
                 errorSignup.setOpacity(1);
@@ -385,12 +391,13 @@ public class SignupController implements Initializable {
     public void resetFields(Label errorName) {
         errorName.setOpacity(0);
     }
-    public int getIndex(String name){
-              int index=0;
-        for(int i=0;i<countriesNames.size();i++){
 
-            if(countriesNames.get(i).getName()==name)
-                index= countriesNames.get(i).getId();
+    public int getIndex(String name) {
+        int index = 0;
+        for (int i = 0; i < countriesNames.size(); i++) {
+
+            if (countriesNames.get(i).getName() == name)
+                index = countriesNames.get(i).getId();
         }
         return index;
     }
