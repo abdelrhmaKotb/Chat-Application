@@ -1,8 +1,6 @@
 package gov.iti.jets.persistence.dao;
 
-import java.sql.Array;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +9,6 @@ import java.util.List;
 
 import gov.iti.jets.business.services.PasswordHashing;
 import gov.iti.jets.persistence.dao.interfaces.UserDao;
-import gov.iti.jets.persistence.entities.Contact;
 import gov.iti.jets.persistence.entities.User;
 import gov.iti.jets.persistence.utils.DBConnecttion;
 

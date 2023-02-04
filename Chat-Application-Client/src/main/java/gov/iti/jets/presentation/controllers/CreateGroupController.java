@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import gov.iti.jets.business.mapper.ContactMapper;
 import gov.iti.jets.business.services.GroupsService;
-import gov.iti.jets.persistence.dao.ContactImpl;
-import gov.iti.jets.persistence.entities.Contact;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

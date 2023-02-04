@@ -6,7 +6,6 @@ package gov.iti.jets.persistence.dao;
 
 import gov.iti.jets.persistence.dao.interfaces.countryDao;
 import gov.iti.jets.persistence.entities.Country;
-import gov.iti.jets.persistence.entities.User;
 import gov.iti.jets.persistence.utils.DBConnecttion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

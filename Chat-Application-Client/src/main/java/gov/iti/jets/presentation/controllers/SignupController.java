@@ -9,11 +9,8 @@ import javafx.fxml.Initializable;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.net.URL;
-import java.rmi.registry.RegistryHandler;
 import java.util.regex.*;
 
-import javax.lang.model.util.ElementScanner14;
-import javax.swing.event.ChangeListener;
 
 import gov.iti.jets.business.services.SignupService;
 import gov.iti.jets.persistence.dao.countryDaoImpl;
@@ -36,7 +33,6 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 
