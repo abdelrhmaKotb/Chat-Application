@@ -16,7 +16,8 @@ public class UserMapper  implements Mapper<User,UserDto>{
             entity.getDateOfBirth(),
             entity.getBio(),
             entity.getStatus(),
-            entity.isAdmin()
+            entity.isAdmin(),
+            entity.getFile()
         );
     }
     

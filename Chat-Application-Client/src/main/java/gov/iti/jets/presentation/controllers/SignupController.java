@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import java.net.URL;
 import java.util.regex.*;
 
-
 import gov.iti.jets.business.services.SignupService;
 import gov.iti.jets.persistence.dao.countryDaoImpl;
 import gov.iti.jets.persistence.entities.Country;
@@ -93,8 +92,11 @@ public class SignupController implements Initializable {
         choiceboxCountry.getItems().add("Emrates");*/
         countryDaoImpl countryDao=new countryDaoImpl();
              countriesNames=countryDao.getCountries();
-        for(Country c:countriesNames)
+        for(Country c:countriesNames){
+
           choiceboxCountry.getItems().add(c.getName());
+        
+        }
 
 
         Image img = new Image("/images/person.png", false);
@@ -164,6 +166,7 @@ public class SignupController implements Initializable {
 
     @FXML
     void clickBtnSignup(ActionEvent event) {
+       
         if (validatePassword() && confirmPass()
                 && isValidGeneder() && isValidCountry()
                 && isValidPhoneNumber() && isValidUserName()
@@ -174,9 +177,8 @@ public class SignupController implements Initializable {
             user.setEmail(txtEmail.getText().trim());
             user.setPassword(txtPassword.getText().trim());
             user.setGender( choiceboxGender.getValue());
-            // user.setGender(genderSelectedValue);
-            // user.setCountry(choiceboxCountry.getValue());
-            // user.setDateOfBirth(datepickerDateOfBirth.getValue());
+              user.setFile(file);
+             user.setCountry(getIndex(choiceboxCountry.getValue()));
             user.setBio(txtBio.getText().trim());
             SignupService signup = new SignupService();
             int result = signup.signupUser(user);
@@ -379,5 +381,14 @@ public class SignupController implements Initializable {
 
     public void resetFields(Label errorName) {
         errorName.setOpacity(0);
+    }
+    public int getIndex(String name){
+              int index=0;
+        for(int i=0;i<countriesNames.size();i++){
+
+            if(countriesNames.get(i).getName()==name)
+                index= countriesNames.get(i).getId();
+        }
+        return index;
     }
 }

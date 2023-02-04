@@ -1,6 +1,11 @@
 package gov.iti.jets.persistence.dao;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +29,8 @@ public class UserImpl implements UserDao {
         }
         int rowInserted = 0;
         String query = new String(
-                "insert into user(phone_number,name,email,password,bio,status_id,is_deleted,is_admin,gender,date_of_birth) values(?,?,?,?,?,?,?,?,?,?)");
+                "insert into user(phone_number,name,email,password,bio,status_id,is_deleted,is_admin,gender,date_of_birth,profile_image,country_id) values(?,?,?,?,?,?,?,?,?,?,?,?)");
+
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, user.getPhoneNumber());
             stmt.setString(2, user.getName());
@@ -36,7 +42,14 @@ public class UserImpl implements UserDao {
             stmt.setBoolean(8, user.isAdmin());
             stmt.setString(9, user.getGender());
             stmt.setDate(10, user.getDateOfBirth());
+            stmt.setInt(12, user.getCountry());
+            try {
+                FileInputStream fin = new FileInputStream(user.getFile());
+                stmt.setBinaryStream(11, fin, (int) user.getFile().length());
 
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             rowInserted = stmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -71,7 +84,7 @@ public class UserImpl implements UserDao {
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setGender(rs.getString("gender"));
-                user.setCountry(rs.getString("country_id"));
+                user.setCountry(rs.getInt("country_id"));
                 user.setDateOfBirth(rs.getDate("date_of_birth"));
                 user.setBio(rs.getString("bio"));
                 user.setAdmin(rs.getBoolean("is_admin"));
@@ -106,22 +119,27 @@ public class UserImpl implements UserDao {
             PreparedStatement stm = con.prepareStatement("SELECT * FROM user WHERE phone_number = ? and password = ?");
             stm.setString(1, phoneNumber);
             stm.setString(2, PasswordHashing.doHahing(password)); // rember to use hash this password after registration
-                                                                  // fineshed
+            // fineshed
             ResultSet result = stm.executeQuery();
-
+            File file = new File("profile_image");
             if (result.next()) {
+
                 return new User(
                         result.getString("phone_number"),
                         result.getString("name"),
                         result.getString("email"),
                         result.getString("password"),
                         result.getString("gender"),
-                        result.getString("country_id"),
+                        result.getInt("country_id"),
                         result.getDate("date_of_birth"),
                         result.getString("bio"),
                         result.getBoolean("is_admin"),
                         result.getBoolean("is_deleted"),
-                        result.getString("status_id"));
+                        result.getString("status_id"),
+                        file
+
+                );
+
             }
 
         } catch (SQLException e) {
@@ -146,20 +164,20 @@ public class UserImpl implements UserDao {
         return false;
 
     }
+
     public void updateUser(User newData) {
-        try(Connection con=DBConnecttion.getConnection()){
-            String query="update user set name=?, email=?,  country_id=?, date_of_birth=?,bio=?,  where phone_number=?" ;
-            PreparedStatement statement= con.prepareStatement(query);
+        try (Connection con = DBConnecttion.getConnection()) {
+            String query = "update user set name=?, email=?,  country_id=?, date_of_birth=?,bio=?,  where phone_number=?";
+            PreparedStatement statement = con.prepareStatement(query);
             statement.setString(1, newData.getName());
             statement.setString(2, newData.getEmail());
-            statement.setString(3, newData.getCountry());
+            statement.setInt(3, newData.getCountry());
             statement.setDate(4, newData.getDateOfBirth());
             statement.setString(5, newData.getBio());
-            statement.setString(6,newData.getStatus());
-            statement.setString(7,newData.getPhoneNumber());
+            statement.setString(6, newData.getStatus());
+            statement.setString(7, newData.getPhoneNumber());
             statement.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -183,7 +201,7 @@ public class UserImpl implements UserDao {
                         result.getString("email"),
                         result.getString("password"),
                         result.getString("gender"),
-                        result.getString("country_id"),
+                        result.getInt("country_id"),
                         result.getDate("date_of_birth"),
                         result.getString("bio"),
                         result.getBoolean("is_admin"),
