@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane fx:id="mainGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ChatScreenController">
+<GridPane fx:id="mainGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ChatScreenController">
   <columnConstraints>
     <ColumnConstraints hgrow="NEVER" maxWidth="295.20001220703125" minWidth="0.0" prefWidth="72.2" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="570.2" minWidth="0.0" prefWidth="212.40003662109376" />
@@ -44,7 +44,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView id="btnGroups" fx:id="btnGroups" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="btnGroups" fx:id="btnGroups" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#clkGroupBtn" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/groups.png" />
                </image>
@@ -68,23 +68,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView id="btnSettings" fx:id="addContactBtn" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#clickAddContactBtn" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/addCon.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <ImageView id="btnSettings" fx:id="addgroupBtn" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#clickAddGroupBtn" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/addGroup2.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <ImageView id="btnSettings" fx:id="notifications" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#clkNotifications" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="btnSettings" fx:id="notificationsBtn" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#clkNotifications" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/noti.png" />
                </image>
@@ -92,7 +76,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView id="btnSettings" fx:id="invitations" fitHeight="30.0" fitWidth="28.0" onMouseClicked="#clkInvitations" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="btnSettings" fx:id="invitationsBtn" fitHeight="30.0" fitWidth="28.0" onMouseClicked="#clkInvitations" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/req2.png" />
                </image>
@@ -112,6 +96,6 @@
          </padding>
       </VBox>
      
-      <VBox prefHeight="550.0" prefWidth="308.0" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES" />
+      <VBox prefHeight="550.0" prefWidth="313.0" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES" />
    </children>
 </GridPane>

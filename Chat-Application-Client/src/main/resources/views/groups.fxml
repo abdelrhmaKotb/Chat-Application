@@ -6,53 +6,47 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #F5F7FB;" GridPane.columnIndex="1"
-      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.GroupsController">
+<VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #F5F7FB;" GridPane.columnIndex="1" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.GroupsController">
     <children>
         <HBox alignment="BASELINE_LEFT" prefHeight="100.0" prefWidth="200.0">
             <children>
-                <Text fill="#495057" strokeType="OUTSIDE" strokeWidth="0.0"
-                      style="-fx-font-weight: 600; -fx-font-size: 30;" text="Groups">
+                <Text fill="#495057" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: 600; -fx-font-size: 30;" text="Groups">
                     <font>
-                        <Font name="Lucida Sans Typewriter Bold" size="39.0"/>
+                        <Font name="Lucida Sans Typewriter Bold" size="39.0" />
                     </font>
                 </Text>
-                <Pane maxWidth="1.7976931348623157E308" prefHeight="15.0" prefWidth="94.0" HBox.hgrow="ALWAYS"/>
-                <ImageView fx:id="addGroupImgView" fitHeight="33.0" fitWidth="30.0" pickOnBounds="true"
-                           preserveRatio="true">
+                <Pane maxWidth="1.7976931348623157E308" prefHeight="15.0" prefWidth="94.0" HBox.hgrow="ALWAYS" />
+                <ImageView fx:id="addgroupBtn" fitHeight="33.0" fitWidth="30.0" onMouseClicked="#clickAddGroupBtn" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../images/addGroup.png"/>
+                        <Image url="@../images/addGroup.png" />
                     </image>
                     <cursor>
-                        <Cursor fx:constant="HAND"/>
+                        <Cursor fx:constant="HAND" />
                     </cursor>
                 </ImageView>
             </children>
             <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </padding>
         </HBox>
         <TextField fx:id="searchTextField" prefHeight="38.0" prefWidth="189.0" promptText="Search Groups.....">
             <VBox.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0"/>
+                <Insets bottom="10.0" left="10.0" right="10.0" />
             </VBox.margin>
         </TextField>
         <ListView fx:id="groupsListView" prefHeight="245.0" prefWidth="192.0" VBox.vgrow="ALWAYS">
             <VBox.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0"/>
+                <Insets bottom="10.0" left="10.0" right="10.0" />
             </VBox.margin>
             <cursor>
-                <Cursor fx:constant="DEFAULT"/>
+                <Cursor fx:constant="DEFAULT" />
             </cursor>
         </ListView>
     </children>

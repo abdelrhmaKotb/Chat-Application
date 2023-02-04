@@ -6,17 +6,14 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<VBox fx:id="contacts" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #f5f7fb;" GridPane.columnIndex="1" fx:controller="gov.iti.jets.presentation.controllers.ContactsController"  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="contacts" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #f5f7fb;" GridPane.columnIndex="1" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ContactsController">
     <children>
        <HBox alignment="BASELINE_LEFT" prefHeight="100.0" prefWidth="200.0">
           <children>
@@ -26,10 +23,13 @@
                 </font>
              </Text>
              <Pane maxWidth="1.7976931348623157E308" prefHeight="15.0" prefWidth="94.0" HBox.hgrow="ALWAYS" />
-             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+             <ImageView fx:id="addContactBtn" fitHeight="24.0" fitWidth="24.0" onMouseClicked="#clickAddContactBtn" pickOnBounds="true" preserveRatio="true">
                 <image>
                    <Image url="@../images/add-user.png" />
                 </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
              </ImageView>
           </children>
           <padding>
