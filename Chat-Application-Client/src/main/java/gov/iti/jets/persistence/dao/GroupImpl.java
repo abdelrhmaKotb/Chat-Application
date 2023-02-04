@@ -17,23 +17,31 @@ public class GroupImpl implements GroupDao {
     @Override
     public List<Group> getGroupById(List<Integer> groups_id) {
         List<Group> groups = new ArrayList<>();
-        Connection con = DBConnecttion.getConnection();
-        String query = "select * from group where group_id=?";
-        try {
+
+
+       try (Connection con = DBConnecttion.getConnection()){
+            String query = "select * from group where group_id = ?";
             for (int i = 0; i < groups_id.size(); i++) {
-                PreparedStatement statement = con.prepareStatement(query);
-                statement.setInt(1, groups_id.get(i));
-
+                System.out.println(groups_id.get(i));
+                System.out.println(groups_id.size());
+                PreparedStatement statement = con.prepareStatement("select * from chat_application.group where group_id = ?");
+                //
+                 statement.setInt(1, groups_id.get(i));
+                System.out.println(groups_id.get(i));
+                System.out.println(groups_id.size());
                 ResultSet rs = statement.executeQuery();
-                groups.add(new Group(groups_id.get(i), rs.getString(2), rs.getDate(3), rs.getString(4)));
+                rs.next();
+                System.out.println(rs.getString(1));
 
-                rs.close();
+                   groups.add(new Group(groups_id.get(i), rs.getString(2), rs.getDate(3), rs.getString(4)));
+
+                //rs.close();
                 statement.close();
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-        DBConnecttion.closeConnection(con);
+
         return groups;
 
     }

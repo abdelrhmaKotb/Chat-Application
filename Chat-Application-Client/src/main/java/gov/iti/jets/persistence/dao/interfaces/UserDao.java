@@ -12,6 +12,7 @@ public interface UserDao {
     int insertUser(User user);
 
     User seletcByPhoneNumber(String phoneNum);
+    void updateUser(User newData);
 
     List<User> getUsersByNumbers(List<String> listOfNumbers);
 

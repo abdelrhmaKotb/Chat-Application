@@ -28,7 +28,7 @@
                </image>
             </ImageView>
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-            <ImageView id="btnUser" fx:id="btnUser" fitHeight="24.0" fitWidth="24.0" onMouseClicked="#openContacts" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="btnUser" fx:id="btnUser" fitHeight="24.0" fitWidth="24.0" onMouseClicked="#viewProfile" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/user.png" />
                </image>
@@ -44,7 +44,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView id="btnGroups" fx:id="btnGroups" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#clkGroupBtn" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="btnGroups" fx:id="btnGroups" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#viewGroups">
                <image>
                   <Image url="@../images/groups.png" />
                </image>
@@ -52,7 +52,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView id="btnContacts" fx:id="btnContacts" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="btnContacts" fx:id="btnContacts" onMouseClicked="#openContacts" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/contact.png" />
                </image>
