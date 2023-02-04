@@ -51,7 +51,7 @@ public class SignUpValidation {
       }
    }
 
-   public String validPassword(String password) {
+   public static String validPassword(String password) {
       if (password.length() > 15 || password.length() < 8) {
          return "must be less than 20 and more than 8 characters.";
       }

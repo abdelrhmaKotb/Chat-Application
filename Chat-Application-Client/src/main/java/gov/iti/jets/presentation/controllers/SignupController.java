@@ -229,8 +229,8 @@ public class SignupController implements Initializable {
     public boolean validatePassword() {
         boolean flag = false;
         String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$";
-        if (!isValidPass(txtPassword.getText().trim(), regex)) {
-            showErrorMessage(errorPassword, "Not Valid");
+        if (!SignUpValidation.validPassword(txtPassword.getText().trim()).equals("valid password")) {
+            showErrorMessage(errorPassword, SignUpValidation.validPassword(txtPassword.getText().trim()));
             flag = false;
         } else {
             resetFields(errorPassword);
@@ -239,11 +239,7 @@ public class SignupController implements Initializable {
         return flag;
     }
 
-    public boolean isValidPass(String password, String regex) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(password);
-        return matcher.matches();
-    }
+   
 
     public boolean confirmPass() {
         boolean flag = false;
