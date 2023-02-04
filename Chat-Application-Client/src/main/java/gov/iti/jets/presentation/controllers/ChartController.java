@@ -40,10 +40,6 @@ public class ChartController implements Initializable {
     public void updatePieChart() {
         ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
 
-        data.addAll(new PieChart.Data("JEE", 25),
-
-                new PieChart.Data("Js", 50));
-
         genderPieChart.setData(data);
         genderPieChart.setTitle("Gender");
         genderPieChart.setStyle("-fx-font:20 arial;");
