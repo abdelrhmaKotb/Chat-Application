@@ -16,7 +16,6 @@ public class GroupMembersImpl implements GroupMembersDao{
     public List<Integer> getGroupByUserPhoneNum(String phoneNumber) {
         List<Integer> groups_id=new ArrayList<>();
         Connection con= DBConnecttion.getConnection();
-        String query="select group_id from group_members where phone_number=?";
         String query="select group_id from group_members where phone_number=?;";
         try {
             PreparedStatement statement= con.prepareStatement(query);
