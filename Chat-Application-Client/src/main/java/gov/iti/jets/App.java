@@ -1,9 +1,6 @@
 package gov.iti.jets;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
