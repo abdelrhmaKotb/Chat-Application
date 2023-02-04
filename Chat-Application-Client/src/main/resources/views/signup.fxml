@@ -191,7 +191,7 @@
             <Label fx:id="errorGender" layoutX="620.0" layoutY="374.0" opacity="0.0" prefHeight="20.0" prefWidth="50.0" text="Required" textFill="RED" />
             <Label fx:id="errorCountry" layoutX="620.0" layoutY="429.0" opacity="0.0" prefHeight="20.0" prefWidth="50.0" text="Required" textFill="RED" />
             <Label fx:id="errorDateOfBirth" layoutX="620.0" layoutY="300.0" opacity="0.0" prefHeight="20.0" prefWidth="50.0" text="Required" textFill="RED" />
-            <Label fx:id="errorPassword" layoutX="620.0" layoutY="169.0" opacity="0.0" prefHeight="20.0" prefWidth="50.0" text="Required" textFill="RED" />
+            <Label fx:id="errorPassword" layoutX="620.0" layoutY="169.0" opacity="0.0" prefHeight="65.0" prefWidth="99.0" text="Required" textFill="RED" wrapText="true" />
             <Label fx:id="errorUerName" alignment="CENTER" layoutX="280.0" layoutY="300.0" opacity="0.0" prefHeight="70.0" prefWidth="80.0" text="Required" textFill="RED" wrapText="true">
                <font>
                   <Font size="11.0" />
