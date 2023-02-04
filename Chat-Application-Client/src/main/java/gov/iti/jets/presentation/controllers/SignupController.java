@@ -239,11 +239,7 @@ public class SignupController implements Initializable {
         return flag;
     }
 
-    public boolean isValidPass(String password, String regex) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(password);
-        return matcher.matches();
-    }
+   
 
     public boolean confirmPass() {
         boolean flag = false;
