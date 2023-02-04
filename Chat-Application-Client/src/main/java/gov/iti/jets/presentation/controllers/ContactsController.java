@@ -30,11 +30,16 @@ public class ContactsController implements Initializable {
 
     List<String> d = new ArrayList<>();
 
+    private Parent root;
+
     @FXML
     ListView<String> listContacts;
 
     @FXML
     TextField txtSearch;
+
+    @FXML
+    private ImageView addContactBtn;
 
     ObservableList<String> names;
 
@@ -49,6 +54,8 @@ public class ContactsController implements Initializable {
         d.add("2154545");
 
         createList();
+
+        Tooltip.install(addContactBtn, new Tooltip("Invite Contact"));
     }
 
     private void createList() {
@@ -89,4 +96,28 @@ public class ContactsController implements Initializable {
         listContacts.setItems(FXCollections.observableArrayList(names.stream().filter(e -> e.contains(txtSearch.getText())).collect(Collectors.toList())));   
 
     }
+
+    @FXML
+    private void clickAddContactBtn(MouseEvent event) {
+        InviteContactController inviteCont = null;
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/inviteContact.fxml"));
+            root = fxmlLoader.load();
+            inviteCont = fxmlLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Invite Contacts");
+
+        inviteCont.setStage(stage);
+
+        Scene scene1 = new Scene(root, 501, 345);
+
+        stage.setScene(scene1);
+        stage.setResizable(false);
+        stage.showAndWait();
+    }
+
 }
