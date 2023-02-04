@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class ContactsModel {
-    // i think shoulde be list of contacts not only string later 
+    // i think should be list of contacts not only string later 
     ObservableList<String> contacts;
 
     public ContactsModel()

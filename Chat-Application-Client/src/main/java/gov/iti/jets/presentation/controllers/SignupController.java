@@ -15,6 +15,7 @@ import gov.iti.jets.business.services.SignupService;
 import gov.iti.jets.persistence.dao.countryDaoImpl;
 import gov.iti.jets.persistence.entities.Country;
 import gov.iti.jets.persistence.entities.User;
+import gov.iti.jets.presentation.helper.StageCoordinator;
 import gov.iti.jets.presentation.validation.SignUpValidation;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -154,13 +155,15 @@ public class SignupController implements Initializable {
 
     @FXML
     void clickBtnSignin(ActionEvent event) throws IOException {
-        Stage stage = (Stage) btnSignup.getScene().getWindow();
-        stage.close();
-        Stage primarystage = new Stage();
-        primarystage.setTitle("Login");
-        Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
-        primarystage.setScene(new Scene(root, 850, 600));
-        primarystage.show();
+        StageCoordinator coordinator = StageCoordinator.getInstance();
+        coordinator.moveToLogin();
+        // Stage stage = (Stage) btnSignup.getScene().getWindow();
+        // stage.close();
+        // Stage primarystage = new Stage();
+        // primarystage.setTitle("Login");
+        // Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
+        // primarystage.setScene(new Scene(root, 850, 600));
+        // primarystage.show();
 
     }
 

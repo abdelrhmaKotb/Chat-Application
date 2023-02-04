@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import gov.iti.jets.business.dto.UserDto;
 import gov.iti.jets.business.services.LoginService;
+import gov.iti.jets.presentation.helper.StageCoordinator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -46,20 +47,17 @@ public class LoginController implements Initializable {
     @FXML
     private Label lblErrorOrSucessLogin;
 
-
     @FXML
     private void handelLogin() throws IOException {
 
-     
-
-         if (txtPhoneNumber.getText().trim().equals(""))
+        if (txtPhoneNumber.getText().trim().equals(""))
             System.exit(0);
 
-         if (lblPassword.getText().trim().equals("")){
-                    lblErrorPassword.setOpacity(1);
-                    imgErrorPassword.setOpacity(1);
+        if (lblPassword.getText().trim().equals("")) {
+            lblErrorPassword.setOpacity(1);
+            imgErrorPassword.setOpacity(1);
 
-         }
+        }
 
         if (!txtPhoneNumber.getText().trim().equals("") && !lblPassword.getText().trim().equals("")) {
             LoginService loginService = new LoginService();
@@ -78,16 +76,19 @@ public class LoginController implements Initializable {
                 imgErrorPassword.setOpacity(0);
                 lblErrorOrSucessLogin.setOpacity(1);
                 lblErrorOrSucessLogin.setStyle("-fx-text-fill:green");
-             //   lblErrorOrSucessLogin.setText("Login Success");
+                // lblErrorOrSucessLogin.setText("Login Success");
 
-             Stage stage = (Stage) btnSignin.getScene().getWindow();
-             stage.close();
-             Stage primarystage = new Stage();
-             primarystage.setTitle("Chat");
-             Parent root = FXMLLoader.load(getClass().getResource("/views/chat.fxml"));
-             primarystage.setScene(new Scene(root, 800, 600));
-             primarystage.show();
-     
+                StageCoordinator coordinator = StageCoordinator.getInstance();
+                coordinator.moveToChat();
+
+                // Stage stage = (Stage) btnSignin.getScene().getWindow();
+                // stage.close();
+                // Stage primarystage = new Stage();
+                // primarystage.setTitle("Chat");
+                // Parent root = FXMLLoader.load(getClass().getResource("/views/chat.fxml"));
+                // primarystage.setScene(new Scene(root, 800, 600));
+                // primarystage.show();
+
             }
         }
     }
@@ -95,13 +96,16 @@ public class LoginController implements Initializable {
     @FXML
     public void handleSignup() throws IOException {
 
-        Stage stage = (Stage) btnSignin.getScene().getWindow();
-        stage.close();
-        Stage primarystage = new Stage();
-        primarystage.setTitle("Sign Up");
-        Parent root = FXMLLoader.load(getClass().getResource("/views/signup.fxml"));
-        primarystage.setScene(new Scene(root, 800, 600));
-        primarystage.show();
+        // Stage stage = (Stage) btnSignin.getScene().getWindow();
+        // stage.close();
+        // Stage primarystage = new Stage();
+        // primarystage.setTitle("Sign Up");
+        // Parent root = FXMLLoader.load(getClass().getResource("/views/signup.fxml"));
+        // primarystage.setScene(new Scene(root, 800, 600));
+        // primarystage.show();
+
+        StageCoordinator coordinator = StageCoordinator.getInstance();
+        coordinator.moveToSingup();
 
     }
 
@@ -110,5 +114,4 @@ public class LoginController implements Initializable {
 
     }
 
-  
 }
