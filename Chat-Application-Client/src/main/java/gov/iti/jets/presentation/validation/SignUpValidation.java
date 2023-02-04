@@ -1,7 +1,12 @@
 package gov.iti.jets.presentation.validation;
 
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
+import javafx.util.Callback;
 
 public class SignUpValidation {
    public String validatePhoneNumber(String phoneNumber) {
@@ -67,6 +72,31 @@ public class SignUpValidation {
          return "must have atleast one special character among !@#$%";
       }
       return "valid password";
+   }
+
+   public void validateDate(DatePicker datePicker) {
+      LocalDate maxDate = LocalDate.now().minusYears(12);
+      LocalDate minDate = LocalDate.now().minusYears(100);
+      datePicker.setValue(maxDate);
+      final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
+         @Override
+         public DateCell call(final DatePicker datePicker) {
+            return new DateCell() {
+               @Override
+               public void updateItem(LocalDate item, boolean empty) {
+                  super.updateItem(item, empty);
+                  if (item.isBefore(minDate)) {
+                     setDisable(true);
+                     setStyle("-fx-background-color: #ffc0cb;");
+                  } else if (item.isAfter(maxDate)) {
+                     setDisable(true);
+                     setStyle("-fx-background-color: #ffc0cb;");
+                  }
+               }
+            };
+         }
+      };
+      datePicker.setDayCellFactory(dayCellFactory);
    }
 
 }
