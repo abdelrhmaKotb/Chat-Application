@@ -7,5 +7,6 @@ public interface UserDao {
     boolean isPhoneNumberExist(String phoneNumber);
     int insertUser(User user);
     User seletcByPhoneNumber(String phoneNum);
+    void updateUser(User newData);
 
 }

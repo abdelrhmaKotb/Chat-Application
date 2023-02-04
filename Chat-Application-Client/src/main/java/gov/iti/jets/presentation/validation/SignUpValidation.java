@@ -7,9 +7,7 @@ public class SignUpValidation {
    public String validatePhoneNumber(String phoneNumber) {
         
         Pattern p = Pattern.compile(
-         "^(\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$" 
-       + "|^(\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$" 
-       + "|^(\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$");
+         "^01[0125][0-9]{8}$");
  
      
           Matcher m = p.matcher(phoneNumber);
@@ -25,14 +23,15 @@ public class SignUpValidation {
      }
     public String validateUserName(String userName){
          
-         Pattern pattern=Pattern.compile("^[a-zA-Z][A-Za-z0-9_]{6,29}$");
+         Pattern pattern=Pattern.compile("^[a-zA-Z]{3,29}$");
          Matcher m = pattern.matcher(userName);
           boolean validName=m.matches();
           if(validName){
              return "valid userName";
           }
           else {
-             return "at least 7 leter or number and starts with letter ";
+
+             return "Name must only contains letters and its size must be between 3 to 30 letters";
           }
      }
     public String validateEmail(String email){

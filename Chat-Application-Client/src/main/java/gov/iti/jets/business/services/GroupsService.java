@@ -10,10 +10,10 @@ import java.util.Date;
 import java.util.List;
 
 public class GroupsService {
-    public List<Group> getGroups() {
+    public static List<Group> getGroups(String phoneNumber) {
         GroupImpl groupImpl = new GroupImpl();
         GroupMembersImpl groupMembers = new GroupMembersImpl();
-        List<Integer> groups_id = groupMembers.getGroupByUserPhoneNum("01110906004");
+        List<Integer> groups_id = groupMembers.getGroupByUserPhoneNum(phoneNumber);
         List<Group> groups = groupImpl.getGroupById(groups_id);
 
         return groups;

@@ -144,5 +144,23 @@ public class UserImpl implements UserDao {
         return false;
 
     }
+    public void updateUser(User newData) {
+        try(Connection con=DBConnecttion.getConnection()){
+            String query="update user set name=?, email=?,  country_id=?, date_of_birth=?,bio=?,  where phone_number=?" ;
+            PreparedStatement statement= con.prepareStatement(query);
+            statement.setString(1, newData.getName());
+            statement.setString(2, newData.getEmail());
+            statement.setString(3, newData.getCountry());
+            statement.setDate(4, newData.getDateOfBirth());
+            statement.setString(5, newData.getBio());
+            statement.setString(6,newData.getStatus());
+            statement.setString(7,newData.getPhoneNumber());
+            statement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

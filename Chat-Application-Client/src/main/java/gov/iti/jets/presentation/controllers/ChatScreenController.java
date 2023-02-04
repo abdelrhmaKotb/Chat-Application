@@ -129,5 +129,24 @@ public class ChatScreenController implements Initializable {
     }
 
 
+    public void viewGroups(MouseEvent mouseEvent) {
+        try {
+            Parent f = (Parent) FXMLLoader.load(getClass().getResource("/views/groups.fxml"));
+            mainGrid.add(f, 1, 0);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void viewProfile(MouseEvent mouseEvent) {
+        try {
+            Parent f = (Parent) FXMLLoader.load(getClass().getResource("/views/editProfile.fxml"));
+
+            mainGrid.add(f, 1, 0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
