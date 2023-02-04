@@ -48,23 +48,23 @@ public class SignUpValidation {
 
    public String validPassword(String password) {
       if (password.length() > 15 || password.length() < 8) {
-         return "Password must be less than 20 and more than 8 characters in length.";
+         return "must be less than 20 and more than 8 characters.";
       }
       String upperCaseChars = "(.*[A-Z].*)";
       if (!password.matches(upperCaseChars)) {
-         return "Password must have atleast one uppercase character";
+         return "must have atleast one uppercase character";
       }
       String lowerCaseChars = "(.*[a-z].*)";
       if (!password.matches(lowerCaseChars)) {
-         return "Password must have atleast one lowercase character";
+         return "must have atleast one lowercase character";
       }
       String numbers = "(.*[0-9].*)";
       if (!password.matches(numbers)) {
-         return "Password must have atleast one number";
+         return "must have atleast one number";
       }
       String specialChars = "(.*[!,@,#,$,%].*$)";
       if (!password.matches(specialChars)) {
-         return "Password must have atleast one special character among !@#$%";
+         return "must have atleast one special character among !@#$%";
       }
       return "valid password";
    }
