@@ -58,12 +58,12 @@ public class PieChartController implements Initializable {
                     @Override
                     public void run() {
                         data.clear();
-                        data.addAll(new PieChart.Data("Male", cs.getCharts("Male")),
-                                new PieChart.Data("Female", cs.getCharts("Female")));
-                        male.setText(String.valueOf(String.format("%.2f",(double) cs.getCharts("Male")
-                                / ((cs.getCharts("Male") + cs.getCharts("Female"))) * 100))+" %");
-                                female.setText(String.valueOf(String.format("%.2f",(double) cs.getCharts("Female")
-                                / ((cs.getCharts("Male") + cs.getCharts("Female"))) * 100))+" %");
+                        data.addAll(new PieChart.Data("Male", cs.getGenderCharts("Male")),
+                                new PieChart.Data("Female", cs.getGenderCharts("Female")));
+                        male.setText(String.valueOf(String.format("%.2f",(double) cs.getGenderCharts("Male")
+                                / ((cs.getGenderCharts("Male") + cs.getGenderCharts("Female"))) * 100))+" %");
+                                female.setText(String.valueOf(String.format("%.2f",(double) cs.getGenderCharts("Female")
+                                / ((cs.getGenderCharts("Male") + cs.getGenderCharts("Female"))) * 100))+" %");
 
                     }
 
