@@ -74,7 +74,7 @@ public class SignUpValidation {
       return "valid password";
    }
 
-   public void validateDate(DatePicker datePicker) {
+   public static void validateDate(DatePicker datePicker) {
       LocalDate maxDate = LocalDate.now().minusYears(12);
       LocalDate minDate = LocalDate.now().minusYears(100);
       datePicker.setValue(maxDate);

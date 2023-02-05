@@ -90,6 +90,7 @@ public class SignupController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         choiceboxGender.getItems().add("Female");
         choiceboxGender.getItems().add("Male");
+        SignUpValidation.validateDate(datepickerDateOfBirth);
         /*
          * choiceboxCountry.getItems().add("Egypt");
          * choiceboxCountry.getItems().add("Saudi Arabi");
