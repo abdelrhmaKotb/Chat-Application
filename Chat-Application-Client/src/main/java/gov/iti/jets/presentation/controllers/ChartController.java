@@ -40,13 +40,12 @@ public class ChartController implements Initializable {
     private TextField male, female;
     @FXML
     private BarChart<String, Double> bar;
-   
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         updatePieChart();
         updateBarChart();
-      
+
     }
 
     public void updatePieChart() {
@@ -57,7 +56,7 @@ public class ChartController implements Initializable {
         genderPieChart.setStyle("-fx-font:20 arial;");
 
         genderPieChart.setLabelLineLength(10);
-        ChartsService cs=new ChartsService();
+        ChartsService cs = new ChartsService();
         new Thread(() -> {
 
             while (true) {
@@ -68,10 +67,10 @@ public class ChartController implements Initializable {
                         data.clear();
                         data.addAll(new PieChart.Data("Male", cs.getGenderCharts("Male")),
                                 new PieChart.Data("Female", cs.getGenderCharts("Female")));
-                        male.setText(String.valueOf(String.format("%.2f",(double) cs.getGenderCharts("Male")
-                                / ((cs.getGenderCharts("Male") + cs.getGenderCharts("Female"))) * 100))+" %");
-                                female.setText(String.valueOf(String.format("%.2f",(double) cs.getGenderCharts("Female")
-                                / ((cs.getGenderCharts("Male") + cs.getGenderCharts("Female"))) * 100))+" %");
+                        male.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts("Male")
+                                / ((cs.getGenderCharts("Male") + cs.getGenderCharts("Female"))) * 100)) + " %");
+                        female.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts("Female")
+                                / ((cs.getGenderCharts("Male") + cs.getGenderCharts("Female"))) * 100)) + " %");
 
                     }
 
@@ -86,8 +85,9 @@ public class ChartController implements Initializable {
             }
         }).start();
     }
+
     public void updateBarChart() {
-     
+
         new Thread(() -> {
 
             while (true) {
@@ -95,7 +95,7 @@ public class ChartController implements Initializable {
 
                     @Override
                     public void run() {
-                        ChartsService chartServie=new ChartsService();
+                        ChartsService chartServie = new ChartsService();
                         bar.setData(getChartData(chartServie.getCountryChart()));
                     }
 
@@ -110,22 +110,21 @@ public class ChartController implements Initializable {
             }
         }).start();
     }
-    private ObservableList<XYChart.Series<String, Double>> getChartData(ArrayList<CountryDto>countryData) {
-    
+
+    private ObservableList<XYChart.Series<String, Double>> getChartData(ArrayList<CountryDto> countryData) {
+
         ObservableList<XYChart.Series<String, Double>> answer = FXCollections.observableArrayList();
         answer.clear();
-        for(int i=0;i<countryData.size();i++){
+        for (int i = 0; i < countryData.size(); i++) {
 
             Series<String, Double> aSeries = new Series<String, Double>();
             aSeries.setName(countryData.get(i).getName());
-            aSeries.getData().add(new XYChart.Data(Integer.toString(i+1),countryData.get(i).getCount()));
+            aSeries.getData().add(new XYChart.Data(Integer.toString(i + 1), countryData.get(i).getCount()));
             answer.add(aSeries);
 
         }
-     
+
         return answer;
     }
-
-
 
 }
