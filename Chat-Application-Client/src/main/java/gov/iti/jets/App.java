@@ -27,7 +27,7 @@ public class App extends Application {
         // primaryStage.setResizable(false);
         StageCoordinator coordinator = StageCoordinator.getInstance();
         coordinator.setStage(primaryStage);
-        coordinator.moveToLogin();
+        coordinator.moveToCharts();
         primaryStage.show();
 
     }
