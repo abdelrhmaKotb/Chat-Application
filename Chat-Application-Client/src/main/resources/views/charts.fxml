@@ -22,7 +22,7 @@
          </font></Label>
       <TextField fx:id="male" editable="false" layoutX="432.0" layoutY="275.0" prefHeight="25.0" prefWidth="64.0" />
       <TextField fx:id="female" alignment="BOTTOM_LEFT" editable="false" layoutX="570.0" layoutY="275.0" prefHeight="25.0" prefWidth="64.0" />
-      <BarChart fx:id="bar" layoutX="30.0" layoutY="38.0" prefHeight="250.0" prefWidth="310.0">
+      <BarChart fx:id="bar" layoutX="30.0" layoutY="38.0" prefHeight="327.0" prefWidth="310.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
