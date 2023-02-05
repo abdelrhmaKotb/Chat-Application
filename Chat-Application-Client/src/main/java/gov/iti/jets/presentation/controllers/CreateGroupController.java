@@ -41,13 +41,25 @@ public class CreateGroupController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        List<String> listOfNameContact = groupsService.getnameOfContacts(currentUserNumber);
-        if (listOfNameContact.size()>0) {
+        // List<String> listOfNameContact =
+        // groupsService.getnameOfContacts(currentUserNumber);
+        // for (int i = 0; i < listOfNameContact.size(); i++) {
+        // CheckBox chk = new CheckBox(listOfNameContact.get(i));
+        // listOfContacts.getItems().add(chk);
+        // }
+        List<String> listOfNameContact = new ArrayList<>();
+
+        try {
+            listOfNameContact = groupsService.getnameOfContacts(currentUserNumber);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (listOfNameContact.size() > 0) {
             for (int i = 0; i < listOfNameContact.size(); i++) {
                 CheckBox chk = new CheckBox(listOfNameContact.get(i));
                 listOfContacts.getItems().add(chk);
             }
-        } 
+        }
     }
     @FXML
     private void closeAction(ActionEvent event) {
