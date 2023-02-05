@@ -13,18 +13,17 @@ import gov.iti.jets.persistence.entities.User;
 
 public class ChartsService {
 
-
-    public int getGenderCharts(String str)
-    {
+    public int getGenderCharts(String str) {
         GenderDaoImpl userGender = new GenderDaoImpl();
-        int  genderNumber = userGender.seletcGender(str);
+        int genderNumber = userGender.seletcGender(str);
         return genderNumber;
     }
-    public ArrayList<CountryDto> getCountryChart(){
 
-        countryDaoImpl countryData=new countryDaoImpl();
-           return countryData.selectCountries();
+    public ArrayList<CountryDto> getCountryChart() {
+
+        countryDaoImpl countryData = new countryDaoImpl();
+        return countryData.selectCountries();
 
     }
-    
+
 }
