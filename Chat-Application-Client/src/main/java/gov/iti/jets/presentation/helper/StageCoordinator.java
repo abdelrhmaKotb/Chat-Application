@@ -126,5 +126,33 @@ public class StageCoordinator {
         primaryStage.setTitle("chat");
 
     }
+    public void moveToCharts() {
+        if (primaryStage == null) {
+            throw new RuntimeException("primary stage not set");
+        }
 
+        if (!scenes.containsKey("charts")) {
+            System.out.println("loaded new one");
+            System.out.println(scenes);
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/charts.fxml"));
+                Parent view = loader.load();
+                Scene chatScene = new Scene(view);
+                SceneData logiSceneData = new SceneData(loader, view, chatScene);
+                scenes.put("login", logiSceneData);
+                primaryStage.setScene(chatScene);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            System.out.println("loaded existing one");
+            SceneData logiSceneData = scenes.get("charts");
+            primaryStage.setScene(logiSceneData.getScene());
+        }
+
+        primaryStage.setTitle("Charts");
+
+    }
 }
