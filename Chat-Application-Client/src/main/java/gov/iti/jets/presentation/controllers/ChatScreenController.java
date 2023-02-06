@@ -103,6 +103,8 @@ public class ChatScreenController implements Initializable {
         try {
             Parent f = (Parent) FXMLLoader.load(getClass().getResource("/views/groups.fxml"));
             mainGrid.add(f, 1, 0);
+             f = (Parent) FXMLLoader.load(getClass().getResource("/views/message.fxml"));
+            mainGrid.add(f, 2, 0);
 
         } catch (Exception e) {
             e.printStackTrace();
