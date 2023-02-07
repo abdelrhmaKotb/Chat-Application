@@ -23,15 +23,14 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.web.HTMLEditor;
+
 import javafx.scene.control.TextArea;
 public class MessageController implements Initializable {
     @FXML
     Text recieverNameText;
     @FXML
     TextArea textArea;
-    @FXML
-    HTMLEditor htmlEditor;
+
     @FXML
     VBox msgvBox;
     @FXML
