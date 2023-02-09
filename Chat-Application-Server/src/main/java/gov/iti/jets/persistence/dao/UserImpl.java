@@ -4,11 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import gov.iti.jets.persistence.utils.PasswordHashing;
 import gov.iti.jets.persistence.dao.interfaces.UserDao;
 import gov.iti.jets.persistence.entities.User;
 import gov.iti.jets.persistence.utils.DBConnecttion;
 import gov.iti.jets.persistence.utils.ImageConversion;
+import gov.iti.jets.persistence.utils.ImageConvertor;
+import gov.iti.jets.persistence.utils.PasswordHashing;
 
 public class UserImpl implements UserDao {
 
@@ -79,7 +80,7 @@ public class UserImpl implements UserDao {
                 user.setAdmin(rs.getBoolean("is_admin"));
                 user.setDeleted(rs.getBoolean("is_deleted"));
                 user.setStatus(rs.getString("status_id"));
-                user.setImage(ImageConversion.convertBlobToBytes(rs.getBlob("profile_image")));
+                user.setImage(ImageConvertor.BlobToBytes(rs.getBlob("profile_image")));
 
             }
 
@@ -102,7 +103,7 @@ public class UserImpl implements UserDao {
     public User getUser(String phoneNumber, String password) {
         try (Connection con = DBConnecttion.getConnection();){
             
-            PreparedStatement stm = con.prepareStatement("SELECT * FROM user WHERE phone_number = ? and password = ?");
+            PreparedStatement stm = con.prepareStatement("SELECT user.* , countries.name country_name FROM user join countries  using(country_id)  WHERE phone_number = ? and password = ?");
             stm.setString(1, phoneNumber);
             stm.setString(2, password); // rember to use hash this password after registration fineshed 
             ResultSet result = stm.executeQuery();
@@ -121,7 +122,7 @@ public class UserImpl implements UserDao {
                 result.getBoolean("is_admin"),
                 result.getBoolean("is_deleted"),
                 result.getString("status_id"),
-                ImageConversion.convertBlobToBytes(result.getBlob("profile_image"))
+                ImageConvertor.BlobToBytes(result.getBlob("profile_image"))
                 );
             }
 

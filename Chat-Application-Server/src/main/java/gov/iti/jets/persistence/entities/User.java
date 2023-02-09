@@ -1,8 +1,9 @@
 package gov.iti.jets.persistence.entities;
 
-import java.io.File;
-import java.sql.Date;;
+import java.sql.Date;
+
 public class User {
+    
     private String phoneNumber;
     private String name;
     private String email;
@@ -33,7 +34,7 @@ public class User {
         this.status = status;
         this.image=image;
     }
-  
+   
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -122,11 +123,11 @@ public class User {
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
-    public void setImage(byte[] image){
+    public void setFile(byte[] image){
 
-        this.image=image;
+        this.image = image;
     }
-    public byte[] getImage(){
+    public byte[] getFile(){
         return image;
     }
 }
