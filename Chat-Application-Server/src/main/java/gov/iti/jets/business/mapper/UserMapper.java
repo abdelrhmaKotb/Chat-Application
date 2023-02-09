@@ -21,7 +21,7 @@ public class UserMapper implements Mapper<User, UserDto> {
     // entity.getFile()
     @Override
 
-    public UserDto toEntity(User e) {
+    public  User toEntity( UserDto e) {
         return null;
     }
 
