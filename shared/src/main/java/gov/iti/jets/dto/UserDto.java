@@ -1,24 +1,26 @@
 package gov.iti.jets.dto;
 
-import java.io.File;
 import java.io.Serializable;
 import java.sql.Date;
+
+import gov.iti.jets.enums.Gender;
+import gov.iti.jets.enums.Mood;
 
 public class UserDto implements Serializable {
     private String phoneNumber;
     private String name;
     private String email;
-    private String gender;
+    private Gender gender;
     private int country;
     private Date dateOfBirth;
     private String bio;  
-    private String status;
+    private Mood status;
     private boolean isAdmin;
-    private File file;
+    private byte[] image;
 
 
-    public UserDto(String phoneNumber, String name, String email, String gender, int country, Date dateOfBirth,
-            String bio, String status, boolean isAdmin,File file) {
+    public UserDto(String phoneNumber, String name, String email, Gender gender, int country, Date dateOfBirth,
+            String bio, Mood status, boolean isAdmin,byte[] image) {
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.email = email;
@@ -28,10 +30,10 @@ public class UserDto implements Serializable {
         this.bio = bio;
         this.status = status;
         this.isAdmin = isAdmin;
-        this.file=file;
+        this.image=image;
     }
-    public UserDto(String phoneNumber, String name, String email, String gender, int country, Date dateOfBirth,
-            String bio, String status, boolean isAdmin) {
+    public UserDto(String phoneNumber, String name, String email, Gender gender, int country, Date dateOfBirth,
+            String bio, Mood status, boolean isAdmin) {
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.email = email;
@@ -67,11 +69,11 @@ public class UserDto implements Serializable {
         this.email = email;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -99,11 +101,11 @@ public class UserDto implements Serializable {
         this.bio = bio;
     }
 
-    public String getStatus() {
+    public Mood getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Mood status) {
         this.status = status;
     }
 
@@ -114,12 +116,12 @@ public class UserDto implements Serializable {
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
-    public void setFile(File file){
 
-        this.file=file;
+    public void setImage(byte[] image){
+        this.image=image;
     }
-    public File getFile(){
-        return file;
+    public byte[] getImage(){
+        return image;
     }
 
 

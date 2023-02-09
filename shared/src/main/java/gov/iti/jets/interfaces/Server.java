@@ -12,4 +12,5 @@ public interface Server  extends Remote{
     void unregister(Client client) throws RemoteException;
     UserDto login(String phoneUmber, String password) throws RemoteException;
     public  List<GroupDto> getGroups(String phoneNumber) throws RemoteException;
+    UserDto Signup() throws RemoteException;
 }

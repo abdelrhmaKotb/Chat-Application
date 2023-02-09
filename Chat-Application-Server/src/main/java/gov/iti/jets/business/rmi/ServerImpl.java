@@ -67,4 +67,13 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     }
 
 
+    @Override
+    public UserDto Signup() throws RemoteException {
+     
+
+
+        
+        return null;
+    }
+
 }
