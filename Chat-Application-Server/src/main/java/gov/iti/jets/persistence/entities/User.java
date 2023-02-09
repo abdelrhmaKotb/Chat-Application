@@ -2,25 +2,28 @@ package gov.iti.jets.persistence.entities;
 
 import java.sql.Date;
 
+import gov.iti.jets.enums.Gender;
+import gov.iti.jets.enums.Mood;
+
 public class User {
-    
+
     private String phoneNumber;
     private String name;
     private String email;
     private String password;
-    private String gender;
+    private Gender gender;
     private int country;
     private Date dateOfBirth;
     private String bio;
     private boolean isAdmin;
     private boolean isDeleted;
-    private String status;
+    private Mood status;
     private byte[] image;
 
     public User(){}
 
-    public User(String phoneNumber, String name, String email, String password, String gender, int country,
-            Date dateOfBirth, String bio, boolean isAdmin, boolean isDeleted, String status,byte[] image) {
+    public User(String phoneNumber, String name, String email, String password, Gender gender, int country,
+            Date dateOfBirth, String bio, boolean isAdmin, boolean isDeleted, Mood status,byte[] image) {
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.email = email;
@@ -68,11 +71,11 @@ public class User {
         this.password = password;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -100,11 +103,11 @@ public class User {
         this.bio = bio;
     }
 
-    public String getStatus() {
+    public Mood getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Mood status) {
         this.status = status;
     }
 
@@ -123,11 +126,11 @@ public class User {
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
-    public void setFile(byte[] image){
+    public void setImage(byte[] image){
 
         this.image = image;
     }
-    public byte[] getFile(){
+    public byte[] getImage(){
         return image;
     }
 }

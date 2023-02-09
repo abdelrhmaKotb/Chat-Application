@@ -10,7 +10,6 @@ import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
 import gov.iti.jets.persistence.dao.UserImpl;
-import gov.iti.jets.persistence.dao.interfaces.UserDao;
 import gov.iti.jets.persistence.entities.User;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
