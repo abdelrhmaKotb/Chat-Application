@@ -1,7 +1,7 @@
-package gov.iti.jets.presentation.helper;
+package gov.iti.jets.business.helper;
 
-import gov.iti.jets.presentation.models.ContactsModel;
-import gov.iti.jets.presentation.models.CurrentUserModel;
+import gov.iti.jets.business.models.ContactsModel;
+import gov.iti.jets.business.models.CurrentUserModel;
 
 public class ModelsFactory {
 

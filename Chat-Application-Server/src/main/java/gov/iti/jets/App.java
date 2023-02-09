@@ -1,25 +1,19 @@
 package gov.iti.jets;
 
-import java.rmi.Naming;
-import java.rmi.registry.LocateRegistry;
+import gov.iti.jets.business.rmi.RMIConnection;
+import gov.iti.jets.persistence.utils.DBConnecttion;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-
-
-public class App  {
-
-
-
+public class App  extends Application{
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        
+    }
     public static void main(String[] args) {
-        try {
-            ServerImpl server = new ServerImpl();
-
-            LocateRegistry.createRegistry(14785);
-            Naming.rebind("rmi://localhost:14785/serverService", server);
-
-            System.out.println("server Running ...");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        RMIConnection rmi = RMIConnection.getInstance();
+        DBConnecttion.getConnection();
+        rmi.connect();
+        Application.launch(args);
     }
 }

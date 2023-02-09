@@ -1,4 +1,4 @@
-package gov.iti.jets;
+package gov.iti.jets.business.rmi;
 
 import gov.iti.jets.interfaces.Client;
 

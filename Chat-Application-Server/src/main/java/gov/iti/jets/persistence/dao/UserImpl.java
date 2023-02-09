@@ -1,9 +1,12 @@
 package gov.iti.jets.persistence.dao;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import gov.iti.jets.persistence.dao.interfaces.UserDao;
 import gov.iti.jets.persistence.entities.User;
@@ -31,13 +34,16 @@ public class UserImpl implements UserDao {
 
             if(result.next())
             {
+                System.out.println("here");
+                // java.util.Date d = new java.util.Date(result.getDate("date_of_birth").getTime());
+                // DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 return new User(
                 result.getString("phone_number"),
                 result.getString("name"),
                 result.getString("email"),
                 result.getString("password"),
                 result.getString("gender"),
-                result.getString("country_id"),
+                result.getInt("country_id"),
                 result.getDate("date_of_birth"),
                 result.getString("bio"),
                 result.getBoolean("is_admin"),

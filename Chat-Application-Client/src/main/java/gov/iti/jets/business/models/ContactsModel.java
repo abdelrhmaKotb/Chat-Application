@@ -1,4 +1,4 @@
-package gov.iti.jets.presentation.models;
+package gov.iti.jets.business.models;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,4 +1,4 @@
-package gov.iti.jets.presentation.helper;
+package gov.iti.jets.business.helper;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

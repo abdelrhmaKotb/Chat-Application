@@ -2,11 +2,10 @@ package gov.iti.jets;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.interfaces.Client;
-import gov.iti.jets.interfaces.Server;
-import gov.iti.jets.presentation.helper.StageCoordinator;
+import gov.iti.jets.business.helper.StageCoordinator;
 
-import java.rmi.Naming;
 
 public class App extends Application {
 
@@ -14,39 +13,33 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-        // Parent root =
-        // FXMLLoader.load(getClass().getResource("/views/signUpPage.fxml"));
-        // Parent root =
-        // FXMLLoader.load(getClass().getResource("/views/chatScreen.fxml"));
-        // Parent root = FXMLLoader.load(getClass().getResource("/views/signup.fxml"));
-        // DBConnecttion.getConnection();
-        // Scene sc = new Scene(root, 800, 600);
-        // primaryStage.setScene(sc);
-        // primaryStage.setTitle("Chat Application");
-        // primaryStage.setResizable(false);
         StageCoordinator coordinator = StageCoordinator.getInstance();
         coordinator.setStage(primaryStage);
-        coordinator.moveToChat();
+        coordinator.moveToLogin();
         primaryStage.show();
 
     }
 
     public static void main(String[] args) {
+        Application.launch(args);
+    }
 
+    @Override
+    public void init() throws Exception {
         try {
 
-            client = new ClientImpl();
+            RMIConnection rmi = RMIConnection.getInstance();
+            rmi.connect("localhost");
+            // client = new ClientImpl();
 
-            Server serverServices = (Server) Naming.lookup("rmi://localhost:14785/serverService");
+            // Server serverServices = (Server) Naming.lookup("rmi://localhost:14785/serverService");
 
-            serverServices.register(client);
+            // serverServices.register(client);
 
-            serverServices.sayHello();
+            // serverServices.sayHello();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        Application.launch(args);
     }
 }

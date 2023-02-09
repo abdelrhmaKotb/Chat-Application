@@ -1,4 +1,4 @@
-package gov.iti.jets.presentation.Enums;
+package gov.iti.jets.business.enums;
 
 public enum Mood {
 
