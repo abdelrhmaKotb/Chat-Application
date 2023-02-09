@@ -13,8 +13,8 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
-<VBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.MessageController">
+<!-- fx:controller="gov.iti.jets.presentation.controllers.MessageController" -->
+<VBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <HBox prefHeight="64.0" prefWidth="607.0">
          <children>

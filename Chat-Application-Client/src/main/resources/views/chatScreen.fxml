@@ -44,7 +44,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView id="btnGroups" fx:id="btnGroups" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#viewGroups">
+            <ImageView id="btnGroups" fx:id="btnGroups" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#viewGroups" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/groups.png" />
                </image>
@@ -52,7 +52,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView id="btnContacts" fx:id="btnContacts" onMouseClicked="#openContacts" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="btnContacts" fx:id="btnContacts" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#openContacts" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/contact.png" />
                </image>
@@ -95,7 +95,8 @@
             <Insets top="10.0" />
          </padding>
       </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" />
      
-      <VBox prefHeight="550.0" prefWidth="313.0" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES" />
+      <VBox fx:id="chat" prefHeight="550.0" prefWidth="313.0" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES" />
    </children>
 </GridPane>
