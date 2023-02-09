@@ -4,13 +4,16 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
-
-import gov.iti.jets.business.mapper.UserMapper;
+import gov.iti.jets.persistence.dao.GroupImpl;
+import gov.iti.jets.persistence.dao.GroupMembersImpl;
+import gov.iti.jets.business.mapper.*;
+import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
 import gov.iti.jets.persistence.dao.UserImpl;
-import gov.iti.jets.persistence.dao.interfaces.UserDao;
+
+import gov.iti.jets.persistence.entities.Group;
 import gov.iti.jets.persistence.entities.User;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
@@ -49,5 +52,19 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         }
         return userMapper.toDto(user);
     }
+    public  List<GroupDto> getGroups(String phoneNumber) {
+        GroupImpl groupImpl = new GroupImpl();
+        GroupMembersImpl groupMembers = new GroupMembersImpl();
+        List<Integer> groups_id = groupMembers.getGroupByUserPhoneNum(phoneNumber);
+        List<Group> groups = groupImpl.getGroupById(groups_id);
+        int groupsSize=groups.size();
+        List<GroupDto> groupDto=new ArrayList<>();
+        GroupMapper groupMapper=new GroupMapper();
+        for(int i=0;i<groupsSize;i++) {
+            groupDto.add(groupMapper.toDto(groups.get(i)));
+        }
+        return groupDto;
+    }
+
 
 }
