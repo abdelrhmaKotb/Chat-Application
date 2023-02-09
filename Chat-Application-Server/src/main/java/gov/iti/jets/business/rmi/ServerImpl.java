@@ -50,4 +50,13 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return userMapper.toDto(user);
     }
 
+    @Override
+    public UserDto Signup() throws RemoteException {
+     
+
+
+        
+        return null;
+    }
+
 }

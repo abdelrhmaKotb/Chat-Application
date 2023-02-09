@@ -14,12 +14,12 @@ public class User {
     private boolean isAdmin;
     private boolean isDeleted;
     private String status;
-    private File file;
+    private byte[] image;
 
     public User(){}
 
     public User(String phoneNumber, String name, String email, String password, String gender, int country,
-            Date dateOfBirth, String bio, boolean isAdmin, boolean isDeleted, String status,File file) {
+            Date dateOfBirth, String bio, boolean isAdmin, boolean isDeleted, String status,byte[] image) {
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.email = email;
@@ -31,22 +31,9 @@ public class User {
         this.isAdmin = isAdmin;
         this.isDeleted = isDeleted;
         this.status = status;
-        this.file=file;
+        this.image=image;
     }
-    public User(String phoneNumber, String name, String email, String password, String gender, int country,
-            Date dateOfBirth, String bio, boolean isAdmin, boolean isDeleted, String status) {
-        this.phoneNumber = phoneNumber;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.gender = gender;
-        this.country = country;
-        this.dateOfBirth = dateOfBirth;
-        this.bio = bio;
-        this.isAdmin = isAdmin;
-        this.isDeleted = isDeleted;
-        this.status = status;
-    }
+  
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -135,11 +122,11 @@ public class User {
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
-    public void setFile(File file){
+    public void setImage(byte[] image){
 
-        this.file=file;
+        this.image=image;
     }
-    public File getFile(){
-        return file;
+    public byte[] getImage(){
+        return image;
     }
 }
