@@ -3,7 +3,7 @@ package gov.iti.jets.business.mapper;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.persistence.entities.User;
 
-public class UserMapper implements Mapper<User, UserDto> {
+public class UserMapper  implements Mapper<User, UserDto> {
     @Override
     public UserDto toDto(User entity) {
         return new UserDto(
@@ -18,7 +18,7 @@ public class UserMapper implements Mapper<User, UserDto> {
             entity.isAdmin()
         );
     }
-    // entity.getFile()
+   
     @Override
 
     public UserDto toEntity(User e) {

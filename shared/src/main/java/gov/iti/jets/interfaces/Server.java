@@ -4,11 +4,12 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.dto.UserDtoSignup;
 
 public interface Server  extends Remote{
     void sayHello() throws RemoteException;
     void register(Client client) throws RemoteException;
     void unregister(Client client) throws RemoteException;
     UserDto login(String phoneUmber, String password) throws RemoteException;
-    UserDto Signup() throws RemoteException;
+    UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException;
 }

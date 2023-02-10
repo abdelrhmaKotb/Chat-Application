@@ -11,34 +11,35 @@ import gov.iti.jets.persistence.entities.User;
 import gov.iti.jets.persistence.utils.DBConnecttion;
 import gov.iti.jets.persistence.utils.ImageConvertor;
 import gov.iti.jets.persistence.utils.PasswordHashing;
+import gov.iti.jets.persistence.entities.User;
 
 public class UserImpl implements UserDao {
 
     @Override
-    public int createUser(User user) {
+    public User createUser(User user) {
 
         Connection con = DBConnecttion.getConnection();
         User tempUser = seletcByPhoneNumber(user.getPhoneNumber());
         if (tempUser != null) {
-            return 0;
+            return null;
         }
 
         int rowInserted = 0;
         String query = new String(
-                "insert into user(phone_number,name,email,password,bio,status_id,is_deleted,is_admin,gender,date_of_birth,profile_image,country_id) values(?,?,?,?,?,?,?,?,?,?,?,?)");
+                "insert into user(phone_number,name,email,password,gender,country_id,date_of_birth,bio,status_id,is_deleted,is_admin,,profile_image) values(?,?,?,?,?,?,?,?,?,?,?,?)");
 
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, user.getPhoneNumber());
             stmt.setString(2, user.getName());
             stmt.setString(3, user.getEmail());
             stmt.setString(4, PasswordHashing.doHahing(user.getPassword()));
-            stmt.setString(5, user.getBio());
-            stmt.setInt(6, user.getStatus().ordinal());
-            stmt.setString(6, "1");
-            stmt.setBoolean(7, user.isDeleted());
-            stmt.setBoolean(8, user.isAdmin());
-            stmt.setInt(9, user.getGender().ordinal());
-            stmt.setDate(10, user.getDateOfBirth());
+            stmt.setInt(5, user.getGender().ordinal());
+            stmt.setInt(6,user.getCountry());
+            stmt.setDate(7, user.getDateOfBirth());
+            stmt.setString(8, user.getBio());
+            stmt.setInt(9, user.getStatus().ordinal());
+            stmt.setBoolean(10, user.isDeleted());
+            stmt.setBoolean(11, user.isAdmin());
             stmt.setInt(12, user.getCountry());
 
             rowInserted = stmt.executeUpdate();
@@ -52,7 +53,11 @@ public class UserImpl implements UserDao {
                 ex.printStackTrace();
             }
         }
-        return rowInserted;
+
+        if (rowInserted == 1)
+            return user;
+        else
+            return null;
 
     }
 
@@ -104,7 +109,7 @@ public class UserImpl implements UserDao {
         try (Connection con = DBConnecttion.getConnection();) {
 
             PreparedStatement stm = con.prepareStatement(
-                    "SELECT user.* , countries.name country_name FROM user WHERE phone_number = ? and password = ?");
+                    "SELECT  *  FROM user WHERE phone_number = ? and password = ?");
             stm.setString(1, phoneNumber);
             stm.setString(2, password); // rember to use hash this password after registration fineshed
             ResultSet result = stm.executeQuery();

@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gov.iti.jets.business.mapper.UserMapper;
+import gov.iti.jets.business.mapper.UserSignupMapperImpl;
 import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.dto.UserDtoSignup;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
 import gov.iti.jets.persistence.dao.UserImpl;
@@ -49,13 +51,18 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return userMapper.toDto(user);
     }
 
+   
     @Override
-    public UserDto Signup() throws RemoteException {
-     
-
-
-        
-        return null;
+    public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
+       
+        UserImpl userDao = new UserImpl();
+        UserMapper userMapper = new UserMapper();
+        User user = userDao.createUser(new UserSignupMapperImpl().toEntity(signupDto));
+        if(user == null)
+        {
+            return null;
+        }
+        return new UserSignupMapperImpl().toDto(user);
     }
 
 }
