@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
 public class EditProfileController implements Initializable {
     @FXML
     ImageView editImgView;
@@ -57,38 +56,55 @@ public class EditProfileController implements Initializable {
     DatePicker dateOfBirthPicker;
     @FXML
     Button saveBtn;
-    //List<Country> country;
+    // List<Country> country;
     @FXML
     private Label errorUerName, errorEmail, errorBio, errorDateOfBirth, errorCountry;
     @FXML
     Circle imgCircle;
     File file;
     CurrentUserModel currentUserModel;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        editImgIcon.setVisible(false);
-        saveBtn.setVisible(false);
+       
         currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
         moodChoiceBox.getItems().add(Mood.AVAILABLE);
         moodChoiceBox.getItems().add(Mood.BUSY);
         moodChoiceBox.getItems().add(Mood.AWAY);
-        //will be changed to users mood
+       
+        disableComponents();
+        /*
+         * country = new ArrayList<>();
+         * country = new countryDaoImpl().getCountries();
+         * dateOfBirthPicker.setDisable(true);
+         * 
+         * for (Country c : country) {
+         * 
+         * countryChoiceBox.getItems().add(c.getName());
+         * 
+         * }
+         */
+    }
+    void disableComponents() {
+        editImgIcon.setVisible(false);
+        saveBtn.setVisible(false);
+        currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
+       
         phoneTextField.setText(currentUserModel.getPhoneNumber());
-        moodChoiceBox.getSelectionModel().select(currentUserModel.getStatus());
+        moodChoiceBox.getSelectionModel().select(Mood.values()[currentUserModel.getStatus()-1]);
         nameTextField.setText(currentUserModel.getName());
         emailTextField.setText(currentUserModel.getEmail());
         bioTextField.setText(currentUserModel.getBio());
-        /*country = new ArrayList<>();
-        country = new countryDaoImpl().getCountries();
+        editImgIcon.setVisible(false);
+        saveBtn.setVisible(false);
+        moodChoiceBox.setDisable(true);
+        nameTextField.setEditable(false);
+        emailTextField.setEditable(false);
+        bioTextField.setEditable(false);
+        countryChoiceBox.setDisable(true);
         dateOfBirthPicker.setDisable(true);
 
-        for (Country c : country) {
-
-            countryChoiceBox.getItems().add(c.getName());
-
-        }*/
     }
-
     @FXML
     public void EnableEdit(MouseEvent mouseEvent) {
         editImgIcon.setVisible(true);
@@ -112,49 +128,52 @@ public class EditProfileController implements Initializable {
 
         });
 
-
         bioTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 
             isValidBio();
 
         });
 
-
         dateOfBirthPicker.valueProperty().addListener((ov, oldValue, newValue) -> {
             isValidDateOfBirth();
         });
     }
+
     @FXML
     public void save(MouseEvent mouseEvent) {
-        if( isValidUserName() && isValidEmail() && isValidBio() && isValidDateOfBirth()) {
-            EditProfileService  editProf = new EditProfileService();
-            UserDto userDto =new UserDto(currentUserModel.getPhoneNumber(), nameTextField.getText(), emailTextField.getText(), null, 1, Date.valueOf(dateOfBirthPicker.getValue()), bioTextField.getText(), Mood.AVAILABLE, false);
+        if (isValidUserName() && isValidEmail() && isValidBio() && isValidDateOfBirth()) {
+            EditProfileService editProf = new EditProfileService();
+            UserDto userDto = new UserDto(currentUserModel.getPhoneNumber(), nameTextField.getText(),
+                    emailTextField.getText(), null, 1, Date.valueOf(dateOfBirthPicker.getValue()),
+                    bioTextField.getText(), Mood.values()[moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue()], false);
             boolean isUpdated = editProf.editProfile(userDto);
             System.out.println(isUpdated);
-
-            if(isUpdated) {
-                currentUserModel.setName( nameTextField.getText());
-                currentUserModel.setEmail( emailTextField.getText());
-                currentUserModel.setBio( bioTextField.getText());
+            System.out.println("selected: "+ Mood.values()[currentUserModel.getStatus()-1]);
+            if (isUpdated) {
+                currentUserModel.setName(nameTextField.getText());
+                currentUserModel.setEmail(emailTextField.getText());
+                currentUserModel.setBio(bioTextField.getText());
+                currentUserModel.setStatus(moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue()+1);
                 
-       
-            }
+                System.out.println("selected: "+moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue());
+            
             Stage popup = new Stage();
-// configure UI for popup etc...
+            // configure UI for popup etc...
 
-// hide popup after 3 seconds:
-PauseTransition delay = new PauseTransition(Duration.seconds(3));
-delay.setOnFinished(e -> popup.hide());
-try {
-    Parent root=FXMLLoader.load(getClass().getResource("/views/edited.fxml"));
-    popup.setScene(new Scene(root));
-} catch (IOException e1) {
-    // TODO Auto-generated catch block
-    e1.printStackTrace();
-}
-popup.show();
-delay.play();
-saveBtn.setVisible(false);
+            // hide popup after 3 seconds:
+            PauseTransition delay = new PauseTransition(Duration.seconds(3));
+            delay.setOnFinished(e -> popup.hide());
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/views/edited.fxml"));
+                popup.setScene(new Scene(root));
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            popup.show();
+            delay.play();
+            disableComponents();
+        }
 
         }
     }
@@ -220,7 +239,6 @@ saveBtn.setVisible(false);
         return flag;
     }
 
-
     public void showErrorMessage(Label errorName, String str) {
         errorName.setOpacity(1.0);
         errorName.setText(str);
@@ -232,7 +250,6 @@ saveBtn.setVisible(false);
     }
 
     @FXML
-
 
     public void editImage(MouseEvent mouseEvent) {
         final FileChooser fileChooser = new FileChooser();

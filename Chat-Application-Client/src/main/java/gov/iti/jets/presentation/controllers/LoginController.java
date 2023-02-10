@@ -84,6 +84,7 @@ public class LoginController implements Initializable {
                 System.out.println(currentUserModel.getPhoneNumber() + " sfdf phome");
                 currentUserModel.setEmail(user.getEmail());
                 currentUserModel.setBio(user.getBio());
+                currentUserModel.setStatus(user.getStatus().ordinal());
                 // RMIConnection.getServerServive().register(new ClientImpl());
                  RMIConnection.getInstance().registerClient();
                  RMIConnection.getServerServive().notifyUsersOnline(RMIConnection.getInstance().getCurrentClientConnection());

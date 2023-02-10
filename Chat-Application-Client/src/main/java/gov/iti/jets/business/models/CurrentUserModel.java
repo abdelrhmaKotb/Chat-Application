@@ -2,6 +2,8 @@ package gov.iti.jets.business.models;
 
 import java.sql.Date;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -12,10 +14,10 @@ public class CurrentUserModel {
     private StringProperty email =  new SimpleStringProperty();
     private StringProperty gender;
     private StringProperty country;
-   // private  Date dateOfBirth;
+    private  StringProperty dateOfBirth;
     private StringProperty bio =  new SimpleStringProperty();
-    private StringProperty status =  new SimpleStringProperty();
-
+    private IntegerProperty status =  new SimpleIntegerProperty();
+    
     
 
 
@@ -63,15 +65,15 @@ public class CurrentUserModel {
 
 
 
-    public StringProperty statusProperty() {
+    public IntegerProperty statusProperty() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status.set(status);
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status.get();
     }
    
