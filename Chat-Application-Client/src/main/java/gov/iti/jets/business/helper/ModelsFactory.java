@@ -1,6 +1,6 @@
 package gov.iti.jets.business.helper;
 
-import gov.iti.jets.business.models.ContactsModel;
+import gov.iti.jets.business.models.*;
 import gov.iti.jets.business.models.CurrentUserModel;
 
 public class ModelsFactory {
@@ -9,7 +9,7 @@ public class ModelsFactory {
 
     private ContactsModel contactsModel;
     private static CurrentUserModel currentUserModel;
-
+    private static GroupsModel groupsModel;
     private ModelsFactory(){}
 
 
@@ -45,5 +45,14 @@ public class ModelsFactory {
         }
 
         return currentUserModel;
+    }
+    public GroupsModel getGroups(){
+        if(groupsModel == null)
+        {
+            groupsModel =  new GroupsModel();
+            return groupsModel;
+        }
+
+        return groupsModel;
     }
 }
