@@ -10,11 +10,10 @@ import java.util.Map;
 
 import gov.iti.jets.persistence.dao.GroupImpl;
 import gov.iti.jets.persistence.dao.GroupMembersImpl;
-import gov.iti.jets.business.mapper.*;
-
 import gov.iti.jets.business.mapper.GroupMapper;
 import gov.iti.jets.business.mapper.UserMapper;
 import gov.iti.jets.business.mapper.UserSignupMapperImpl;
+import gov.iti.jets.dto.CountryDto;
 import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.dto.MessageDto;
 import gov.iti.jets.dto.UserDto;
@@ -22,11 +21,10 @@ import gov.iti.jets.dto.UserDtoSignup;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
 import gov.iti.jets.persistence.dao.UserImpl;
-
+import gov.iti.jets.persistence.dao.countryDaoImpl;
 import gov.iti.jets.persistence.entities.Group;
 import gov.iti.jets.persistence.dao.ContactImpl;
 import gov.iti.jets.persistence.dao.RequestImpl;
-import gov.iti.jets.persistence.dao.interfaces.UserDao;
 import gov.iti.jets.persistence.entities.Request;
 import gov.iti.jets.persistence.entities.User;
 
@@ -86,8 +84,12 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
 
         UserImpl userDao = new UserImpl();
-        UserMapper userMapper = new UserMapper();
-        User user = userDao.createUser(new UserSignupMapperImpl().toEntity(signupDto));
+        User tempUser=new UserSignupMapperImpl().toEntity(signupDto);
+       
+         System.out.println(signupDto);
+         System.out.println(tempUser.toString());
+
+        User user = null;//userDao.createUser(new UserSignupMapperImpl().toEntity(signupDto));
         if (user == null) {
             return null;
         }
@@ -142,6 +144,12 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     public boolean isRequestExistInDB(String currentUserNumber, String contactNumber) {
         RequestImpl RequestDao = new RequestImpl();
         return RequestDao.isRequestExist(currentUserNumber, contactNumber);
+    }
+
+    @Override 
+    public ArrayList<CountryDto> getCountriesNames() throws RemoteException{
+             return new countryDaoImpl().getCountries();
+
     }
 
 }

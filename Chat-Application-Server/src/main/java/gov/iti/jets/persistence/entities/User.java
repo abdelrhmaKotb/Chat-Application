@@ -1,6 +1,7 @@
 package gov.iti.jets.persistence.entities;
 
 import java.sql.Date;
+import java.util.Arrays;
 
 import gov.iti.jets.enums.Gender;
 import gov.iti.jets.enums.Mood;
@@ -38,6 +39,7 @@ public class User {
         this.image=image;
     }
    
+
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -132,5 +134,13 @@ public class User {
     }
     public byte[] getImage(){
         return image;
+    }
+    
+    @Override
+    public String toString() {
+        return "User [phoneNumber=" + phoneNumber + ", name=" + name + ", email=" + email + ", password=" + password
+                + ", gender=" + gender + ", country=" + country + ", dateOfBirth=" + dateOfBirth + ", bio=" + bio
+                + ", isAdmin=" + isAdmin + ", isDeleted=" + isDeleted + ", status=" + status + ", image="
+                + "]";
     }
 }

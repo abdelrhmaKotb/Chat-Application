@@ -1,8 +1,8 @@
 package gov.iti.jets.persistence.dao;
 
-import gov.iti.jets.business.dto.CountryDto;
+
+import gov.iti.jets.dto.CountryDto;
 import gov.iti.jets.persistence.dao.interfaces.countryDao;
-import gov.iti.jets.persistence.entities.Country;
 import gov.iti.jets.persistence.utils.DBConnecttion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class countryDaoImpl implements countryDao {
 
-    @Override
+     @Override
     public ArrayList<CountryDto> getCountries() {
 
         Connection con = DBConnecttion.getConnection();
@@ -25,7 +25,7 @@ public class countryDaoImpl implements countryDao {
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                CountryDto country = new CountryDto(rs.getInt("country_id"), rs.getString("name"));
+                CountryDto country = new CountryDto(rs.getString("name"),rs.getInt("country_id"));
                 countriesNames.add(country);
 
             }
