@@ -1,5 +1,7 @@
 package gov.iti.jets.presentation.controllers;
 
+import gov.iti.jets.business.helper.ModelsFactory;
+import gov.iti.jets.business.models.CurrentUserModel;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.business.services.EditProfileService;
 import gov.iti.jets.dto.UserDto;
@@ -8,6 +10,7 @@ import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.enums.Mood;
 import gov.iti.jets.interfaces.Server;
 import gov.iti.jets.presentation.validation.SignUpValidation;
+import javafx.animation.PauseTransition;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +21,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.net.URL;
@@ -54,16 +59,21 @@ public class EditProfileController implements Initializable {
     @FXML
     Circle imgCircle;
     File file;
-
+    CurrentUserModel currentUserModel;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         editImgIcon.setVisible(false);
         saveBtn.setVisible(false);
+        currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
         moodChoiceBox.getItems().add(Mood.AVAILABLE);
         moodChoiceBox.getItems().add(Mood.BUSY);
         moodChoiceBox.getItems().add(Mood.AWAY);
         //will be changed to users mood
-        moodChoiceBox.getSelectionModel().select(Mood.AVAILABLE);
+        phoneTextField.setText(currentUserModel.getPhoneNumber());
+        moodChoiceBox.getSelectionModel().select(currentUserModel.getStatus());
+        nameTextField.setText(currentUserModel.getName());
+        emailTextField.setText(currentUserModel.getEmail());
+        bioTextField.setText(currentUserModel.getBio());
         /*country = new ArrayList<>();
         country = new countryDaoImpl().getCountries();
         dateOfBirthPicker.setDisable(true);
@@ -114,9 +124,27 @@ public class EditProfileController implements Initializable {
     public void save(MouseEvent mouseEvent) {
         if( isValidUserName() && isValidEmail() && isValidBio() && isValidDateOfBirth()) {
             EditProfileService  editProf = new EditProfileService();
-            UserDto userDto =new UserDto("01110906004", nameTextField.getText(), emailTextField.getText(), null, 1, Date.valueOf(dateOfBirthPicker.getValue()), bioTextField.getText(), Mood.AVAILABLE, false);
+            UserDto userDto =new UserDto(currentUserModel.getPhoneNumber(), nameTextField.getText(), emailTextField.getText(), null, 1, Date.valueOf(dateOfBirthPicker.getValue()), bioTextField.getText(), Mood.AVAILABLE, false);
             boolean isUpdated = editProf.editProfile(userDto);
             System.out.println(isUpdated);
+
+            if(isUpdated) {
+                currentUserModel.setName( nameTextField.getText());
+                currentUserModel.setEmail( emailTextField.getText());
+                currentUserModel.setBio( bioTextField.getText());
+                
+       
+            }
+            Stage popup = new Stage();
+// configure UI for popup etc...
+
+// hide popup after 3 seconds:
+PauseTransition delay = new PauseTransition(Duration.seconds(3));
+delay.setOnFinished(e -> popup.hide());
+
+popup.show();
+delay.play();
+saveBtn.setVisible(false);
 
         }
     }

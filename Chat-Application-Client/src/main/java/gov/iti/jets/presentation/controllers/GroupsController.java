@@ -52,7 +52,7 @@ public class GroupsController implements Initializable {
     }
 
     private void createList() {
-        CurrentUserModel currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
+        
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         GroupsModel groupsModel = modelsFactory.getGroups();
         groupObservableList=groupsModel.getGroups();
