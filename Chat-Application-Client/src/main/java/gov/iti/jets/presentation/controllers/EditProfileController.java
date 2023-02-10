@@ -13,7 +13,10 @@ import gov.iti.jets.presentation.validation.SignUpValidation;
 import javafx.animation.PauseTransition;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -141,7 +145,13 @@ public class EditProfileController implements Initializable {
 // hide popup after 3 seconds:
 PauseTransition delay = new PauseTransition(Duration.seconds(3));
 delay.setOnFinished(e -> popup.hide());
-
+try {
+    Parent root=FXMLLoader.load(getClass().getResource("/views/edited.fxml"));
+    popup.setScene(new Scene(root));
+} catch (IOException e1) {
+    // TODO Auto-generated catch block
+    e1.printStackTrace();
+}
 popup.show();
 delay.play();
 saveBtn.setVisible(false);
