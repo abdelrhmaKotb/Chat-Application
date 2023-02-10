@@ -10,11 +10,11 @@ import java.util.Map;
 
 import gov.iti.jets.persistence.dao.GroupImpl;
 import gov.iti.jets.persistence.dao.GroupMembersImpl;
-import gov.iti.jets.business.mapper.*;
 
 import gov.iti.jets.business.mapper.GroupMapper;
 import gov.iti.jets.business.mapper.UserMapper;
 import gov.iti.jets.business.mapper.UserSignupMapperImpl;
+import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.dto.MessageDto;
 import gov.iti.jets.dto.UserDto;
@@ -27,13 +27,12 @@ import gov.iti.jets.persistence.entities.Group;
 import gov.iti.jets.persistence.entities.GroupMembers;
 import gov.iti.jets.persistence.dao.ContactImpl;
 import gov.iti.jets.persistence.dao.RequestImpl;
-import gov.iti.jets.persistence.dao.interfaces.UserDao;
 import gov.iti.jets.persistence.entities.Request;
 import gov.iti.jets.persistence.entities.User;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
     List<Client> clients = new ArrayList<>();
-    Map<String, Client> clientsMap = new HashMap<>();
+    static Map<String, Client> clientsMap = new HashMap<>();
 
     public ServerImpl() throws RemoteException {
         super();
@@ -47,7 +46,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         System.out.println("register");
         clients.add(client);
         clientsMap.put(client.getPhoneNumber(), client);
-        System.out.println(clients);
+        System.out.println(clientsMap.keySet());
+        System.out.println(client.getPhoneNumber() + " phone");
+        System.out.println(clientsMap);
         client.helloBack();
     }
 
@@ -99,7 +100,10 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     public void send(MessageDto message) throws RemoteException {
         System.out.println(message);
         String reciverr = message.getReciver();
+        System.out.println(reciverr);
+        System.out.println(clientsMap.keySet());
         if (clientsMap.containsKey(reciverr)) {
+            System.out.println("yes contains " + clientsMap.size() + " " +clientsMap.get(reciverr).getPhoneNumber());
             Client reciver = clientsMap.get(reciverr);
             reciver.reciveMessage(message);
         }
@@ -177,5 +181,35 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         }
         return listOfNameContact;
     }
+
+    public List<ContactDto> getUserContacts(String phone) throws RemoteException {
+        System.out.println(phone);
+        ContactImpl contactImpl = new ContactImpl();
+        return contactImpl.getContactsForUser(phone);
+    }
+
+    @Override
+    public void notifyUsersOnline(Client client) throws RemoteException {
+        ContactImpl contactImpl = new ContactImpl();
+        var listOfContatcs = contactImpl.getContactsForUser(client.getPhoneNumber());
+        listOfContatcs.forEach(e -> {
+            String phone = e.getFriendPhoneNumber();
+            if(clientsMap.containsKey(phone)){
+                try {
+                    clientsMap.get(phone).userOnlineNotify(e);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+    public boolean editProfile(UserDto uDto) {
+        UserImpl userDao = new UserImpl();
+        UserMapper userMapper = new UserMapper();
+        User userEntity=userMapper.toEntity(uDto);
+        boolean isUpdated=userDao.updateUser(userEntity);
+        return isUpdated;
+    }
+    
 
 }

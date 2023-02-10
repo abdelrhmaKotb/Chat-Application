@@ -17,4 +17,6 @@ public interface UserDao {
     boolean isPhoneNumberExist(String phoneNumber);
 
     List<User> getUsersByNumbers(List<String> listOfNumbers);
+    
+    boolean updateUser(User newData);
 }

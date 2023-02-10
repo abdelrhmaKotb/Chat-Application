@@ -2,9 +2,9 @@ package gov.iti.jets;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import gov.iti.jets.business.helper.StageCoordinator;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.interfaces.Client;
-import gov.iti.jets.business.helper.StageCoordinator;
 
 
 public class App extends Application {

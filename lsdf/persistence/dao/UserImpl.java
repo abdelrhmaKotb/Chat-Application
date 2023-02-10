@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import gov.iti.jets.business.services.PasswordHashing;
 import gov.iti.jets.persistence.dao.interfaces.UserDao;
 import gov.iti.jets.persistence.entities.User;
 import gov.iti.jets.persistence.utils.DBConnecttion;
@@ -121,7 +120,7 @@ public class UserImpl implements UserDao {
 
             PreparedStatement stm = con.prepareStatement("SELECT * FROM user WHERE phone_number = ? and password = ?");
             stm.setString(1, phoneNumber);
-            stm.setString(2, PasswordHashing.doHahing(password)); // rember to use hash this password after registration
+            stm.setString(2, PasswordHashing.doHahing(password)); 
             // fineshed
             ResultSet result = stm.executeQuery();
             File file = new File("profile_image");

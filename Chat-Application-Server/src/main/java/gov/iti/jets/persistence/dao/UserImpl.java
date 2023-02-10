@@ -112,7 +112,7 @@ public class UserImpl implements UserDao {
             PreparedStatement stm = con.prepareStatement(
                     "SELECT  *  FROM user WHERE phone_number = ? and password = ?");
             stm.setString(1, phoneNumber);
-            stm.setString(2, password); // rember to use hash this password after registration fineshed
+            stm.setString(2,PasswordHashing.doHahing(password)); // rember to use hash this password after registration fineshed
             ResultSet result = stm.executeQuery();
 
             if (result.next()) {
@@ -183,5 +183,24 @@ public class UserImpl implements UserDao {
             e.printStackTrace();
         }
         return listOfUsers;
+    @Override
+    public boolean updateUser(User newData) {
+        try (Connection con = DBConnecttion.getConnection()) {
+            String query = "update user set name=?, email=?,  country_id=?, date_of_birth=?,bio=?  where phone_number=?";
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setString(1, newData.getName());
+            statement.setString(2, newData.getEmail());
+            statement.setInt(3, newData.getCountry());
+            statement.setDate(4, newData.getDateOfBirth());
+            statement.setString(5, newData.getBio());
+            //statement.setString(6, newData.getStatus());
+            statement.setString(6, newData.getPhoneNumber());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }

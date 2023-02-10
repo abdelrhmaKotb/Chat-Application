@@ -10,7 +10,6 @@ package gov.iti.jets.business.services;
 // import gov.iti.jets.persistence.entities.User;
 
 import java.rmi.RemoteException;
-
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.interfaces.Server;

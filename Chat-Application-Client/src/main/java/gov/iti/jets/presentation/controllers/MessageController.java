@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
+import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.MessageDto;
 import javafx.scene.control.Label;
@@ -28,6 +29,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 import javafx.scene.control.TextArea;
+
 public class MessageController implements Initializable {
     @FXML
     Text recieverNameText;
@@ -41,12 +43,20 @@ public class MessageController implements Initializable {
     ImageView staticImage;
     @FXML
     Circle circle;
+
+    public static MessageController messageController;
+
+    public MessageController() {
+        messageController = this;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        staticImage =new ImageView();
+        staticImage = new ImageView();
 
     }
+
     @FXML
     private void sendAction(MouseEvent event) {
 
@@ -54,30 +64,33 @@ public class MessageController implements Initializable {
 
     }
 
-
     public void send() {
         MessageDto msg = new MessageDto();
+        msg.setReciver(recieverNameText.getText());
+        msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
+        msg.setMessage(msgTextField.getText());
 
-        MessageDto.MessageContent content = msg.new MessageContent("fisrt msg", 0, null, null, null, false, false, false);
         try {
             RMIConnection.getServerServive().send(msg);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        chatComponent(Pos.CENTER_RIGHT);
+        chatComponent(Pos.CENTER_RIGHT, msg);
     }
 
+    public void recive(MessageDto mDto) {
+        chatComponent(Pos.CENTER_LEFT, mDto);
+    }
 
     public void setRecievedMsg(String msg) {
 
     }
+
     private Circle imageChatCSS() {
         ImageView chatImage = new ImageView();
         File file = new File("C:/Users/PC/Downloads/images.jpg");
 
-
-
-        Circle circle=new Circle();
+        Circle circle = new Circle();
         circle.setRadius(11);
         chatImage.setImage(staticImage.getImage());
         chatImage.setFitHeight(35);
@@ -88,7 +101,7 @@ public class MessageController implements Initializable {
         return circle;
     }
 
-    private Label messageChatCSS(String color) {
+    private Label messageChatCSS(String color, MessageDto mDto) {
         Label msg = new Label();
         msg.setId("msglabel");
         msg.setStyle("-fx-background-color: " + color + "; -fx-font-size: 15; -fx-background-radius: 3;");
@@ -98,28 +111,24 @@ public class MessageController implements Initializable {
         msg.setMaxWidth(250);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        msg.setText(msgTextField.getText()+"\n["+sdf.format(timestamp)+"]");
-
+        msg.setText(mDto.getMessage() + "\n[" + sdf.format(timestamp) + "]");
 
         return msg;
     }
 
-    private void chatComponent(Pos p) {
+    private void chatComponent(Pos p, MessageDto messageDto) {
         HBox hbox = new HBox();
         hbox.setAlignment(p);
         hbox.setSpacing(5);
         hbox.setPadding(new Insets(10, 10, 10, 10));
-        hbox.getChildren().addAll(messageChatCSS("#F5F7FB"), imageChatCSS());
+        hbox.getChildren().addAll(messageChatCSS("#F5F7FB", messageDto), imageChatCSS());
 
         msgvBox.getChildren().add(hbox);
         msgTextField.clear();
     }
 
-
-    public  void setReciverName(String name)
-    {
+    public void setReciverName(String name) {
         recieverNameText.setText(name);
     }
-
 
 }

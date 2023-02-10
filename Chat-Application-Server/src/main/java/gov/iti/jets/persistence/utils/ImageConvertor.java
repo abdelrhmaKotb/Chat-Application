@@ -9,6 +9,10 @@ public class ImageConvertor {
 
     public static byte[] BlobToBytes(Blob blob) {
 
+        if(blob == null){
+            return null;
+        }
+
         byte[] blobAsBytes = null;
 
         try {
