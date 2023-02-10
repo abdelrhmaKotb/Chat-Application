@@ -2,7 +2,9 @@ package gov.iti.jets.interfaces;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
+import gov.iti.jets.dto.RequestDto;
 import gov.iti.jets.dto.UserDto;
 
 public interface Server  extends Remote{
@@ -10,4 +12,9 @@ public interface Server  extends Remote{
     void register(Client client) throws RemoteException;
     void unregister(Client client) throws RemoteException;
     UserDto login(String phoneUmber, String password) throws RemoteException;
+    void sendRequests(String senderPhoneNumber,List<String> listOfContacts) throws RemoteException;
+    String chkNumberInDB(String currentUserNumber, String contactNumber) throws RemoteException;
+    boolean isUserExistInDB(String contactNumber) throws RemoteException;
+    boolean isContactExistInDB(String currentUserNumber, String contactNumber) throws RemoteException;
+    boolean isRequestExistInDB(String currentUserNumber, String contactNumber)throws RemoteException;
 }
