@@ -1,23 +1,41 @@
 package gov.iti.jets.business.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import gov.iti.jets.business.helper.ModelsFactory;
+import gov.iti.jets.business.rmi.RMIConnection;
+import gov.iti.jets.dto.ContactDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class ContactsModel {
     // i think should be list of contacts not only string later 
-    ObservableList<String> contacts;
+    ObservableList<ContactDto> contacts;
 
     public ContactsModel()
     {
-        contacts = FXCollections.observableArrayList("ahned mohamed","yarek fawaz","koko momo");
+        try {
+            List<ContactDto> userContacts =  RMIConnection.getServerServive().getUserContacts(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
+            System.out.println(userContacts.size());
+            contacts = FXCollections.observableArrayList(userContacts);
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
     }
 
 
-    public ObservableList<String> getContacts() {
+    public ObservableList<ContactDto> getContacts() {
         return contacts;
     }
 
-    public void setContacts(String contact) {
+    public ObservableList<String> getContactsPhoneNumber() {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        contacts.forEach(e -> list.add(e.getFriendPhoneNumber()));
+        return list;
+    }
+
+    public void setContacts(ContactDto contact) {
         contacts.add(contact);
     }
 

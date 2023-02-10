@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.dto.MessageDto;
 import gov.iti.jets.dto.RequestDto;
@@ -34,4 +35,6 @@ public interface Server extends Remote {
     boolean isContactExistInDB(String currentUserNumber, String contactNumber) throws RemoteException;
 
     boolean isRequestExistInDB(String currentUserNumber, String contactNumber) throws RemoteException;
+
+    List<ContactDto> getUserContacts(String phone) throws RemoteException;
 }

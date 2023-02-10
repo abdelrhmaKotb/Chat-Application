@@ -1,17 +1,20 @@
 package gov.iti.jets.business.models;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class CurrentUserModel {
 
-    private StringProperty phoneNumber;
-    private StringProperty name;
-    private StringProperty email;
+    private StringProperty phoneNumber = new SimpleStringProperty();
+    private StringProperty name = new SimpleStringProperty();
+    private StringProperty email =  new SimpleStringProperty();
     // private StringProperty gender;
     // private StringProperty country;
     // // private   dateOfBirth;
     // private StringProperty bio;
-    private StringProperty status;
+    private StringProperty status =  new SimpleStringProperty();
+
+    
 
 
     public StringProperty phoneNumberProperty() {
@@ -19,11 +22,11 @@ public class CurrentUserModel {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber.setValue(phoneNumber);
+        this.phoneNumber.set(phoneNumber);
     }
 
     public String getPhoneNumber() {
-        return phoneNumber.getValue();
+        return phoneNumber.get();
     }
 
 
@@ -34,11 +37,11 @@ public class CurrentUserModel {
     }
 
     public void setName(String name) {
-        this.name.setValue(name);
+        this.name.set(name);
     }
 
     public String getName() {
-        return phoneNumber.getValue();
+        return phoneNumber.get();
     }
 
 
@@ -49,11 +52,11 @@ public class CurrentUserModel {
     }
 
     public void setEmail(String email) {
-        this.email.setValue(email);
+        this.email.set(email);
     }
 
     public String getEmail() {
-        return email.getValue();
+        return email.get();
     }
 
 
@@ -63,11 +66,11 @@ public class CurrentUserModel {
     }
 
     public void setStatus(String status) {
-        this.status.setValue(status);
+        this.status.set(status);
     }
 
     public String getStatus() {
-        return status.getValue();
+        return status.get();
     }
 
     

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.ContactsModel;
+import gov.iti.jets.dto.ContactDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -35,7 +36,7 @@ public class ContactsController implements Initializable {
     @FXML
     TextField txtSearch;
 
-    ObservableList<String> contacts;
+    ObservableList<ContactDto> contacts;
 
     @FXML
     private ImageView addContactBtn;
@@ -57,7 +58,7 @@ public class ContactsController implements Initializable {
         ContactsModel contactsModel = modelsFactory.getContactsModel();
         contacts = contactsModel.getContacts();
 
-        listContacts.setItems(contacts);
+        listContacts.setItems(contactsModel.getContactsPhoneNumber());
 
         listContacts.getSelectionModel().selectedItemProperty().addListener((obs, old, newVal) -> {
             if (newVal == null)
@@ -97,8 +98,8 @@ public class ContactsController implements Initializable {
 
     @FXML
     public void handelShearch() {
-        listContacts.setItems(FXCollections.observableArrayList(
-                contacts.stream().filter(e -> e.contains(txtSearch.getText())).collect(Collectors.toList())));
+        // listContacts.setItems(FXCollections.observableArrayList(
+        //         contacts.stream().filter(e -> e.contains(txtSearch.getText())).collect(Collectors.toList())));
 
     }
 

@@ -1,10 +1,8 @@
 package gov.iti.jets.business.services;
 
-import java.util.Date;
 import java.util.List;
 import java.rmi.RemoteException;
 import gov.iti.jets.business.rmi.RMIConnection;
-import gov.iti.jets.dto.RequestDto;
 import gov.iti.jets.interfaces.Server;
 
 public class RequestService {

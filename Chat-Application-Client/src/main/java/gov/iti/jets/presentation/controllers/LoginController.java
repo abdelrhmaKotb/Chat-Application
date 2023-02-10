@@ -5,7 +5,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import gov.iti.jets.business.services.LoginService;
 import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.helper.StageCoordinator;
+import gov.iti.jets.business.models.CurrentUserModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -73,8 +75,17 @@ public class LoginController implements Initializable {
                 lblErrorOrSucessLogin.setOpacity(1);
                 lblErrorOrSucessLogin.setStyle("-fx-text-fill:green");
 
+                CurrentUserModel currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
+                currentUserModel.setName(user.getName());
+                
+                currentUserModel.setPhoneNumber(user.getPhoneNumber());
+                System.out.println(currentUserModel.getPhoneNumber() + " sfdf phome");
+                currentUserModel.setEmail(user.getEmail());
+                // currentUserModel.setStatus(user.getStatus());
                  StageCoordinator coordinator = StageCoordinator.getInstance();
                  coordinator.moveToChat();
+
+                 System.out.println(user);
              
 
             }
