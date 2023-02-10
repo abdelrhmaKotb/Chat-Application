@@ -1,88 +1,94 @@
-// package gov.iti.jets.business.dto;
+package gov.iti.jets.dto;
 
-// public class MessageDto {
-//     private String message;
-//     private int fontSize;
-//     private String fontStyle;
-//     private String fontColor;
-//     private String backgroundColor;
-//     private boolean isBold;
-//     private boolean isUnderlined;
-//     private boolean isItalic;
-//     public MessageDto(String message, int fontSize, String fontStyle, String fontColor, String backgroundColor, boolean isBold, boolean isUnderlined, boolean isItalic) {
-//         this.message = message;
-//         this.fontSize = fontSize;
-//         this.fontStyle = fontStyle;
-//         this.fontColor = fontColor;
-//         this.backgroundColor = backgroundColor;
-//         this.isBold = isBold;
-//         this.isUnderlined = isUnderlined;
-//         this.isItalic = isItalic;
-//     }
-//     public String getMessage() {
-//         return message;
-//     }
+import java.io.Serializable;
 
-//     public void setMessage(String message) {
-//         this.message = message;
-//     }
+public class MessageDto implements Serializable {
 
-//     public int getFontSize() {
-//         return fontSize;
-//     }
+    class MessageContent {
+        private String message;
+        private int fontSize;
+        private String fontStyle;
+        private String fontColor;
+        private String backgroundColor;
+        private boolean isBold;
+        private boolean isUnderlined;
+        private boolean isItalic;
 
-//     public void setFontSize(int fontSize) {
-//         this.fontSize = fontSize;
-//     }
+        public MessageContent(String message, int fontSize, String fontStyle, String fontColor, String backgroundColor,
+                boolean isBold, boolean isUnderlined, boolean isItalic) {
+            this.message = message;
+            this.fontSize = fontSize;
+            this.fontStyle = fontStyle;
+            this.fontColor = fontColor;
+            this.backgroundColor = backgroundColor;
+            this.isBold = isBold;
+            this.isUnderlined = isUnderlined;
+            this.isItalic = isItalic;
+        }
 
-//     public String getFontStyle() {
-//         return fontStyle;
-//     }
+        public String getMessage() {
+            return message;
+        }
 
-//     public void setFontStyle(String fontStyle) {
-//         this.fontStyle = fontStyle;
-//     }
+        public void setMessage(String message) {
+            this.message = message;
+        }
 
-//     public String getFontColor() {
-//         return fontColor;
-//     }
+        public int getFontSize() {
+            return fontSize;
+        }
 
-//     public void setFontColor(String fontColor) {
-//         this.fontColor = fontColor;
-//     }
+        public void setFontSize(int fontSize) {
+            this.fontSize = fontSize;
+        }
 
-//     public String getBackgroundColor() {
-//         return backgroundColor;
-//     }
+        public String getFontStyle() {
+            return fontStyle;
+        }
 
-//     public void setBackgroundColor(String backgroundColor) {
-//         this.backgroundColor = backgroundColor;
-//     }
+        public void setFontStyle(String fontStyle) {
+            this.fontStyle = fontStyle;
+        }
 
-//     public boolean isBold() {
-//         return isBold;
-//     }
+        public String getFontColor() {
+            return fontColor;
+        }
 
-//     public void setBold(boolean bold) {
-//         isBold = bold;
-//     }
+        public void setFontColor(String fontColor) {
+            this.fontColor = fontColor;
+        }
 
-//     public boolean isUnderlined() {
-//         return isUnderlined;
-//     }
+        public String getBackgroundColor() {
+            return backgroundColor;
+        }
 
-//     public void setUnderlined(boolean underlined) {
-//         isUnderlined = underlined;
-//     }
+        public void setBackgroundColor(String backgroundColor) {
+            this.backgroundColor = backgroundColor;
+        }
 
-//     public boolean isItalic() {
-//         return isItalic;
-//     }
+        public boolean isBold() {
+            return isBold;
+        }
 
-//     public void setItalic(boolean italic) {
-//         isItalic = italic;
-//     }
+        public void setBold(boolean bold) {
+            isBold = bold;
+        }
 
+        public boolean isUnderlined() {
+            return isUnderlined;
+        }
 
+        public void setUnderlined(boolean underlined) {
+            isUnderlined = underlined;
+        }
 
-// }
+        public boolean isItalic() {
+            return isItalic;
+        }
+
+        public void setItalic(boolean italic) {
+            isItalic = italic;
+        }
+    }
+
+}

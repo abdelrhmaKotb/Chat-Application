@@ -2,6 +2,7 @@ package gov.iti.jets.interfaces;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.dto.UserDtoSignup;

@@ -1,20 +1,21 @@
-package gov.iti.jets.dto;
+package gov.iti.jets.persistence.entities;
 
-import java.io.Serializable;
 import java.sql.Date;
 
-public class GroupDto implements Serializable{
+public class Group {
     private int id;
     private String name;
     private Date dateOfCreation;
     private String adminPhoneNumber;
 
-    public GroupDto (int id, String name, Date dateOfCreation, String adminPhoneNumber) {
+    public Group(int id, String name, Date dateOfCreation, String adminPhoneNumber) {
         this.id = id;
         this.name = name;
         this.dateOfCreation = dateOfCreation;
         this.adminPhoneNumber = adminPhoneNumber;
     }
+
+   
 
     public int getId() {
         return id;
@@ -47,5 +48,4 @@ public class GroupDto implements Serializable{
     public void setAdminPhoneNumber(String adminPhoneNumber) {
         this.adminPhoneNumber = adminPhoneNumber;
     }
-
 }
