@@ -13,4 +13,6 @@ public interface UserDao {
     // int create(User user);
 
     boolean isPhoneNumberExist(String phoneNumber);
+    
+    boolean updateUser(User newData);
 }

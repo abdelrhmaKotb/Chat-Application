@@ -150,4 +150,14 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return contactImpl.getContactsForUser(phone);
     }
 
+    @Override
+    public boolean editProfile(UserDto uDto) {
+        UserImpl userDao = new UserImpl();
+        UserMapper userMapper = new UserMapper();
+        User userEntity=userMapper.toEntity(uDto);
+        boolean isUpdated=userDao.updateUser(userEntity);
+        return isUpdated;
+    }
+    
+
 }

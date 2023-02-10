@@ -238,7 +238,7 @@
                         <HBox prefHeight="53.0" prefWidth="264.0">
                            <children>
                               <Pane prefHeight="54.0" prefWidth="202.0" HBox.hgrow="ALWAYS" />
-                              <Button fx:id="saveBtn" mnemonicParsing="false" style="-fx-background-color: #7269EF;" text="Save" textFill="WHITE" HBox.hgrow="ALWAYS">
+                              <Button fx:id="saveBtn" onMouseClicked="#save" mnemonicParsing="false" style="-fx-background-color: #7269EF;" text="Save" textFill="WHITE" HBox.hgrow="ALWAYS">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
