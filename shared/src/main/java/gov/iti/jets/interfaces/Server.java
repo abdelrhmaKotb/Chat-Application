@@ -24,9 +24,14 @@ public interface Server extends Remote {
     void send(MessageDto message) throws RemoteException;
 
     UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException;
-    void sendRequests(String senderPhoneNumber,List<String> listOfContacts) throws RemoteException;
+
+    void sendRequests(String senderPhoneNumber, List<String> listOfContacts) throws RemoteException;
+
     String chkNumberInDB(String currentUserNumber, String contactNumber) throws RemoteException;
+
     boolean isUserExistInDB(String contactNumber) throws RemoteException;
+
     boolean isContactExistInDB(String currentUserNumber, String contactNumber) throws RemoteException;
-    boolean isRequestExistInDB(String currentUserNumber, String contactNumber)throws RemoteException;
+
+    boolean isRequestExistInDB(String currentUserNumber, String contactNumber) throws RemoteException;
 }
