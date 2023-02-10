@@ -81,22 +81,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     }
 
     @Override
-    public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
-
-        UserImpl userDao = new UserImpl();
-        User tempUser=new UserSignupMapperImpl().toEntity(signupDto);
-       
-         System.out.println(signupDto);
-         System.out.println(tempUser.toString());
-
-        User user = null;//userDao.createUser(new UserSignupMapperImpl().toEntity(signupDto));
-        if (user == null) {
-            return null;
-        }
-        return new UserSignupMapperImpl().toDto(user);
-    }
-
-    @Override
     public void send(MessageDto message) throws RemoteException {
         System.out.println(message);
         String reciverr = message.getReciver();
@@ -151,5 +135,18 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
              return new countryDaoImpl().getCountries();
 
     }
+    @Override
+    public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
+       System.out.println("inside function signup");
+        UserImpl userDao = new UserImpl();
+        User tempUser=new UserSignupMapperImpl().toEntity(signupDto);
+       
 
+        User user =userDao.createUser(new UserSignupMapperImpl().toEntity(signupDto));
+        if (user == null) {
+            System.out.println("this user already exist and not created");
+            return null;
+        }
+        return new UserSignupMapperImpl().toDto(user);
+    }
 }

@@ -169,7 +169,6 @@ public class SignupController implements Initializable {
 
     @FXML
     void clickBtnSignup(ActionEvent event) {
-
         if (validatePassword() && confirmPass()
                 && isValidGeneder() && isValidCountry()
                 && isValidPhoneNumber() && isValidUserName()
@@ -194,7 +193,7 @@ public class SignupController implements Initializable {
                 user.setGender(Gender.FEMAIL);
             }
             //6-country
-            user.setCountry(1997);
+            user.setCountry(getIndex(choiceboxCountry.getValue()));
             //7-date of birth
              user.setDateOfBirth(Date.valueOf(datepickerDateOfBirth.getValue()));
              //8-bio
@@ -212,10 +211,9 @@ public class SignupController implements Initializable {
             if (result != null) {
                 successMessage.setOpacity(1);
                 StageCoordinator coordinator = StageCoordinator.getInstance();
-                coordinator.moveToChat();
-
+                    System.out.println("user no exist sign up sucess");
             } else {
-
+                System.out.println("signup fieald already exist user ");
                 errorSignup.setOpacity(1);
             }
 
@@ -411,8 +409,10 @@ public class SignupController implements Initializable {
         int index = 0;
         for (int i = 0; i < countriesNames.size(); i++) {
 
-            if (countriesNames.get(i).getName() == name)
-                index = countriesNames.get(i).getCount();
+            if (countriesNames.get(i).getName().equals(name)){
+                index = countriesNames.get(i).getId();
+                break;
+            }
         }
         return index;
     }

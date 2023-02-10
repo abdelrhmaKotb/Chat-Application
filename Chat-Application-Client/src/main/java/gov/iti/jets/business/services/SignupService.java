@@ -15,19 +15,21 @@ public class SignupService {
     public UserDtoSignup signupUser(UserDtoSignup signupDto) {
         Server ser = RMIConnection.getServerServive();
 
-        UserDtoSignup user = null;
+      
         try {
-            user = ser.Signup(signupDto);
+            UserDtoSignup user  = ser.Signup(signupDto);
+            return user;
+
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        return user;
+        return null;
     }
 
     public ArrayList<CountryDto> getCountries() {
         Server ser = RMIConnection.getServerServive();
 
-        ArrayList<CountryDto>  countries = null;
+        ArrayList<CountryDto> countries = null;
         try {
             countries = ser.getCountriesNames();
             System.out.println(countries.size());

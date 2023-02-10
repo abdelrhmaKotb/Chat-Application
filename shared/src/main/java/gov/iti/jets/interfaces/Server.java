@@ -24,7 +24,6 @@ public interface Server extends Remote {
 
     void send(MessageDto message) throws RemoteException;
 
-   public  UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException;
 
     void sendRequests(String senderPhoneNumber, List<String> listOfContacts) throws RemoteException;
 
@@ -37,5 +36,8 @@ public interface Server extends Remote {
     boolean isRequestExistInDB(String currentUserNumber, String contactNumber) throws RemoteException;
     
    public ArrayList<CountryDto> getCountriesNames() throws RemoteException;
+   
+   public  UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException;
+
 
 }

@@ -123,7 +123,7 @@ public class UserDtoSignup implements Serializable {
     public String toString() {
         return "UserDtoSignup [phoneNumber=" + phoneNumber + ", name=" + name + ", email=" + email + ", password="
                 + password + ", gender=" + gender + ", country=" + country + ", dateOfBirth=" + dateOfBirth + ", bio="
-                + bio + ", status=" + status + ", image=" + Arrays.toString(image) + "]";
+                + bio + ", status=" + status + ", image="  + "]";
     }
 
 }

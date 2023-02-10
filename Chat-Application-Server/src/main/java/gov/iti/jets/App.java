@@ -1,6 +1,12 @@
 package gov.iti.jets;
 
+import java.util.ArrayList;
+
 import gov.iti.jets.business.rmi.RMIConnection;
+import gov.iti.jets.dto.CountryDto;
+import gov.iti.jets.persistence.dao.UserImpl;
+import gov.iti.jets.persistence.dao.countryDaoImpl;
+import gov.iti.jets.persistence.entities.User;
 import gov.iti.jets.persistence.utils.DBConnecttion;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,13 +18,12 @@ public class App  extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-       /*  countryDaoImpl objDao=new countryDaoImpl();
-        ArrayList<CountryDto>objCon=di.getCountries();
-    
-          for(CountryDto cDto:objCon)
-             System.out.println(cDto.toString());*/
-            
-      
+     /*    UserImpl obj=new UserImpl();
+            User user =   obj.seletcByPhoneNumber("0111111111");
+            if(user==null)
+                 System.out.println("not exists user");
+                 else
+      System.out.println(user.toString());*/
       
      
     }
