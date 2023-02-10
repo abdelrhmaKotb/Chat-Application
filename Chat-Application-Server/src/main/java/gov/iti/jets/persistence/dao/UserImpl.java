@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import gov.iti.jets.enums.EnumsUtil;
 import gov.iti.jets.persistence.dao.interfaces.UserDao;
@@ -33,7 +35,7 @@ public class UserImpl implements UserDao {
             stmt.setString(3, user.getEmail());
             stmt.setString(4, PasswordHashing.doHahing(user.getPassword()));
             stmt.setInt(5, user.getGender().ordinal());
-            stmt.setInt(6,user.getCountry());
+            stmt.setInt(6, user.getCountry());
             stmt.setDate(7, user.getDateOfBirth());
             stmt.setString(8, user.getBio());
             stmt.setInt(9, user.getStatus().ordinal());
@@ -149,5 +151,37 @@ public class UserImpl implements UserDao {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public List<User> getUsersByNumbers(List<String> listOfNumbers) {
+        List<User> listOfUsers = new ArrayList<>();
+        try (Connection con = DBConnecttion.getConnection();) {
+            String numbers = "";
+            for (String num : listOfNumbers) {
+                numbers += num + ",";
+            }
+            numbers = numbers.substring(0, numbers.length() - 1);
+            PreparedStatement stm = con.prepareStatement("SELECT * FROM user WHERE phone_number in (" + numbers + ")");
+            ResultSet result = stm.executeQuery();
+            while (result.next()) {
+                listOfUsers.add(new User(
+                        result.getString("phone_number"),
+                        result.getString("name"),
+                        result.getString("email"),
+                        result.getString("password"),
+                        EnumsUtil.fromOrdinalToGender(result.getInt("gender")),
+                        result.getInt("country_id"),
+                        result.getDate("date_of_birth"),
+                        result.getString("bio"),
+                        result.getBoolean("is_admin"),
+                        result.getBoolean("is_deleted"),
+                        EnumsUtil.fromOrdinalToStatus(result.getInt("status_id")),
+                        ImageConvertor.BlobToBytes(result.getBlob("profile_image"))));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listOfUsers;
     }
 }

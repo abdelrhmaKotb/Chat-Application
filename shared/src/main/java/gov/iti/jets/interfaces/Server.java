@@ -20,6 +20,8 @@ public interface Server extends Remote {
     UserDto login(String phoneUmber, String password) throws RemoteException;
 
     public List<GroupDto> getGroups(String phoneNumber) throws RemoteException;
+    void createGroup(String name, String currentUserNumber, List<String> listOfNumbers) throws RemoteException;
+    List<String> getnameOfContacts(String currentUserNumber) throws RemoteException;
 
     void send(MessageDto message) throws RemoteException;
 

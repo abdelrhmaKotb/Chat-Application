@@ -22,8 +22,9 @@ import gov.iti.jets.dto.UserDtoSignup;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
 import gov.iti.jets.persistence.dao.UserImpl;
-
+import gov.iti.jets.persistence.entities.Contact;
 import gov.iti.jets.persistence.entities.Group;
+import gov.iti.jets.persistence.entities.GroupMembers;
 import gov.iti.jets.persistence.dao.ContactImpl;
 import gov.iti.jets.persistence.dao.RequestImpl;
 import gov.iti.jets.persistence.dao.interfaces.UserDao;
@@ -142,6 +143,39 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     public boolean isRequestExistInDB(String currentUserNumber, String contactNumber) {
         RequestImpl RequestDao = new RequestImpl();
         return RequestDao.isRequestExist(currentUserNumber, contactNumber);
+    }
+
+    @Override
+    public void createGroup(String name, String currentUserNumber, List<String> listOfNumbers) throws RemoteException {
+        GroupImpl groupIml = new GroupImpl();
+        Group group = new Group(name, new Date(System.currentTimeMillis()), currentUserNumber);
+        int groupId = groupIml.createGroup(group);
+        GroupMembersImpl groupMembersImpl = new GroupMembersImpl();
+        for (int i = 0; i < listOfNumbers.size(); i++) {
+            GroupMembers groupMember = new GroupMembers(groupId, listOfNumbers.get(i),
+                    new Date(System.currentTimeMillis()));
+            groupMembersImpl.addMember(groupMember);
+        }
+
+    }
+
+    @Override
+    public List<String> getnameOfContacts(String currentUserNumber) throws RemoteException {
+        ContactImpl contactImpl = new ContactImpl();
+        List<Contact> contacts = contactImpl.getContactsForUser(currentUserNumber);
+        List<String> listOfNumbers = new ArrayList<>();
+        List<String> listOfNameContact = new ArrayList<>();
+        if (contacts.size() > 0) {
+            for (int i = 0; i < contacts.size(); i++) {
+                listOfNumbers.add(contacts.get(i).getFriendPhoneNumber());
+            }
+            UserImpl userImp = new UserImpl();
+            List<User> listOfUsers = userImp.getUsersByNumbers(listOfNumbers);
+            for (int i = 0; i < listOfUsers.size(); i++) {
+                listOfNameContact.add(listOfUsers.get(i).getName() + " : " + listOfUsers.get(i).getPhoneNumber());
+            }
+        }
+        return listOfNameContact;
     }
 
 }

@@ -15,6 +15,12 @@ public class Group {
         this.adminPhoneNumber = adminPhoneNumber;
     }
 
+    public Group(String name, Date dateOfCreation, String adminPhoneNumber) {
+        this.id = id;
+        this.name = name;
+        this.dateOfCreation = dateOfCreation;
+        this.adminPhoneNumber = adminPhoneNumber;
+    }
    
 
     public int getId() {
