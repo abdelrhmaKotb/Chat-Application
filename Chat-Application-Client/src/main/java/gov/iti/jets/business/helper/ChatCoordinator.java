@@ -45,8 +45,6 @@ public class ChatCoordinator {
 
             System.out.println(grid.getChildren().isEmpty());
 
-            // grid.getChildren().get(2)
-            // grid.getChildren().add(cuurrent)
             if (!chats.containsKey(phone)) {
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/message.fxml"));
