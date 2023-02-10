@@ -1,5 +1,8 @@
 package gov.iti.jets.persistence.utils;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.Blob;
 import java.sql.SQLException;
 
@@ -35,5 +38,11 @@ public class ImageConvertor {
         }
 
         return blob;
+    }
+    
+    public static byte[] convertImageToBytes(File file) throws IOException {
+        byte[] data = Files.readAllBytes(file.toPath());
+        return data;
+
     }
 }
