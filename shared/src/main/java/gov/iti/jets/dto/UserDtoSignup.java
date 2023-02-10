@@ -6,44 +6,36 @@ import java.sql.Date;
 import gov.iti.jets.enums.Gender;
 import gov.iti.jets.enums.Mood;
 
-public class UserDto implements Serializable {
+
+public class UserDtoSignup implements Serializable{
 
     private String phoneNumber;
     private String name;
     private String email;
+    private String password;
     private Gender gender;
     private int country;
     private Date dateOfBirth;
-    private String bio;  
+    private String bio;
     private Mood status;
-    private boolean isAdmin;
     private byte[] image;
 
-    public UserDto(String phoneNumber, String name, String email, Gender gender, int country, Date dateOfBirth,
-            String bio, Mood status, boolean isAdmin,byte[] image) {
+    public UserDtoSignup(){}
+
+    public UserDtoSignup(String phoneNumber, String name, String email, String password, Gender gender, int country,
+            Date dateOfBirth, String bio, Mood status,byte[] image) {
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.email = email;
+        this.password = password;
         this.gender = gender;
         this.country = country;
         this.dateOfBirth = dateOfBirth;
         this.bio = bio;
         this.status = status;
-        this.isAdmin = isAdmin;
         this.image=image;
     }
-    public UserDto(String phoneNumber, String name, String email, Gender gender, int country, Date dateOfBirth,
-            String bio, Mood status, boolean isAdmin) {
-        this.phoneNumber = phoneNumber;
-        this.name = name;
-        this.email = email;
-        this.gender = gender;
-        this.country = country;
-        this.dateOfBirth = dateOfBirth;
-        this.bio = bio;
-        this.status = status;
-        this.isAdmin = isAdmin;
-    }
+   
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -69,6 +61,14 @@ public class UserDto implements Serializable {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Gender getGender() {
         return gender;
     }
@@ -89,8 +89,8 @@ public class UserDto implements Serializable {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setDateOfBirth(Date localDate) {
+        this.dateOfBirth = localDate;
     }
 
     public String getBio() {
@@ -108,25 +108,11 @@ public class UserDto implements Serializable {
     public void setStatus(Mood status) {
         this.status = status;
     }
+ public void setImage(byte[] image){
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }
-
-    public void setImage(byte[] image){
-        this.image=image;
+        this.image = image;
     }
     public byte[] getImage(){
         return image;
-    }
-
-
-    @Override
-    public String toString() {
-        return "name " + name + "phone " + phoneNumber;
     }
 }

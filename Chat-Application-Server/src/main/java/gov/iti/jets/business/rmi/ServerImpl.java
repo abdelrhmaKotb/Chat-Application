@@ -10,11 +10,18 @@ import java.util.Map;
 import gov.iti.jets.persistence.dao.GroupImpl;
 import gov.iti.jets.persistence.dao.GroupMembersImpl;
 import gov.iti.jets.business.mapper.*;
+
+import gov.iti.jets.business.mapper.GroupMapper;
+import gov.iti.jets.business.mapper.UserMapper;
+import gov.iti.jets.business.mapper.UserSignupMapperImpl;
 import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.dto.MessageDto;
 import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.dto.UserDtoSignup;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
+import gov.iti.jets.persistence.dao.GroupImpl;
+import gov.iti.jets.persistence.dao.GroupMembersImpl;
 import gov.iti.jets.persistence.dao.UserImpl;
 
 import gov.iti.jets.persistence.entities.Group;
@@ -72,10 +79,19 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return groupDto;
     }
 
-    @Override
-    public UserDto Signup() throws RemoteException {
 
-        return null;
+   
+    @Override
+    public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
+       
+        UserImpl userDao = new UserImpl();
+        UserMapper userMapper = new UserMapper();
+        User user = userDao.createUser(new UserSignupMapperImpl().toEntity(signupDto));
+        if(user == null)
+        {
+            return null;
+        }
+        return new UserSignupMapperImpl().toDto(user);
     }
 
     @Override

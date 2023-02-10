@@ -4,7 +4,10 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import gov.iti.jets.dto.*;
+import gov.iti.jets.dto.GroupDto;
+import gov.iti.jets.dto.MessageDto;
+import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.dto.UserDtoSignup;
 
 public interface Server extends Remote {
     void sayHello() throws RemoteException;
@@ -17,8 +20,7 @@ public interface Server extends Remote {
 
     public List<GroupDto> getGroups(String phoneNumber) throws RemoteException;
 
-    UserDto Signup() throws RemoteException;
-
     void send(MessageDto message) throws RemoteException;
 
+    UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException;
 }

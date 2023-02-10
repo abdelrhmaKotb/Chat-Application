@@ -12,12 +12,7 @@
 // import java.sql.Date;
 // import java.util.regex.*;
 
-// import gov.iti.jets.business.services.SignupService;
-// import gov.iti.jets.persistence.dao.countryDaoImpl;
-// import gov.iti.jets.persistence.entities.Country;
-// import gov.iti.jets.persistence.entities.User;
-// import gov.iti.jets.presentation.helper.StageCoordinator;
-// import gov.iti.jets.presentation.validation.SignUpValidation;
+// import gov.iti.jets.business.helper.StageCoordinator;
 // import javafx.scene.Parent;
 // import javafx.scene.Scene;
 // import javafx.scene.control.Button;
@@ -33,6 +28,9 @@
 // import javafx.scene.shape.Circle;
 // import javafx.stage.FileChooser;
 // import javafx.stage.Stage;
+// import gov.iti.jets.business.services.SignupService;
+// import gov.iti.jets.dto.CountryDto;
+// import gov.iti.jets.presentation.validation.SignUpValidation;
 
 // import java.io.File;
 // import java.io.IOException;
@@ -84,18 +82,13 @@
 //     private Circle mycircle;
 
 //     File file;
-//     ArrayList<Country> countriesNames = null;
+//     ArrayList<CountryDto> countriesNames = null;
 
 //     @Override
 //     public void initialize(URL location, ResourceBundle resources) {
 //         choiceboxGender.getItems().add("Female");
 //         choiceboxGender.getItems().add("Male");
 //         SignUpValidation.validateDate(datepickerDateOfBirth);
-//         /*
-//          * choiceboxCountry.getItems().add("Egypt");
-//          * choiceboxCountry.getItems().add("Saudi Arabi");
-//          * choiceboxCountry.getItems().add("Emrates");
-//          */
 //         countryDaoImpl countryDao = new countryDaoImpl();
 //         countriesNames = countryDao.getCountries();
 //         for (Country c : countriesNames) {
