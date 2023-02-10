@@ -57,6 +57,7 @@ public class MessageController implements Initializable {
 
     public void send() {
         MessageDto msg = new MessageDto();
+        msg.setReciver(recieverNameText.getText());
 
         MessageDto.MessageContent content = msg.new MessageContent("fisrt msg", 0, null, null, null, false, false, false);
         try {

@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ClientImpl extends UnicastRemoteObject implements Client {
-    CurrentUserModel currentUser = ModelsFactory.getInstance().getCurrentUserModel();
+    static CurrentUserModel currentUser = ModelsFactory.getInstance().getCurrentUserModel();
     public ClientImpl() throws RemoteException {
     }
 
@@ -20,6 +20,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 
     @Override
     public String getPhoneNumber() throws RemoteException {
+        System.out.println(currentUser.getPhoneNumber());
         return currentUser.getPhoneNumber();
     }
 

@@ -30,6 +30,7 @@ public class RMIConnection {
         }
     }
 
+
     public static Server getServerServive() {
         return serverServices;
     }
