@@ -35,6 +35,10 @@ public class StageCoordinator {
         primaryStage = stage;
     }
 
+    public Stage getStage() {
+        return primaryStage;
+    }
+
     public void moveToLogin() {
         if (primaryStage == null) {
             throw new RuntimeException("primary stage not set");
