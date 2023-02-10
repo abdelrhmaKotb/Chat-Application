@@ -1,7 +1,6 @@
 package gov.iti.jets.dto;
-import java.io.Serializable;
 
-public class CountryDto implements Serializable{
+public class CountryDto {
 
     private String name;
     private int count;

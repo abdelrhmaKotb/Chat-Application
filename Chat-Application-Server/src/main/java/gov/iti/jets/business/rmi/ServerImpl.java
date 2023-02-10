@@ -15,7 +15,6 @@ import gov.iti.jets.business.mapper.GroupMapper;
 import gov.iti.jets.business.mapper.UserMapper;
 import gov.iti.jets.business.mapper.UserSignupMapperImpl;
 import gov.iti.jets.dto.ContactDto;
-import gov.iti.jets.dto.CountryDto;
 import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.dto.MessageDto;
 import gov.iti.jets.dto.UserDto;
@@ -23,11 +22,7 @@ import gov.iti.jets.dto.UserDtoSignup;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
 import gov.iti.jets.persistence.dao.UserImpl;
-
-
-
-
-import gov.iti.jets.persistence.dao.countryDaoImpl;
+import gov.iti.jets.persistence.entities.Contact;
 import gov.iti.jets.persistence.entities.Group;
 import gov.iti.jets.persistence.entities.GroupMembers;
 import gov.iti.jets.persistence.dao.ContactImpl;
@@ -93,12 +88,8 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
 
         UserImpl userDao = new UserImpl();
-        User tempUser=new UserSignupMapperImpl().toEntity(signupDto);
-       
-         System.out.println(signupDto);
-         System.out.println(tempUser.toString());
-
-        User user = null;//userDao.createUser(new UserSignupMapperImpl().toEntity(signupDto));
+        UserMapper userMapper = new UserMapper();
+        User user = userDao.createUser(new UserSignupMapperImpl().toEntity(signupDto));
         if (user == null) {
             return null;
         }
@@ -158,22 +149,67 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return RequestDao.isRequestExist(currentUserNumber, contactNumber);
     }
 
-    @Override 
-    public ArrayList<CountryDto> getCountriesNames() throws RemoteException{
-             return new countryDaoImpl().getCountries();
-
-    }
-
     @Override
     public void createGroup(String name, String currentUserNumber, List<String> listOfNumbers) throws RemoteException {
-        // TODO Auto-generated method stub
-        
+        GroupImpl groupIml = new GroupImpl();
+        Group group = new Group(name, new Date(System.currentTimeMillis()), currentUserNumber);
+        int groupId = groupIml.createGroup(group);
+        GroupMembersImpl groupMembersImpl = new GroupMembersImpl();
+        for (int i = 0; i < listOfNumbers.size(); i++) {
+            GroupMembers groupMember = new GroupMembers(groupId, listOfNumbers.get(i),
+                    new Date(System.currentTimeMillis()));
+            groupMembersImpl.addMember(groupMember);
+        }
+
     }
 
     @Override
     public List<String> getnameOfContacts(String currentUserNumber) throws RemoteException {
-        // TODO Auto-generated method stub
-        return null;
+        ContactImpl contactImpl = new ContactImpl();
+        List<ContactDto> contacts = contactImpl.getContactsForUser(currentUserNumber);
+        List<String> listOfNumbers = new ArrayList<>();
+        List<String> listOfNameContact = new ArrayList<>();
+        if (contacts.size() > 0) {
+            for (int i = 0; i < contacts.size(); i++) {
+                listOfNumbers.add(contacts.get(i).getFriendPhoneNumber());
+            }
+            UserImpl userImp = new UserImpl();
+            List<User> listOfUsers = userImp.getUsersByNumbers(listOfNumbers);
+            for (int i = 0; i < listOfUsers.size(); i++) {
+                listOfNameContact.add(listOfUsers.get(i).getName() + " : " + listOfUsers.get(i).getPhoneNumber());
+            }
+        }
+        return listOfNameContact;
     }
+
+    public List<ContactDto> getUserContacts(String phone) throws RemoteException {
+        System.out.println(phone);
+        ContactImpl contactImpl = new ContactImpl();
+        return contactImpl.getContactsForUser(phone);
+    }
+
+    @Override
+    public void notifyUsersOnline(Client client) throws RemoteException {
+        ContactImpl contactImpl = new ContactImpl();
+        var listOfContatcs = contactImpl.getContactsForUser(client.getPhoneNumber());
+        listOfContatcs.forEach(e -> {
+            String phone = e.getFriendPhoneNumber();
+            if(clientsMap.containsKey(phone)){
+                try {
+                    clientsMap.get(phone).userOnlineNotify(e);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+    public boolean editProfile(UserDto uDto) {
+        UserImpl userDao = new UserImpl();
+        UserMapper userMapper = new UserMapper();
+        User userEntity=userMapper.toEntity(uDto);
+        boolean isUpdated=userDao.updateUser(userEntity);
+        return isUpdated;
+    }
+    
 
 }

@@ -13,10 +13,10 @@ import java.util.ArrayList;
 public class countryDaoImpl implements countryDao {
 
     @Override
-    public ArrayList<CountryDto> getCountries() {
+    public ArrayList<Country> getCountries() {
 
         Connection con = DBConnecttion.getConnection();
-        ArrayList<CountryDto> countriesNames = new ArrayList<>();
+        ArrayList<Country> countriesNames = new ArrayList<>();
         if (con == null)
             return null;
 
@@ -25,7 +25,7 @@ public class countryDaoImpl implements countryDao {
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                CountryDto country = new CountryDto(rs.getInt("country_id"), rs.getString("name"));
+                Country country = new Country(rs.getInt("country_id"), rs.getString("name"));
                 countriesNames.add(country);
 
             }
