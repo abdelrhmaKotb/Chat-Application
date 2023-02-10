@@ -166,7 +166,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     @Override
     public List<String> getnameOfContacts(String currentUserNumber) throws RemoteException {
         ContactImpl contactImpl = new ContactImpl();
-        List<Contact> contacts = contactImpl.getContactsForUser(currentUserNumber);
+        List<ContactDto> contacts = contactImpl.getContactsForUser(currentUserNumber);
         List<String> listOfNumbers = new ArrayList<>();
         List<String> listOfNameContact = new ArrayList<>();
         if (contacts.size() > 0) {
