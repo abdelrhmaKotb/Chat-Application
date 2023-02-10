@@ -133,4 +133,15 @@ public class User {
     public byte[] getImage(){
         return image;
     }
+    public User(String phoneNumber, String name, String email, int country,
+            Date dateOfBirth, String bio,  Mood status) {
+        this.phoneNumber = phoneNumber;
+        this.name = name;
+        this.email = email;
+        this.country = country;
+        this.dateOfBirth = dateOfBirth;
+        this.bio = bio;
+        this.status = status;
+        
+    }
 }

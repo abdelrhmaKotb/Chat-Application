@@ -1,196 +1,211 @@
-// package gov.iti.jets.presentation.controllers;
+package gov.iti.jets.presentation.controllers;
 
-// import gov.iti.jets.persistence.dao.countryDaoImpl;
-// import gov.iti.jets.persistence.entities.Country;
-// import gov.iti.jets.presentation.Enums.Mood;
-// import gov.iti.jets.presentation.validation.SignUpValidation;
-// import javafx.beans.value.ObservableValue;
-// import javafx.fxml.FXML;
-// import javafx.fxml.Initializable;
-// import javafx.scene.control.*;
-// import javafx.scene.image.Image;
-// import javafx.scene.image.ImageView;
-// import javafx.scene.input.MouseEvent;
-// import javafx.scene.paint.ImagePattern;
-// import javafx.scene.shape.Circle;
-// import javafx.stage.FileChooser;
+import gov.iti.jets.business.rmi.RMIConnection;
+import gov.iti.jets.business.services.EditProfileService;
+import gov.iti.jets.dto.UserDto;
+//import gov.iti.jets.persistence.dao.countryDaoImpl;
+//import gov.iti.jets.persistence.entities.Country;
+import gov.iti.jets.enums.Mood;
+import gov.iti.jets.interfaces.Server;
+import gov.iti.jets.presentation.validation.SignUpValidation;
+import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 
-// import java.io.File;
-// import java.net.URL;
-// import java.util.ArrayList;
-// import java.util.List;
-// import java.util.ResourceBundle;
-
-
-// public class EditProfileController implements Initializable {
-//     @FXML
-//     ImageView editImgView;
-//     @FXML
-//     ImageView editImgIcon;
-//     @FXML
-//     ChoiceBox moodChoiceBox;
-//     @FXML
-//     TextField phoneTextField;
-//     @FXML
-//     TextField nameTextField;
-//     @FXML
-//     TextField emailTextField;
-//     @FXML
-//     TextField bioTextField;
-//     @FXML
-//     ChoiceBox countryChoiceBox;
-//     @FXML
-//     DatePicker dateOfBirthPicker;
-//     @FXML
-//     Button saveBtn;
-//     List<Country> country;
-//     @FXML
-//     private Label errorUerName, errorEmail, errorBio, errorDateOfBirth, errorCountry;
-//     @FXML
-//     Circle imgCircle;
-//     File file;
-
-//     @Override
-//     public void initialize(URL location, ResourceBundle resources) {
-//         editImgIcon.setVisible(false);
-//         saveBtn.setVisible(false);
-//         moodChoiceBox.getItems().add(Mood.AVAILABLE);
-//         moodChoiceBox.getItems().add(Mood.BUSY);
-//         moodChoiceBox.getItems().add(Mood.AWAY);
-//         //will be changed to users mood
-//         moodChoiceBox.getSelectionModel().select(Mood.AVAILABLE);
-//         country = new ArrayList<>();
-//         country = new countryDaoImpl().getCountries();
-//         dateOfBirthPicker.setDisable(true);
-
-//         for (Country c : country) {
-
-//             countryChoiceBox.getItems().add(c.getName());
-
-//         }
-//     }
-
-//     @FXML
-//     public void EnableEdit(MouseEvent mouseEvent) {
-//         editImgIcon.setVisible(true);
-//         saveBtn.setVisible(true);
-//         moodChoiceBox.setDisable(false);
-//         nameTextField.setEditable(true);
-//         emailTextField.setEditable(true);
-//         bioTextField.setEditable(true);
-//         countryChoiceBox.setDisable(false);
-//         dateOfBirthPicker.setDisable(false);
-
-//         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-
-//             isValidUserName();
-
-//         });
-
-//         emailTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-
-//             isValidEmail();
-
-//         });
+import java.io.File;
+import java.net.URL;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 
-//         bioTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+public class EditProfileController implements Initializable {
+    @FXML
+    ImageView editImgView;
+    @FXML
+    ImageView editImgIcon;
+    @FXML
+    ChoiceBox moodChoiceBox;
+    @FXML
+    TextField phoneTextField;
+    @FXML
+    TextField nameTextField;
+    @FXML
+    TextField emailTextField;
+    @FXML
+    TextField bioTextField;
+    @FXML
+    ChoiceBox countryChoiceBox;
+    @FXML
+    DatePicker dateOfBirthPicker;
+    @FXML
+    Button saveBtn;
+    //List<Country> country;
+    @FXML
+    private Label errorUerName, errorEmail, errorBio, errorDateOfBirth, errorCountry;
+    @FXML
+    Circle imgCircle;
+    File file;
 
-//             isValidBio();
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        editImgIcon.setVisible(false);
+        saveBtn.setVisible(false);
+        moodChoiceBox.getItems().add(Mood.AVAILABLE);
+        moodChoiceBox.getItems().add(Mood.BUSY);
+        moodChoiceBox.getItems().add(Mood.AWAY);
+        //will be changed to users mood
+        moodChoiceBox.getSelectionModel().select(Mood.AVAILABLE);
+        /*country = new ArrayList<>();
+        country = new countryDaoImpl().getCountries();
+        dateOfBirthPicker.setDisable(true);
 
-//         });
+        for (Country c : country) {
 
+            countryChoiceBox.getItems().add(c.getName());
 
-//         dateOfBirthPicker.valueProperty().addListener((ov, oldValue, newValue) -> {
-//             isValidDateOfBirth();
-//         });
-//     }
+        }*/
+    }
 
-//     public boolean isValidUserName() {
+    @FXML
+    public void EnableEdit(MouseEvent mouseEvent) {
+        editImgIcon.setVisible(true);
+        saveBtn.setVisible(true);
+        moodChoiceBox.setDisable(false);
+        nameTextField.setEditable(true);
+        emailTextField.setEditable(true);
+        bioTextField.setEditable(true);
+        countryChoiceBox.setDisable(false);
+        dateOfBirthPicker.setDisable(false);
 
-//         boolean flag = false;
-//         SignUpValidation validation = new SignUpValidation();
-//         if (!validation.validateUserName(nameTextField.getText()).trim().equals("valid userName")) {
-//             showErrorMessage(errorUerName, validation.validateUserName(nameTextField.getText().trim()));
-//             flag = false;
-//         } else {
-//             resetFields(errorUerName);
-//             flag = true;
-//         }
+        nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 
-//         return flag;
+            isValidUserName();
 
-//     }
+        });
 
-//     public boolean isValidEmail() {
+        emailTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 
-//         boolean flag = false;
-//         SignUpValidation validation = new SignUpValidation();
-//         if (!validation.validateEmail(emailTextField.getText().trim()).equals("valid email")) {
-//             showErrorMessage(errorEmail, "invalid email");
-//             flag = false;
-//         } else {
-//             resetFields(errorEmail);
-//             flag = true;
+            isValidEmail();
 
-//         }
-
-//         return flag;
-//     }
-
-//     public boolean isValidBio() {
-
-//         boolean flag = false;
-//         if (bioTextField.getText().trim().equals("")) {
-//             showErrorMessage(errorBio, "Required");
-//             flag = false;
-//         } else {
-//             resetFields(errorBio);
-//             flag = true;
-//         }
-
-//         return flag;
-//     }
-
-//     public boolean isValidDateOfBirth() {
-
-//         boolean flag = false;
-//         if (dateOfBirthPicker.getValue() == null) {
-//             showErrorMessage(errorDateOfBirth, "Required");
-//             flag = false;
-//         } else {
-//             errorDateOfBirth.setOpacity(0);
-//             dateOfBirthPicker.setStyle("-fx-border-color:derive(#2D75E8,80%)");
-//             flag = true;
-//         }
-
-//         return flag;
-//     }
+        });
 
 
-//     public void showErrorMessage(Label errorName, String str) {
-//         errorName.setOpacity(1.0);
-//         errorName.setText(str);
+        bioTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 
-//     }
+            isValidBio();
 
-//     public void resetFields(Label errorName) {
-//         errorName.setOpacity(0);
-//     }
-
-//     @FXML
+        });
 
 
-//     public void editImage(MouseEvent mouseEvent) {
-//         final FileChooser fileChooser = new FileChooser();
-//         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image files ", "*.PNG", "*.JPG",
-//                 "*.JPEG", "*.GIF", "*.SVG");
-//         fileChooser.getExtensionFilters().addAll(extFilter);
-//         file = fileChooser.showOpenDialog(null);
-//         if (file != null) {
-//             imgCircle.setStroke(null);
-//             Image img = new Image(file.toURI().toString());
-//             imgCircle.setFill(new ImagePattern(img));
-//         }
-//     }
-// }
+        dateOfBirthPicker.valueProperty().addListener((ov, oldValue, newValue) -> {
+            isValidDateOfBirth();
+        });
+    }
+    @FXML
+    public void save(MouseEvent mouseEvent) {
+        if( isValidUserName() && isValidEmail() && isValidBio() && isValidDateOfBirth()) {
+            EditProfileService  editProf = new EditProfileService();
+            UserDto userDto =new UserDto("01110906004", nameTextField.getText(), emailTextField.getText(), null, 1, Date.valueOf(dateOfBirthPicker.getValue()), bioTextField.getText(), Mood.AVAILABLE, false);
+            boolean isUpdated = editProf.editProfile(userDto);
+            System.out.println(isUpdated);
+
+        }
+    }
+
+    public boolean isValidUserName() {
+
+        boolean flag = false;
+        SignUpValidation validation = new SignUpValidation();
+        if (!validation.validateUserName(nameTextField.getText()).trim().equals("valid userName")) {
+            showErrorMessage(errorUerName, validation.validateUserName(nameTextField.getText().trim()));
+            flag = false;
+        } else {
+            resetFields(errorUerName);
+            flag = true;
+        }
+
+        return flag;
+
+    }
+
+    public boolean isValidEmail() {
+
+        boolean flag = false;
+        SignUpValidation validation = new SignUpValidation();
+        if (!validation.validateEmail(emailTextField.getText().trim()).equals("valid email")) {
+            showErrorMessage(errorEmail, "invalid email");
+            flag = false;
+        } else {
+            resetFields(errorEmail);
+            flag = true;
+
+        }
+
+        return flag;
+    }
+
+    public boolean isValidBio() {
+
+        boolean flag = false;
+        if (bioTextField.getText().trim().equals("")) {
+            showErrorMessage(errorBio, "Required");
+            flag = false;
+        } else {
+            resetFields(errorBio);
+            flag = true;
+        }
+
+        return flag;
+    }
+
+    public boolean isValidDateOfBirth() {
+
+        boolean flag = false;
+        if (dateOfBirthPicker.getValue() == null) {
+            showErrorMessage(errorDateOfBirth, "Required");
+            flag = false;
+        } else {
+            errorDateOfBirth.setOpacity(0);
+            dateOfBirthPicker.setStyle("-fx-border-color:derive(#2D75E8,80%)");
+            flag = true;
+        }
+
+        return flag;
+    }
+
+
+    public void showErrorMessage(Label errorName, String str) {
+        errorName.setOpacity(1.0);
+        errorName.setText(str);
+
+    }
+
+    public void resetFields(Label errorName) {
+        errorName.setOpacity(0);
+    }
+
+    @FXML
+
+
+    public void editImage(MouseEvent mouseEvent) {
+        final FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image files ", "*.PNG", "*.JPG",
+                "*.JPEG", "*.GIF", "*.SVG");
+        fileChooser.getExtensionFilters().addAll(extFilter);
+        file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+            imgCircle.setStroke(null);
+            Image img = new Image(file.toURI().toString());
+            imgCircle.setFill(new ImagePattern(img));
+        }
+    }
+}

@@ -39,4 +39,6 @@ public interface Server extends Remote {
     List<ContactDto> getUserContacts(String phone) throws RemoteException;
 
     void notifyUsersOnline(Client client) throws RemoteException;
+
+    boolean editProfile(UserDto uDto) throws RemoteException;
 }
