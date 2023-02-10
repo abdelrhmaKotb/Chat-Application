@@ -1,5 +1,7 @@
 package gov.iti.jets.persistence.dao.interfaces;
 
+import java.util.List;
+
 import gov.iti.jets.persistence.entities.User;
 
 public interface UserDao {
@@ -13,4 +15,8 @@ public interface UserDao {
     // int create(User user);
 
     boolean isPhoneNumberExist(String phoneNumber);
+
+    List<User> getUsersByNumbers(List<String> listOfNumbers);
+    
+    boolean updateUser(User newData);
 }

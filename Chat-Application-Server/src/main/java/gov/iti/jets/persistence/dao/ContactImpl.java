@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.persistence.dao.interfaces.ContactDao;
 import gov.iti.jets.persistence.entities.Contact;
 import gov.iti.jets.persistence.utils.DBConnecttion;
@@ -22,8 +23,8 @@ public class ContactImpl implements ContactDao {
      * null if contact dose not exist
      */
     @Override
-    public List<Contact> getContactsForUser(String user) {
-        List<Contact> listOfContacts = new ArrayList<>();
+    public List<ContactDto> getContactsForUser(String user) {
+        List<ContactDto> listOfContacts = new ArrayList<>();
         try (Connection con = DBConnecttion.getConnection();) {
 
             PreparedStatement stmt = con.prepareStatement("select * from contacts where user =  ?");
@@ -31,8 +32,9 @@ public class ContactImpl implements ContactDao {
             ResultSet result = stmt.executeQuery();
 
             while (result.next()) {
-                listOfContacts.add(new Contact(result.getString("user"), result.getString("friend_phone_number"),
+                listOfContacts.add(new ContactDto(result.getString("user"), result.getString("friend_phone_number"),
                         result.getString("category_id"), result.getBoolean("is_blocked")));
+                        System.out.println("contajh");
             }
         } catch (SQLException e) {
             e.printStackTrace();

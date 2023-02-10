@@ -4,7 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class PasswordHashing {
-    private  final static byte []salt="B@37000169".getBytes();
+    private final static byte[] salt = "B@37000169".getBytes();
+
     public static String doHahing(String password) {
         MessageDigest md;
         StringBuilder hashedPassword;
@@ -14,7 +15,7 @@ public class PasswordHashing {
             byte[] hashedPasswordByte = md.digest(password.getBytes());
             hashedPassword = new StringBuilder();
             for (byte b : hashedPasswordByte) {
-                hashedPassword.append(String.format("%02x",b));
+                hashedPassword.append(String.format("%02x", b));
 
             }
             return hashedPassword.toString();
@@ -22,6 +23,6 @@ public class PasswordHashing {
             e.printStackTrace();
         }
         return "";
-            
+
     }
 }

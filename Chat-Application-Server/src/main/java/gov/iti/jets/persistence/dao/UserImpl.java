@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import gov.iti.jets.enums.EnumsUtil;
 import gov.iti.jets.persistence.dao.interfaces.UserDao;
@@ -19,6 +21,9 @@ public class UserImpl implements UserDao {
 
         Connection con = DBConnecttion.getConnection();
         User tempUser = seletcByPhoneNumber(user.getPhoneNumber());
+        
+        System.out.println(tempUser.toString());
+
         
         if (tempUser != null) {
             System.out.println("inside temp user");
@@ -114,7 +119,8 @@ public class UserImpl implements UserDao {
             PreparedStatement stm = con.prepareStatement(
                     "SELECT  *  FROM user WHERE phone_number = ? and password = ?");
             stm.setString(1, phoneNumber);
-            stm.setString(2,PasswordHashing.doHahing(password)); // rember to use hash this password after registration fineshed
+            stm.setString(2, PasswordHashing.doHahing(password)); // rember to use hash this password after registration
+                                                                  // fineshed
             ResultSet result = stm.executeQuery();
 
             if (result.next()) {
@@ -153,5 +159,58 @@ public class UserImpl implements UserDao {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public List<User> getUsersByNumbers(List<String> listOfNumbers) {
+        List<User> listOfUsers = new ArrayList<>();
+        try (Connection con = DBConnecttion.getConnection();) {
+            String numbers = "";
+            for (String num : listOfNumbers) {
+                numbers += num + ",";
+            }
+            numbers = numbers.substring(0, numbers.length() - 1);
+            PreparedStatement stm = con.prepareStatement("SELECT * FROM user WHERE phone_number in (" + numbers + ")");
+            ResultSet result = stm.executeQuery();
+            while (result.next()) {
+                listOfUsers.add(new User(
+                        result.getString("phone_number"),
+                        result.getString("name"),
+                        result.getString("email"),
+                        result.getString("password"),
+                        EnumsUtil.fromOrdinalToGender(result.getInt("gender")),
+                        result.getInt("country_id"),
+                        result.getDate("date_of_birth"),
+                        result.getString("bio"),
+                        result.getBoolean("is_admin"),
+                        result.getBoolean("is_deleted"),
+                        EnumsUtil.fromOrdinalToStatus(result.getInt("status_id")),
+                        ImageConvertor.BlobToBytes(result.getBlob("profile_image"))));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listOfUsers;
+    }
+
+    @Override
+    public boolean updateUser(User newData) {
+        try (Connection con = DBConnecttion.getConnection()) {
+            String query = "update user set name=?, email=?,  country_id=?, date_of_birth=?,bio=?  where phone_number=?";
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setString(1, newData.getName());
+            statement.setString(2, newData.getEmail());
+            statement.setInt(3, newData.getCountry());
+            statement.setDate(4, newData.getDateOfBirth());
+            statement.setString(5, newData.getBio());
+            // statement.setString(6, newData.getStatus());
+            statement.setString(6, newData.getPhoneNumber());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }
