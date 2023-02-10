@@ -10,7 +10,6 @@ package gov.iti.jets.business.services;
 // import gov.iti.jets.persistence.entities.User;
 
 import java.rmi.RemoteException;
-
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.interfaces.Server;
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class GroupsService {
 
-    public static List<GroupDto> getGroups(String phoneNumber) {
+  /*   public static List<GroupDto> getGroups(String phoneNumber) {
 
         Server ser = RMIConnection.getServerServive();
 
@@ -36,7 +35,7 @@ public class GroupsService {
         }
         return groupDto;
     }
-
+*/
 
         
         

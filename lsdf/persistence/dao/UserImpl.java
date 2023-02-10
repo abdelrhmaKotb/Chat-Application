@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import gov.iti.jets.business.services.PasswordHashing;
 import gov.iti.jets.persistence.dao.interfaces.UserDao;
 import gov.iti.jets.persistence.entities.User;
 import gov.iti.jets.persistence.utils.DBConnecttion;

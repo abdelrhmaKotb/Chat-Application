@@ -73,11 +73,9 @@ public class LoginController implements Initializable {
                 lblErrorOrSucessLogin.setOpacity(1);
                 lblErrorOrSucessLogin.setStyle("-fx-text-fill:green");
 
-                // StageCoordinator coordinator = StageCoordinator.getInstance();
-                // coordinator.moveToChat();
-                System.out.println("here from");
-                System.out.println(user);
-                System.out.println("here from");
+                 StageCoordinator coordinator = StageCoordinator.getInstance();
+                 coordinator.moveToChat();
+             
 
             }
         }
