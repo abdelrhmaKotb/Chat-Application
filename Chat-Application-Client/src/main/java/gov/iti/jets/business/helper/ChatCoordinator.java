@@ -12,6 +12,7 @@ public class ChatCoordinator {
 
     private static ChatCoordinator instance = null;
     private static VBox grid = null;
+    private static ChatData currentChat = null;
 
     private static Map<String, ChatData> chats = new HashMap<>();
 
@@ -51,6 +52,7 @@ public class ChatCoordinator {
                     Parent view = loader.load();
                     c.setReciverName(phone);
                     ChatData chatData = new ChatData(loader, view);
+                    currentChat = chatData;
                     chats.put(phone, chatData);
                     grid.getChildren().add(view);
 
@@ -60,7 +62,9 @@ public class ChatCoordinator {
                     e.printStackTrace();
                 }
             } else {
-                Parent view = chats.get(phone).getView();
+                var chat = chats.get(phone);
+                Parent view = chat.getView();
+                currentChat = chat;
                 grid.getChildren().add(view);
                 System.out.println("old chat");
             }
@@ -68,5 +72,9 @@ public class ChatCoordinator {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public MessageController getCurrentChatController() {
+        return (MessageController) currentChat.getLoader().getController();
     }
 }

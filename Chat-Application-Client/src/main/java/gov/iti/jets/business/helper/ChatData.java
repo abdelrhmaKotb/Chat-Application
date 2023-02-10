@@ -2,7 +2,6 @@ package gov.iti.jets.business.helper;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 
 public class ChatData {
     private FXMLLoader loader;

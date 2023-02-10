@@ -155,4 +155,20 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return contactImpl.getContactsForUser(phone);
     }
 
+    @Override
+    public void notifyUsersOnline(Client client) throws RemoteException {
+        ContactImpl contactImpl = new ContactImpl();
+        var listOfContatcs = contactImpl.getContactsForUser(client.getPhoneNumber());
+        listOfContatcs.forEach(e -> {
+            String phone = e.getFriendPhoneNumber();
+            if(clientsMap.containsKey(phone)){
+                try {
+                    clientsMap.get(phone).userOnlineNotify(e);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+
 }

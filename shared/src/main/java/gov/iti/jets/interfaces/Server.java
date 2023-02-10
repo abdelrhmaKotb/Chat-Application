@@ -37,4 +37,6 @@ public interface Server extends Remote {
     boolean isRequestExistInDB(String currentUserNumber, String contactNumber) throws RemoteException;
 
     List<ContactDto> getUserContacts(String phone) throws RemoteException;
+
+    void notifyUsersOnline(Client client) throws RemoteException;
 }

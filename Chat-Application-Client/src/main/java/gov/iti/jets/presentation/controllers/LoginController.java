@@ -85,7 +85,8 @@ public class LoginController implements Initializable {
                 currentUserModel.setEmail(user.getEmail());
 
                 // RMIConnection.getServerServive().register(new ClientImpl());
-                RMIConnection.getInstance().registerClient();
+                 RMIConnection.getInstance().registerClient();
+                 RMIConnection.getServerServive().notifyUsersOnline(RMIConnection.getInstance().getCurrentClientConnection());
                 // currentUserModel.setStatus(user.getStatus());
                  StageCoordinator coordinator = StageCoordinator.getInstance();
                  coordinator.moveToChat();
