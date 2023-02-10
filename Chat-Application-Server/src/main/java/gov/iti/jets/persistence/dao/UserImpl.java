@@ -11,7 +11,6 @@ import gov.iti.jets.persistence.entities.User;
 import gov.iti.jets.persistence.utils.DBConnecttion;
 import gov.iti.jets.persistence.utils.ImageConvertor;
 import gov.iti.jets.persistence.utils.PasswordHashing;
-import gov.iti.jets.persistence.entities.User;
 
 public class UserImpl implements UserDao {
 
@@ -137,4 +136,18 @@ public class UserImpl implements UserDao {
         return null;
     }
 
+    @Override
+    public boolean isPhoneNumberExist(String phoneNumber) {
+        try (Connection con = DBConnecttion.getConnection();) {
+            PreparedStatement stm = con.prepareStatement("SELECT * FROM user WHERE phone_number = ?");
+            stm.setString(1, phoneNumber);
+            ResultSet result = stm.executeQuery();
+            if (result.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

@@ -1,21 +1,21 @@
-package gov.iti.jets.dto;
+package gov.iti.jets.persistence.entities;
 
 import java.sql.Date;
-import java.io.Serializable;
 
-public class RequestDto implements Serializable{
-   private String sender;
+public class Request {
+    private String sender;
     private String receiver;
     private Date requestDate;
 
-    public RequestDto(){}
-    
-    public RequestDto(String sender, String receiver, Date requestDate) {
+
+    public Request(){}
+
+    public Request(String sender, String receiver, Date requestDate) {
         this.sender = sender;
         this.receiver = receiver;
         this.requestDate = requestDate;
     }
-    
+
     public String getSender() {
         return sender;
     }
@@ -40,9 +40,4 @@ public class RequestDto implements Serializable{
         this.requestDate = requestDate;
     }
 
-    @Override
-    public String toString() {
-        return "RequestsDto{" + "sender=" + sender + ", receiver=" + receiver + ", requestDate=" + requestDate + '}';
-    }
-    
 }

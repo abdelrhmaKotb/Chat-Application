@@ -1,10 +1,38 @@
 package gov.iti.jets.dto;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class MessageDto implements Serializable {
+    private String sender;
+    public String getSender() {
+        return sender;
+    }
 
-    class MessageContent {
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    private String reciver;
+    public String getReciver() {
+        return reciver;
+    }
+
+    public void setReciver(String reciver) {
+        this.reciver = reciver;
+    }
+
+    private Date messageDate;
+    
+    public Date getMessageDate() {
+        return messageDate;
+    }
+
+    public void setMessageDate(Date messageDate) {
+        this.messageDate = messageDate;
+    }
+
+    public class MessageContent {
         private String message;
         private int fontSize;
         private String fontStyle;
