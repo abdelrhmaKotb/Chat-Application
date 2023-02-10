@@ -8,6 +8,8 @@ import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.helper.StageCoordinator;
 import gov.iti.jets.business.models.CurrentUserModel;
+import gov.iti.jets.business.rmi.ClientImpl;
+import gov.iti.jets.business.rmi.RMIConnection;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -81,6 +83,9 @@ public class LoginController implements Initializable {
                 currentUserModel.setPhoneNumber(user.getPhoneNumber());
                 System.out.println(currentUserModel.getPhoneNumber() + " sfdf phome");
                 currentUserModel.setEmail(user.getEmail());
+
+                // RMIConnection.getServerServive().register(new ClientImpl());
+                RMIConnection.getInstance().registerClient();
                 // currentUserModel.setStatus(user.getStatus());
                  StageCoordinator coordinator = StageCoordinator.getInstance();
                  coordinator.moveToChat();

@@ -1,6 +1,5 @@
 package gov.iti.jets.business.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import gov.iti.jets.business.helper.ModelsFactory;

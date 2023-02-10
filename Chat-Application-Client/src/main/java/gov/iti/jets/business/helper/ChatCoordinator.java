@@ -5,16 +5,13 @@ import java.util.Map;
 
 import gov.iti.jets.presentation.controllers.MessageController;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 public class ChatCoordinator {
 
     private static ChatCoordinator instance = null;
     private static VBox grid = null;
-    private static Node cuurrent = null;
 
     private static Map<String, ChatData> chats = new HashMap<>();
 
@@ -52,11 +49,9 @@ public class ChatCoordinator {
 
                     loader.setController(c);
                     Parent view = loader.load();
-                    cuurrent = view;
                     c.setReciverName(phone);
                     ChatData chatData = new ChatData(loader, view);
                     chats.put(phone, chatData);
-                    // grid.add(view, 2, 0);
                     grid.getChildren().add(view);
 
                     System.out.println("new chat");
@@ -66,8 +61,6 @@ public class ChatCoordinator {
                 }
             } else {
                 Parent view = chats.get(phone).getView();
-                cuurrent = view;
-                // grid.add(view, 2, 0);
                 grid.getChildren().add(view);
                 System.out.println("old chat");
             }

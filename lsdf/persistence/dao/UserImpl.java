@@ -120,7 +120,7 @@ public class UserImpl implements UserDao {
 
             PreparedStatement stm = con.prepareStatement("SELECT * FROM user WHERE phone_number = ? and password = ?");
             stm.setString(1, phoneNumber);
-            stm.setString(2, PasswordHashing.doHahing(password)); // rember to use hash this password after registration
+            stm.setString(2, PasswordHashing.doHahing(password)); 
             // fineshed
             ResultSet result = stm.executeQuery();
             File file = new File("profile_image");

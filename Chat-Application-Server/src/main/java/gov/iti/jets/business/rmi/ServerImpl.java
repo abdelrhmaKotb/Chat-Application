@@ -31,7 +31,7 @@ import gov.iti.jets.persistence.entities.User;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
     List<Client> clients = new ArrayList<>();
-    Map<String, Client> clientsMap = new HashMap<>();
+    static Map<String, Client> clientsMap = new HashMap<>();
 
     public ServerImpl() throws RemoteException {
         super();
@@ -45,7 +45,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         System.out.println("register");
         clients.add(client);
         clientsMap.put(client.getPhoneNumber(), client);
-        System.out.println(clients);
+        System.out.println(clientsMap.keySet());
+        System.out.println(client.getPhoneNumber() + " phone");
+        System.out.println(clientsMap);
         client.helloBack();
     }
 
@@ -97,7 +99,10 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     public void send(MessageDto message) throws RemoteException {
         System.out.println(message);
         String reciverr = message.getReciver();
+        System.out.println(reciverr);
+        System.out.println(clientsMap.keySet());
         if (clientsMap.containsKey(reciverr)) {
+            System.out.println("yes contains " + clientsMap.size() + " " +clientsMap.get(reciverr).getPhoneNumber());
             Client reciver = clientsMap.get(reciverr);
             reciver.reciveMessage(message);
         }

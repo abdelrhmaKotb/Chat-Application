@@ -8,7 +8,7 @@ public class ModelsFactory {
     private static ModelsFactory instance;
 
     private ContactsModel contactsModel;
-    private CurrentUserModel currentUserModel;
+    private static CurrentUserModel currentUserModel;
 
     private ModelsFactory(){}
 
@@ -17,7 +17,9 @@ public class ModelsFactory {
     {
         if(instance == null)
         {
-            return new ModelsFactory();
+            instance =  new ModelsFactory();
+
+            return instance;
         }
         return instance;
     }
@@ -27,7 +29,8 @@ public class ModelsFactory {
 
         if(contactsModel == null)
         {
-            return new ContactsModel();
+            contactsModel =  new ContactsModel();
+            return contactsModel;
         }
 
         return contactsModel;
@@ -37,7 +40,8 @@ public class ModelsFactory {
     public CurrentUserModel getCurrentUserModel(){
         if(currentUserModel == null)
         {
-            return new CurrentUserModel();
+            currentUserModel =  new CurrentUserModel();
+            return currentUserModel;
         }
 
         return currentUserModel;
