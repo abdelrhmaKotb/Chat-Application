@@ -21,7 +21,8 @@ public class ChatCoordinator {
 
     public static ChatCoordinator getInstance() {
         if (instance == null) {
-            return new ChatCoordinator();
+            instance =  new ChatCoordinator();
+            return instance; 
         }
 
         return instance;
