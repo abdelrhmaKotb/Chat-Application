@@ -1,26 +1,19 @@
-package gov.iti.jets.dto;
+package gov.iti.jets.persistence.entities;
 
-import java.io.Serializable;
-
-/**
- *
- * @author Esraa
- */
-public class ContactDto implements Serializable{
+public class Contact {
     private String user;
     private String friendPhoneNumber;
     private String category;
     private boolean isBlocked;
 
-    public ContactDto() {
-    }
 
-    public ContactDto(String user, String friendPhoneNumber, String category, boolean isBlocked) {
+    public Contact(){}
+
+    public Contact(String user, String friendPhoneNumber, String category, boolean isBlocked) {
         this.user = user;
         this.friendPhoneNumber = friendPhoneNumber;
         this.category = category;
         this.isBlocked = isBlocked;
-
     }
 
     public String getUser() {
@@ -55,9 +48,4 @@ public class ContactDto implements Serializable{
         this.isBlocked = isBlocked;
     }
 
-    @Override
-    public String toString() {
-        return "ContactsDto{" + "user=" + user + ", friendPhoneNumber=" + friendPhoneNumber + ", category=" + category
-                + ", isBlocked=" + isBlocked + '}';
-    }
 }
