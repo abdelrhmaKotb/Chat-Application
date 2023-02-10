@@ -110,7 +110,7 @@ public class UserImpl implements UserDao {
             PreparedStatement stm = con.prepareStatement(
                     "SELECT  *  FROM user WHERE phone_number = ? and password = ?");
             stm.setString(1, phoneNumber);
-            stm.setString(2, password); // rember to use hash this password after registration fineshed
+            stm.setString(2,PasswordHashing.doHahing(password)); // rember to use hash this password after registration fineshed
             ResultSet result = stm.executeQuery();
 
             if (result.next()) {
