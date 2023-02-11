@@ -20,3 +20,4 @@ public interface UserDao {
     
     boolean updateUser(User newData);
 }
+
