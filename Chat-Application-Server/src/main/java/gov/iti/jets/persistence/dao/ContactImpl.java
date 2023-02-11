@@ -30,7 +30,9 @@ public class ContactImpl implements ContactDao {
 
             PreparedStatement stmt = con.prepareStatement(
                     """
-                            select c.`user` , c.friend_phone_number , u.name , u.email ,u.gender , u.status_id ,c.is_blocked,c.category_id
+                            select c.`user` , c.friend_phone_number , u.name , u.email ,u.gender , u.status_id ,c.is_blocked,c.category_id,
+                            c.FontSize, c.FontStyle, c.FontColor, c.BackgroundColor, c.isBold,
+                            c.IsUnderlined, c.IsItalic 
                             from contacts c
                             join `user` u on u.phone_number  = c.friend_phone_number
                             where user =  ?
@@ -46,7 +48,10 @@ public class ContactImpl implements ContactDao {
                         EnumsUtil.fromOrdinalToGender(result.getInt("gender")),
                         EnumsUtil.fromOrdinalToStatus(result.getInt("status_id")),
                         result.getString("category_id"),
-                        result.getBoolean("is_blocked")));
+                        result.getBoolean("is_blocked"),result.getInt("fontSize"),
+                        result.getString("fontStyle"), result.getString("fontColor"),
+                        result.getString("backgroundColor"),result.getBoolean("isBold"),
+                        result.getBoolean("isUnderlined"),result.getBoolean("isItalic")));
                 System.out.println("contajh");
             }
         } catch (SQLException e) {

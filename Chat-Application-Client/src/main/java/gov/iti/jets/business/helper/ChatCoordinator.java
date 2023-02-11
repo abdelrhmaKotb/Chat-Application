@@ -52,7 +52,7 @@ public class ChatCoordinator {
                     loader.setController(c);
                     Parent view = loader.load();
                     c.setReciverName(phone);
-                    ChatData chatData = new ChatData(loader, view);
+                    ChatData chatData = new ChatData(loader, view,phone);
                     currentChat = chatData;
                     chats.put(phone, chatData);
                     grid.getChildren().add(view);
@@ -77,5 +77,8 @@ public class ChatCoordinator {
 
     public MessageController getCurrentChatController() {
         return (MessageController) currentChat.getLoader().getController();
+    }
+    public String getCurrentChatOpen() {
+        return currentChat.getPhoneNumber();
     }
 }

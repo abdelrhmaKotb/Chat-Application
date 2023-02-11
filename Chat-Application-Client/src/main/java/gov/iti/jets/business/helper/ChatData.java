@@ -8,9 +8,12 @@ public class ChatData {
 
     private Parent view;
 
-    public ChatData(FXMLLoader loader, Parent view) {
+    private static String phoneNumber;
+    public ChatData(FXMLLoader loader, Parent view, String phone) {
         this.loader = loader;
         this.view = view;
+        phoneNumber=phone;
+        System.out.println("phoneeee"+phoneNumber);
     }
 
     public FXMLLoader getLoader() {
@@ -19,6 +22,9 @@ public class ChatData {
 
     public Parent getView() {
         return view;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
 }

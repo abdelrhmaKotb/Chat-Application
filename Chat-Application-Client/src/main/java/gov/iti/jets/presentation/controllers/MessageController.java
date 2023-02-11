@@ -1,5 +1,8 @@
 package gov.iti.jets.presentation.controllers;
 
+import gov.iti.jets.business.models.ContactsModel;
+import gov.iti.jets.business.models.GroupsModel;
+import gov.iti.jets.dto.ContactDto;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,6 +12,7 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
+import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.MessageDto;
@@ -50,7 +54,7 @@ public class MessageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         staticImage = new ImageView();
-
+        
     }
 
     @FXML
@@ -107,7 +111,11 @@ public class MessageController implements Initializable {
     @FXML
     private void SetMessage(MouseEvent event) {
         MessageSettingsController createGroupCont = null;
-        
+        System.out.println(ChatCoordinator.getInstance().getCurrentChatOpen());
+        ModelsFactory modelsFactory = ModelsFactory.getInstance();
+        ContactsModel groupsModel = modelsFactory.getContactsModel();
+        ContactDto contactDto = groupsModel.getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+        System.out.println(contactDto.getBackgroundColor());
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/messageSettings.fxml"));
             root = fxmlLoader.load();
