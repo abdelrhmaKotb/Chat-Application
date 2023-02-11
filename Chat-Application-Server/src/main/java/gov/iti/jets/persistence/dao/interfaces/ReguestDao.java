@@ -13,4 +13,5 @@ public interface ReguestDao {
     boolean isRequestExist(String currentUserNumber, String contactNumber);
 
     List<RequestDto> getUserRequests(String reciever);
+    int deleteRequest(Request request);
 }

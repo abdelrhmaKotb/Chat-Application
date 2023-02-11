@@ -229,9 +229,24 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         UserImpl userImp = new UserImpl();
         List<User> listOfUsers = userImp.getUsersByNumbers(listOfNumbersOfReqSenders);
         for (int i = 0; i < listOfUsers.size(); i++) {
-            listOfNamesOfReqSenders.add(listOfUsers.get(i).getName()+ " : " + listOfUsers.get(i).getPhoneNumber());    
+            listOfNamesOfReqSenders.add(listOfUsers.get(i).getName() + " : " + listOfUsers.get(i).getPhoneNumber());
         }
         return listOfNamesOfReqSenders;
+    }
+
+    @Override
+    public void acceptContact(String currentUser, String friendNumber) throws RemoteException {
+        ContactImpl contactImpl = new ContactImpl();
+        Contact contact = new Contact(currentUser, friendNumber);
+        contactImpl.create(contact);
+
+    }
+
+    @Override
+    public void deleteRequest(String sender, String currentUser) throws RemoteException {
+        RequestImpl requestImpl = new RequestImpl();
+        Request request = new Request(sender, currentUser);
+        requestImpl.deleteRequest(request);
     }
 
 }

@@ -34,7 +34,7 @@ public class ContactImpl implements ContactDao {
             while (result.next()) {
                 listOfContacts.add(new ContactDto(result.getString("user"), result.getString("friend_phone_number"),
                         result.getString("category_id"), result.getBoolean("is_blocked")));
-                        System.out.println("contajh");
+                System.out.println("contajh");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,6 +65,23 @@ public class ContactImpl implements ContactDao {
 
     @Override
     public int create(Contact contact) {
+        try (Connection con = DBConnecttion.getConnection();) {
+
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO contacts(user,friend_phone_number) "
+                    + "VALUES(?, ?);");
+            stmt.setString(1, contact.getUser());
+            stmt.setString(2, contact.getFriendPhoneNumber());
+            int i = stmt.executeUpdate();
+            stmt.setString(1, contact.getFriendPhoneNumber());
+            stmt.setString(2, contact.getUser());
+            int j = stmt.executeUpdate();
+            if (i > 0 && j > 0) {
+                System.out.println("2 Rows is inserted");
+                return i+j;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 

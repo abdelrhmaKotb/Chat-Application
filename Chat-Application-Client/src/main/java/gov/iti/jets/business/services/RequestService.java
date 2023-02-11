@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.rmi.RemoteException;
 import gov.iti.jets.business.rmi.RMIConnection;
-import gov.iti.jets.dto.RequestDto;
-import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.interfaces.Server;
 
 public class RequestService {
@@ -72,5 +70,14 @@ public class RequestService {
             e.printStackTrace();
         }
         return listOfNamesOfReqSenders;
+    }
+
+    public void deleteRequest(String sender, String currentUser) {
+        Server ser = RMIConnection.getServerServive();
+        try {
+            ser.deleteRequest(sender, currentUser);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

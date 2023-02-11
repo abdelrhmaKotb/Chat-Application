@@ -23,19 +23,18 @@ public class ShowPopUp {
         Scene popupScene = new Scene(stackPane, 200, 50);
         popupScene.getStylesheets().add(getClass().getResource("/css/stylePopUp.css").toExternalForm());
         Stage popupStage = new Stage();
-        popupStage.setX(coordinator.getStage().getWidth()-200 );
+        popupStage.setX(coordinator.getStage().getWidth() -200);
         popupStage.setY(coordinator.getStage().getHeight()-100);
         popupStage.initStyle(StageStyle.UNDECORATED);
         popupStage.setScene(popupScene);
-        popupStage.initModality(Modality.WINDOW_MODAL);
+        popupStage.initModality(Modality.NONE);
         popupStage.initOwner(coordinator.getStage());
         popupStage.show();
-
         Thread ts = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(5000);
                     Platform.runLater(() -> {
                         popupStage.close();
                     });
