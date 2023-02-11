@@ -24,11 +24,17 @@ public class App  extends Application{
                  System.out.println("not exists user");
                  else
       System.out.println(user.toString());*/
-      
+      Parent root = FXMLLoader.load(getClass().getResource("/views/charts.fxml"));
+      DBConnecttion.getConnection();
+      Scene sc = new Scene(root, 800, 600);
+      primaryStage.setScene(sc);
+      primaryStage.setTitle("Chat Application");
+     // primaryStage.setResizable(false);
+      primaryStage.show();
      
     }
     public static void main(String[] args) {
-         RMIConnection rmi = RMIConnection.getInstance();
+      RMIConnection rmi = RMIConnection.getInstance();
         DBConnecttion.getConnection();
         rmi.connect();
         Application.launch(args);
