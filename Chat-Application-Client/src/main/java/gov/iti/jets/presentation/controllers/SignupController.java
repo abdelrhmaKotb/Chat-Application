@@ -10,10 +10,14 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.net.URL;
 import java.nio.file.Files;
+import java.rmi.RemoteException;
 import java.sql.Date;
 import java.util.regex.*;
 
+import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.helper.StageCoordinator;
+import gov.iti.jets.business.models.CurrentUserModel;
+import gov.iti.jets.business.rmi.RMIConnection;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -168,7 +172,7 @@ public class SignupController implements Initializable {
     }
 
     @FXML
-    void clickBtnSignup(ActionEvent event) {
+    void clickBtnSignup(ActionEvent event) throws RemoteException {
         if (validatePassword() && confirmPass()
                 && isValidGeneder() && isValidCountry()
                 && isValidPhoneNumber() && isValidUserName()
@@ -212,7 +216,24 @@ public class SignupController implements Initializable {
                 successMessage.setOpacity(1);
                 StageCoordinator coordinator = StageCoordinator.getInstance();
                     System.out.println("user no exist sign up sucess");
-                     coordinator.moveToChat();
+
+                    
+                CurrentUserModel currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
+                currentUserModel.setName(user.getName());
+                
+                currentUserModel.setPhoneNumber(user.getPhoneNumber());
+                System.out.println(currentUserModel.getPhoneNumber() + " sfdf phome");
+                currentUserModel.setEmail(user.getEmail());
+                currentUserModel.setBio(user.getBio());
+                currentUserModel.setStatus(user.getStatus().ordinal());
+                // RMIConnection.getServerServive().register(new ClientImpl());
+                 RMIConnection.getInstance().registerClient();
+                 RMIConnection.getServerServive().notifyUsersOnline(RMIConnection.getInstance().getCurrentClientConnection());
+                // currentUserModel.setStatus(user.getStatus());
+                 coordinator.moveToChat();
+
+                 System.out.println(user);
+             
             } else {
                 System.out.println("signup fieald already exist user ");
                 errorSignup.setOpacity(1);
