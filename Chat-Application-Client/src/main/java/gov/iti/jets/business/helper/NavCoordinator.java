@@ -146,6 +146,44 @@ public class NavCoordinator {
         }
     }
 
+    public void goToNotifications() {
+        try {
+
+            if (!grid.getChildren().isEmpty()) {
+                grid.getChildren().removeAll(grid.getChildren());
+
+            }
+
+            System.out.println(grid.getChildren().isEmpty());
+
+            if (!navs.containsKey("notifications")) {
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/notifications.fxml"));
+
+                // ContactsController c = new ContactsController();
+
+                // loader.setController(c);
+                Parent view = loader.load();
+                NavData navData = new NavData(loader, view);
+                currentNav = navData;
+                navs.put("notifications", navData);
+                grid.getChildren().add(view);
+
+                System.out.println("new notifications");
+
+            } else {
+                var nav = navs.get("notifications");
+                Parent view = nav.getView();
+                currentNav = nav;
+                grid.getChildren().add(view);
+                System.out.println("old notifications");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void goToInvitations() {
         try {

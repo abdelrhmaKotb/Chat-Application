@@ -70,25 +70,8 @@ public class ChatScreenController implements Initializable {
     }
 
     @FXML
-    private void clkGroupBtn(MouseEvent event) {
-
-        try {
-            Parent f = (Parent) FXMLLoader.load(getClass().getResource("/views/groups.fxml"));
-            mainGrid.add(f, 1, 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @FXML
     private void clkNotifications(MouseEvent event) {
-        try {
-            Parent f = (Parent) FXMLLoader.load(getClass().getResource("/views/notifications.fxml"));
-            mainGrid.add(f, 1, 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        NavCoordinator.getInstance().goToNotifications();
     }
 
     @FXML
