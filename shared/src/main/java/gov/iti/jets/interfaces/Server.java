@@ -51,7 +51,7 @@ public interface Server extends Remote {
     void acceptContact(String currentUser, String friendNumber) throws RemoteException;
 
     void deleteRequest(String sender, String currentUser) throws RemoteException;
-    
+
     public ArrayList<CountryDto> getCountriesNames() throws RemoteException;
    
     public  UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException;
