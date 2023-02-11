@@ -232,12 +232,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         contactImpl.create(contact);
     }
 
-    @Override
-    public ArrayList<CountryDto> getCountriesNames() throws RemoteException {
-        return new countryDaoImpl().getCountries();
-
-    }
-
+  
     @Override
     public void deleteRequest(String sender, String currentUser) throws RemoteException {
         RequestImpl requestImpl = new RequestImpl();
@@ -249,15 +244,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
              return new countryDaoImpl().getCountries();
 
     }
-    @Override
-    public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
-       System.out.println("inside function signup");
-        UserImpl userDao = new UserImpl();
-        User tempUser=new UserSignupMapperImpl().toEntity(signupDto);
-       
-
-        User user =userDao.createUser(new UserSignupMapperImpl().toEntity(signupDto));
-
+    
     public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
         System.out.println("inside function signup");
         UserImpl userDao = new UserImpl();

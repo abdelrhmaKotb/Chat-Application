@@ -54,10 +54,11 @@ public class ChartController implements Initializable {
                         data.clear();
                         data.addAll(new PieChart.Data("Male", cs.getGenderCharts(0)),
                                 new PieChart.Data("Female", cs.getGenderCharts(1)));
-                        male.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(1)
+
+                        male.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(0)
                                 / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
                         female.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(1)
-                                / ((cs.getGenderCharts(0) + cs.getGenderCharts(0))) * 100)) + " %");
+                                / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
 
                     }
 
