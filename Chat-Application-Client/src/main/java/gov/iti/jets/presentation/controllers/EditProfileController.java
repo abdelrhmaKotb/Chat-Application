@@ -91,7 +91,7 @@ public class EditProfileController implements Initializable {
         currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
        
         phoneTextField.setText(currentUserModel.getPhoneNumber());
-        moodChoiceBox.getSelectionModel().select(Mood.values()[currentUserModel.getStatus()-1]);
+        moodChoiceBox.getSelectionModel().select(Mood.values()[currentUserModel.getStatus()]);
         nameTextField.setText(currentUserModel.getName());
         emailTextField.setText(currentUserModel.getEmail());
         bioTextField.setText(currentUserModel.getBio());
@@ -148,7 +148,7 @@ public class EditProfileController implements Initializable {
                     bioTextField.getText(), Mood.values()[moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue()], false);
             boolean isUpdated = editProf.editProfile(userDto);
             System.out.println(isUpdated);
-            System.out.println("selected: "+ Mood.values()[currentUserModel.getStatus()-1]);
+            System.out.println("selected: "+ Mood.values()[currentUserModel.getStatus()]);
             if (isUpdated) {
                 currentUserModel.setName(nameTextField.getText());
                 currentUserModel.setEmail(emailTextField.getText());

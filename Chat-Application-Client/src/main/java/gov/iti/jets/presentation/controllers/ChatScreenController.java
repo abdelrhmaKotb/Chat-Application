@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import gov.iti.jets.business.helper.ChatCoordinator;
+import gov.iti.jets.business.helper.NavCoordinator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,8 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-
-
 
 public class ChatScreenController implements Initializable {
 
@@ -40,6 +39,9 @@ public class ChatScreenController implements Initializable {
     VBox chat;
 
     @FXML
+    VBox nav;
+
+    @FXML
     private ImageView notificationsBtn;
 
     @FXML
@@ -56,23 +58,17 @@ public class ChatScreenController implements Initializable {
         Tooltip.install(notificationsBtn, new Tooltip("Notifications"));
         Tooltip.install(invitationsBtn, new Tooltip("Invitations"));
         ChatCoordinator.getInstance().setGrid(chat);
+        NavCoordinator.getInstance().setGrid(nav);
 
-        openContacts();
+        viewProfile();
 
     }
 
     @FXML
     public void openContacts() {
-        try {
-            Parent f = (Parent) FXMLLoader.load(getClass().getResource("/views/contacts.fxml"));
-            mainGrid.add(f, 1, 0);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        NavCoordinator.getInstance().goToContacts();
     }
-    
+
     @FXML
     private void clkGroupBtn(MouseEvent event) {
 
@@ -83,7 +79,7 @@ public class ChatScreenController implements Initializable {
             e.printStackTrace();
         }
 
-    }  
+    }
 
     @FXML
     private void clkNotifications(MouseEvent event) {
@@ -93,39 +89,20 @@ public class ChatScreenController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }    
+    }
 
     @FXML
     private void clkInvitations(MouseEvent event) {
-
-        try {
-            Parent f = (Parent) FXMLLoader.load(getClass().getResource("/views/showInvitations.fxml"));
-            mainGrid.add(f, 1, 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }  
-    public void viewGroups(MouseEvent mouseEvent) {
-        try {
-            Parent f = (Parent) FXMLLoader.load(getClass().getResource("/views/groups.fxml"));
-            mainGrid.add(f, 1, 0);
-           //  f = (Parent) FXMLLoader.load(getClass().getResource("/views/message.fxml"));
-            //mainGrid.add(f, 2, 0);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        NavCoordinator.getInstance().goToInvitations();
     }
 
-    public void viewProfile(MouseEvent mouseEvent) {
-        try {
-            Parent f = (Parent) FXMLLoader.load(getClass().getResource("/views/editProfile.fxml"));
+    @FXML
+    public void viewGroups(MouseEvent mouseEvent) {
+        NavCoordinator.getInstance().goToGroups();
+    }
 
-            mainGrid.add(f, 1, 0);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @FXML
+    public void viewProfile() {
+        NavCoordinator.getInstance().goToEditProfile();
     }
 }
