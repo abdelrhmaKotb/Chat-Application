@@ -14,7 +14,7 @@
   <columnConstraints>
     <ColumnConstraints hgrow="NEVER" maxWidth="295.20001220703125" minWidth="0.0" prefWidth="72.2" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="570.2" minWidth="0.0" prefWidth="212.40003662109376" />
-      <ColumnConstraints hgrow="ALWAYS" maxWidth="570.2" minWidth="10.0" prefWidth="314.7999633789062" />
+      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="314.7999633789062" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -97,6 +97,9 @@
       </VBox>
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" />
      
-      <VBox fx:id="chat" prefHeight="550.0" prefWidth="313.0" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES" />
+      <VBox fx:id="chat" maxHeight="1.7976931348623157E308" prefHeight="550.0" prefWidth="313.0" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+         </children></VBox>
    </children>
 </GridPane>

@@ -13,8 +13,10 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+
 <!-- fx:controller="gov.iti.jets.presentation.controllers.MessageController" -->
-<VBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" >
+
+<VBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" VBox.vgrow="ALWAYS">
    <children>
       <HBox prefHeight="64.0" prefWidth="607.0">
          <children>
@@ -73,16 +75,17 @@
          </children>
       </HBox>
       <Separator prefWidth="200.0" />
-      <ScrollPane fitToHeight="true" fitToWidth="true" hvalue="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: white;" vvalue="1.0" VBox.vgrow="ALWAYS">
+      <ScrollPane fitToHeight="true" fitToWidth="true" hvalue="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" style="-fx-background-color: white;" vvalue="1.0" VBox.vgrow="ALWAYS">
          <content>
             <VBox fx:id="msgvBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="398.0" prefWidth="731.0" style="-fx-background-color: white;" />
          </content>
       </ScrollPane>
+      <Separator prefWidth="200.0" />
       <HBox prefHeight="56.0" prefWidth="734.0">
          <children>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <TextField fx:id="msgTextField" prefHeight="88.0" prefWidth="564.0" HBox.hgrow="ALWAYS" />
-            <HBox prefHeight="100.0" prefWidth="229.0">
+            <HBox prefHeight="100.0" prefWidth="229.0" style="-fx-background-color: white;">
                <children>
                   <VBox prefHeight="56.0" prefWidth="43.0">
                      <children>
@@ -91,7 +94,7 @@
                            <children>
                               <ImageView fx:id="textEditorBtn" fitHeight="33.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../../../../Downloads/icons8-text-50.png" />
+                                    <Image url="@../images/icons8-text-50.png" />
                                  </image>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
