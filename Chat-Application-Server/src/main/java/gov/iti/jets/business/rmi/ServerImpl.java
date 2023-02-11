@@ -15,6 +15,7 @@ import gov.iti.jets.business.mapper.GroupMapper;
 import gov.iti.jets.business.mapper.UserMapper;
 import gov.iti.jets.business.mapper.UserSignupMapperImpl;
 import gov.iti.jets.dto.ContactDto;
+import gov.iti.jets.dto.CountryDto;
 import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.dto.MessageDto;
 import gov.iti.jets.dto.RequestDto;
@@ -23,6 +24,7 @@ import gov.iti.jets.dto.UserDtoSignup;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
 import gov.iti.jets.persistence.dao.UserImpl;
+import gov.iti.jets.persistence.dao.countryDaoImpl;
 import gov.iti.jets.persistence.entities.Contact;
 import gov.iti.jets.persistence.entities.Group;
 import gov.iti.jets.persistence.entities.GroupMembers;
@@ -85,18 +87,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             groupDto.add(groupMapper.toDto(groups.get(i)));
         }
         return groupDto;
-    }
-
-    @Override
-    public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
-
-        UserImpl userDao = new UserImpl();
-        UserMapper userMapper = new UserMapper();
-        User user = userDao.createUser(new UserSignupMapperImpl().toEntity(signupDto));
-        if (user == null) {
-            return null;
-        }
-        return new UserSignupMapperImpl().toDto(user);
     }
 
     @Override
@@ -239,6 +229,11 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         ContactImpl contactImpl = new ContactImpl();
         Contact contact = new Contact(currentUser, friendNumber);
         contactImpl.create(contact);
+    }
+
+    @Override
+    public ArrayList<CountryDto> getCountriesNames() throws RemoteException {
+        return new countryDaoImpl().getCountries();
 
     }
 
@@ -249,4 +244,16 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         requestImpl.deleteRequest(request);
     }
 
+    public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
+        System.out.println("inside function signup");
+        UserImpl userDao = new UserImpl();
+        User tempUser = new UserSignupMapperImpl().toEntity(signupDto);
+
+        User user = userDao.createUser(new UserSignupMapperImpl().toEntity(signupDto));
+        if (user == null) {
+            System.out.println("this user already exist and not created");
+            return null;
+        }
+        return new UserSignupMapperImpl().toDto(user);
+    }
 }

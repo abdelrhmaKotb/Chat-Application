@@ -58,7 +58,7 @@ public class countryDaoImpl implements countryDao {
             while (rs.next()) {
                 CountryDto country = new CountryDto();
                 country.setName(rs.getString("countries.name"));
-                country.setCount(rs.getInt("count(countries.country_id)"));
+                country.setId(rs.getInt("count(countries.country_id)"));
                 countryData.add(country);
 
             }
@@ -75,5 +75,8 @@ public class countryDaoImpl implements countryDao {
         }
         return countryData;
     }
+
+
+ 
 
 }
