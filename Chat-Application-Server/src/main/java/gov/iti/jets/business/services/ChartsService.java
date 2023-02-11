@@ -12,9 +12,9 @@ import gov.iti.jets.persistence.entities.User;
 
 public class ChartsService {
 
-    public int getGenderCharts(String str) {
+    public int getGenderCharts(int index) {
         GenderDaoImpl userGender = new GenderDaoImpl();
-        int genderNumber = userGender.seletcGender(str);
+        int genderNumber = userGender.seletcGender(index);
         return genderNumber;
     }
 

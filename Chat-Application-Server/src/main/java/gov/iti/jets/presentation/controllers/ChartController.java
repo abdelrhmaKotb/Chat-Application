@@ -31,7 +31,7 @@ public class ChartController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         updatePieChart();
-       updateBarChart();
+         updateBarChart();
 
     }
 
@@ -52,12 +52,12 @@ public class ChartController implements Initializable {
                     @Override
                     public void run() {
                         data.clear();
-                        data.addAll(new PieChart.Data("Male", cs.getGenderCharts("Male")),
-                                new PieChart.Data("Female", cs.getGenderCharts("Female")));
-                        male.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts("Male")
-                                / ((cs.getGenderCharts("Male") + cs.getGenderCharts("Female"))) * 100)) + " %");
-                        female.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts("Female")
-                                / ((cs.getGenderCharts("Male") + cs.getGenderCharts("Female"))) * 100)) + " %");
+                        data.addAll(new PieChart.Data("Male", cs.getGenderCharts(0)),
+                                new PieChart.Data("Female", cs.getGenderCharts(1)));
+                        male.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(1)
+                                / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
+                        female.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(1)
+                                / ((cs.getGenderCharts(0) + cs.getGenderCharts(0))) * 100)) + " %");
 
                     }
 
