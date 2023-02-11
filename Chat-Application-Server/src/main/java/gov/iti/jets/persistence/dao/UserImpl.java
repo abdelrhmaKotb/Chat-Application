@@ -16,34 +16,40 @@ import gov.iti.jets.persistence.utils.PasswordHashing;
 
 public class UserImpl implements UserDao {
 
+  
     @Override
     public User createUser(User user) {
 
         Connection con = DBConnecttion.getConnection();
         User tempUser = seletcByPhoneNumber(user.getPhoneNumber());
+
         if (tempUser != null) {
             return null;
         }
-
         int rowInserted = 0;
         String query = new String(
-                "insert into user(phone_number,name,email,password,gender,country_id,date_of_birth,bio,status_id,is_deleted,is_admin,,profile_image) values(?,?,?,?,?,?,?,?,?,?,?,?)");
+                "insert into user(phone_number,name,email,password,gender,country_id,date_of_birth,bio,status_id,is_deleted,is_admin,profile_image) values(?,?,?,?,?,?,?,?,?,?,?,?)");
 
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, user.getPhoneNumber());
             stmt.setString(2, user.getName());
             stmt.setString(3, user.getEmail());
             stmt.setString(4, PasswordHashing.doHahing(user.getPassword()));
+
             stmt.setInt(5, user.getGender().ordinal());
             stmt.setInt(6, user.getCountry());
+
             stmt.setDate(7, user.getDateOfBirth());
             stmt.setString(8, user.getBio());
+
             stmt.setInt(9, user.getStatus().ordinal());
             stmt.setBoolean(10, user.isDeleted());
+
             stmt.setBoolean(11, user.isAdmin());
-            stmt.setInt(12, user.getCountry());
+            stmt.setBlob(12, ImageConvertor.bytesToBlob(user.getImage()));
 
             rowInserted = stmt.executeUpdate();
+            System.out.println("number oof row inserted " + rowInserted);
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -63,7 +69,6 @@ public class UserImpl implements UserDao {
     }
 
     public User seletcByPhoneNumber(String phoneNum) {
-
         Connection con = DBConnecttion.getConnection();
         User user = null;
         if (con == null)
@@ -101,6 +106,7 @@ public class UserImpl implements UserDao {
                 ex.printStackTrace();
             }
         }
+
         return user;
 
     }
