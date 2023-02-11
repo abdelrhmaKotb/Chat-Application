@@ -5,7 +5,13 @@ public class Contact {
     private String friendPhoneNumber;
     private String category;
     private boolean isBlocked;
-
+    private int fontSize;
+    private String fontColor;
+    private String fontStyle;
+    private String backgroundColor;
+    private boolean isBold;
+    private boolean isUnderlined;
+    private boolean isItalic;
 
     public Contact(){}
 

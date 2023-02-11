@@ -18,7 +18,13 @@ public class ContactDto implements Serializable {
     private Mood frinMood;
     private String category;
     private boolean isBlocked;
-
+    private int fontSize;
+    private String fontColor;
+    private String fontStyle;
+    private String backgroundColor;
+    private boolean isBold;
+    private boolean isUnderlined;
+    private boolean isItalic;
     public ContactDto(String user, String friendPhoneNumber, String friendName, String friendEmail, Gender friendGender,
             Mood frinMood, String category, boolean isBlocked) {
         this.user = user;
@@ -40,6 +46,27 @@ public class ContactDto implements Serializable {
         this.category = category;
         this.isBlocked = isBlocked;
 
+    }
+
+    public ContactDto(String user, String friendPhoneNumber, String friendName,
+                      String friendEmail, Gender friendGender, Mood frinMood, String category,
+                      boolean isBlocked, int fontSize, String fontColor, String fontStyle, String backgroundColor,
+                      boolean isBold, boolean isUnderlined, boolean isItalic) {
+        this.user = user;
+        this.friendPhoneNumber = friendPhoneNumber;
+        this.friendName = friendName;
+        this.friendEmail = friendEmail;
+        this.friendGender = friendGender;
+        this.frinMood = frinMood;
+        this.category = category;
+        this.isBlocked = isBlocked;
+        this.fontSize = fontSize;
+        this.fontColor = fontColor;
+        this.fontStyle = fontStyle;
+        this.backgroundColor = backgroundColor;
+        this.isBold = isBold;
+        this.isUnderlined = isUnderlined;
+        this.isItalic = isItalic;
     }
 
     public String getFriendEmail() {
@@ -114,5 +141,69 @@ public class ContactDto implements Serializable {
         return "ContactDto [user=" + user + ", friendPhoneNumber=" + friendPhoneNumber + ", friendName=" + friendName
                 + ", friendEmail=" + friendEmail + ", friendGender=" + friendGender + ", frinMood=" + frinMood
                 + ", category=" + category + ", isBlocked=" + isBlocked + "]";
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+
+    public int getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(int fontSize) {
+        this.fontSize = fontSize;
+    }
+
+    public String getFontColor() {
+        return fontColor;
+    }
+
+    public void setFontColor(String fontColor) {
+        this.fontColor = fontColor;
+    }
+
+    public String getFontStyle() {
+        return fontStyle;
+    }
+
+    public void setFontStyle(String fontStyle) {
+        this.fontStyle = fontStyle;
+    }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public boolean isBold() {
+        return isBold;
+    }
+
+    public void setBold(boolean bold) {
+        isBold = bold;
+    }
+
+    public boolean isUnderlined() {
+        return isUnderlined;
+    }
+
+    public void setUnderlined(boolean underlined) {
+        isUnderlined = underlined;
+    }
+
+    public boolean isItalic() {
+        return isItalic;
+    }
+
+    public void setItalic(boolean italic) {
+        isItalic = italic;
     }
 }
