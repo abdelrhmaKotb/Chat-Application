@@ -16,6 +16,11 @@ public class Contact {
         this.isBlocked = isBlocked;
     }
 
+    public Contact(String user, String friendPhoneNumber) {
+        this.user = user;
+        this.friendPhoneNumber = friendPhoneNumber;
+    }
+
     public String getUser() {
         return user;
     }

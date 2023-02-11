@@ -22,7 +22,7 @@ public class UserMapper  implements Mapper<User, UserDto> {
     @Override
 
     public  User toEntity( UserDto e) {
-        return null;
+        return new User(e.getPhoneNumber(), e.getName(), e.getEmail(),e.getCountry(), e.getDateOfBirth(), e.getBio(),  e.getStatus());
     }
 
 

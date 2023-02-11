@@ -10,27 +10,34 @@ import java.util.Map;
 
 import gov.iti.jets.persistence.dao.GroupImpl;
 import gov.iti.jets.persistence.dao.GroupMembersImpl;
+
 import gov.iti.jets.business.mapper.GroupMapper;
 import gov.iti.jets.business.mapper.UserMapper;
 import gov.iti.jets.business.mapper.UserSignupMapperImpl;
+import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.CountryDto;
 import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.dto.MessageDto;
+import gov.iti.jets.dto.RequestDto;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.dto.UserDtoSignup;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
 import gov.iti.jets.persistence.dao.UserImpl;
 import gov.iti.jets.persistence.dao.countryDaoImpl;
+import gov.iti.jets.persistence.entities.Contact;
 import gov.iti.jets.persistence.entities.Group;
+import gov.iti.jets.persistence.entities.GroupMembers;
 import gov.iti.jets.persistence.dao.ContactImpl;
 import gov.iti.jets.persistence.dao.RequestImpl;
 import gov.iti.jets.persistence.entities.Request;
 import gov.iti.jets.persistence.entities.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
     List<Client> clients = new ArrayList<>();
-    Map<String, Client> clientsMap = new HashMap<>();
+    static Map<String, Client> clientsMap = new HashMap<>();
 
     public ServerImpl() throws RemoteException {
         super();
@@ -44,7 +51,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         System.out.println("register");
         clients.add(client);
         clientsMap.put(client.getPhoneNumber(), client);
-        System.out.println(clients);
+        System.out.println(clientsMap.keySet());
+        System.out.println(client.getPhoneNumber() + " phone");
+        System.out.println(clientsMap);
         client.helloBack();
     }
 
@@ -84,7 +93,10 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     public void send(MessageDto message) throws RemoteException {
         System.out.println(message);
         String reciverr = message.getReciver();
+        System.out.println(reciverr);
+        System.out.println(clientsMap.keySet());
         if (clientsMap.containsKey(reciverr)) {
+            System.out.println("yes contains " + clientsMap.size() + " " + clientsMap.get(reciverr).getPhoneNumber());
             Client reciver = clientsMap.get(reciverr);
             reciver.reciveMessage(message);
         }
@@ -130,19 +142,115 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return RequestDao.isRequestExist(currentUserNumber, contactNumber);
     }
 
-    @Override 
-    public ArrayList<CountryDto> getCountriesNames() throws RemoteException{
-             return new countryDaoImpl().getCountries();
+    @Override
+    public void createGroup(String name, String currentUserNumber, List<String> listOfNumbers) throws RemoteException {
+        GroupImpl groupIml = new GroupImpl();
+        Group group = new Group(name, new Date(System.currentTimeMillis()), currentUserNumber);
+        int groupId = groupIml.createGroup(group);
+        GroupMembersImpl groupMembersImpl = new GroupMembersImpl();
+        for (int i = 0; i < listOfNumbers.size(); i++) {
+            GroupMembers groupMember = new GroupMembers(groupId, listOfNumbers.get(i),
+                    new Date(System.currentTimeMillis()));
+            groupMembersImpl.addMember(groupMember);
+        }
 
     }
-    @Override
-    public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
-       System.out.println("inside function signup");
-        UserImpl userDao = new UserImpl();
-        User tempUser=new UserSignupMapperImpl().toEntity(signupDto);
        
 
-        User user =userDao.createUser(new UserSignupMapperImpl().toEntity(signupDto));
+    @Override
+    public List<String> getnameOfContacts(String currentUserNumber) throws RemoteException {
+        ContactImpl contactImpl = new ContactImpl();
+        List<ContactDto> contacts = contactImpl.getContactsForUser(currentUserNumber);
+        List<String> listOfNumbers = new ArrayList<>();
+        List<String> listOfNameContact = new ArrayList<>();
+        if (contacts.size() > 0) {
+            for (int i = 0; i < contacts.size(); i++) {
+                listOfNumbers.add(contacts.get(i).getFriendPhoneNumber());
+            }
+            UserImpl userImp = new UserImpl();
+            List<User> listOfUsers = userImp.getUsersByNumbers(listOfNumbers);
+            for (int i = 0; i < listOfUsers.size(); i++) {
+                listOfNameContact.add(listOfUsers.get(i).getName() + " : " + listOfUsers.get(i).getPhoneNumber());
+            }
+        }
+        return listOfNameContact;
+    }
+
+    public List<ContactDto> getUserContacts(String phone) throws RemoteException {
+        System.out.println(phone);
+        ContactImpl contactImpl = new ContactImpl();
+        return contactImpl.getContactsForUser(phone);
+    }
+
+    @Override
+    public void notifyUsersOnline(Client client) throws RemoteException {
+        ContactImpl contactImpl = new ContactImpl();
+        var listOfContatcs = contactImpl.getContactsForUser(client.getPhoneNumber());
+        listOfContatcs.forEach(e -> {
+            String phone = e.getFriendPhoneNumber();
+            if (clientsMap.containsKey(phone)) {
+                try {
+                    clientsMap.get(phone).userOnlineNotify(e);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public boolean editProfile(UserDto uDto) {
+        UserImpl userDao = new UserImpl();
+        UserMapper userMapper = new UserMapper();
+        User userEntity = userMapper.toEntity(uDto);
+        boolean isUpdated = userDao.updateUser(userEntity);
+        return isUpdated;
+    }
+
+    @Override
+    public List<String> getNamesOfRequestSenders(String phone) throws RemoteException {
+        RequestImpl requestImpl = new RequestImpl();
+        List<RequestDto> listOfRequestDto = requestImpl.getUserRequests(phone);
+        List<String> listOfNumbersOfReqSenders = new ArrayList<>();
+        List<String> listOfNamesOfReqSenders = new ArrayList<>();
+        if (listOfRequestDto.size() > 0) {
+            for (int i = 0; i < listOfRequestDto.size(); i++) {
+                listOfNumbersOfReqSenders.add(listOfRequestDto.get(i).getSender());
+            }
+            UserImpl userImp = new UserImpl();
+            List<User> listOfUsers = userImp.getUsersByNumbers(listOfNumbersOfReqSenders);
+            for (int i = 0; i < listOfUsers.size(); i++) {
+                listOfNamesOfReqSenders.add(listOfUsers.get(i).getName() + " : " + listOfUsers.get(i).getPhoneNumber());
+            }
+        }
+        return listOfNamesOfReqSenders;
+    }
+
+    @Override
+    public void acceptContact(String currentUser, String friendNumber) throws RemoteException {
+        ContactImpl contactImpl = new ContactImpl();
+        Contact contact = new Contact(currentUser, friendNumber);
+        contactImpl.create(contact);
+    }
+
+    @Override
+    public ArrayList<CountryDto> getCountriesNames() throws RemoteException {
+        return new countryDaoImpl().getCountries();
+
+    }
+
+    @Override
+    public void deleteRequest(String sender, String currentUser) throws RemoteException {
+        RequestImpl requestImpl = new RequestImpl();
+        Request request = new Request(sender, currentUser);
+        requestImpl.deleteRequest(request);
+    }
+
+    public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
+        System.out.println("inside function signup");
+        UserImpl userDao = new UserImpl();
+        User tempUser = new UserSignupMapperImpl().toEntity(signupDto);
+
+        User user = userDao.createUser(new UserSignupMapperImpl().toEntity(signupDto));
         if (user == null) {
             System.out.println("this user already exist and not created");
             return null;

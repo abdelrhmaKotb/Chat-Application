@@ -1,17 +1,24 @@
 package gov.iti.jets.business.models;
 
+import java.sql.Date;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class CurrentUserModel {
 
-    private StringProperty phoneNumber;
-    private StringProperty name;
-    private StringProperty email;
-    // private StringProperty gender;
-    // private StringProperty country;
-    // // private   dateOfBirth;
-    // private StringProperty bio;
-    private StringProperty status;
+    private StringProperty phoneNumber = new SimpleStringProperty();
+    private StringProperty name = new SimpleStringProperty();
+    private StringProperty email =  new SimpleStringProperty();
+    private StringProperty gender;
+    private StringProperty country;
+    private  StringProperty dateOfBirth;
+    private StringProperty bio =  new SimpleStringProperty();
+    private IntegerProperty status =  new SimpleIntegerProperty();
+    
+    
 
 
     public StringProperty phoneNumberProperty() {
@@ -19,11 +26,11 @@ public class CurrentUserModel {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber.setValue(phoneNumber);
+        this.phoneNumber.set(phoneNumber);
     }
 
     public String getPhoneNumber() {
-        return phoneNumber.getValue();
+        return phoneNumber.get();
     }
 
 
@@ -34,11 +41,11 @@ public class CurrentUserModel {
     }
 
     public void setName(String name) {
-        this.name.setValue(name);
+        this.name.set(name);
     }
 
     public String getName() {
-        return phoneNumber.getValue();
+        return name.get();
     }
 
 
@@ -49,26 +56,36 @@ public class CurrentUserModel {
     }
 
     public void setEmail(String email) {
-        this.email.setValue(email);
+        this.email.set(email);
     }
 
     public String getEmail() {
-        return email.getValue();
+        return email.get();
     }
 
 
 
-    public StringProperty statusProperty() {
+    public IntegerProperty statusProperty() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status.setValue(status);
+    public void setStatus(int status) {
+        this.status.set(status);
     }
 
-    public String getStatus() {
-        return status.getValue();
+    public int getStatus() {
+        return status.get();
+    }
+   
+    public void setBio(String b) {
+        this.bio.set(b);
     }
 
+    public String getBio() {
+        return bio.get();
+    }
+    public StringProperty bProperty() {
+        return bio;
+    }
     
 }

@@ -15,7 +15,7 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
         StageCoordinator coordinator = StageCoordinator.getInstance();
         coordinator.setStage(primaryStage);
-        coordinator.moveToSingup();
+        coordinator.moveToLogin();
         primaryStage.show();
 
     }

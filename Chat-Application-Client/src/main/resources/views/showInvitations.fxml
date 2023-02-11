@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="vBoxRoot" prefHeight="619.0" prefWidth="100.0" style="-fx-background-color: #f5f7fb;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ShowInvitationsController">
+<VBox fx:id="rootVBox" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #f5f7fb;"
+   xmlns="http://javafx.com/javafx/19"
+   xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ShowInvitationsController">
    <children>
-      <HBox alignment="BASELINE_LEFT" prefHeight="60.0" prefWidth="154.0">
+      <HBox alignment="BASELINE_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Text fx:id="invitationsLbl" fill="#495057" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: 600; -fx-font-size: 30;" text="invitations">
+            <Text fx:id="invitationsLbl" fill="#495057" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: 600; -fx-font-size: 30;" text="Add Requests">
                <font>
-                  <Font name="SansSerif Regular" size="39.0" />
+                  <Font name="Lucida Sans Typewriter Bold" size="39.0" />
                </font>
             </Text>
          </children>
@@ -22,16 +23,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </HBox>
-      <Separator prefWidth="200.0">
-         <padding>
-            <Insets bottom="15.0" />
-         </padding>
-      </Separator>
-      <ScrollPane prefHeight="517.0" prefWidth="154.0">
-         <content>
-            <VBox fx:id="invitationsVBox" prefHeight="121.0" prefWidth="152.0" />
-         </content>
-      </ScrollPane>
+      <ListView fx:id="listOfRequests" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

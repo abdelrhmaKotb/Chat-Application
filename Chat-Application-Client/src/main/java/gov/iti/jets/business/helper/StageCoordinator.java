@@ -35,6 +35,10 @@ public class StageCoordinator {
         primaryStage = stage;
     }
 
+    public Stage getStage() {
+        return primaryStage;
+    }
+
     public void moveToLogin() {
         if (primaryStage == null) {
             throw new RuntimeException("primary stage not set");
@@ -153,37 +157,6 @@ public class StageCoordinator {
         }
 
         primaryStage.setTitle("Charts");
-
-    }
-
-    public void moveToInviteContact() {
-
-        if (primaryStage == null) {
-            throw new RuntimeException("primary stage not set");
-        }
-
-        if (!scenes.containsKey("inviteContact")) {
-            System.out.println("loaded new one");
-            System.out.println(scenes);
-
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/inviteContact.fxml"));
-                Parent view = loader.load();
-                Scene chatScene = new Scene(view);
-                SceneData logiSceneData = new SceneData(loader, view, chatScene);
-                scenes.put("inviteContact", logiSceneData);
-                primaryStage.setScene(chatScene);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            System.out.println("loaded existing one");
-            SceneData logiSceneData = scenes.get("inviteContact");
-            primaryStage.setScene(logiSceneData.getScene());
-        }
-
-        primaryStage.setTitle("inviteContact");
 
     }
 }

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import gov.iti.jets.business.helper.ModelsFactory;
+import gov.iti.jets.business.models.CurrentUserModel;
 import gov.iti.jets.business.services.RequestService;
 import gov.iti.jets.presentation.validation.SignUpValidation;
 import javafx.event.ActionEvent;
@@ -38,7 +40,8 @@ public class InviteContactController implements Initializable {
     private Stage stage;
     private SignUpValidation validationObj = new SignUpValidation();
     private RequestService requestService = new RequestService();
-    private String currentUserNumber = "01110906004";
+    private CurrentUserModel currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
+    private String currentUserNumber = currentUserModel.getPhoneNumber();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -68,7 +71,7 @@ public class InviteContactController implements Initializable {
                     listOfContactsA.add(listOfContacts.getItems().get(i));
                 }
                 requestService.sendRequests(currentUserNumber, listOfContactsA);
-                // stage.close();
+                stage.close();
             }
 
         } else if (!listOfContacts.getItems().isEmpty()) {
@@ -76,7 +79,7 @@ public class InviteContactController implements Initializable {
                 listOfContactsA.add(listOfContacts.getItems().get(i));
             }
             requestService.sendRequests(currentUserNumber, listOfContactsA);
-            // stage.close();
+            stage.close();
         } else {
             showErrorMessageLabel(errorLabel, contactTextField, "Add at least one contact");
         }

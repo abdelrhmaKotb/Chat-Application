@@ -186,11 +186,11 @@ public class SignupController implements Initializable {
              user.setPassword(txtPassword.getText().trim());
              //5-gender
             if (choiceboxGender.getValue().equals("Male")){
-                user.setGender(Gender.MAIL);
+                user.setGender(Gender.MALE);
             }
             
             else{
-                user.setGender(Gender.FEMAIL);
+                user.setGender(Gender.FEMALE);
             }
             //6-country
             user.setCountry(getIndex(choiceboxCountry.getValue()));
@@ -212,6 +212,7 @@ public class SignupController implements Initializable {
                 successMessage.setOpacity(1);
                 StageCoordinator coordinator = StageCoordinator.getInstance();
                     System.out.println("user no exist sign up sucess");
+                     coordinator.moveToChat();
             } else {
                 System.out.println("signup fieald already exist user ");
                 errorSignup.setOpacity(1);

@@ -3,12 +3,12 @@ package gov.iti.jets.business.helper;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
-public class ChatData {
+public class NavData {
     private FXMLLoader loader;
 
     private Parent view;
 
-    public ChatData(FXMLLoader loader, Parent view) {
+    public NavData(FXMLLoader loader, Parent view) {
         this.loader = loader;
         this.view = view;
     }
@@ -20,5 +20,4 @@ public class ChatData {
     public Parent getView() {
         return view;
     }
-
 }
