@@ -44,6 +44,8 @@ public interface Server extends Remote {
 
     void notifyUsersOnline(Client client) throws RemoteException;
 
+    void notifyUsersOffline(Client client) throws RemoteException;
+
     boolean editProfile(UserDto uDto) throws RemoteException;
 
     List<String> getNamesOfRequestSenders(String phone) throws RemoteException;
@@ -55,4 +57,6 @@ public interface Server extends Remote {
     public ArrayList<CountryDto> getCountriesNames() throws RemoteException;
    
     public  UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException;
+
+    boolean isUserOnline(ContactDto user) throws RemoteException;
 }

@@ -59,7 +59,10 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     public void unregister(Client client) throws RemoteException {
         System.out.println("unregister");
-        clients.remove(client);
+        clientsMap.remove(client.getPhoneNumber());
+        System.out.println(clientsMap.keySet());
+
+        notifyUsersOffline(client);
         System.out.println(clients);
     }
 
@@ -198,6 +201,23 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         });
     }
 
+    @Override
+    public void notifyUsersOffline(Client client) throws RemoteException {
+        // clientsMap.remove(client.getPhoneNumber());
+        ContactImpl contactImpl = new ContactImpl();
+        var listOfContatcs = contactImpl.getContactsForUser(client.getPhoneNumber());
+        listOfContatcs.forEach(e -> {
+            String phone = e.getFriendPhoneNumber();
+            if (clientsMap.containsKey(phone)) {
+                try {
+                    clientsMap.get(phone).userOfflineNotify(e);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+
     public boolean editProfile(UserDto uDto) {
         UserImpl userDao = new UserImpl();
         UserMapper userMapper = new UserMapper();
@@ -258,5 +278,11 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             return null;
         }
         return new UserSignupMapperImpl().toDto(user);
+    }
+
+
+    @Override
+    public boolean isUserOnline(ContactDto user) throws RemoteException {
+        return clientsMap.containsKey(user.getFriendPhoneNumber());
     }
 }

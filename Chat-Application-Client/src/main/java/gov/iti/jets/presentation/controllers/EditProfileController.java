@@ -168,7 +168,6 @@ public class EditProfileController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("/views/edited.fxml"));
                 popup.setScene(new Scene(root));
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
             popup.show();

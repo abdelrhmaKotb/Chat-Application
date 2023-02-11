@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.ContactsModel;
+import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.ContactDto;
+import gov.iti.jets.enums.Mood;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -83,10 +85,35 @@ public class ContactsController implements Initializable {
                             setGraphic(null);
 
                         } else {
-                            ImageView imageView = new ImageView(getClass().getResource("/images/user.png").toString());
-                            imageView.setFitHeight(10);
-                            imageView.setFitWidth(10);
-                            setGraphic(imageView);
+                            String image = "";
+                            try {
+                                if (RMIConnection.getServerServive().isUserOnline(item)) {
+                                    if (item.getFrinMood() == Mood.AWAY) {
+                                        image = "away.png";
+
+                                    } else if (item.getFrinMood() == Mood.BUSY) {
+                                        image = "busy.png";
+
+                                    } else {
+                                        image = "available.png";
+                                    }
+                                    ImageView imageView = new ImageView(
+                                            getClass().getResource("/images/" + image).toString());
+
+                                    imageView.setFitHeight(17);
+                                    imageView.setFitWidth(17);
+                                    setGraphic(imageView);
+                                } else {
+                                    ImageView imageView = new ImageView(
+                                            getClass().getResource("/images/offline.png").toString());
+                                    imageView.setFitHeight(17);
+                                    imageView.setFitWidth(17);
+                                    setGraphic(imageView);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
                             setText(item.getFriendName());
                         }
                     }
