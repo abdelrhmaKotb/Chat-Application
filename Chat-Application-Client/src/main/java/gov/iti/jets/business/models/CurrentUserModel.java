@@ -17,9 +17,19 @@ public class CurrentUserModel {
     private  StringProperty dateOfBirth=new SimpleStringProperty();
     private StringProperty bio =  new SimpleStringProperty();
     private IntegerProperty status =  new SimpleIntegerProperty();
+
+    private byte[] image;
     
     
 
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     public StringProperty phoneNumberProperty() {
         return phoneNumber;

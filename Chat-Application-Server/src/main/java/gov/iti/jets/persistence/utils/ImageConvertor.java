@@ -13,6 +13,7 @@ public class ImageConvertor {
     public static byte[] BlobToBytes(Blob blob) {
 
         if(blob == null){
+            System.out.println("blob is null");
             return null;
         }
 
