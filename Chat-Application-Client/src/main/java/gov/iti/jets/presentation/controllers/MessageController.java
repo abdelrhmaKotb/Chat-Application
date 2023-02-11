@@ -19,7 +19,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 
 public class MessageController implements Initializable {
@@ -35,7 +38,8 @@ public class MessageController implements Initializable {
     ImageView staticImage;
     @FXML
     Circle circle;
-    HBox f = null;
+    String messageContent;
+    Parent root;
     public static MessageController messageController;
 
     public MessageController() {
@@ -81,13 +85,14 @@ public class MessageController implements Initializable {
     private void chatComponent(Boolean recieve, MessageDto messageDto) {
 
         try {
-
+            if(messageDto.getMessage()!=""){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sendMsg.fxml"));
-            SendMsgController controller = new SendMsgController(msgTextField.getText(), recieve);
+            SendMsgController controller = new SendMsgController(messageDto, recieve);
             loader.setController(controller);
             HBox hbox = loader.load();
 
             msgvBox.getChildren().add(hbox);
+            }
         } catch (IOException e) {
 
             e.printStackTrace();
@@ -98,6 +103,26 @@ public class MessageController implements Initializable {
 
     public void setReciverName(String name) {
         recieverNameText.setText(name);
+    }
+    @FXML
+    private void SetMessage(MouseEvent event) {
+        MessageSettingsController createGroupCont = null;
+        
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/messageSettings.fxml"));
+            root = fxmlLoader.load();
+            createGroupCont = fxmlLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Message settings");
+        createGroupCont.setStage(stage);
+        Scene scene1 = new Scene(root, 501, 400);
+        stage.setScene(scene1);
+        stage.setResizable(false);
+        stage.showAndWait();
     }
 
 }

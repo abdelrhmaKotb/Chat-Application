@@ -1,13 +1,14 @@
 package gov.iti.jets.dto;
+import java.io.Serializable;
 
-public class CountryDto {
+public class CountryDto implements Serializable{
 
     private String name;
-    private int count;
+    private int id;
 
-    public CountryDto(String name, int count) {
+    public CountryDto(String name, int id) {
         this.name = name;
-        this.count = count;
+        this.id = id;
     }
 
     public CountryDto() {
@@ -21,17 +22,19 @@ public class CountryDto {
         this.name = name;
     }
 
-    public int getCount() {
-        return count;
+    public int getId() {
+        return id;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
-        return "CountryDto [name=" + name + ", count=" + count + "]";
+        return "CountryDto [name=" + name + ", id=" + id + "]";
     }
+
+  
 
 }

@@ -4,8 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import gov.iti.jets.business.services.ChartsService;
 import gov.iti.jets.dto.CountryDto;
-import gov.iti.jets.persistence.dao.ChartsService;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,7 +31,7 @@ public class ChartController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         updatePieChart();
-        updateBarChart();
+         updateBarChart();
 
     }
 
@@ -52,12 +52,12 @@ public class ChartController implements Initializable {
                     @Override
                     public void run() {
                         data.clear();
-                        data.addAll(new PieChart.Data("Male", cs.getGenderCharts("Male")),
-                                new PieChart.Data("Female", cs.getGenderCharts("Female")));
-                        male.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts("Male")
-                                / ((cs.getGenderCharts("Male") + cs.getGenderCharts("Female"))) * 100)) + " %");
-                        female.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts("Female")
-                                / ((cs.getGenderCharts("Male") + cs.getGenderCharts("Female"))) * 100)) + " %");
+                        data.addAll(new PieChart.Data("Male", cs.getGenderCharts(0)),
+                                new PieChart.Data("Female", cs.getGenderCharts(1)));
+                        male.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(1)
+                                / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
+                        female.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(1)
+                                / ((cs.getGenderCharts(0) + cs.getGenderCharts(0))) * 100)) + " %");
 
                     }
 
@@ -108,7 +108,7 @@ public class ChartController implements Initializable {
 
             Series<String, Double> aSeries = new Series<String, Double>();
             aSeries.setName(countryData.get(i).getName());
-            aSeries.getData().add(new XYChart.Data(Integer.toString(i + 1), countryData.get(i).getCount()));
+            aSeries.getData().add(new XYChart.Data(Integer.toString(i + 1), countryData.get(i).getId()));
             answer.add(aSeries);
 
         }
