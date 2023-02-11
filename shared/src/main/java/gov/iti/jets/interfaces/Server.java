@@ -47,4 +47,8 @@ public interface Server extends Remote {
     boolean editProfile(UserDto uDto) throws RemoteException;
 
     List<String> getNamesOfRequestSenders(String phone) throws RemoteException;
+
+    void acceptContact(String currentUser, String friendNumber) throws RemoteException;
+
+    void deleteRequest(String sender, String currentUser) throws RemoteException;
 }

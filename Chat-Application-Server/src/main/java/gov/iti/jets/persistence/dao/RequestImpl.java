@@ -75,4 +75,22 @@ public class RequestImpl implements ReguestDao {
         return listOfContacts;
     }
 
+    @Override
+    public int deleteRequest(Request request) {
+        try (Connection con = DBConnecttion.getConnection();) {
+
+            PreparedStatement stmt = con.prepareStatement("DELETE from requests where sender = ? and receiver = ? ");
+            stmt.setString(1, request.getSender());
+            stmt.setString(2, request.getReceiver());
+            int i = stmt.executeUpdate();
+            if (i > 0) {
+                System.out.println("Row is deleted");
+                return i;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

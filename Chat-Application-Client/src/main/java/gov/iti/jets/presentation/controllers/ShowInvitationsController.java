@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.CurrentUserModel;
+import gov.iti.jets.business.services.ContactService;
 import gov.iti.jets.business.services.RequestService;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -72,6 +73,11 @@ public class ShowInvitationsController implements Initializable {
         Button cancelBtn = new Button("Cancel");
         String lastItem;
 
+        private ContactService contactService = new ContactService();
+        private RequestService requestService = new RequestService();
+        private CurrentUserModel currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
+        private String currentUserNumber = currentUserModel.getPhoneNumber();
+
         public XCell() {
             super();
             hbox.getChildren().addAll(label, pane, acceptBtn, cancelBtn);
@@ -80,27 +86,27 @@ public class ShowInvitationsController implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     System.out.println("Accept " + label.getText() + " : " + label.getId());
-                    acceptBtn.setDisable(true);
-                    cancelBtn.setDisable(true);
+                    contactService.acceptContact(currentUserNumber, label.getId());
+                    requestService.deleteRequest(label.getId(), currentUserNumber);
+                    getListView().getItems().remove(getItem());
                 }
             });
             cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
                     System.out.println("Cancel " + label.getText() + " : " + label.getId());
-                    acceptBtn.setDisable(true);
-                    cancelBtn.setDisable(true);
+                    requestService.deleteRequest(label.getId(), currentUserNumber);
+                    getListView().getItems().remove(getItem());
                 }
-
             });
         }
 
         @Override
         protected void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
-            acceptBtn.setStyle("-fx-background-color:  #7269ef;  ");
+            acceptBtn.setStyle("-fx-background-color:  #7269ef; -fx-text-fill: #ffffff; ");
             acceptBtn.setCursor(Cursor.HAND);
-            cancelBtn.setStyle("-fx-background-color:  #f4f4f4;");
+            cancelBtn.setStyle("-fx-background-color:  #f4f4f4; -fx-text-fill: #7269ef;");
             cancelBtn.setCursor(Cursor.HAND);
             setText(null);
             if (empty) {
