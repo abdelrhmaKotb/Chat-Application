@@ -2,6 +2,8 @@ package gov.iti.jets.presentation.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import gov.iti.jets.business.helper.ChatCoordinator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,6 +12,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 
 
@@ -34,6 +37,9 @@ public class ChatScreenController implements Initializable {
     GridPane mainGrid;
 
     @FXML
+    VBox chat;
+
+    @FXML
     private ImageView notificationsBtn;
 
     @FXML
@@ -49,6 +55,7 @@ public class ChatScreenController implements Initializable {
         Tooltip.install(btnSettings, new Tooltip("Settings"));
         Tooltip.install(notificationsBtn, new Tooltip("Notifications"));
         Tooltip.install(invitationsBtn, new Tooltip("Invitations"));
+        ChatCoordinator.getInstance().setGrid(chat);
 
         openContacts();
 
@@ -103,8 +110,8 @@ public class ChatScreenController implements Initializable {
         try {
             Parent f = (Parent) FXMLLoader.load(getClass().getResource("/views/groups.fxml"));
             mainGrid.add(f, 1, 0);
-             f = (Parent) FXMLLoader.load(getClass().getResource("/views/message.fxml"));
-            mainGrid.add(f, 2, 0);
+           //  f = (Parent) FXMLLoader.load(getClass().getResource("/views/message.fxml"));
+            //mainGrid.add(f, 2, 0);
 
         } catch (Exception e) {
             e.printStackTrace();

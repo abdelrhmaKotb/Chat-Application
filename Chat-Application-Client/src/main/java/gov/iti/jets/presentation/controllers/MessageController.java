@@ -7,10 +7,13 @@ import javafx.geometry.Pos;
 
 import java.io.File;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
+import gov.iti.jets.business.rmi.RMIConnection;
+import gov.iti.jets.dto.MessageDto;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -53,6 +56,14 @@ public class MessageController implements Initializable {
 
 
     public void send() {
+        MessageDto msg = new MessageDto();
+
+        MessageDto.MessageContent content = msg.new MessageContent("fisrt msg", 0, null, null, null, false, false, false);
+        try {
+            RMIConnection.getServerServive().send(msg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         chatComponent(Pos.CENTER_RIGHT);
     }
 
@@ -102,6 +113,12 @@ public class MessageController implements Initializable {
 
         msgvBox.getChildren().add(hbox);
         msgTextField.clear();
+    }
+
+
+    public  void setReciverName(String name)
+    {
+        recieverNameText.setText(name);
     }
 
 

@@ -3,6 +3,14 @@ package gov.iti.jets.persistence.dao.interfaces;
 import gov.iti.jets.persistence.entities.User;
 
 public interface UserDao {
-    int create(User user);
-    User getUser(String phoneNumber,String password);
+
+    User getUser(String phoneNumber, String password);
+
+    User createUser(User user);
+
+    User seletcByPhoneNumber(String phoneNum);
+
+    // int create(User user);
+
+    boolean isPhoneNumberExist(String phoneNumber);
 }

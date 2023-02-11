@@ -1,24 +1,30 @@
 package gov.iti.jets.persistence.entities;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.Arrays;
+
+import gov.iti.jets.enums.Gender;
+import gov.iti.jets.enums.Mood;
 
 public class User {
+
     private String phoneNumber;
     private String name;
     private String email;
     private String password;
-    private String gender;
-    private String country;
+    private Gender gender;
+    private int country;
     private Date dateOfBirth;
     private String bio;
     private boolean isAdmin;
     private boolean isDeleted;
-    private String status;
+    private Mood status;
+    private byte[] image;
 
     public User(){}
 
-    public User(String phoneNumber, String name, String email, String password, String gender, String country,
-            Date dateOfBirth, String bio, boolean isAdmin, boolean isDeleted, String status) {
+    public User(String phoneNumber, String name, String email, String password, Gender gender, int country,
+            Date dateOfBirth, String bio, boolean isAdmin, boolean isDeleted, Mood status,byte[] image) {
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.email = email;
@@ -30,7 +36,10 @@ public class User {
         this.isAdmin = isAdmin;
         this.isDeleted = isDeleted;
         this.status = status;
+        this.image=image;
     }
+   
+
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -64,19 +73,19 @@ public class User {
         this.password = password;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
-    public String getCountry() {
+    public int getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(int country) {
         this.country = country;
     }
 
@@ -84,8 +93,8 @@ public class User {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setDateOfBirth(Date localDate) {
+        this.dateOfBirth = localDate;
     }
 
     public String getBio() {
@@ -96,11 +105,11 @@ public class User {
         this.bio = bio;
     }
 
-    public String getStatus() {
+    public Mood getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Mood status) {
         this.status = status;
     }
 
@@ -118,5 +127,20 @@ public class User {
 
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+    public void setImage(byte[] image){
+
+        this.image = image;
+    }
+    public byte[] getImage(){
+        return image;
+    }
+    
+    @Override
+    public String toString() {
+        return "User [phoneNumber=" + phoneNumber + ", name=" + name + ", email=" + email + ", password=" + password
+                + ", gender=" + gender + ", country=" + country + ", dateOfBirth=" + dateOfBirth + ", bio=" + bio
+                + ", isAdmin=" + isAdmin + ", isDeleted=" + isDeleted + ", status=" + status + ", image="
+                + "]";
     }
 }

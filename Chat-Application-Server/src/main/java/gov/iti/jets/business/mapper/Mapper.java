@@ -1,5 +1,7 @@
 package gov.iti.jets.business.mapper;
 
 public interface Mapper<E,R> {
-    R toDto(E entity);
+    //R getContactDto(E entity);
+    R toDto(E e);
+    E toEntity(R e);
 }

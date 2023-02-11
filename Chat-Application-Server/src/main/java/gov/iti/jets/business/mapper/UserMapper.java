@@ -1,16 +1,15 @@
 package gov.iti.jets.business.mapper;
 
-import gov.iti.jets.business.dto.UserDto;
+import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.persistence.entities.User;
 
-public class UserMapper  implements Mapper<User,UserDto>{
+public class UserMapper  implements Mapper<User, UserDto> {
     @Override
     public UserDto toDto(User entity) {
-        
         return new UserDto(
             entity.getPhoneNumber(),
             entity.getName(),
-            entity.getName(),
+            entity.getEmail(),
             entity.getGender(),
             entity.getCountry(),
             entity.getDateOfBirth(),
@@ -19,4 +18,12 @@ public class UserMapper  implements Mapper<User,UserDto>{
             entity.isAdmin()
         );
     }
+   
+    @Override
+
+    public  User toEntity( UserDto e) {
+        return null;
+    }
+
+
 }

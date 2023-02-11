@@ -9,15 +9,11 @@ import javafx.fxml.Initializable;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.Date;
 import java.util.regex.*;
 
-import gov.iti.jets.business.services.SignupService;
-import gov.iti.jets.persistence.dao.countryDaoImpl;
-import gov.iti.jets.persistence.entities.Country;
-import gov.iti.jets.persistence.entities.User;
-import gov.iti.jets.presentation.helper.StageCoordinator;
-import gov.iti.jets.presentation.validation.SignUpValidation;
+import gov.iti.jets.business.helper.StageCoordinator;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,6 +29,12 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import gov.iti.jets.business.services.SignupService;
+import gov.iti.jets.dto.CountryDto;
+import gov.iti.jets.dto.UserDtoSignup;
+import gov.iti.jets.enums.Gender;
+import gov.iti.jets.enums.Mood;
+import gov.iti.jets.presentation.validation.SignUpValidation;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,25 +86,21 @@ public class SignupController implements Initializable {
     private Circle mycircle;
 
     File file;
-    ArrayList<Country> countriesNames = null;
+    ArrayList<CountryDto> countriesNames = null;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        choiceboxGender.getItems().add("Female");
+        choiceboxGender.getItems().add("Femal");
         choiceboxGender.getItems().add("Male");
-        SignUpValidation.validateDate(datepickerDateOfBirth);
-        /*
-         * choiceboxCountry.getItems().add("Egypt");
-         * choiceboxCountry.getItems().add("Saudi Arabi");
-         * choiceboxCountry.getItems().add("Emrates");
-         */
-        countryDaoImpl countryDao = new countryDaoImpl();
-        countriesNames = countryDao.getCountries();
-        for (Country c : countriesNames) {
+        SignupService signupService = new SignupService();
+
+        countriesNames = signupService.getCountries();
+        for (CountryDto c : countriesNames) {
 
             choiceboxCountry.getItems().add(c.getName());
 
         }
+        SignUpValidation.validateDate(datepickerDateOfBirth);
 
         Image img = new Image("/images/person.png", false);
         mycircle.setFill(new ImagePattern(img));
@@ -171,31 +169,51 @@ public class SignupController implements Initializable {
 
     @FXML
     void clickBtnSignup(ActionEvent event) {
-     
         if (validatePassword() && confirmPass()
-        && isValidGeneder() && isValidCountry()
-        && isValidPhoneNumber() && isValidUserName()
-        && isValidImage() && isValidDateOfBirth() && isValidBio() && isValidEmail()) {
-            User user = new User();
-            user.setPhoneNumber(txtPhoneNumber.getText().trim());
-            user.setName(txtUserName.getText().trim());
-            user.setEmail(txtEmail.getText().trim());
-            user.setPassword(txtPassword.getText().trim());
-            user.setGender(choiceboxGender.getValue());
-            user.setFile(file);
-            user.setCountry(getIndex(choiceboxCountry.getValue()));
-            user.setBio(txtBio.getText().trim());
-            user.setDateOfBirth(Date.valueOf(datepickerDateOfBirth.getValue()));
-            //user.setStatus("1");
+                && isValidGeneder() && isValidCountry()
+                && isValidPhoneNumber() && isValidUserName()
+                && isValidImage() && isValidDateOfBirth() && isValidBio() && isValidEmail()) {
+            UserDtoSignup user = new UserDtoSignup();
             SignupService signup = new SignupService();
-            int result = signup.signupUser(user);
-            if (result == 1) {
+           
+           //1- phone number
+            user.setPhoneNumber(txtPhoneNumber.getText().trim());
+            //2-name
+            user.setName(txtUserName.getText().trim());
+            //3-email
+            user.setEmail(txtEmail.getText().trim());
+            //4- password
+             user.setPassword(txtPassword.getText().trim());
+             //5-gender
+            if (choiceboxGender.getValue().equals("Male")){
+                user.setGender(Gender.MAIL);
+            }
+            
+            else{
+                user.setGender(Gender.FEMAIL);
+            }
+            //6-country
+            user.setCountry(getIndex(choiceboxCountry.getValue()));
+            //7-date of birth
+             user.setDateOfBirth(Date.valueOf(datepickerDateOfBirth.getValue()));
+             //8-bio
+            user.setBio(txtBio.getText().trim());
+            //9-status
+            user.setStatus(Mood.AVAILABLE);
+            //10- profile image
+            try {
+                user.setImage(convertImageToBytes(file));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+            UserDtoSignup result = signup.signupUser(user);
+            if (result != null) {
                 successMessage.setOpacity(1);
                 StageCoordinator coordinator = StageCoordinator.getInstance();
-                coordinator.moveToChat();
-
+                    System.out.println("user no exist sign up sucess");
             } else {
-
+                System.out.println("signup fieald already exist user ");
                 errorSignup.setOpacity(1);
             }
 
@@ -239,8 +257,6 @@ public class SignupController implements Initializable {
         }
         return flag;
     }
-
-   
 
     public boolean confirmPass() {
         boolean flag = false;
@@ -393,9 +409,18 @@ public class SignupController implements Initializable {
         int index = 0;
         for (int i = 0; i < countriesNames.size(); i++) {
 
-            if (countriesNames.get(i).getName() == name)
+            if (countriesNames.get(i).getName().equals(name)){
                 index = countriesNames.get(i).getId();
+                break;
+            }
         }
         return index;
+    }
+
+    
+    public static byte[] convertImageToBytes(File file) throws IOException {
+        byte[] data = Files.readAllBytes(file.toPath());
+        return data;
+
     }
 }

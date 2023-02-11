@@ -1,14 +1,14 @@
-package gov.iti.jets.presentation.controllers;
+// package gov.iti.jets.presentation.controllers;
 
-import javafx.fxml.Initializable;
+// import javafx.fxml.Initializable;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+// import java.net.URL;
+// import java.util.ResourceBundle;
 
-public class MessageSettingsController implements Initializable {
+// public class MessageSettingsController implements Initializable {
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+//     @Override
+//     public void initialize(URL location, ResourceBundle resources) {
 
-    }
-}
+//     }
+// }

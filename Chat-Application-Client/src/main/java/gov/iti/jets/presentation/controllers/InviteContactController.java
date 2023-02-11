@@ -1,6 +1,8 @@
 package gov.iti.jets.presentation.controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import gov.iti.jets.business.services.RequestService;
@@ -58,16 +60,23 @@ public class InviteContactController implements Initializable {
 
     @FXML
     private void saveRequest(ActionEvent event) {
+        List<String> listOfContactsA = new ArrayList<>();
         if (!contactTextField.getText().isEmpty()) {
             if (isValidPhone()) {
                 listOfContacts.getItems().add(contactTextField.getText());
-                requestService.sendRequests(currentUserNumber, listOfContacts.getItems());
-                stage.close();
+                for (int i = 0; i < listOfContacts.getItems().size(); i++) {
+                    listOfContactsA.add(listOfContacts.getItems().get(i));
+                }
+                requestService.sendRequests(currentUserNumber, listOfContactsA);
+                // stage.close();
             }
 
         } else if (!listOfContacts.getItems().isEmpty()) {
-            requestService.sendRequests(currentUserNumber, listOfContacts.getItems());
-            stage.close();
+            for (int i = 0; i < listOfContacts.getItems().size(); i++) {
+                listOfContactsA.add(listOfContacts.getItems().get(i));
+            }
+            requestService.sendRequests(currentUserNumber, listOfContactsA);
+            // stage.close();
         } else {
             showErrorMessageLabel(errorLabel, contactTextField, "Add at least one contact");
         }

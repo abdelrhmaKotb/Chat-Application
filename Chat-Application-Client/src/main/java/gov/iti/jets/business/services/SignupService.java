@@ -1,18 +1,42 @@
 package gov.iti.jets.business.services;
 
-import gov.iti.jets.persistence.dao.UserImpl;
-import gov.iti.jets.persistence.entities.User;
+import gov.iti.jets.business.rmi.RMIConnection;
+import gov.iti.jets.dto.UserDtoSignup;
+
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+
+import gov.iti.jets.dto.CountryDto;
+import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.interfaces.Server;
 
 public class SignupService {
-    
+
+    public UserDtoSignup signupUser(UserDtoSignup signupDto) {
+        Server ser = RMIConnection.getServerServive();
+
       
+        try {
+            UserDtoSignup user  = ser.Signup(signupDto);
+            return user;
 
-
-     public int signupUser(User user){
-        int rowInserted=0;
-        UserImpl userImpl = new UserImpl();
-        rowInserted=userImpl.insertUser(user);
-        return rowInserted;
-     }
-
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+
+    public ArrayList<CountryDto> getCountries() {
+        Server ser = RMIConnection.getServerServive();
+
+        ArrayList<CountryDto> countries = null;
+        try {
+            countries = ser.getCountriesNames();
+            System.out.println(countries.size());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return countries;
+        
+    }
+}

@@ -5,8 +5,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-import gov.iti.jets.presentation.helper.ModelsFactory;
-import gov.iti.jets.presentation.models.ContactsModel;
+import gov.iti.jets.business.helper.ChatCoordinator;
+import gov.iti.jets.business.helper.ModelsFactory;
+import gov.iti.jets.business.models.ContactsModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,7 +27,6 @@ import javafx.util.Callback;
 
 public class ContactsController implements Initializable {
 
-
     private Parent root;
 
     @FXML
@@ -36,7 +36,7 @@ public class ContactsController implements Initializable {
     TextField txtSearch;
 
     ObservableList<String> contacts;
-    
+
     @FXML
     private ImageView addContactBtn;
 
@@ -46,8 +46,8 @@ public class ContactsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         createConatctsList();
-        System.out.println("init"); 
-      
+        System.out.println("init");
+
         Tooltip.install(addContactBtn, new Tooltip("Invite Contact"));
     }
 
@@ -59,13 +59,13 @@ public class ContactsController implements Initializable {
 
         listContacts.setItems(contacts);
 
-       
-
-        listContacts.getSelectionModel().selectedItemProperty().addListener((obs,old,newVal) -> {
+        listContacts.getSelectionModel().selectedItemProperty().addListener((obs, old, newVal) -> {
             if (newVal == null)
-                    return;
+                return;
 
-                    System.out.println(newVal);
+            System.out.println(newVal);
+
+            ChatCoordinator.getInstance().openChat(newVal);
         });
 
         listContacts.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
@@ -104,25 +104,26 @@ public class ContactsController implements Initializable {
 
     @FXML
     private void clickAddContactBtn(MouseEvent event) {
-        InviteContactController inviteCont = null;
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/inviteContact.fxml"));
-            root = fxmlLoader.load();
-            inviteCont = fxmlLoader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Invite Contacts");
+        // InviteContactController inviteCont = null;
+        // try {
+        // FXMLLoader fxmlLoader = new
+        // FXMLLoader(getClass().getResource("/views/inviteContact.fxml"));
+        // root = fxmlLoader.load();
+        // inviteCont = fxmlLoader.getController();
+        // } catch (IOException e) {
+        // e.printStackTrace();
+        // }
+        // Stage stage = new Stage();
+        // stage.initModality(Modality.APPLICATION_MODAL);
+        // stage.setTitle("Invite Contacts");
 
-        inviteCont.setStage(stage);
+        // inviteCont.setStage(stage);
 
-        Scene scene1 = new Scene(root, 501, 345);
+        // Scene scene1 = new Scene(root, 501, 345);
 
-        stage.setScene(scene1);
-        stage.setResizable(false);
-        stage.showAndWait();
+        // stage.setScene(scene1);
+        // stage.setResizable(false);
+        // stage.showAndWait();
     }
 
 }
