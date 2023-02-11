@@ -8,6 +8,6 @@ import gov.iti.jets.dto.CountryDto;
 
 public interface countryDao {
     public  ArrayList<CountryDto> getCountries();
-        public  ArrayList<CountryDto> selectCountries() ;
+    public  ArrayList<CountryDto> selectCountries() ;
 
 }

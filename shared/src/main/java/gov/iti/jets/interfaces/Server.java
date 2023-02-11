@@ -30,8 +30,6 @@ public interface Server extends Remote {
 
     void send(MessageDto message) throws RemoteException;
 
-  
-
     void sendRequests(String senderPhoneNumber, List<String> listOfContacts) throws RemoteException;
 
     String chkNumberInDB(String currentUserNumber, String contactNumber) throws RemoteException;
