@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gov.iti.jets.dto.ContactDto;
+import gov.iti.jets.enums.EnumsUtil;
 import gov.iti.jets.persistence.dao.interfaces.ContactDao;
 import gov.iti.jets.persistence.entities.Contact;
 import gov.iti.jets.persistence.utils.DBConnecttion;
@@ -27,13 +28,25 @@ public class ContactImpl implements ContactDao {
         List<ContactDto> listOfContacts = new ArrayList<>();
         try (Connection con = DBConnecttion.getConnection();) {
 
-            PreparedStatement stmt = con.prepareStatement("select * from contacts where user =  ?");
+            PreparedStatement stmt = con.prepareStatement(
+                    """
+                            select c.`user` , c.friend_phone_number , u.name , u.email ,u.gender , u.status_id ,c.is_blocked,c.category_id
+                            from contacts c
+                            join `user` u on u.phone_number  = c.friend_phone_number
+                            where user =  ?
+                                    """);
             stmt.setString(1, user);
             ResultSet result = stmt.executeQuery();
-
             while (result.next()) {
-                listOfContacts.add(new ContactDto(result.getString("user"), result.getString("friend_phone_number"),
-                        result.getString("category_id"), result.getBoolean("is_blocked")));
+                listOfContacts.add(new ContactDto(
+                        result.getString("user"),
+                        result.getString("friend_phone_number"),
+                        result.getString("name"),
+                        result.getString("email"),
+                        EnumsUtil.fromOrdinalToGender(result.getInt("gender")),
+                        EnumsUtil.fromOrdinalToStatus(result.getInt("status_id")),
+                        result.getString("category_id"),
+                        result.getBoolean("is_blocked")));
                 System.out.println("contajh");
             }
         } catch (SQLException e) {
@@ -77,7 +90,7 @@ public class ContactImpl implements ContactDao {
             int j = stmt.executeUpdate();
             if (i > 0 && j > 0) {
                 System.out.println("2 Rows is inserted");
-                return i+j;
+                return i + j;
             }
         } catch (SQLException e) {
             e.printStackTrace();

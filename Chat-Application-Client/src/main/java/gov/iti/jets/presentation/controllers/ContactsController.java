@@ -31,7 +31,7 @@ public class ContactsController implements Initializable {
     private Parent root;
 
     @FXML
-    ListView<String> listContacts;
+    ListView<ContactDto> listContacts;
 
     @FXML
     TextField txtSearch;
@@ -58,7 +58,7 @@ public class ContactsController implements Initializable {
         ContactsModel contactsModel = modelsFactory.getContactsModel();
         contacts = contactsModel.getContacts();
 
-        listContacts.setItems(contactsModel.getContactsPhoneNumber());
+        listContacts.setItems(contacts);
 
         listContacts.getSelectionModel().selectedItemProperty().addListener((obs, old, newVal) -> {
             if (newVal == null)
@@ -66,16 +66,16 @@ public class ContactsController implements Initializable {
 
             System.out.println(newVal);
 
-            ChatCoordinator.getInstance().openChat(newVal);
+            ChatCoordinator.getInstance().openChat(newVal.getFriendPhoneNumber());
         });
 
-        listContacts.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+        listContacts.setCellFactory(new Callback<ListView<ContactDto>, ListCell<ContactDto>>() {
             @Override
-            public ListCell<String> call(ListView<String> param) {
-                return new ListCell<String>() {
+            public ListCell<ContactDto> call(ListView<ContactDto> param) {
+                return new ListCell<ContactDto>() {
 
                     @Override
-                    protected void updateItem(String item, boolean empty) {
+                    protected void updateItem(ContactDto item, boolean empty) {
                         super.updateItem(item, empty);
 
                         if (item == null || empty) {
@@ -87,7 +87,7 @@ public class ContactsController implements Initializable {
                             imageView.setFitHeight(10);
                             imageView.setFitWidth(10);
                             setGraphic(imageView);
-                            setText(item);
+                            setText(item.getFriendName());
                         }
                     }
                 };
@@ -98,8 +98,9 @@ public class ContactsController implements Initializable {
 
     @FXML
     public void handelShearch() {
-        // listContacts.setItems(FXCollections.observableArrayList(
-        //         contacts.stream().filter(e -> e.contains(txtSearch.getText())).collect(Collectors.toList())));
+        listContacts.setItems(FXCollections.observableArrayList(
+                contacts.stream().filter(e -> e.getFriendName().contains(txtSearch.getText()))
+                        .collect(Collectors.toList())));
 
     }
 
@@ -107,12 +108,11 @@ public class ContactsController implements Initializable {
     private void clickAddContactBtn(MouseEvent event) {
         InviteContactController inviteCont = null;
         try {
-        FXMLLoader fxmlLoader = new
-        FXMLLoader(getClass().getResource("/views/inviteContact.fxml"));
-        root = fxmlLoader.load();
-        inviteCont = fxmlLoader.getController();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/inviteContact.fxml"));
+            root = fxmlLoader.load();
+            inviteCont = fxmlLoader.getController();
         } catch (IOException e) {
-        e.printStackTrace();
+            e.printStackTrace();
         }
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);

@@ -16,6 +16,7 @@ public class ContactsModel {
         try {
             List<ContactDto> userContacts =  RMIConnection.getServerServive().getUserContacts(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
             System.out.println(userContacts.size());
+            System.out.println(userContacts);
             contacts = FXCollections.observableArrayList(userContacts);
         } catch (Exception e) {
            e.printStackTrace();

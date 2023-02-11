@@ -244,19 +244,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         Request request = new Request(sender, currentUser);
         requestImpl.deleteRequest(request);
     }
-    @Override 
-    public ArrayList<CountryDto> getCountriesNames() throws RemoteException{
-             return new countryDaoImpl().getCountries();
 
-    }
-    @Override
-    public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
-       System.out.println("inside function signup");
-        UserImpl userDao = new UserImpl();
-        User tempUser=new UserSignupMapperImpl().toEntity(signupDto);
-       
-
-        User user =userDao.createUser(new UserSignupMapperImpl().toEntity(signupDto));
 
     public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
         System.out.println("inside function signup");
