@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import gov.iti.jets.dto.RequestDto;
 import gov.iti.jets.persistence.dao.interfaces.ReguestDao;
 import gov.iti.jets.persistence.entities.Request;
 import gov.iti.jets.persistence.utils.DBConnecttion;
@@ -53,9 +56,23 @@ public class RequestImpl implements ReguestDao {
     }
 
     @Override
-    public Request getRequests(String sender, String receiver) {
+    public List<RequestDto> getUserRequests(String receiver) {
 
-        return null;
+        List<RequestDto> listOfContacts = new ArrayList<>();
+        try (Connection con = DBConnecttion.getConnection();) {
+
+            PreparedStatement stmt = con.prepareStatement("select * from requests where receiver =  ?");
+            stmt.setString(1, receiver);
+            ResultSet result = stmt.executeQuery();
+
+            while (result.next()) {
+                listOfContacts.add(new RequestDto(result.getString("sender"), result.getString("receiver"),
+                        result.getDate("request_date")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listOfContacts;
     }
 
 }
