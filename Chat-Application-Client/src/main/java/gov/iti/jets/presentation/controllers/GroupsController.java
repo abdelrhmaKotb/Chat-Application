@@ -52,19 +52,21 @@ public class GroupsController implements Initializable {
     }
 
     private void createList() {
-        
+
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         GroupsModel groupsModel = modelsFactory.getGroups();
-        groupObservableList=groupsModel.getGroups();
+        groupObservableList = groupsModel.getGroups();
         groupsListView.setItems(groupsModel.getGroupsNames());
-      /*   groups = GroupsService.getGroups(currentUserModel.getPhoneNumber());
-        groupsNames = new ArrayList<>();
-        for (int i = 0; i < groups.size(); i++) {
-            groupsNames.add(groups.get(i).getName());
-        }
-        groupList = FXCollections.observableArrayList(groupsNames);
-
-        groupsListView.setItems(groupList);*/
+        /*
+         * groups = GroupsService.getGroups(currentUserModel.getPhoneNumber());
+         * groupsNames = new ArrayList<>();
+         * for (int i = 0; i < groups.size(); i++) {
+         * groupsNames.add(groups.get(i).getName());
+         * }
+         * groupList = FXCollections.observableArrayList(groupsNames);
+         * 
+         * groupsListView.setItems(groupList);
+         */
 
     }
 

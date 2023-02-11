@@ -95,7 +95,7 @@
             <Insets top="10.0" />
          </padding>
       </VBox>
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" />
+      <VBox fx:id="nav" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" />
      
       <VBox fx:id="chat" maxHeight="1.7976931348623157E308" prefHeight="550.0" prefWidth="313.0" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
          <children>

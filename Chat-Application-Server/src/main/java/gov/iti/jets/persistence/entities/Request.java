@@ -7,13 +7,18 @@ public class Request {
     private String receiver;
     private Date requestDate;
 
-
-    public Request(){}
+    public Request() {
+    }
 
     public Request(String sender, String receiver, Date requestDate) {
         this.sender = sender;
         this.receiver = receiver;
         this.requestDate = requestDate;
+    }
+
+    public Request(String sender, String receiver) {
+        this.sender = sender;
+        this.receiver = receiver;
     }
 
     public String getSender() {

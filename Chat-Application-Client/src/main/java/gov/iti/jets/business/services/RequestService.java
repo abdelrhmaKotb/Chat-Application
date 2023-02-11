@@ -1,5 +1,6 @@
 package gov.iti.jets.business.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.rmi.RemoteException;
 import gov.iti.jets.business.rmi.RMIConnection;
@@ -7,9 +8,9 @@ import gov.iti.jets.interfaces.Server;
 
 public class RequestService {
 
-    public void sendRequests(String senderPhoneNumber,List<String> listOfContacts) {
+    public void sendRequests(String senderPhoneNumber, List<String> listOfContacts) {
         Server ser = RMIConnection.getServerServive();
-        try{
+        try {
             ser.sendRequests(senderPhoneNumber, listOfContacts);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -58,5 +59,25 @@ public class RequestService {
             e.printStackTrace();
         }
         return isRequestExist;
+    }
+
+    public List<String> getNamesOfRequestSenders(String currentUserNumber) {
+        Server ser = RMIConnection.getServerServive();
+        List<String> listOfNamesOfReqSenders = new ArrayList<>();
+        try {
+            listOfNamesOfReqSenders = ser.getNamesOfRequestSenders(currentUserNumber);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return listOfNamesOfReqSenders;
+    }
+
+    public void deleteRequest(String sender, String currentUser) {
+        Server ser = RMIConnection.getServerServive();
+        try {
+            ser.deleteRequest(sender, currentUser);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

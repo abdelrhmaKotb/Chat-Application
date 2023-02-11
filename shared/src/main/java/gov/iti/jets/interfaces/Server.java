@@ -21,7 +21,9 @@ public interface Server extends Remote {
     UserDto login(String phoneUmber, String password) throws RemoteException;
 
     public List<GroupDto> getGroups(String phoneNumber) throws RemoteException;
+    
     void createGroup(String name, String currentUserNumber, List<String> listOfNumbers) throws RemoteException;
+    
     List<String> getnameOfContacts(String currentUserNumber) throws RemoteException;
 
     void send(MessageDto message) throws RemoteException;
@@ -43,4 +45,10 @@ public interface Server extends Remote {
     void notifyUsersOnline(Client client) throws RemoteException;
 
     boolean editProfile(UserDto uDto) throws RemoteException;
+
+    List<String> getNamesOfRequestSenders(String phone) throws RemoteException;
+
+    void acceptContact(String currentUser, String friendNumber) throws RemoteException;
+
+    void deleteRequest(String sender, String currentUser) throws RemoteException;
 }

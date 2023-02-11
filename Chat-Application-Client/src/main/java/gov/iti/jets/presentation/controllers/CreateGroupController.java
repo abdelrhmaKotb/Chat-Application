@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import gov.iti.jets.business.services.GroupsService;
+import gov.iti.jets.business.helper.ModelsFactory;
+import gov.iti.jets.business.models.CurrentUserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,16 +39,11 @@ public class CreateGroupController implements Initializable {
 
     private Stage stage;
     private GroupsService groupsService = new GroupsService();
-    private String currentUserNumber = "01110906004";
+    private CurrentUserModel currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
+    private String currentUserNumber = currentUserModel.getPhoneNumber();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // List<String> listOfNameContact =
-        // groupsService.getnameOfContacts(currentUserNumber);
-        // for (int i = 0; i < listOfNameContact.size(); i++) {
-        // CheckBox chk = new CheckBox(listOfNameContact.get(i));
-        // listOfContacts.getItems().add(chk);
-        // }
         List<String> listOfNameContact = new ArrayList<>();
 
         try {
@@ -85,7 +82,7 @@ public class CreateGroupController implements Initializable {
             }
             listOfNumbers.add(currentUserNumber);
             groupsService.createGroup(groupNameTextField.getText(), currentUserNumber, listOfNumbers);
-            //stage.close();
+            stage.close();
         }
     }
 

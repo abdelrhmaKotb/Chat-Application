@@ -17,6 +17,7 @@ import gov.iti.jets.business.mapper.UserSignupMapperImpl;
 import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.dto.MessageDto;
+import gov.iti.jets.dto.RequestDto;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.dto.UserDtoSignup;
 import gov.iti.jets.interfaces.Client;
@@ -29,6 +30,8 @@ import gov.iti.jets.persistence.dao.ContactImpl;
 import gov.iti.jets.persistence.dao.RequestImpl;
 import gov.iti.jets.persistence.entities.Request;
 import gov.iti.jets.persistence.entities.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
     List<Client> clients = new ArrayList<>();
@@ -103,7 +106,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         System.out.println(reciverr);
         System.out.println(clientsMap.keySet());
         if (clientsMap.containsKey(reciverr)) {
-            System.out.println("yes contains " + clientsMap.size() + " " +clientsMap.get(reciverr).getPhoneNumber());
+            System.out.println("yes contains " + clientsMap.size() + " " + clientsMap.get(reciverr).getPhoneNumber());
             Client reciver = clientsMap.get(reciverr);
             reciver.reciveMessage(message);
         }
@@ -178,6 +181,8 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             for (int i = 0; i < listOfUsers.size(); i++) {
                 listOfNameContact.add(listOfUsers.get(i).getName() + " : " + listOfUsers.get(i).getPhoneNumber());
             }
+            ObservableList<String> list = FXCollections.observableArrayList(
+                    "Esraa : 01110906004", "Noura : 01110904444", "Naser : 01110905555", "Hussein : 01110906666");
         }
         return listOfNameContact;
     }
@@ -194,7 +199,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         var listOfContatcs = contactImpl.getContactsForUser(client.getPhoneNumber());
         listOfContatcs.forEach(e -> {
             String phone = e.getFriendPhoneNumber();
-            if(clientsMap.containsKey(phone)){
+            if (clientsMap.containsKey(phone)) {
                 try {
                     clientsMap.get(phone).userOnlineNotify(e);
                 } catch (Exception ex) {
@@ -203,13 +208,45 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             }
         });
     }
+
     public boolean editProfile(UserDto uDto) {
         UserImpl userDao = new UserImpl();
         UserMapper userMapper = new UserMapper();
-        User userEntity=userMapper.toEntity(uDto);
-        boolean isUpdated=userDao.updateUser(userEntity);
+        User userEntity = userMapper.toEntity(uDto);
+        boolean isUpdated = userDao.updateUser(userEntity);
         return isUpdated;
     }
-    
+
+    @Override
+    public List<String> getNamesOfRequestSenders(String phone) throws RemoteException {
+        RequestImpl requestImpl = new RequestImpl();
+        List<RequestDto> listOfRequestDto = requestImpl.getUserRequests(phone);
+        List<String> listOfNumbersOfReqSenders = new ArrayList<>();
+        List<String> listOfNamesOfReqSenders = new ArrayList<>();
+        for (int i = 0; i < listOfRequestDto.size(); i++) {
+            listOfNumbersOfReqSenders.add(listOfRequestDto.get(i).getSender());
+        }
+        UserImpl userImp = new UserImpl();
+        List<User> listOfUsers = userImp.getUsersByNumbers(listOfNumbersOfReqSenders);
+        for (int i = 0; i < listOfUsers.size(); i++) {
+            listOfNamesOfReqSenders.add(listOfUsers.get(i).getName() + " : " + listOfUsers.get(i).getPhoneNumber());
+        }
+        return listOfNamesOfReqSenders;
+    }
+
+    @Override
+    public void acceptContact(String currentUser, String friendNumber) throws RemoteException {
+        ContactImpl contactImpl = new ContactImpl();
+        Contact contact = new Contact(currentUser, friendNumber);
+        contactImpl.create(contact);
+
+    }
+
+    @Override
+    public void deleteRequest(String sender, String currentUser) throws RemoteException {
+        RequestImpl requestImpl = new RequestImpl();
+        Request request = new Request(sender, currentUser);
+        requestImpl.deleteRequest(request);
+    }
 
 }
