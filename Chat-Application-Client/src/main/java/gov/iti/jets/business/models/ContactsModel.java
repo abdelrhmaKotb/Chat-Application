@@ -37,6 +37,16 @@ public class ContactsModel {
     public void setContacts(ContactDto contact) {
         contacts.add(contact);
     }
+    public ContactDto getContactByPhoneNumber(String phone){
+        int size=contacts.size();
+        for(int i=0;i<size;i++) {
+            if(contacts.get(i).getFriendPhoneNumber().equals(phone))
+            {
+                return contacts.get(i);
+            }
+        }
+        return null;
+    }
 
 
 }
