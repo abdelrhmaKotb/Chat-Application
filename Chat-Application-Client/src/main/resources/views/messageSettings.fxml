@@ -12,148 +12,144 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="368.0"
-      prefWidth="446.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="368.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.MessageSettingsController">
     <children>
-        <TextField editable="false" prefHeight="63.0" prefWidth="430.0"
-                   text="                  Sample......................"/>
+        <TextField fx:id="sampleTextfield" alignment="CENTER" editable="false" prefHeight="63.0" prefWidth="430.0" text="Sample......................" />
         <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
             <children>
                 <HBox prefHeight="44.0" prefWidth="430.0">
                     <children>
-                        <HBox prefHeight="36.0" prefWidth="82.0" HBox.hgrow="ALWAYS"/>
+                        <HBox prefHeight="36.0" prefWidth="82.0" HBox.hgrow="ALWAYS" />
                         <Label prefHeight="20.0" prefWidth="144.0" text="Font Style">
                             <font>
-                                <Font name="SansSerif Bold" size="16.0"/>
+                                <Font name="SansSerif Bold" size="16.0" />
                             </font>
                             <HBox.margin>
-                                <Insets right="10.0" top="10.0"/>
+                                <Insets right="10.0" top="10.0" />
                             </HBox.margin>
                         </Label>
-                        <ChoiceBox prefHeight="26.0" prefWidth="127.0">
+                        <ChoiceBox fx:id="fontStyleChoice" prefHeight="26.0" prefWidth="127.0">
                             <HBox.margin>
-                                <Insets top="10.0"/>
+                                <Insets top="10.0" />
                             </HBox.margin>
                         </ChoiceBox>
-                        <HBox prefHeight="100.0" prefWidth="54.0" HBox.hgrow="ALWAYS"/>
+                        <HBox prefHeight="100.0" prefWidth="54.0" HBox.hgrow="ALWAYS" />
                     </children>
                     <opaqueInsets>
-                        <Insets/>
+                        <Insets />
                     </opaqueInsets>
                 </HBox>
                 <HBox prefHeight="46.0" prefWidth="446.0">
                     <children>
-                        <HBox prefHeight="30.0" prefWidth="78.0" HBox.hgrow="ALWAYS"/>
+                        <HBox prefHeight="30.0" prefWidth="78.0" HBox.hgrow="ALWAYS" />
                         <Label prefHeight="20.0" prefWidth="145.0" text="Font Color:">
                             <font>
-                                <Font name="SansSerif Bold" size="16.0"/>
+                                <Font name="SansSerif Bold" size="16.0" />
                             </font>
                             <HBox.margin>
-                                <Insets right="10.0" top="10.0"/>
+                                <Insets right="10.0" top="10.0" />
                             </HBox.margin>
                         </Label>
-                        <ColorPicker>
+                        <ColorPicker fx:id="fontcolorPicker">
                             <HBox.margin>
-                                <Insets top="6.0"/>
+                                <Insets top="6.0" />
                             </HBox.margin>
                         </ColorPicker>
-                        <HBox prefHeight="100.0" prefWidth="54.0" HBox.hgrow="ALWAYS"/>
+                        <HBox prefHeight="100.0" prefWidth="54.0" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
                 <HBox prefHeight="44.0" prefWidth="430.0">
                     <children>
-                        <HBox prefHeight="30.0" prefWidth="74.0" HBox.hgrow="ALWAYS"/>
+                        <HBox prefHeight="30.0" prefWidth="74.0" HBox.hgrow="ALWAYS" />
                         <Label prefHeight="20.0" prefWidth="144.0" text=" Text background:">
                             <HBox.margin>
-                                <Insets right="10.0" top="10.0"/>
+                                <Insets right="10.0" top="10.0" />
                             </HBox.margin>
                             <font>
-                                <Font name="SansSerif Bold" size="16.0"/>
+                                <Font name="SansSerif Bold" size="16.0" />
                             </font>
                         </Label>
-                        <Pane prefHeight="30.0" prefWidth="6.0"/>
-                        <ColorPicker prefHeight="31.0" prefWidth="125.0">
+                        <Pane prefHeight="30.0" prefWidth="6.0" />
+                        <ColorPicker fx:id="bgcolorPicker" prefHeight="31.0" prefWidth="125.0">
                             <HBox.margin>
-                                <Insets top="6.0"/>
+                                <Insets top="6.0" />
                             </HBox.margin>
                         </ColorPicker>
-                        <HBox prefHeight="100.0" prefWidth="54.0" HBox.hgrow="ALWAYS"/>
+                        <HBox prefHeight="100.0" prefWidth="54.0" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
                 <HBox prefHeight="44.0" prefWidth="430.0">
                     <children>
-                        <HBox prefHeight="36.0" prefWidth="0.0" HBox.hgrow="ALWAYS"/>
+                        <HBox prefHeight="36.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
                         <Label prefHeight="20.0" prefWidth="118.0" text="  Font Size:">
                             <font>
-                                <Font name="SansSerif Bold" size="16.0"/>
+                                <Font name="SansSerif Bold" size="16.0" />
                             </font>
                             <HBox.margin>
-                                <Insets right="10.0" top="10.0"/>
+                                <Insets right="10.0" top="10.0" />
                             </HBox.margin>
                         </Label>
-                        <Pane prefHeight="36.0" prefWidth="29.0"/>
-                        <ChoiceBox prefHeight="26.0" prefWidth="62.0">
+                        <Pane prefHeight="36.0" prefWidth="29.0" />
+                        <ChoiceBox fx:id="fontSizechoiceBox" prefHeight="26.0" prefWidth="62.0">
                             <HBox.margin>
-                                <Insets top="10.0"/>
+                                <Insets top="10.0" />
                             </HBox.margin>
                         </ChoiceBox>
-                        <HBox prefHeight="100.0" prefWidth="54.0" HBox.hgrow="ALWAYS"/>
+                        <HBox prefHeight="100.0" prefWidth="54.0" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
                 <HBox prefHeight="44.0" prefWidth="430.0">
                     <children>
-                        <HBox prefHeight="33.0" prefWidth="0.0" HBox.hgrow="ALWAYS"/>
-                        <CheckBox mnemonicParsing="false" text="Bold">
+                        <HBox prefHeight="33.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
+                        <CheckBox fx:id="boldCheck" mnemonicParsing="false" text="Bold">
                             <font>
-                                <Font name="SansSerif Bold" size="16.0"/>
+                                <Font name="SansSerif Bold" size="16.0" />
                             </font>
                             <HBox.margin>
-                                <Insets top="10.0"/>
+                                <Insets top="10.0" />
                             </HBox.margin>
                         </CheckBox>
-                        <HBox prefHeight="42.0" prefWidth="178.0" HBox.hgrow="ALWAYS"/>
+                        <HBox prefHeight="42.0" prefWidth="178.0" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
                 <HBox prefHeight="44.0" prefWidth="430.0">
                     <children>
-                        <HBox prefHeight="33.0" prefWidth="33.0" HBox.hgrow="ALWAYS"/>
-                        <CheckBox mnemonicParsing="false" text="Underline" underline="true">
+                        <HBox prefHeight="33.0" prefWidth="33.0" HBox.hgrow="ALWAYS" />
+                        <CheckBox fx:id="underlineCheck" mnemonicParsing="false" text="Underline" underline="true">
                             <font>
-                                <Font name="SansSerif Regular" size="16.0"/>
+                                <Font name="SansSerif Regular" size="16.0" />
                             </font>
                             <HBox.margin>
-                                <Insets top="10.0"/>
+                                <Insets top="10.0" />
                             </HBox.margin>
                         </CheckBox>
-                        <HBox prefHeight="42.0" prefWidth="178.0" HBox.hgrow="ALWAYS"/>
+                        <HBox prefHeight="42.0" prefWidth="178.0" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
                 <HBox prefHeight="44.0" prefWidth="430.0">
                     <children>
-                        <HBox prefHeight="33.0" prefWidth="0.0" HBox.hgrow="ALWAYS"/>
-                        <CheckBox mnemonicParsing="false" text="Italic">
+                        <HBox prefHeight="33.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
+                        <CheckBox fx:id="italicCheck" mnemonicParsing="false" text="Italic">
                             <font>
-                                <Font name="SansSerif Italic" size="16.0"/>
+                                <Font name="SansSerif Italic" size="16.0" />
                             </font>
                             <HBox.margin>
-                                <Insets top="10.0"/>
+                                <Insets top="10.0" />
                             </HBox.margin>
                         </CheckBox>
-                        <HBox prefHeight="42.0" prefWidth="178.0" HBox.hgrow="ALWAYS"/>
+                        <HBox prefHeight="42.0" prefWidth="178.0" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
                 <HBox prefHeight="100.0" prefWidth="200.0">
                     <children>
-                        <HBox minHeight="-Infinity" prefHeight="86.0" prefWidth="190.0" HBox.hgrow="ALWAYS"/>
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0"
-                                style="-fx-background-color: #7269EF;" text="Save" textFill="WHITE"/>
-                        <HBox maxWidth="-Infinity" minHeight="-Infinity" prefHeight="86.0" prefWidth="70.0"
-                              HBox.hgrow="ALWAYS"/>
+                        <HBox minHeight="-Infinity" prefHeight="86.0" prefWidth="190.0" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="saveBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0" style="-fx-background-color: #7269EF;" text="Save" textFill="WHITE" />
+                        <HBox maxWidth="-Infinity" minHeight="-Infinity" prefHeight="86.0" prefWidth="70.0" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
             </children>
             <opaqueInsets>
-                <Insets top="10.0"/>
+                <Insets top="10.0" />
             </opaqueInsets>
         </VBox>
     </children>

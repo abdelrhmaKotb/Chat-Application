@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
+import gov.iti.jets.dto.MessageDto;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -27,8 +28,8 @@ public class SendMsgController implements Initializable {
     HBox hbox;
     String content;
     boolean recieve;
-    public SendMsgController(String message,boolean recieve) {
-        content=(message);
+    public SendMsgController(MessageDto messageDto,boolean recieve) {
+        content=(messageDto.getMessage());
         this.recieve=recieve;
     }
 

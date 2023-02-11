@@ -30,7 +30,7 @@
                   <HBox prefHeight="51.0" prefWidth="200.0" />
                   <HBox prefHeight="59.0" prefWidth="290.0">
                      <children>
-                        <Text fx:id="recieverNameText" fill="#495057" strokeType="OUTSIDE" strokeWidth="0.0" text="Omnia Ayman" wrappingWidth="150.385498046875">
+                        <Text fx:id="recieverNameText" fill="#495057" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="150.385498046875">
                            <font>
                               <Font name="SansSerif Regular" size="16.0" />
                            </font>
@@ -92,7 +92,7 @@
                         <HBox prefHeight="33.0" prefWidth="34.0" />
                         <HBox prefHeight="27.0" prefWidth="30.0">
                            <children>
-                              <ImageView fx:id="textEditorBtn" fitHeight="33.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="textEditorBtn" fitHeight="33.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true"  onMouseClicked="#SetMessage">
                                  <image>
                                     <Image url="@../images/icons8-text-50.png" />
                                  </image>
