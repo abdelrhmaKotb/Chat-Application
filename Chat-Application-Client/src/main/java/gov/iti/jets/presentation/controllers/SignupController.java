@@ -226,6 +226,7 @@ public class SignupController implements Initializable {
                 currentUserModel.setEmail(user.getEmail());
                 currentUserModel.setBio(user.getBio());
                 currentUserModel.setStatus(user.getStatus().ordinal());
+                currentUserModel.setCountryProperty(user.getCountry());
                 // RMIConnection.getServerServive().register(new ClientImpl());
                  RMIConnection.getInstance().registerClient();
                  RMIConnection.getServerServive().notifyUsersOnline(RMIConnection.getInstance().getCurrentClientConnection());

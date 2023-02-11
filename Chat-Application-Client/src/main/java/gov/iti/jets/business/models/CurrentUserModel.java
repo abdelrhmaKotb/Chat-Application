@@ -12,9 +12,9 @@ public class CurrentUserModel {
     private StringProperty phoneNumber = new SimpleStringProperty();
     private StringProperty name = new SimpleStringProperty();
     private StringProperty email =  new SimpleStringProperty();
-    private StringProperty gender;
-    private StringProperty country;
-    private  StringProperty dateOfBirth;
+    private StringProperty gender=new SimpleStringProperty();
+    private IntegerProperty country=new SimpleIntegerProperty();
+    private  StringProperty dateOfBirth=new SimpleStringProperty();
     private StringProperty bio =  new SimpleStringProperty();
     private IntegerProperty status =  new SimpleIntegerProperty();
     
@@ -86,6 +86,15 @@ public class CurrentUserModel {
     }
     public StringProperty bProperty() {
         return bio;
+    }
+    
+
+    public IntegerProperty getCountryProperty() {
+        return country;
+    }
+
+    public void setCountryProperty(int country) {
+        this.country.set(country);
     }
     
 }
