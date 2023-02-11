@@ -2,12 +2,12 @@ package gov.iti.jets.dto;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Arrays;
 
 import gov.iti.jets.enums.Gender;
 import gov.iti.jets.enums.Mood;
 
-
-public class UserDtoSignup implements Serializable{
+public class UserDtoSignup implements Serializable {
 
     private String phoneNumber;
     private String name;
@@ -20,10 +20,11 @@ public class UserDtoSignup implements Serializable{
     private Mood status;
     private byte[] image;
 
-    public UserDtoSignup(){}
+    public UserDtoSignup() {
+    }
 
     public UserDtoSignup(String phoneNumber, String name, String email, String password, Gender gender, int country,
-            Date dateOfBirth, String bio, Mood status,byte[] image) {
+            Date dateOfBirth, String bio, Mood status, byte[] image) {
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.email = email;
@@ -33,9 +34,8 @@ public class UserDtoSignup implements Serializable{
         this.dateOfBirth = dateOfBirth;
         this.bio = bio;
         this.status = status;
-        this.image=image;
+        this.image = image;
     }
-   
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -108,11 +108,22 @@ public class UserDtoSignup implements Serializable{
     public void setStatus(Mood status) {
         this.status = status;
     }
- public void setImage(byte[] image){
+
+    public void setImage(byte[] image) {
 
         this.image = image;
     }
-    public byte[] getImage(){
+
+    public byte[] getImage() {
         return image;
     }
+
+    
+    @Override
+    public String toString() {
+        return "UserDtoSignup [phoneNumber=" + phoneNumber + ", name=" + name + ", email=" + email + ", password="
+                + password + ", gender=" + gender + ", country=" + country + ", dateOfBirth=" + dateOfBirth + ", bio="
+                + bio + ", status=" + status + ", image="  + "]";
+    }
+
 }
