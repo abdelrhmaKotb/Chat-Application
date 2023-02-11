@@ -181,8 +181,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             for (int i = 0; i < listOfUsers.size(); i++) {
                 listOfNameContact.add(listOfUsers.get(i).getName() + " : " + listOfUsers.get(i).getPhoneNumber());
             }
-            ObservableList<String> list = FXCollections.observableArrayList(
-                    "Esraa : 01110906004", "Noura : 01110904444", "Naser : 01110905555", "Hussein : 01110906666");
         }
         return listOfNameContact;
     }
@@ -223,13 +221,15 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         List<RequestDto> listOfRequestDto = requestImpl.getUserRequests(phone);
         List<String> listOfNumbersOfReqSenders = new ArrayList<>();
         List<String> listOfNamesOfReqSenders = new ArrayList<>();
-        for (int i = 0; i < listOfRequestDto.size(); i++) {
-            listOfNumbersOfReqSenders.add(listOfRequestDto.get(i).getSender());
-        }
-        UserImpl userImp = new UserImpl();
-        List<User> listOfUsers = userImp.getUsersByNumbers(listOfNumbersOfReqSenders);
-        for (int i = 0; i < listOfUsers.size(); i++) {
-            listOfNamesOfReqSenders.add(listOfUsers.get(i).getName() + " : " + listOfUsers.get(i).getPhoneNumber());
+        if (listOfRequestDto.size() > 0) {
+            for (int i = 0; i < listOfRequestDto.size(); i++) {
+                listOfNumbersOfReqSenders.add(listOfRequestDto.get(i).getSender());
+            }
+            UserImpl userImp = new UserImpl();
+            List<User> listOfUsers = userImp.getUsersByNumbers(listOfNumbersOfReqSenders);
+            for (int i = 0; i < listOfUsers.size(); i++) {
+                listOfNamesOfReqSenders.add(listOfUsers.get(i).getName() + " : " + listOfUsers.get(i).getPhoneNumber());
+            }
         }
         return listOfNamesOfReqSenders;
     }
