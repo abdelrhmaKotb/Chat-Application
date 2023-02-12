@@ -49,7 +49,7 @@ public class SendMsgController implements Initializable {
             hbox.setAlignment(Pos.CENTER_RIGHT);
 
         }
-        msg.setStyle("-fx-background-color: " + "#F5F7FB" + "; -fx-font-size: 15; -fx-background-radius: 3;");
+
         msg.setPadding(new Insets(5, 5, 5, 5));
         msg.setWrapText(true);
         msg.setTextAlignment(TextAlignment.JUSTIFY);
