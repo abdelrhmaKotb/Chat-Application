@@ -1,12 +1,12 @@
 package gov.iti.jets.business.helper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import gov.iti.jets.presentation.controllers.MessageController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChatCoordinator {
 
@@ -15,14 +15,15 @@ public class ChatCoordinator {
     private static ChatData currentChat = null;
 
     private static Map<String, ChatData> chats = new HashMap<>();
+    private static String currentPhone;
 
     private ChatCoordinator() {
     }
 
     public static ChatCoordinator getInstance() {
         if (instance == null) {
-            instance =  new ChatCoordinator();
-            return instance; 
+            instance = new ChatCoordinator();
+            return instance;
         }
 
         return instance;
@@ -41,7 +42,7 @@ public class ChatCoordinator {
                 grid.getChildren().removeAll(grid.getChildren());
 
             }
-
+            currentPhone = phone;
             System.out.println(grid.getChildren().isEmpty());
 
             if (!chats.containsKey(phone)) {
@@ -52,7 +53,7 @@ public class ChatCoordinator {
                     loader.setController(c);
                     Parent view = loader.load();
                     c.setReciverName(phone);
-                    ChatData chatData = new ChatData(loader, view,phone);
+                    ChatData chatData = new ChatData(loader, view, phone);
                     currentChat = chatData;
                     chats.put(phone, chatData);
                     grid.getChildren().add(view);
@@ -78,7 +79,8 @@ public class ChatCoordinator {
     public MessageController getCurrentChatController() {
         return (MessageController) currentChat.getLoader().getController();
     }
+
     public String getCurrentChatOpen() {
-        return currentChat.getPhoneNumber();
+        return currentPhone;
     }
 }

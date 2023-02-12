@@ -1,12 +1,11 @@
 package gov.iti.jets.dto;
 
-import java.io.Serializable;
-
 import gov.iti.jets.enums.Gender;
 import gov.iti.jets.enums.Mood;
 
+import java.io.Serializable;
+
 /**
- *
  * @author Esraa
  */
 public class ContactDto implements Serializable {
@@ -25,8 +24,9 @@ public class ContactDto implements Serializable {
     private boolean isBold;
     private boolean isUnderlined;
     private boolean isItalic;
+
     public ContactDto(String user, String friendPhoneNumber, String friendName, String friendEmail, Gender friendGender,
-            Mood frinMood, String category, boolean isBlocked) {
+                      Mood frinMood, String category, boolean isBlocked) {
         this.user = user;
         this.friendPhoneNumber = friendPhoneNumber;
         this.friendName = friendName;
@@ -50,7 +50,7 @@ public class ContactDto implements Serializable {
 
     public ContactDto(String user, String friendPhoneNumber, String friendName,
                       String friendEmail, Gender friendGender, Mood frinMood, String category,
-                      boolean isBlocked, int fontSize, String fontColor, String fontStyle, String backgroundColor,
+                      boolean isBlocked, int fontSize, String fontStyle, String fontColor, String backgroundColor,
                       boolean isBold, boolean isUnderlined, boolean isItalic) {
         this.user = user;
         this.friendPhoneNumber = friendPhoneNumber;
@@ -93,7 +93,6 @@ public class ContactDto implements Serializable {
         this.frinMood = frinMood;
     }
 
-   
 
     public String getUser() {
         return user;
@@ -135,7 +134,7 @@ public class ContactDto implements Serializable {
         this.isBlocked = isBlocked;
     }
 
-    
+
     @Override
     public String toString() {
         return "ContactDto [user=" + user + ", friendPhoneNumber=" + friendPhoneNumber + ", friendName=" + friendName
@@ -143,13 +142,6 @@ public class ContactDto implements Serializable {
                 + ", category=" + category + ", isBlocked=" + isBlocked + "]";
     }
 
-    public boolean isBlocked() {
-        return isBlocked;
-    }
-
-    public void setBlocked(boolean blocked) {
-        isBlocked = blocked;
-    }
 
     public int getFontSize() {
         return fontSize;

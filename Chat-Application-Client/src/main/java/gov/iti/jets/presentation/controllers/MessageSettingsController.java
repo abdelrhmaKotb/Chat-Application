@@ -1,17 +1,30 @@
 package gov.iti.jets.presentation.controllers;
+
+import gov.iti.jets.business.helper.ModelsFactory;
+import gov.iti.jets.business.models.ContactsModel;
+import gov.iti.jets.business.services.messageSettingsService;
+import gov.iti.jets.dto.ContactDto;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,38 +56,63 @@ public class MessageSettingsController implements Initializable {
     boolean isBold;
     boolean isUndelined;
     boolean isItalic;
+    ContactDto contactDto;
+
+    boolean changed;
+
+    public MessageSettingsController(ContactDto contactDto) {
+        this.contactDto = contactDto;
+        System.out.println("-----------cont" + contactDto.getFriendPhoneNumber() + contactDto.isBold());
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-      
+
         setFontStyle();
-        size = 12;
-        style = "System";
-        bgColor = "#7269EF";
-        color = "white";
+        size = contactDto.getFontSize();
+        style = contactDto.getFontStyle();
+        bgColor = contactDto.getBackgroundColor();
+        color = contactDto.getFontColor();
         List<Integer> fontSize = new ArrayList<>(
-                Arrays.asList(10, 11, 12, 13, 14, 18, 24, 28, 36));
+                Arrays.asList(10, 11, 12, 13, 14, 18, 24, 28));
         fontSizechoiceBox.getItems().setAll(fontSize);
-        fontStyleChoice.getSelectionModel().select("System");
-        fontSizechoiceBox.getSelectionModel().select(12);
-        fontcolorPicker.setValue(Color.WHITE);
-        bgcolorPicker.setValue(Color.web("#7269EF"));
+        fontStyleChoice.getSelectionModel().select(contactDto.getFontStyle());
+        System.out.println(contactDto.getFontSize());
+        fontSizechoiceBox.getSelectionModel().select((Integer) contactDto.getFontSize());
+        System.out.println(contactDto.getFontColor());
+        fontcolorPicker.setValue(Color.web(contactDto.getFontColor()));
+        bgcolorPicker.setValue(Color.web(contactDto.getBackgroundColor()));
+        isBold = contactDto.isBold();
+        isItalic = contactDto.isItalic();
+        isUndelined = contactDto.isUnderlined();
+        if (isBold)
+            boldCheck.setSelected(true);
+        if (isItalic)
+            italicCheck.setSelected(true);
+        if (isUndelined)
+            underlineCheck.setSelected(true);
         sampleTextfield.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";");
         fontStyleChoice.getSelectionModel().selectedIndexProperty().addListener((ov, oldValue, newValue) -> {
             style = fontStyleChoice.getSelectionModel().getSelectedItem().toString();
+            contactDto.setFontStyle(style);
             sampleTextfield.setFont(Font.font(style, size));
+            changed = true;
         });
         fontSizechoiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, oldValue, newValue) -> {
             size = Integer.parseInt(fontSizechoiceBox.getSelectionModel().getSelectedItem().toString());
+            contactDto.setFontSize(size);
             sampleTextfield.setFont(Font.font(style, size));
+            changed = true;
         });
-       
+
         fontcolorPicker.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
 
                 color = "#" + fontcolorPicker.getValue().toString().substring(2, 8);
+                contactDto.setFontColor(color);
+                changed = true;
                 sampleTextfield.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";");
 
             }
@@ -85,6 +123,8 @@ public class MessageSettingsController implements Initializable {
             public void handle(ActionEvent event) {
 
                 bgColor = "#" + bgcolorPicker.getValue().toString().substring(2, 8);
+                contactDto.setBackgroundColor(bgColor);
+                changed = true;
                 sampleTextfield.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";");
 
             }
@@ -99,7 +139,8 @@ public class MessageSettingsController implements Initializable {
                     sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, size));
                     isBold = false;
                 }
-
+                contactDto.setBold(isBold);
+                changed = true;
             }
 
         });
@@ -114,6 +155,8 @@ public class MessageSettingsController implements Initializable {
                     sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.REGULAR, size));
                     isItalic = false;
                 }
+                contactDto.setItalic(isItalic);
+                changed = true;
             }
 
         });
@@ -127,6 +170,8 @@ public class MessageSettingsController implements Initializable {
                     sampleTextfield.lookup(".text").setStyle("-fx-underline: false;");
                     isUndelined = false;
                 }
+                contactDto.setUnderlined(isUndelined);
+                changed = true;
             }
 
         });
@@ -140,6 +185,36 @@ public class MessageSettingsController implements Initializable {
     void setFontStyle() {
         List<String> fontFamilies = Font.getFamilies();
         fontStyleChoice.getItems().setAll(fontFamilies);
+
+    }
+
+    @FXML
+    public void save(MouseEvent mouseEvent) {
+        System.out.println("save");
+        if (changed) {
+
+            messageSettingsService settingsService = new messageSettingsService();
+            settingsService.msgSettings(contactDto);
+            System.out.println("SAVED");
+            ModelsFactory modelsFactory = ModelsFactory.getInstance();
+            ContactsModel contactsModel = modelsFactory.getContactsModel();
+            contactsModel.editContact(contactDto);
+            Stage popup = new Stage();
+            // configure UI for popup etc...
+
+            // hide popup after 3 seconds:
+            PauseTransition delay = new PauseTransition(Duration.seconds(3));
+            delay.setOnFinished(e -> popup.hide());
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/views/edited.fxml"));
+                popup.setScene(new Scene(root));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            popup.show();
+            delay.play();
+
+        }
 
     }
 }

@@ -202,7 +202,7 @@ public class UserImpl implements UserDao {
             statement.setInt(3, newData.getCountry());
             statement.setDate(4, newData.getDateOfBirth());
             statement.setString(5, newData.getBio());
-            statement.setInt(6, newData.getStatus().ordinal() + 1);
+            statement.setInt(6, newData.getStatus().ordinal() );
             statement.setString(7, newData.getPhoneNumber());
             statement.executeUpdate();
             return true;
