@@ -74,8 +74,11 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                 showPopUp.showNotifacation(contact.getUser() + " became offline");
                 ContactsModel contactsModel = ModelsFactory.getInstance().getContactsModel();
                 ContactDto c = new ContactDto();
+                
                 contactsModel.getContacts().add(c);
                 contactsModel.getContacts().remove(c);
+
+                
 
                 // var contacts = contactsModel.getContacts();
                 // contacts.

@@ -12,6 +12,7 @@ import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.enums.Mood;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,6 +63,15 @@ public class ContactsController implements Initializable {
 
         listContacts.setItems(contacts);
 
+        contacts.addListener(new ListChangeListener<ContactDto>() {
+            @Override
+            public void onChanged(ListChangeListener.Change<? extends ContactDto> c) {
+                System.out.println("Changed on " + c);
+                listContacts.refresh();
+
+            }
+        });
+
         listContacts.getSelectionModel().selectedItemProperty().addListener((obs, old, newVal) -> {
             if (newVal == null)
                 return;
@@ -70,6 +80,7 @@ public class ContactsController implements Initializable {
 
             ChatCoordinator.getInstance().openChat(newVal.getFriendPhoneNumber());
         });
+
 
         listContacts.setCellFactory(new Callback<ListView<ContactDto>, ListCell<ContactDto>>() {
             @Override
