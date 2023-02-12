@@ -3,11 +3,16 @@ package gov.iti.jets.presentation.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import gov.iti.jets.business.rmi.RMIConnection;
+import gov.iti.jets.persistence.utils.DBConnecttion;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,22 +31,31 @@ public class MainPanelController implements Initializable {
     @FXML
     private BorderPane borderPane;
 
-   
+    @FXML
+    private Button startSerververId;
 
+    @FXML
+    private Button stopSerververId;
+
+    @FXML
+    private Button logout;
+
+    @FXML
+    void close(ActionEvent event) {
+
+    }
 
   
-
-   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Parent parent;
+  /*      Parent parent;
         try {
             parent = FXMLLoader.load(getClass().getResource("/views/charts.fxml"));
             borderPane.setCenter(parent);
 
         } catch (IOException ex) {
             Logger.getLogger(MainPanelController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 
  
@@ -60,15 +74,21 @@ public class MainPanelController implements Initializable {
      System.exit(0);
     }
 
-    @FXML
-    private void loadPage01View(ActionEvent e) {
-    }
+  
 
     @FXML
-    private void loadPage02View(ActionEvent e) {
+    private void stopServerAction(ActionEvent e) {
+        RMIConnection rmi = RMIConnection.getInstance();
+         rmi.discConnect();
     }
 
     
-   
+    @FXML
+    void startServerAction(ActionEvent event) {
+        RMIConnection rmi = RMIConnection.getInstance();
+        DBConnecttion.getConnection();
+        rmi.connect();
+    }
+
    
 }
