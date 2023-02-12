@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane fx:id="ggg" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="372.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.39996337890625" minWidth="10.0" prefWidth="122.00004043579102" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="573.6000061035156" minWidth="10.0" prefWidth="97.59998779296873" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="573.6000061035156" minWidth="10.0" prefWidth="101.60001220703128" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="573.6000061035156" minWidth="10.0" prefWidth="101.60001220703128" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label fx:id="contactName" />
+      <ImageView fx:id="mood" fitHeight="40.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+      <ImageView fx:id="status" fitHeight="37.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+      <Label fx:id="statusTxt" GridPane.columnIndex="3" />
+   </children>
+</GridPane>

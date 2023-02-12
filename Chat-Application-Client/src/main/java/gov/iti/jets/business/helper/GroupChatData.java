@@ -1,26 +1,20 @@
 package gov.iti.jets.business.helper;
 
+import gov.iti.jets.dto.GroupDto;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
-public class ChatData {
+public class GroupChatData implements Chat{
     private FXMLLoader loader;
 
     private Parent view;
 
-    private  String idintifer;
+    private  GroupDto group;
 
-    private boolean isGroup;
-
-    public boolean isGroup() {
-        return isGroup;
-    }
-
-    public ChatData(FXMLLoader loader, Parent view, String idintifer,boolean isGroup) {
+    public GroupChatData(FXMLLoader loader, Parent view, GroupDto group) {
         this.loader = loader;
         this.view = view;
-        this.idintifer=idintifer;
-        this.isGroup = isGroup;
+        this.group=group;
     }
 
     public FXMLLoader getLoader() {
@@ -31,7 +25,7 @@ public class ChatData {
         return view;
     }
     public String getIdntifier() {
-        return idintifer;
+        return String.valueOf(group.getId());
     }
 
 }

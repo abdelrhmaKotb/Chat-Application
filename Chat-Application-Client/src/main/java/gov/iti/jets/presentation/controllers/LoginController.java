@@ -2,6 +2,7 @@ package gov.iti.jets.presentation.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import gov.iti.jets.business.services.LoginService;
 import gov.iti.jets.dto.UserDto;
@@ -85,6 +86,8 @@ public class LoginController implements Initializable {
                 currentUserModel.setEmail(user.getEmail());
                 currentUserModel.setBio(user.getBio());
                 currentUserModel.setStatus(user.getStatus().ordinal());
+                // System.out.println("image" + Arrays.toString(user.getImage()));
+                currentUserModel.setImage(user.getImage());
                 // RMIConnection.getServerServive().register(new ClientImpl());
                  RMIConnection.getInstance().registerClient();
                  RMIConnection.getServerServive().notifyUsersOnline(RMIConnection.getInstance().getCurrentClientConnection());

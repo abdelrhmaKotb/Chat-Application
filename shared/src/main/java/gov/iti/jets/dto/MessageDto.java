@@ -13,6 +13,21 @@ public class MessageDto implements Serializable {
     private String backgroundColor;
     private boolean isBold;
     private boolean isUnderlined;
+
+    public MessageDto(String sender, String message, int fontSize, String fontStyle, String fontColor, String backgroundColor, boolean isBold, boolean isUnderlined, boolean isItalic, String reciver) {
+        this.sender = sender;
+        this.message = message;
+        this.fontSize = fontSize;
+        this.fontStyle = fontStyle;
+        this.fontColor = fontColor;
+        this.backgroundColor = backgroundColor;
+        this.isBold = isBold;
+        this.isUnderlined = isUnderlined;
+        this.isItalic = isItalic;
+        this.reciver = reciver;
+        this.messageDate = messageDate;
+    }
+
     private boolean isItalic;
 
     private String reciver;
