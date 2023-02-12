@@ -42,4 +42,9 @@ public class App extends Application {
         }
 
     }
+
+    @Override
+    public void stop() throws Exception {
+        RMIConnection.getServerServive().unregister(RMIConnection.getInstance().getCurrentClientConnection());
+    }
 }

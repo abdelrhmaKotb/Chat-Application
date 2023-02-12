@@ -11,4 +11,5 @@ public interface Client extends Remote{
     String getPhoneNumber() throws RemoteException;
     void reciveMessage(MessageDto Message) throws RemoteException;
     void userOnlineNotify(ContactDto contact) throws RemoteException;
+    void userOfflineNotify(ContactDto contact) throws RemoteException;
 }

@@ -27,6 +27,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -167,7 +168,6 @@ public class EditProfileController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("/views/edited.fxml"));
                 popup.setScene(new Scene(root));
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
             popup.show();

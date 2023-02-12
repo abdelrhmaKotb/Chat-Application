@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="368.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.MessageSettingsController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="368.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <TextField fx:id="sampleTextfield" alignment="CENTER" editable="false" prefHeight="63.0" prefWidth="430.0" text="Sample......................" />
         <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
@@ -101,7 +101,7 @@
                 <HBox prefHeight="44.0" prefWidth="430.0">
                     <children>
                         <HBox prefHeight="33.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-                        <CheckBox fx:id="boldCheck" mnemonicParsing="false" text="Bold">
+                        <CheckBox fx:id="boldCheck" mnemonicParsing="false" onAction="#checkboxs" text="Bold">
                             <font>
                                 <Font name="SansSerif Bold" size="16.0" />
                             </font>
@@ -115,7 +115,7 @@
                 <HBox prefHeight="44.0" prefWidth="430.0">
                     <children>
                         <HBox prefHeight="33.0" prefWidth="33.0" HBox.hgrow="ALWAYS" />
-                        <CheckBox fx:id="underlineCheck" mnemonicParsing="false" text="Underline" underline="true">
+                        <CheckBox fx:id="underlineCheck" mnemonicParsing="false" onAction="#checkboxs" text="Underline" underline="true">
                             <font>
                                 <Font name="SansSerif Regular" size="16.0" />
                             </font>
@@ -129,7 +129,7 @@
                 <HBox prefHeight="44.0" prefWidth="430.0">
                     <children>
                         <HBox prefHeight="33.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-                        <CheckBox fx:id="italicCheck" mnemonicParsing="false" text="Italic">
+                        <CheckBox fx:id="italicCheck" mnemonicParsing="false" onAction="#checkboxs" text="Italic">
                             <font>
                                 <Font name="SansSerif Italic" size="16.0" />
                             </font>
@@ -143,7 +143,7 @@
                 <HBox prefHeight="100.0" prefWidth="200.0">
                     <children>
                         <HBox minHeight="-Infinity" prefHeight="86.0" prefWidth="190.0" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="saveBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0" style="-fx-background-color: #7269EF;" text="Save" textFill="WHITE" />
+                        <Button fx:id="saveBtn" mnemonicParsing="false" onMouseClicked="#save" prefHeight="26.0" prefWidth="56.0" style="-fx-background-color: #7269EF;" text="Save" textFill="WHITE" />
                         <HBox maxWidth="-Infinity" minHeight="-Infinity" prefHeight="86.0" prefWidth="70.0" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
