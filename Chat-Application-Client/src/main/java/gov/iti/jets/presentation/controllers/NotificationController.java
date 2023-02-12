@@ -24,11 +24,10 @@ public class NotificationController implements Initializable {
     private ListView<String> listOfNotifications;
 
     public static NotificationController notificationController;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        for (int i = 0; i < 3; i++) {
-            addInListOfNotifications( "You can access any of the following websites fdgdgdg fdgfhfhh" + i);
-        }
+
     }
 
     public void addInListOfNotifications(String notification) {

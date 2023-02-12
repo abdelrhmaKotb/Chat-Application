@@ -75,6 +75,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
             @Override
             public void run() {
                 showPopUp.showNotifacation(contact.getUser() + " became offline");
+                NavCoordinator.getNotificationController().addInListOfNotifications(contact.getUser() + " became offline");
                 ContactsModel contactsModel = ModelsFactory.getInstance().getContactsModel();
                 ContactDto c = new ContactDto();
                 
