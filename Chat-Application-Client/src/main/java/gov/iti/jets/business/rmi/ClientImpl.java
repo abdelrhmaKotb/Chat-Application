@@ -2,11 +2,13 @@ package gov.iti.jets.business.rmi;
 
 import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ModelsFactory;
+import gov.iti.jets.business.helper.NavCoordinator;
 import gov.iti.jets.business.models.CurrentUserModel;
 import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.MessageDto;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.presentation.controllers.MessageController;
+import gov.iti.jets.presentation.controllers.NotificationController;
 import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.application.Platform;
 
@@ -51,6 +53,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
             @Override
             public void run() {
                 showPopUp.showNotifacation(contact.getUser() + " became online");
+                NavCoordinator.getNotificationController().addInListOfNotifications(contact.getUser() + " became online");
             }
         });
     }

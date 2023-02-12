@@ -23,10 +23,11 @@ public class NotificationController implements Initializable {
     @FXML
     private ListView<String> listOfNotifications;
 
+    public static NotificationController notificationController;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         for (int i = 0; i < 3; i++) {
-            addInListOfNotifications( "notiiiiiiiiiiiiiiii" + i);
+            addInListOfNotifications( "You can access any of the following websites fdgdgdg fdgfhfhh" + i);
         }
     }
 
