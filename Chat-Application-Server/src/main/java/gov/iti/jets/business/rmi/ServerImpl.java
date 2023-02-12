@@ -92,7 +92,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return groupDto;
     }
 
-
     @Override
     public void send(MessageDto message) throws RemoteException {
         System.out.println(message);
@@ -265,7 +264,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         requestImpl.deleteRequest(request);
     }
 
-
     public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
         System.out.println("inside function signup");
         UserImpl userDao = new UserImpl();
@@ -280,9 +278,33 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return new UserSignupMapperImpl().toDto(user);
     }
 
-
     @Override
     public boolean isUserOnline(ContactDto user) throws RemoteException {
         return clientsMap.containsKey(user.getFriendPhoneNumber());
+    }
+
+    @Override
+    public void sendGroupMessage(MessageDto messageDto) throws RemoteException {
+        System.out.println(messageDto);
+        String group = messageDto.getReciver();
+        GroupImpl groupImpl = new GroupImpl();
+        var members = groupImpl.getGroupMember(Integer.parseInt(group));
+        System.out.println(members.size() + " size is ");
+        members.forEach(e -> {
+
+            System.out.println(e +" is and in loop");
+            
+            if (!e.equals(messageDto.getSender())) {
+                System.out.println(e + " hereee");
+                if (clientsMap.containsKey(e)) {
+                    System.out.println(e + " send to");
+                    try {
+                        clientsMap.get(e).reciveMessage(messageDto);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 }

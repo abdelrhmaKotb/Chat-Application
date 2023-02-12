@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 import gov.iti.jets.business.helper.ChatCoordinator;
+import gov.iti.jets.business.helper.ChatData;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.MessageDto;
@@ -54,7 +55,7 @@ public class MessageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         staticImage = new ImageView();
-        
+
     }
 
     @FXML
@@ -66,12 +67,19 @@ public class MessageController implements Initializable {
 
     public void send() {
         MessageDto msg = new MessageDto();
-        msg.setReciver(recieverNameText.getText());
+
+        ChatData chat = ChatCoordinator.getInstance().getCurrentChat();
+
+        msg.setReciver(chat.getIdntifier());
         msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
         msg.setMessage(msgTextField.getText());
 
         try {
-            RMIConnection.getServerServive().send(msg);
+            if(chat.isGroup()){
+                RMIConnection.getServerServive().sendGroupMessage(msg);
+            }else{
+                RMIConnection.getServerServive().send(msg);
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -89,13 +97,13 @@ public class MessageController implements Initializable {
     private void chatComponent(Boolean recieve, MessageDto messageDto) {
 
         try {
-            if(messageDto.getMessage()!=""){
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sendMsg.fxml"));
-            SendMsgController controller = new SendMsgController(messageDto, recieve);
-            loader.setController(controller);
-            HBox hbox = loader.load();
+            if (messageDto.getMessage() != "") {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sendMsg.fxml"));
+                SendMsgController controller = new SendMsgController(messageDto, recieve);
+                loader.setController(controller);
+                HBox hbox = loader.load();
 
-            msgvBox.getChildren().add(hbox);
+                msgvBox.getChildren().add(hbox);
             }
         } catch (IOException e) {
 
@@ -108,6 +116,7 @@ public class MessageController implements Initializable {
     public void setReciverName(String name) {
         recieverNameText.setText(name);
     }
+
     @FXML
     private void SetMessage(MouseEvent event) {
         MessageSettingsController createGroupCont = null;

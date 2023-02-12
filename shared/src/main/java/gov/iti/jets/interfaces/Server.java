@@ -59,4 +59,6 @@ public interface Server extends Remote {
     public  UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException;
 
     boolean isUserOnline(ContactDto user) throws RemoteException;
+
+    void sendGroupMessage(MessageDto messageDto) throws RemoteException;
 }
