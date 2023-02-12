@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import gov.iti.jets.enums.EnumsUtil;
@@ -16,6 +17,7 @@ import gov.iti.jets.persistence.utils.PasswordHashing;
 
 public class UserImpl implements UserDao {
 
+  
     @Override
     public User createUser(User user) {
 
@@ -202,7 +204,7 @@ public class UserImpl implements UserDao {
             statement.setInt(3, newData.getCountry());
             statement.setDate(4, newData.getDateOfBirth());
             statement.setString(5, newData.getBio());
-            statement.setInt(6, newData.getStatus().ordinal() + 1);
+            statement.setInt(6, newData.getStatus().ordinal() );
             statement.setString(7, newData.getPhoneNumber());
             statement.executeUpdate();
             return true;

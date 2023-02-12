@@ -4,7 +4,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,7 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
+import javafx.util.Callback;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import java.io.IOException;
@@ -21,21 +22,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import gov.iti.jets.business.models.GroupsModel;
+import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.CurrentUserModel;
 import gov.iti.jets.business.services.GroupsService;
+import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.GroupDto;
 
 public class GroupsController implements Initializable {
     List<GroupDto> groups = new ArrayList<>();
 
     @FXML
-    ListView<String> groupsListView;
+    ListView<GroupDto> groupsListView;
 
     @FXML
     TextField searchTextField;
 
-    ObservableList<String> groupList;
+    ObservableList<GroupDto> groupList;
 
     List<String> groupsNames;
 
@@ -48,7 +51,16 @@ public class GroupsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Tooltip.install(addgroupBtn, new Tooltip("Create Group"));
+        groupList = ModelsFactory.getInstance().getGroups().getGroups();
         createList();
+        groupsListView.getSelectionModel().selectedItemProperty().addListener((obs, old, newVal) -> {
+            if (newVal == null)
+                return;
+
+            System.out.println(newVal);
+
+            ChatCoordinator.getInstance().openGroupChat(newVal);
+        });
     }
 
     private void createList() {
@@ -56,7 +68,30 @@ public class GroupsController implements Initializable {
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         GroupsModel groupsModel = modelsFactory.getGroups();
         groupObservableList = groupsModel.getGroups();
-        groupsListView.setItems(groupsModel.getGroupsNames());
+        groupsListView.setItems(groupList);
+
+
+        groupsListView.setCellFactory(new Callback<ListView<GroupDto>, ListCell<GroupDto>>() {
+            @Override
+            public ListCell<GroupDto> call(ListView<GroupDto> param) {
+                return new ListCell<GroupDto>() {
+
+                    @Override
+                    protected void updateItem(GroupDto item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (item == null || empty) {
+                            setText(null);
+                            setGraphic(null);
+
+                        } else {
+                            setGraphic(null);
+                            setText(item.getName());
+                        }
+                    }
+                };
+            }
+        });
         /*
          * groups = GroupsService.getGroups(currentUserModel.getPhoneNumber());
          * groupsNames = new ArrayList<>();
