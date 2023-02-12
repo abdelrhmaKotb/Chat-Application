@@ -9,6 +9,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ChatCoordinator {
 
     private static ChatCoordinator instance = null;
@@ -17,6 +20,7 @@ public class ChatCoordinator {
 
     private static Map<String, ChatData> chats = new HashMap<>();
     // private static Map<Integer, GroupChatData> groupChats = new HashMap<>();
+    private static String currentPhone;
 
     private ChatCoordinator() {
     }
@@ -43,7 +47,7 @@ public class ChatCoordinator {
                 grid.getChildren().removeAll(grid.getChildren());
 
             }
-
+            currentPhone = phone;
             System.out.println(grid.getChildren().isEmpty());
 
             if (!chats.containsKey(phone)) {
@@ -128,5 +132,6 @@ public class ChatCoordinator {
 
     public ChatData getCurrentChat() {
         return currentChat;
+        // return currentPhone;
     }
 }

@@ -1,5 +1,15 @@
 package gov.iti.jets.business.rmi;
 
+import gov.iti.jets.business.mapper.ContactMapper;
+import gov.iti.jets.business.mapper.GroupMapper;
+import gov.iti.jets.business.mapper.UserMapper;
+import gov.iti.jets.business.mapper.UserSignupMapperImpl;
+import gov.iti.jets.dto.*;
+import gov.iti.jets.interfaces.Client;
+import gov.iti.jets.interfaces.Server;
+import gov.iti.jets.persistence.dao.*;
+import gov.iti.jets.persistence.entities.*;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.Date;
@@ -7,33 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import gov.iti.jets.persistence.dao.GroupImpl;
-import gov.iti.jets.persistence.dao.GroupMembersImpl;
-
-import gov.iti.jets.business.mapper.GroupMapper;
-import gov.iti.jets.business.mapper.UserMapper;
-import gov.iti.jets.business.mapper.UserSignupMapperImpl;
-import gov.iti.jets.dto.ContactDto;
-import gov.iti.jets.dto.CountryDto;
-import gov.iti.jets.dto.GroupDto;
-import gov.iti.jets.dto.MessageDto;
-import gov.iti.jets.dto.RequestDto;
-import gov.iti.jets.dto.UserDto;
-import gov.iti.jets.dto.UserDtoSignup;
-import gov.iti.jets.interfaces.Client;
-import gov.iti.jets.interfaces.Server;
-import gov.iti.jets.persistence.dao.UserImpl;
-import gov.iti.jets.persistence.dao.countryDaoImpl;
-import gov.iti.jets.persistence.entities.Contact;
-import gov.iti.jets.persistence.entities.Group;
-import gov.iti.jets.persistence.entities.GroupMembers;
-import gov.iti.jets.persistence.dao.ContactImpl;
-import gov.iti.jets.persistence.dao.RequestImpl;
-import gov.iti.jets.persistence.entities.Request;
-import gov.iti.jets.persistence.entities.User;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
     List<Client> clients = new ArrayList<>();
@@ -278,6 +261,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return new UserSignupMapperImpl().toDto(user);
     }
 
+
     @Override
     public boolean isUserOnline(ContactDto user) throws RemoteException {
         return clientsMap.containsKey(user.getFriendPhoneNumber());
@@ -307,4 +291,12 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             }
         });
     }
+    public void msgSettings(ContactDto cDto) {
+        ContactImpl contactImpl = new ContactImpl();
+        ContactMapper contactMapper = new ContactMapper();
+        Contact contact = contactMapper.toEntity(cDto);
+        contactImpl.updateMsgSettings(contact);
+
+    }
+
 }
