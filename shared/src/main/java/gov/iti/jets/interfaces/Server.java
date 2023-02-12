@@ -47,15 +47,12 @@ public interface Server extends Remote {
     void deleteRequest(String sender, String currentUser) throws RemoteException;
 
     public ArrayList<CountryDto> getCountriesNames() throws RemoteException;
-<<<<<<< Updated upstream
+
    
     public  UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException;
-=======
-
-    public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException;
 
     boolean isUserOnline(ContactDto user) throws RemoteException;
 
     void msgSettings(ContactDto cDto) throws RemoteException;
->>>>>>> Stashed changes
+
 }

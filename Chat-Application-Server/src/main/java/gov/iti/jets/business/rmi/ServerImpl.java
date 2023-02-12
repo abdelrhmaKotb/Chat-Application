@@ -242,8 +242,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         }
         return new UserSignupMapperImpl().toDto(user);
     }
-<<<<<<< Updated upstream
-=======
 
 
     @Override
@@ -259,5 +257,5 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         contactImpl.updateMsgSettings(contact);
 
     }
->>>>>>> Stashed changes
+
 }
