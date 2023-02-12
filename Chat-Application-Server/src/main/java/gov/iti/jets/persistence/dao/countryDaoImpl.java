@@ -50,15 +50,17 @@ public class countryDaoImpl implements countryDao {
         Connection con = DBConnecttion.getConnection();
 
         String query = new String(
-                "select countries.name,count(countries.country_id) from countries,user where countries.country_id=user.country_id group by countries.country_id");
+            "SELECT countries.name,count(user.country_id) FROM countries LEFT JOIN  user ON  countries.country_id = user.country_id group by countries.country_id");
 
+                
+                
         try (PreparedStatement stmt = con.prepareStatement(query)) {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 CountryDto country = new CountryDto();
                 country.setName(rs.getString("countries.name"));
-                country.setId(rs.getInt("count(countries.country_id)"));
+                country.setId(rs.getInt("count(user.country_id)"));
                 countryData.add(country);
 
             }

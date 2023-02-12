@@ -32,10 +32,10 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     public void register(Client client) throws RemoteException {
         System.out.println("register");
-        clients.add(client);
+    //    clients.add(client);
         clientsMap.put(client.getPhoneNumber(), client);
         System.out.println(clientsMap.keySet());
-        System.out.println(client.getPhoneNumber() + " phone");
+        // System.out.println(client.getPhoneNumber() + " phone");
         System.out.println(clientsMap);
         client.helloBack();
     }
@@ -46,7 +46,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         System.out.println(clientsMap.keySet());
 
         notifyUsersOffline(client);
-        System.out.println(clients);
+        // System.out.println(clients);
     }
 
     @Override
@@ -234,12 +234,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         contactImpl.create(contact);
     }
 
-    @Override
-    public ArrayList<CountryDto> getCountriesNames() throws RemoteException {
-        return new countryDaoImpl().getCountries();
-
-    }
-
+  
     @Override
     public void deleteRequest(String sender, String currentUser) throws RemoteException {
         RequestImpl requestImpl = new RequestImpl();
@@ -247,6 +242,12 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         requestImpl.deleteRequest(request);
     }
 
+    @Override 
+    public ArrayList<CountryDto> getCountriesNames() throws RemoteException{
+             return new countryDaoImpl().getCountries();
+
+    }
+    
     public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
         System.out.println("inside function signup");
         UserImpl userDao = new UserImpl();
