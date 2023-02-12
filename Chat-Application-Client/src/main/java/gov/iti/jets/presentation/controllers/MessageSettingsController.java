@@ -6,6 +6,7 @@ import gov.iti.jets.business.services.messageSettingsService;
 import gov.iti.jets.dto.ContactDto;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,9 +74,7 @@ public class MessageSettingsController implements Initializable {
         style = contactDto.getFontStyle();
         bgColor = contactDto.getBackgroundColor();
         color = contactDto.getFontColor();
-        List<Integer> fontSize = new ArrayList<>(
-                Arrays.asList(10, 11, 12, 13, 14, 18, 24, 28));
-        fontSizechoiceBox.getItems().setAll(fontSize);
+
         fontStyleChoice.getSelectionModel().select(contactDto.getFontStyle());
         System.out.println(contactDto.getFontSize());
         fontSizechoiceBox.getSelectionModel().select((Integer) contactDto.getFontSize());
@@ -85,25 +84,37 @@ public class MessageSettingsController implements Initializable {
         isBold = contactDto.isBold();
         isItalic = contactDto.isItalic();
         isUndelined = contactDto.isUnderlined();
+        setTextStyle();
         if (isBold)
             boldCheck.setSelected(true);
         if (isItalic)
             italicCheck.setSelected(true);
         if (isUndelined)
             underlineCheck.setSelected(true);
+
         sampleTextfield.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";");
-        fontStyleChoice.getSelectionModel().selectedIndexProperty().addListener((ov, oldValue, newValue) -> {
-            style = fontStyleChoice.getSelectionModel().getSelectedItem().toString();
-            contactDto.setFontStyle(style);
-            sampleTextfield.setFont(Font.font(style, size));
-            changed = true;
+        fontStyleChoice.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                style = fontStyleChoice.getSelectionModel().getSelectedItem().toString();
+                contactDto.setFontStyle(style);
+                sampleTextfield.setFont(Font.font(style, size));
+                changed = true;
+            }
         });
-        fontSizechoiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, oldValue, newValue) -> {
-            size = Integer.parseInt(fontSizechoiceBox.getSelectionModel().getSelectedItem().toString());
-            contactDto.setFontSize(size);
-            sampleTextfield.setFont(Font.font(style, size));
-            changed = true;
-        });
+        fontSizechoiceBox.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                size = Integer.parseInt(fontSizechoiceBox.getSelectionModel().getSelectedItem().toString());
+                System.out.println(size);
+                contactDto.setFontSize(size);
+                sampleTextfield.setFont(Font.font(style, size));
+                changed = true;
+
+            }});
+
 
         fontcolorPicker.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -129,52 +140,63 @@ public class MessageSettingsController implements Initializable {
 
             }
         });
-        boldCheck.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent e) {
-                if (boldCheck.isSelected()) {
-                    sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, size));
-                    isBold = true;
-                } else {
-                    sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, size));
-                    isBold = false;
-                }
-                contactDto.setBold(isBold);
-                changed = true;
-            }
-
-        });
-
-        italicCheck.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent e) {
-                if (italicCheck.isSelected()) {
-                    sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.ITALIC, size));
-                    isItalic = true;
-                } else {
-                    sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.REGULAR, size));
-                    isItalic = false;
-                }
-                contactDto.setItalic(isItalic);
-                changed = true;
-            }
-
-        });
-        underlineCheck.setOnAction(new EventHandler<ActionEvent>() {
-
-            public void handle(ActionEvent e) {
-                if (italicCheck.isSelected()) {
-                    sampleTextfield.lookup(".text").setStyle("-fx-underline: true;");
-                    isUndelined = true;
-                } else {
-                    sampleTextfield.lookup(".text").setStyle("-fx-underline: false;");
-                    isUndelined = false;
-                }
-                contactDto.setUnderlined(isUndelined);
-                changed = true;
-            }
-
-        });
+//        boldCheck.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent e) {
+//                if (boldCheck.isSelected()) {
+//                    sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, size));
+//                    isBold = true;
+//                    System.out.println("bold checked");
+//                } else {
+//                    sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, size));
+//                    isBold = false;
+//                }
+//                contactDto.setBold(isBold);
+//                changed = true;
+//            }
+//
+//        });
+//
+//        italicCheck.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent e) {
+//                if (italicCheck.isSelected()) {
+//                    if(boldCheck.isSelected()) {
+//                        sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.ITALIC, size));
+//                    }
+//                    else {
+//                        sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
+//                    }
+//                    isItalic = true;
+//                } else {
+//                    if(boldCheck.isSelected()) {
+//                        sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.REGULAR, size));
+//                    }
+//                    else {
+//                        sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
+//                    }
+//                    isItalic = false;
+//                }
+//                contactDto.setItalic(isItalic);
+//                changed = true;
+//            }
+//
+//        });
+//        underlineCheck.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent e) {
+//                if (underlineCheck.isSelected()) {
+//                    sampleTextfield.lookup(".text").setStyle("-fx-underline: true;");
+//                    isUndelined = true;
+//                } else {
+//                    sampleTextfield.lookup(".text").setStyle("-fx-underline: false;");
+//                    isUndelined = false;
+//                }
+//                contactDto.setUnderlined(isUndelined);
+//                changed = true;
+//            }
+//
+//        });
 
     }
 
@@ -185,13 +207,30 @@ public class MessageSettingsController implements Initializable {
     void setFontStyle() {
         List<String> fontFamilies = Font.getFamilies();
         fontStyleChoice.getItems().setAll(fontFamilies);
+        List<Integer> fontSize = new ArrayList<>(
+                Arrays.asList(10, 11, 12, 13, 14, 18, 24, 28));
+        fontSizechoiceBox.getItems().setAll(fontSize);
+
+    }
+    public void setTextStyle() {
+        sampleTextfield.setStyle("-fx-background-color: " + contactDto.getBackgroundColor() + "; -fx-font-size:" + contactDto.getFontSize() +
+                "; -fx-background-radius: 3;" + ";-fx-text-inner-color: " + contactDto.getFontColor() + ";" );
+        if (contactDto.isBold())
+            sampleTextfield.setFont(Font.font(contactDto.getFontStyle(), FontWeight.BOLD, contactDto.getFontSize()));
+        else if (contactDto.isItalic() && contactDto.isBold())
+            sampleTextfield.setFont(Font.font(contactDto.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, contactDto.getFontSize()));
+        else if (contactDto.isItalic())
+            sampleTextfield.setFont(Font.font(contactDto.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, contactDto.getFontSize()));
+        else
+            sampleTextfield.setFont(Font.font(contactDto.getFontStyle(), contactDto.getFontSize()));
+
 
     }
 
     @FXML
     public void save(MouseEvent mouseEvent) {
         System.out.println("save");
-        if (changed) {
+
 
             messageSettingsService settingsService = new messageSettingsService();
             settingsService.msgSettings(contactDto);
@@ -214,7 +253,57 @@ public class MessageSettingsController implements Initializable {
             popup.show();
             delay.play();
 
-        }
+
+
+    }
+    public void checkboxs(ActionEvent e) {
+
+                if (boldCheck.isSelected()) {
+                    sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, size));
+                    isBold = true;
+                    System.out.println("bold checked");
+                } else {
+                    sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, size));
+                    isBold = false;
+                }
+                contactDto.setBold(isBold);
+                changed = true;
+
+
+
+
+                if (italicCheck.isSelected()) {
+                    if(boldCheck.isSelected()) {
+                        sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.ITALIC, size));
+                    }
+                    else {
+                        sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
+                    }
+                    isItalic = true;
+                } else {
+                    if(boldCheck.isSelected()) {
+                        sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.REGULAR, size));
+                    }
+                    else {
+                        sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
+                    }
+                    isItalic = false;
+                }
+                contactDto.setItalic(isItalic);
+                changed = true;
+
+
+                if (underlineCheck.isSelected()) {
+                    sampleTextfield.lookup(".text").setStyle("-fx-underline: true;");
+                    isUndelined = true;
+                } else {
+                    sampleTextfield.lookup(".text").setStyle("-fx-underline: false;");
+                    isUndelined = false;
+                }
+                contactDto.setUnderlined(isUndelined);
+                changed = true;
+
+
 
     }
 }
