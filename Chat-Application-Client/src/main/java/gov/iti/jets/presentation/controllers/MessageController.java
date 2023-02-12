@@ -81,13 +81,13 @@ public class MessageController implements Initializable {
 
         ChatData chat = ChatCoordinator.getInstance().getCurrentChat();
 
-        msg.setReciver(chat.getIdntifier());
+        // msg.setReciver(chat.getIdntifier());
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         ContactsModel contactsModel = modelsFactory.getContactsModel();
         ContactDto contactDto = contactsModel.getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
         MessageDto msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
                 msgTextField.getText(), contactDto.getFontSize(), contactDto.getFontStyle(), contactDto.getFontColor(),
-                contactDto.getBackgroundColor(), contactDto.isBold(), contactDto.isUnderlined(), contactDto.isItalic(), recieverNameText.getText());
+                contactDto.getBackgroundColor(), contactDto.isBold(), contactDto.isUnderlined(), contactDto.isItalic(), chat.getIdntifier());
         // msg.setReciver(chat);
         msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
         msg.setMessage(msgTextField.getText());
