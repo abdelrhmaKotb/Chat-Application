@@ -4,8 +4,10 @@ import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ChatData;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.ContactsModel;
+import gov.iti.jets.business.models.GroupsModel;
 import gov.iti.jets.business.services.messageSettingsService;
 import gov.iti.jets.dto.ContactDto;
+import gov.iti.jets.dto.GroupsMembersDto;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,15 +16,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -33,7 +36,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MessageSettingsController implements Initializable {
+public class groupMessageSettingsController implements Initializable {
     Stage stage;
     @FXML
     TextField sampleTextfield;
@@ -58,16 +61,15 @@ public class MessageSettingsController implements Initializable {
     boolean isBold;
     boolean isUndelined;
     boolean isItalic;
-    ContactDto chatSet;
+    GroupsMembersDto chatSet;
 
     boolean changed;
 
 
-    public MessageSettingsController(ContactDto dto) {
+    public groupMessageSettingsController(GroupsMembersDto dto) {
         this.chatSet = dto;
 
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -234,16 +236,16 @@ public class MessageSettingsController implements Initializable {
     public void save(MouseEvent mouseEvent) {
         System.out.println("save");
         ChatData chatData= ChatCoordinator.getInstance().getCurrentChat();
-            if(!chatData.isGroup()) {
+        if(chatData.isGroup()) {
 
-                messageSettingsService settingsService = new messageSettingsService();
-                settingsService.msgSettings(chatSet);
-                System.out.println("SAVED");
-                ModelsFactory modelsFactory = ModelsFactory.getInstance();
-                ContactsModel contactsModel = modelsFactory.getContactsModel();
-                contactsModel.editContact(chatSet);
-            }
-            else {
+            messageSettingsService settingsService = new messageSettingsService();
+            settingsService.msgSettings((GroupsMembersDto) chatSet);
+            System.out.println("SAVED");
+            ModelsFactory modelsFactory = ModelsFactory.getInstance();
+            GroupsModel groupsModel = modelsFactory.getGroups();
+            groupsModel.editGroupStyle((GroupsMembersDto)  chatSet);
+        }
+        else {
             /*    messageSettingsService settingsService = new messageSettingsService();
                 settingsService.msgSettings((GroupsMembersDto) chatSet);
                 System.out.println("SAVED");
@@ -251,71 +253,71 @@ public class MessageSettingsController implements Initializable {
                 GroupsModel groupsModel = modelsFactory.getGroups();
                 groupsModel.editGroupStyle((GroupsMembersDto)  chatSet);*/
 
-            }
-            Stage popup = new Stage();
-            // configure UI for popup etc...
+        }
+        Stage popup = new Stage();
+        // configure UI for popup etc...
 
-            // hide popup after 3 seconds:
-            PauseTransition delay = new PauseTransition(Duration.seconds(3));
-            delay.setOnFinished(e -> popup.hide());
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("/views/edited.fxml"));
-                popup.setScene(new Scene(root));
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-            popup.show();
-            delay.play();
+        // hide popup after 3 seconds:
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        delay.setOnFinished(e -> popup.hide());
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/views/edited.fxml"));
+            popup.setScene(new Scene(root));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        popup.show();
+        delay.play();
 
 
 
     }
     public void checkboxs(ActionEvent e) {
 
-                if (boldCheck.isSelected()) {
-                    sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, size));
-                    isBold = true;
-                    System.out.println("bold checked");
-                } else {
-                    sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, size));
-                    isBold = false;
-                }
-                chatSet.setBold(isBold);
-                changed = true;
+        if (boldCheck.isSelected()) {
+            sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, size));
+            isBold = true;
+            System.out.println("bold checked");
+        } else {
+            sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, size));
+            isBold = false;
+        }
+        chatSet.setBold(isBold);
+        changed = true;
 
 
 
 
-                if (italicCheck.isSelected()) {
-                    if(boldCheck.isSelected()) {
-                        sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.ITALIC, size));
-                    }
-                    else {
-                        sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
-                    }
-                    isItalic = true;
-                } else {
-                    if(boldCheck.isSelected()) {
-                        sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.REGULAR, size));
-                    }
-                    else {
-                        sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
-                    }
-                    isItalic = false;
-                }
-                chatSet.setItalic(isItalic);
-                changed = true;
+        if (italicCheck.isSelected()) {
+            if(boldCheck.isSelected()) {
+                sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.ITALIC, size));
+            }
+            else {
+                sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
+            }
+            isItalic = true;
+        } else {
+            if(boldCheck.isSelected()) {
+                sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.REGULAR, size));
+            }
+            else {
+                sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
+            }
+            isItalic = false;
+        }
+        chatSet.setItalic(isItalic);
+        changed = true;
 
 
-                if (underlineCheck.isSelected()) {
-                    sampleTextfield.lookup(".text").setStyle("-fx-underline: true;");
-                    isUndelined = true;
-                } else {
-                    sampleTextfield.lookup(".text").setStyle("-fx-underline: false;");
-                    isUndelined = false;
-                }
-                chatSet.setUnderlined(isUndelined);
-                changed = true;
+        if (underlineCheck.isSelected()) {
+            sampleTextfield.lookup(".text").setStyle("-fx-underline: true;");
+            isUndelined = true;
+        } else {
+            sampleTextfield.lookup(".text").setStyle("-fx-underline: false;");
+            isUndelined = false;
+        }
+        chatSet.setUnderlined(isUndelined);
+        changed = true;
 
 
 

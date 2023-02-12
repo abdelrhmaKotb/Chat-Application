@@ -1,9 +1,12 @@
 package gov.iti.jets.presentation.controllers;
 
 import gov.iti.jets.business.helper.ChatCoordinator;
+import gov.iti.jets.business.helper.ChatData;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.ContactsModel;
+import gov.iti.jets.business.models.GroupsModel;
 import gov.iti.jets.dto.ContactDto;
+import gov.iti.jets.dto.GroupsMembersDto;
 import gov.iti.jets.dto.MessageDto;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -65,33 +68,53 @@ public class SendMsgController implements Initializable {
 
     void setMsgFormat() {
         ContactDto contactDto;
-        if (!recieve) {
-            ModelsFactory modelsFactory = ModelsFactory.getInstance();
-            ContactsModel contactsModel = modelsFactory.getContactsModel();
-            contactDto = contactsModel.getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+        ChatData chat = ChatCoordinator.getInstance().getCurrentChat();
 
-            msg.setStyle("-fx-background-color: " + contactDto.getBackgroundColor() + "; -fx-font-size:" + contactDto.getFontSize() +
-                    "; -fx-background-radius: 3;" + ";-fx-text-inner-color: " + contactDto.getFontColor() + ";" + "-fx-underline:" + contactDto.isUnderlined() + ";");
-            if (contactDto.isBold())
-                msg.setFont(Font.font(contactDto.getFontStyle(), FontWeight.BOLD, contactDto.getFontSize()));
-            else if (contactDto.isItalic() && contactDto.isBold())
-                msg.setFont(Font.font(contactDto.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, contactDto.getFontSize()));
-            else if (contactDto.isItalic())
-                msg.setFont(Font.font(contactDto.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, contactDto.getFontSize()));
-            else
-                msg.setFont(Font.font(contactDto.getFontStyle(), contactDto.getFontSize()));
-        } else {
-            msg.setStyle("-fx-background-color: " + msgDto.getBackgroundColor() + "; -fx-font-size:" + msgDto.getFontSize() +
-                    "; -fx-background-radius: 3;" + ";-fx-text-inner-color: " + msgDto.getFontColor() + ";" + "-fx-underline:" + msgDto.isUnderlined() + ";");
-            if (msgDto.isBold())
-                msg.setFont(Font.font(msgDto.getFontStyle(), FontWeight.BOLD, msgDto.getFontSize()));
-            else if (msgDto.isItalic() && msgDto.isBold())
-                msg.setFont(Font.font(msgDto.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, msgDto.getFontSize()));
-            else if (msgDto.isItalic())
-                msg.setFont(Font.font(msgDto.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, msgDto.getFontSize()));
-            else
-                msg.setFont(Font.font(msgDto.getFontStyle(), msgDto.getFontSize()));
-        }
+            if (!recieve && !chat.isGroup()) {
+                ModelsFactory modelsFactory = ModelsFactory.getInstance();
+                ContactsModel contactsModel = modelsFactory.getContactsModel();
+                contactDto = contactsModel.getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+
+                msg.setStyle("-fx-background-color: " + contactDto.getBackgroundColor() + "; -fx-font-size:" + contactDto.getFontSize() +
+                        "; -fx-background-radius: 3;" + ";-fx-text-inner-color: " + contactDto.getFontColor() + ";" + "-fx-underline:" + contactDto.isUnderlined() + ";");
+                if (contactDto.isBold())
+                    msg.setFont(Font.font(contactDto.getFontStyle(), FontWeight.BOLD, contactDto.getFontSize()));
+                else if (contactDto.isItalic() && contactDto.isBold())
+                    msg.setFont(Font.font(contactDto.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, contactDto.getFontSize()));
+                else if (contactDto.isItalic())
+                    msg.setFont(Font.font(contactDto.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, contactDto.getFontSize()));
+                else
+                    msg.setFont(Font.font(contactDto.getFontStyle(), contactDto.getFontSize()));
+            }
+            else if(!recieve && !chat.isGroup()) {
+                ModelsFactory modelsFactory = ModelsFactory.getInstance();
+                GroupsModel groupsModel = modelsFactory.getGroups();
+                GroupsMembersDto groupsMembersDto = groupsModel.getGroupByGroup_id(Integer.parseInt(ChatCoordinator.getInstance().getCurrentChatOpen()));
+
+                msg.setStyle("-fx-background-color: " + groupsMembersDto.getBackgroundColor() + "; -fx-font-size:" + groupsMembersDto.getFontSize() +
+                        "; -fx-background-radius: 3;" + ";-fx-text-inner-color: " + groupsMembersDto.getFontColor() + ";" + "-fx-underline:" + groupsMembersDto.isUnderlined() + ";");
+                if (groupsMembersDto.isBold())
+                    msg.setFont(Font.font(groupsMembersDto.getFontStyle(), FontWeight.BOLD, groupsMembersDto.getFontSize()));
+                else if (groupsMembersDto.isItalic() && groupsMembersDto.isBold())
+                    msg.setFont(Font.font(groupsMembersDto.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, groupsMembersDto.getFontSize()));
+                else if (groupsMembersDto.isItalic())
+                    msg.setFont(Font.font(groupsMembersDto.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, groupsMembersDto.getFontSize()));
+                else
+                    msg.setFont(Font.font(groupsMembersDto.getFontStyle(), groupsMembersDto.getFontSize()));
+            }
+            else {
+                msg.setStyle("-fx-background-color: " + msgDto.getBackgroundColor() + "; -fx-font-size:" + msgDto.getFontSize() +
+                        "; -fx-background-radius: 3;" + ";-fx-text-inner-color: " + msgDto.getFontColor() + ";" + "-fx-underline:" + msgDto.isUnderlined() + ";");
+                if (msgDto.isBold())
+                    msg.setFont(Font.font(msgDto.getFontStyle(), FontWeight.BOLD, msgDto.getFontSize()));
+                else if (msgDto.isItalic() && msgDto.isBold())
+                    msg.setFont(Font.font(msgDto.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, msgDto.getFontSize()));
+                else if (msgDto.isItalic())
+                    msg.setFont(Font.font(msgDto.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, msgDto.getFontSize()));
+                else
+                    msg.setFont(Font.font(msgDto.getFontStyle(), msgDto.getFontSize()));
+            }
+
 
     }
 }

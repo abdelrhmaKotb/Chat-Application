@@ -3,6 +3,7 @@ package gov.iti.jets.persistence.dao;
 import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.persistence.dao.interfaces.GroupDao;
 import gov.iti.jets.persistence.entities.Group;
+import gov.iti.jets.persistence.entities.GroupMembers;
 import gov.iti.jets.persistence.utils.DBConnecttion;
 
 import java.sql.Connection;
@@ -70,6 +71,7 @@ public class GroupImpl implements GroupDao {
         return generatedKey;
     }
 
+
     @Override
     public List<String> getGroupMember(int groupid) {
         try (Connection con = DBConnecttion.getConnection();) {
@@ -93,4 +95,5 @@ public class GroupImpl implements GroupDao {
 
         return null;
     }
+
 }
