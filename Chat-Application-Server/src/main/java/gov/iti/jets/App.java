@@ -12,7 +12,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/views/charts.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/views/MainPanelView.fxml"));
         DBConnecttion.getConnection();
         Scene sc = new Scene(root, 800, 600);
         primaryStage.setScene(sc);
