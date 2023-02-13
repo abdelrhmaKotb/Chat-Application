@@ -125,6 +125,7 @@ public class MessageSettingsController implements Initializable {
             public void handle(ActionEvent event) {
 
                 color = "#" + fontcolorPicker.getValue().toString().substring(2, 8);
+                System.out.println(color);
                 chatSet.setFontColor(color);
                 changed = true;
                 sampleTextfield.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";");

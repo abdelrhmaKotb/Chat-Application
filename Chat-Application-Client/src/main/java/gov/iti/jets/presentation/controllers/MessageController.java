@@ -54,7 +54,7 @@ public class MessageController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) { 
 
         staticImage = new ImageView();
         msgTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {

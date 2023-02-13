@@ -44,7 +44,6 @@ public class SendMsgController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub
         if (recieve) {
             hbox.setAlignment(Pos.CENTER_LEFT);
             hbox.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
@@ -75,8 +74,12 @@ public class SendMsgController implements Initializable {
                 ContactsModel contactsModel = modelsFactory.getContactsModel();
                 contactDto = contactsModel.getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
 
+                System.out.println(contactDto + "contactDto");
+                System.out.println("-fx-background-color: " + contactDto.getBackgroundColor() + "; -fx-font-size:" + contactDto.getFontSize() +
+                "; -fx-background-radius: 3;" + "-fx-text-fill: " + contactDto.getFontColor() + ";" + "-fx-underline:" + contactDto.isUnderlined() + ";");
+
                 msg.setStyle("-fx-background-color: " + contactDto.getBackgroundColor() + "; -fx-font-size:" + contactDto.getFontSize() +
-                        "; -fx-background-radius: 3;" + ";-fx-text-inner-color: " + contactDto.getFontColor() + ";" + "-fx-underline:" + contactDto.isUnderlined() + ";");
+                        "; -fx-background-radius: 3;" + "-fx-text-fill: " + contactDto.getFontColor() + ";" + "-fx-underline:" + contactDto.isUnderlined() + ";");
                 if (contactDto.isBold())
                     msg.setFont(Font.font(contactDto.getFontStyle(), FontWeight.BOLD, contactDto.getFontSize()));
                 else if (contactDto.isItalic() && contactDto.isBold())
@@ -87,12 +90,14 @@ public class SendMsgController implements Initializable {
                     msg.setFont(Font.font(contactDto.getFontStyle(), contactDto.getFontSize()));
             }
             else if(!recieve && !chat.isGroup()) {
+                
                 ModelsFactory modelsFactory = ModelsFactory.getInstance();
                 GroupsModel groupsModel = modelsFactory.getGroups();
                 GroupsMembersDto groupsMembersDto = groupsModel.getGroupByGroup_id(Integer.parseInt(ChatCoordinator.getInstance().getCurrentChatOpen()));
+                System.out.println(groupsMembersDto + "groupsMembersDto");
 
                 msg.setStyle("-fx-background-color: " + groupsMembersDto.getBackgroundColor() + "; -fx-font-size:" + groupsMembersDto.getFontSize() +
-                        "; -fx-background-radius: 3;" + ";-fx-text-inner-color: " + groupsMembersDto.getFontColor() + ";" + "-fx-underline:" + groupsMembersDto.isUnderlined() + ";");
+                        "; -fx-background-radius: 3;" + ";-fx-text-fill: " + groupsMembersDto.getFontColor() + ";" + "-fx-underline:" + groupsMembersDto.isUnderlined() + ";");
                 if (groupsMembersDto.isBold())
                     msg.setFont(Font.font(groupsMembersDto.getFontStyle(), FontWeight.BOLD, groupsMembersDto.getFontSize()));
                 else if (groupsMembersDto.isItalic() && groupsMembersDto.isBold())
@@ -104,7 +109,7 @@ public class SendMsgController implements Initializable {
             }
             else {
                 msg.setStyle("-fx-background-color: " + msgDto.getBackgroundColor() + "; -fx-font-size:" + msgDto.getFontSize() +
-                        "; -fx-background-radius: 3;" + ";-fx-text-inner-color: " + msgDto.getFontColor() + ";" + "-fx-underline:" + msgDto.isUnderlined() + ";");
+                        "; -fx-background-radius: 3;" + ";-fx-text-fill: " + msgDto.getFontColor() + ";" + "-fx-underline:" + msgDto.isUnderlined() + ";");
                 if (msgDto.isBold())
                     msg.setFont(Font.font(msgDto.getFontStyle(), FontWeight.BOLD, msgDto.getFontSize()));
                 else if (msgDto.isItalic() && msgDto.isBold())

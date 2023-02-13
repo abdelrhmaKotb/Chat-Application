@@ -81,7 +81,6 @@ public class ContactsController implements Initializable {
             ChatCoordinator.getInstance().openChat(newVal.getFriendPhoneNumber());
         });
 
-
         listContacts.setCellFactory(new Callback<ListView<ContactDto>, ListCell<ContactDto>>() {
             @Override
             public ListCell<ContactDto> call(ListView<ContactDto> param) {

@@ -135,13 +135,16 @@ public class ContactDto implements Serializable {
     }
 
 
+   
+
     @Override
     public String toString() {
         return "ContactDto [user=" + user + ", friendPhoneNumber=" + friendPhoneNumber + ", friendName=" + friendName
                 + ", friendEmail=" + friendEmail + ", friendGender=" + friendGender + ", frinMood=" + frinMood
-                + ", category=" + category + ", isBlocked=" + isBlocked + "]";
+                + ", category=" + category + ", isBlocked=" + isBlocked + ", fontSize=" + fontSize + ", fontColor="
+                + fontColor + ", fontStyle=" + fontStyle + ", backgroundColor=" + backgroundColor + ", isBold=" + isBold
+                + ", isUnderlined=" + isUnderlined + ", isItalic=" + isItalic + "]";
     }
-
 
     public int getFontSize() {
         return fontSize;
