@@ -7,10 +7,29 @@ public class GroupMembers {
     private String memberPhoneNumber;
     private Date join_date;
 
+    private int fontSize;
+    private String fontColor;
+    private String fontStyle;
+    private String backgroundColor;
+    private boolean isBold;
+    private boolean isUnderlined;
+    private boolean isItalic;
     public GroupMembers(int group_id, String memberPhoneNumber, Date join_date) {
         this.group_id = group_id;
         this.memberPhoneNumber = memberPhoneNumber;
         this.join_date = join_date;
+    }
+
+    public GroupMembers(int group_id, String memberPhoneNumber, int fontSize, String fontColor, String fontStyle, String backgroundColor, boolean isBold, boolean isUnderlined, boolean isItalic) {
+        this.group_id = group_id;
+        this.memberPhoneNumber = memberPhoneNumber;
+        this.fontSize = fontSize;
+        this.fontColor = fontColor;
+        this.fontStyle = fontStyle;
+        this.backgroundColor = backgroundColor;
+        this.isBold = isBold;
+        this.isUnderlined = isUnderlined;
+        this.isItalic = isItalic;
     }
 
     public int getGroup_id() {
@@ -37,4 +56,59 @@ public class GroupMembers {
         this.join_date = join_date;
     }
 
+    public int getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(int fontSize) {
+        this.fontSize = fontSize;
+    }
+
+    public String getFontColor() {
+        return fontColor;
+    }
+
+    public void setFontColor(String fontColor) {
+        this.fontColor = fontColor;
+    }
+
+    public String getFontStyle() {
+        return fontStyle;
+    }
+
+    public void setFontStyle(String fontStyle) {
+        this.fontStyle = fontStyle;
+    }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public boolean isBold() {
+        return isBold;
+    }
+
+    public void setBold(boolean bold) {
+        isBold = bold;
+    }
+
+    public boolean isUnderlined() {
+        return isUnderlined;
+    }
+
+    public void setUnderlined(boolean underlined) {
+        isUnderlined = underlined;
+    }
+
+    public boolean isItalic() {
+        return isItalic;
+    }
+
+    public void setItalic(boolean italic) {
+        isItalic = italic;
+    }
 }

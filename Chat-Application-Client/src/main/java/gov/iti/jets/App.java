@@ -5,7 +5,6 @@ import javafx.stage.Stage;
 import gov.iti.jets.business.helper.StageCoordinator;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.interfaces.Client;
-import gov.iti.jets.presentation.utils.chatBot;
 
 
 public class App extends Application {
@@ -31,7 +30,7 @@ public class App extends Application {
         try {
 
             RMIConnection rmi = RMIConnection.getInstance();
-            rmi.connect("10.145.17.169");
+            rmi.connect("localhost");
             // client = new ClientImpl();
 
             // Server serverServices = (Server) Naming.lookup("rmi://localhost:14785/serverService");
@@ -43,5 +42,10 @@ public class App extends Application {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void stop() throws Exception {
+        RMIConnection.getServerServive().unregister(RMIConnection.getInstance().getCurrentClientConnection());
     }
 }

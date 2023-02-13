@@ -16,7 +16,7 @@ public class Group {
     }
 
     public Group(String name, Date dateOfCreation, String adminPhoneNumber) {
-        this.id = id;
+        
         this.name = name;
         this.dateOfCreation = dateOfCreation;
         this.adminPhoneNumber = adminPhoneNumber;

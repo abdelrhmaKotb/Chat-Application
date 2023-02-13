@@ -15,14 +15,15 @@ public class UserMapper  implements Mapper<User, UserDto> {
             entity.getDateOfBirth(),
             entity.getBio(),
             entity.getStatus(),
-            entity.isAdmin()
+            entity.isAdmin(),
+            entity.getImage()
         );
     }
    
     @Override
 
     public  User toEntity( UserDto e) {
-        return new User(e.getPhoneNumber(), e.getName(), e.getEmail(),e.getCountry(), e.getDateOfBirth(), e.getBio(),  e.getStatus());
+        return new User(e.getPhoneNumber(), e.getName(), e.getEmail(),e.getCountry(), e.getDateOfBirth(), e.getBio(),  e.getStatus(), e.getImage());
     }
 
 

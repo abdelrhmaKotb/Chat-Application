@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import gov.iti.jets.enums.EnumsUtil;
@@ -70,7 +71,7 @@ public class UserImpl implements UserDao {
 
     public User seletcByPhoneNumber(String phoneNum) {
         Connection con = DBConnecttion.getConnection();
-        User user = null;
+         User user = null;
         if (con == null)
             return null;
 
@@ -95,6 +96,7 @@ public class UserImpl implements UserDao {
                 user.setImage(ImageConvertor.BlobToBytes(rs.getBlob("profile_image")));
 
             }
+
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -195,15 +197,16 @@ public class UserImpl implements UserDao {
     @Override
     public boolean updateUser(User newData) {
         try (Connection con = DBConnecttion.getConnection()) {
-            String query = "update user set name=?, email=?,  country_id=?, date_of_birth=?,bio=? , status_id=? where phone_number=?";
+            String query = "update user set name=?, email=?,  country_id=?, date_of_birth=?,bio=? , status_id=? ,profile_image=? where phone_number=?";
             PreparedStatement statement = con.prepareStatement(query);
             statement.setString(1, newData.getName());
             statement.setString(2, newData.getEmail());
             statement.setInt(3, newData.getCountry());
             statement.setDate(4, newData.getDateOfBirth());
             statement.setString(5, newData.getBio());
-            statement.setInt(6, newData.getStatus().ordinal() + 1);
-            statement.setString(7, newData.getPhoneNumber());
+            statement.setInt(6, newData.getStatus().ordinal() );
+            statement.setBlob(7, ImageConvertor.bytesToBlob(newData.getImage()));
+            statement.setString(8, newData.getPhoneNumber());
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
