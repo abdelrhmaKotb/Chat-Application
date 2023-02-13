@@ -1,9 +1,6 @@
 package gov.iti.jets.business.rmi;
 
-import gov.iti.jets.business.mapper.ContactMapper;
-import gov.iti.jets.business.mapper.GroupMapper;
-import gov.iti.jets.business.mapper.UserMapper;
-import gov.iti.jets.business.mapper.UserSignupMapperImpl;
+import gov.iti.jets.business.mapper.*;
 import gov.iti.jets.dto.*;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
@@ -299,6 +296,16 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         Contact contact = contactMapper.toEntity(cDto);
         contactImpl.updateMsgSettings(contact);
 
+    }
+    public void msgSettings(GroupsMembersDto gDto) {
+        GroupMembersImpl groupMembersImpl = new GroupMembersImpl();
+        GroupMembersMapper groupMembersMapper = new GroupMembersMapper();
+        GroupMembers group = groupMembersMapper.toEntity(gDto);
+        groupMembersImpl.editGroupMemberStyle(group);
+
+    }
+    public List<GroupsMembersDto> getMyGroupsStyle(String phoneNumber){
+        return new GroupMembersImpl().getGroupMembersByUserPhoneNum(phoneNumber);
     }
 
 }
