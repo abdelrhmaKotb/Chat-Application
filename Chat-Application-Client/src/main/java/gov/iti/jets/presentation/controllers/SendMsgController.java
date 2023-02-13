@@ -89,7 +89,7 @@ public class SendMsgController implements Initializable {
                 else
                     msg.setFont(Font.font(contactDto.getFontStyle(), contactDto.getFontSize()));
             }
-            else if(!recieve && !chat.isGroup()) {
+            else if(!recieve && chat.isGroup()) {
                 
                 ModelsFactory modelsFactory = ModelsFactory.getInstance();
                 GroupsModel groupsModel = modelsFactory.getGroups();
