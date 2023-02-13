@@ -7,6 +7,7 @@ import gov.iti.jets.business.models.ContactsModel;
 import gov.iti.jets.business.models.CurrentUserModel;
 import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.MessageDto;
+import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.application.Platform;
@@ -52,7 +53,8 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
             @Override
             public void run() {
                 showPopUp.showNotifacation(contact.getUser() + " became online");
-                NavCoordinator.getNotificationController().addInListOfNotifications(contact.getUser() + " became online");
+                NavCoordinator.getNotificationController()
+                        .addInListOfNotifications(contact.getUser() + " became online");
                 ContactsModel contactsModel = ModelsFactory.getInstance().getContactsModel();
                 ContactDto c = new ContactDto();
                 contactsModel.getContacts().add(c);
@@ -73,19 +75,31 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
             @Override
             public void run() {
                 showPopUp.showNotifacation(contact.getUser() + " became offline");
-                NavCoordinator.getNotificationController().addInListOfNotifications(contact.getUser() + " became offline");
+                NavCoordinator.getNotificationController()
+                        .addInListOfNotifications(contact.getUser() + " became offline");
                 ContactsModel contactsModel = ModelsFactory.getInstance().getContactsModel();
                 ContactDto c = new ContactDto();
-                
+
                 contactsModel.getContacts().add(c);
                 contactsModel.getContacts().remove(c);
-
-                
 
                 // var contacts = contactsModel.getContacts();
                 // contacts.
                 // contacts.get(contacts.indexOf(contact)).setCategory("1");;
             }
+        });
+    }
+
+    @Override
+    public void userNotifyRequest(UserDto user) throws RemoteException {
+       
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ShowPopUp showPopUp = new ShowPopUp();
+                showPopUp.showNotifacation(user.getName() + " Send Friend Request");
+                NavCoordinator.getNotificationController().addInListOfNotifications(user.getName() + " Send Friend Request");
+                System.out.println("user" + user + "send to you request");            }
         });
     }
 }
