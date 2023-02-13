@@ -75,7 +75,7 @@
          </children>
       </HBox>
       <Separator prefWidth="200.0" />
-      <ScrollPane fitToHeight="true" fitToWidth="true" hvalue="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" style="-fx-background-color: white;" vvalue="1.0" VBox.vgrow="ALWAYS">
+      <ScrollPane fx:id="scroll" fitToHeight="true" fitToWidth="true" hvalue="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" style="-fx-background-color: white;" vvalue="1.0" VBox.vgrow="ALWAYS">
          <content>
             <VBox fx:id="msgvBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="398.0" prefWidth="731.0" style="-fx-background-color: white;" />
          </content>

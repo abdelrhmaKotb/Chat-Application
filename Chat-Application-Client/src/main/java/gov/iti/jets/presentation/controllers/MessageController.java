@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -46,7 +47,8 @@ public class MessageController implements Initializable {
     Circle circle;
     String messageContent;
     Parent root;
-
+    @FXML
+    ScrollPane scroll;
     public static MessageController messageController;
 
     public MessageController() {
@@ -66,6 +68,7 @@ public class MessageController implements Initializable {
                 }
             }
         });
+        scroll.vvalueProperty().bind(msgvBox.heightProperty());
 
     }
 
