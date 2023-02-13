@@ -14,10 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -61,7 +58,10 @@ public class MessageSettingsController implements Initializable {
     ContactDto chatSet;
 
     boolean changed;
-
+    @FXML
+    Label sampleLabel;
+    String font_Weight="normal";
+    String font_style="regular";
 
     public MessageSettingsController(ContactDto dto) {
         this.chatSet = dto;
@@ -71,6 +71,11 @@ public class MessageSettingsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
+
+
+
         System.out.println(chatSet.getFontStyle());
         setFontStyle();
         size = chatSet.getFontSize();
@@ -88,61 +93,73 @@ public class MessageSettingsController implements Initializable {
         isItalic = chatSet.isItalic();
         isUndelined = chatSet.isUnderlined();
         setTextStyle();
-        if (isBold)
+
+        if (isBold) {
             boldCheck.setSelected(true);
-        if (isItalic)
+            font_Weight="bold";
+        }
+        if (isItalic) {
             italicCheck.setSelected(true);
+            font_style="italic";
+        }
         if (isUndelined)
             underlineCheck.setSelected(true);
 
-        sampleTextfield.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";");
-        fontStyleChoice.setOnAction(new EventHandler<ActionEvent>() {
+        sampleLabel.setFont(Font.font(style,size));
+        sampleLabel.setTextFill(Color.web(color));
+        sampleLabel.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";"+"-fx-underline: "+
 
-            @Override
-            public void handle(ActionEvent event) {
-                style = fontStyleChoice.getSelectionModel().getSelectedItem().toString();
-                chatSet.setFontStyle(style);
-                sampleTextfield.setFont(Font.font(style, size));
-                changed = true;
-            }
-        });
-        fontSizechoiceBox.setOnAction(new EventHandler<ActionEvent>() {
+                isUndelined+"; -fx-font-weight: "+font_Weight+"; -fx-font-style:"+font_style+";-fx-alignment:center;");
 
-            @Override
-            public void handle(ActionEvent event) {
-                size = Integer.parseInt(fontSizechoiceBox.getSelectionModel().getSelectedItem().toString());
-                System.out.println(size);
-                chatSet.setFontSize(size);
-                sampleTextfield.setFont(Font.font(style, size));
-                changed = true;
-
-            }});
-
-
-        fontcolorPicker.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-
-                color = "#" + fontcolorPicker.getValue().toString().substring(2, 8);
-                chatSet.setFontColor(color);
-                changed = true;
-                sampleTextfield.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";");
-
-            }
-        });
-        bgcolorPicker.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-
-                bgColor = "#" + bgcolorPicker.getValue().toString().substring(2, 8);
-                chatSet.setBackgroundColor(bgColor);
-                changed = true;
-                sampleTextfield.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";");
-
-            }
-        });
+//
+//        sampleTextfield.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";");
+//        fontStyleChoice.setOnAction(new EventHandler<ActionEvent>() {
+//
+//            @Override
+//            public void handle(ActionEvent event) {
+//                style = fontStyleChoice.getSelectionModel().getSelectedItem().toString();
+//                chatSet.setFontStyle(style);
+//                sampleTextfield.setFont(Font.font(style, size));
+//                changed = true;
+//            }
+//        });
+//        fontSizechoiceBox.setOnAction(new EventHandler<ActionEvent>() {
+//
+//            @Override
+//            public void handle(ActionEvent event) {
+//                size = Integer.parseInt(fontSizechoiceBox.getSelectionModel().getSelectedItem().toString());
+//                System.out.println(size);
+//                chatSet.setFontSize(size);
+//                sampleTextfield.setFont(Font.font(style, size));
+//                changed = true;
+//
+//            }});
+//
+//
+//        fontcolorPicker.setOnAction(new EventHandler<ActionEvent>() {
+//
+//            @Override
+//            public void handle(ActionEvent event) {
+//
+//                color = "#" + fontcolorPicker.getValue().toString().substring(2, 8);
+//                chatSet.setFontColor(color);
+//                changed = true;
+//                sampleTextfield.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";");
+//
+//            }
+//        });
+//        bgcolorPicker.setOnAction(new EventHandler<ActionEvent>() {
+//
+//            @Override
+//            public void handle(ActionEvent event) {
+//
+//                bgColor = "#" + bgcolorPicker.getValue().toString().substring(2, 8);
+//                chatSet.setBackgroundColor(bgColor);
+//                changed = true;
+//                sampleTextfield.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";");
+//
+//            }
+//        });
 //        boldCheck.setOnAction(new EventHandler<ActionEvent>() {
 //            @Override
 //            public void handle(ActionEvent e) {
@@ -276,10 +293,16 @@ public class MessageSettingsController implements Initializable {
                     sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, size));
                     isBold = true;
                     System.out.println("bold checked");
+                    font_Weight="bold";
+
                 } else {
                     sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, size));
+                    font_Weight="normal";
                     isBold = false;
                 }
+        sampleLabel.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";"+"-fx-underline: "+
+
+                isUndelined+"; -fx-font-weight: "+font_Weight+"; -fx-font-style:"+font_style+";-fx-alignment:center;");
                 chatSet.setBold(isBold);
                 changed = true;
 
@@ -287,25 +310,30 @@ public class MessageSettingsController implements Initializable {
 
 
                 if (italicCheck.isSelected()) {
-                    if(boldCheck.isSelected()) {
-                        sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.ITALIC, size));
-                    }
-                    else {
-                        sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
-                    }
+//                    if(boldCheck.isSelected()) {
+//                        sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.ITALIC, size));
+//                    }
+//                    else {
+//                        sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
+                    font_style="italic";
+                   // }
                     isItalic = true;
                 } else {
-                    if(boldCheck.isSelected()) {
-                        sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.REGULAR, size));
-                    }
-                    else {
-                        sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
-                    }
+//                    if(boldCheck.isSelected()) {
+//                        sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.REGULAR, size));
+//                    }
+//                    else {
+//                        sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
+//                    }
+                    font_style="regular";
                     isItalic = false;
+
                 }
                 chatSet.setItalic(isItalic);
                 changed = true;
+        sampleLabel.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";"+"-fx-underline: "+
 
+                isUndelined+"; -fx-font-weight: "+font_Weight+"; -fx-font-style:"+font_style+";-fx-alignment:center;");
 
                 if (underlineCheck.isSelected()) {
                     sampleTextfield.lookup(".text").setStyle("-fx-underline: true;");
@@ -314,6 +342,9 @@ public class MessageSettingsController implements Initializable {
                     sampleTextfield.lookup(".text").setStyle("-fx-underline: false;");
                     isUndelined = false;
                 }
+        sampleLabel.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";"+"-fx-underline: "+
+
+                isUndelined+"; -fx-font-weight: "+font_Weight+"; -fx-font-style:"+font_style+";-fx-alignment:center;");
                 chatSet.setUnderlined(isUndelined);
                 changed = true;
 
