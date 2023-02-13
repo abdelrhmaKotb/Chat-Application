@@ -103,8 +103,45 @@ public class CurrentUserModel {
         return country;
     }
 
-    public void setCountryProperty(int country) {
+
+
+    public int getCountry() {
+        return country.get();
+    }
+
+    public IntegerProperty countryProperty() {
+        return country;
+    }
+
+    public String getGender() {
+        return gender.get();
+    }
+
+    public StringProperty genderProperty() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender.set(gender);
+    }
+
+    public void setCountry(int country) {
         this.country.set(country);
     }
-    
+
+    public String getDateOfBirth() {
+        return dateOfBirth.get();
+    }
+
+    public StringProperty dateOfBirthProperty() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth.set(dateOfBirth);
+    }
+
+    public StringProperty bioProperty() {
+        return bio;
+    }
 }
