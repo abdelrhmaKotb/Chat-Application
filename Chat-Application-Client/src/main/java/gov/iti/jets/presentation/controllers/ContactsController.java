@@ -17,17 +17,29 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.control.Label;
 
 public class ContactsController implements Initializable {
 
@@ -81,54 +93,69 @@ public class ContactsController implements Initializable {
             ChatCoordinator.getInstance().openChat(newVal.getFriendPhoneNumber());
         });
 
-        listContacts.setCellFactory(new Callback<ListView<ContactDto>, ListCell<ContactDto>>() {
-            @Override
-            public ListCell<ContactDto> call(ListView<ContactDto> param) {
-                return new ListCell<ContactDto>() {
+        listContacts.setCellFactory(lv -> {
+            ListCell<ContactDto> cell = new ListCell<ContactDto>() {
 
-                    @Override
-                    protected void updateItem(ContactDto item, boolean empty) {
-                        super.updateItem(item, empty);
+                private HBox rootHbox = new HBox();
+                private VBox vBoxOfHboxAndNum = new VBox();
+                private HBox hBoxOfNameAndImg = new HBox();
+                Circle imgCircle = new Circle(22);
+                private Label namelabel = new Label();
+                private Label phonelabel = new Label();
+                ImageView imageView = new ImageView();
+                Image userImage = new Image(getClass().getResource("/images/sheka.jpg").toString());
+                {
+                    imgCircle.setFill(new ImagePattern(userImage));
+                    imgCircle.setStroke(Color.BLACK);
+                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                    rootHbox.setSpacing(3);
+                    hBoxOfNameAndImg.getChildren().addAll(namelabel, imageView);
+                    vBoxOfHboxAndNum.getChildren().addAll(hBoxOfNameAndImg, phonelabel);
+                    rootHbox.getChildren().addAll(imgCircle, vBoxOfHboxAndNum);
+                }
 
-                        if (item == null || empty) {
-                            setText(null);
-                            setGraphic(null);
-
-                        } else {
-                            String image = "";
-                            try {
-                                if (RMIConnection.getServerServive().isUserOnline(item)) {
-                                    if (item.getFrinMood() == Mood.AWAY) {
-                                        image = "away.png";
-
-                                    } else if (item.getFrinMood() == Mood.BUSY) {
-                                        image = "busy.png";
-
-                                    } else {
-                                        image = "available.png";
-                                    }
-                                    ImageView imageView = new ImageView(
-                                            getClass().getResource("/images/" + image).toString());
-
-                                    imageView.setFitHeight(17);
-                                    imageView.setFitWidth(17);
-                                    setGraphic(imageView);
+                @Override
+                protected void updateItem(ContactDto item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        String image = "";
+                        try {
+                            if (RMIConnection.getServerServive().isUserOnline(item)) {
+                                if (item.getFrinMood() == Mood.AWAY) {
+                                    image = "away.png";
+                                } else if (item.getFrinMood() == Mood.BUSY) {
+                                    image = "red.png";
                                 } else {
-                                    ImageView imageView = new ImageView(
-                                            getClass().getResource("/images/offline.png").toString());
-                                    imageView.setFitHeight(17);
-                                    imageView.setFitWidth(17);
-                                    setGraphic(imageView);
+                                    image = "green.png";
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                                imageView.setImage(new Image(getClass().getResource("/images/" + image).toString()));
+                                imageView.setFitHeight(15);
+                                imageView.setFitWidth(15);
 
-                            setText(item.getFriendName());
+                            } else {
+                                imageView.setImage(new Image(getClass().getResource("/images/offline.png").toString()));
+                                imageView.setFitHeight(15);
+                                imageView.setFitWidth(15);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
+
+                        namelabel.setText(item.getFriendName());
+                        namelabel.setWrapText(true);
+                        namelabel.setTextAlignment(TextAlignment.JUSTIFY);
+
+                        Font font = Font.font("SansSerif", FontWeight.BOLD, 11);
+                        namelabel.setFont(font);
+                        phonelabel.setText(item.getFriendPhoneNumber());
+                        rootHbox.setMaxWidth(150);
+                        setGraphic(rootHbox);
                     }
-                };
-            }
+                }
+            };
+            return cell;
         });
 
     }

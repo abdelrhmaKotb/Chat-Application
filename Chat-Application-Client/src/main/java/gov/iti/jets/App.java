@@ -33,7 +33,8 @@ public class App extends Application {
 
             RMIConnection rmi = RMIConnection.getInstance();
 //            rmi.connect("10.145.18.76");
-             rmi.connect("10.145.18.76");
+            //  rmi.connect("10.145.17.169");
+             rmi.connect("localhost");
             // client = new ClientImpl();
 
             // Server serverServices = (Server) Naming.lookup("rmi://localhost:14785/serverService");
