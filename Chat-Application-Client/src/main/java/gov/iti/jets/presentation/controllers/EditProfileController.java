@@ -87,6 +87,10 @@ public class EditProfileController implements Initializable {
         }
        
         disableComponents();
+
+        imgCircle.setStroke(null);
+        Image userImage = new Image(new ByteArrayInputStream(currentUserModel.getImage()));
+        imgCircle.setFill(new ImagePattern(userImage));
         /*
          * country = new ArrayList<>();
          * country = new countryDaoImpl().getCountries();
