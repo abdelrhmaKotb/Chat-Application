@@ -4,6 +4,7 @@ import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ChatData;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.ContactsModel;
+import gov.iti.jets.business.models.CurrentUserModel;
 import gov.iti.jets.business.models.GroupsModel;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.*;
@@ -16,17 +17,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -50,7 +54,7 @@ public class MessageController implements Initializable {
     @FXML
     ScrollPane scroll;
     public static MessageController messageController;
-
+    CurrentUserModel currentUserModel;
     public MessageController() {
         messageController = this;
     }
@@ -87,6 +91,7 @@ public class MessageController implements Initializable {
 
         MessageDto msg=null;
 
+
         try {
             if(chat.isGroup()){
 
@@ -97,8 +102,11 @@ public class MessageController implements Initializable {
                         msgTextField.getText(), groupsMembersDto.getFontSize(), groupsMembersDto.getFontStyle(), groupsMembersDto.getFontColor(),
                         groupsMembersDto.getBackgroundColor(), groupsMembersDto.isBold(), groupsMembersDto.isUnderlined(), groupsMembersDto.isItalic(), chat.getIdntifier());
                 // msg.setReciver(chat);
+
                 msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
+               // currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
                 msg.setMessage(msgTextField.getText());
+                
                 RMIConnection.getServerServive().sendGroupMessage(msg);
             }else{
 
@@ -111,6 +119,7 @@ public class MessageController implements Initializable {
                 // msg.setReciver(chat);
                 msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
                 msg.setMessage(msgTextField.getText());
+                
                 RMIConnection.getServerServive().send(msg);
             }
 

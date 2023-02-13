@@ -307,5 +307,16 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     public List<GroupsMembersDto> getMyGroupsStyle(String phoneNumber){
         return new GroupMembersImpl().getGroupMembersByUserPhoneNum(phoneNumber);
     }
+    @Override
+    public List<UserDto> getUsersByNumber(List<String> phoneNumber) {
+        UserImpl userImp = new UserImpl();
+        List<User> listOfUsers = userImp.getUsersByNumbers(phoneNumber);
+        List<UserDto> userDtos=new ArrayList<>();
+        int len=listOfUsers.size();
+        UserMapper userMapper = new UserMapper();
+        for(int i=0;i<len;i++)
+        userDtos.add(userMapper.toDto(listOfUsers.get(i)));
+        return userDtos;
+    }
 
 }

@@ -61,5 +61,6 @@ public interface Server extends Remote {
     void msgSettings(ContactDto cDto) throws RemoteException;
     void msgSettings(GroupsMembersDto gDto) throws RemoteException;
     List<GroupsMembersDto> getMyGroupsStyle(String phoneNumber) throws RemoteException;
+    List<UserDto> getUsersByNumber(List<String> phoneNumber) throws RemoteException;
 
 }
