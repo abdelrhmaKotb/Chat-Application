@@ -36,6 +36,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -70,7 +71,7 @@ public class EditProfileController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       
+    
         currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
         moodChoiceBox.getItems().add(Mood.AVAILABLE);
         moodChoiceBox.getItems().add(Mood.BUSY);
@@ -89,6 +90,14 @@ public class EditProfileController implements Initializable {
         disableComponents();
 
         imgCircle.setStroke(null);
+
+
+//        System.out.println("dasd");
+
+
+//        System.out.println(Arrays.toString(currentUserModel.getImage()));
+
+
         Image userImage = new Image(new ByteArrayInputStream(currentUserModel.getImage()));
         imgCircle.setFill(new ImagePattern(userImage));
         /*
