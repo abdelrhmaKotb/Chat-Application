@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import gov.iti.jets.business.helper.StageCoordinator;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.interfaces.Client;
+import gov.iti.jets.presentation.utils.chatBot;
 
 
 public class App extends Application {
@@ -21,9 +22,9 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-     Application.launch(args);
-       
 
+     Application.launch(args);
+      
 
     }
 

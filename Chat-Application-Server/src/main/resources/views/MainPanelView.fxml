@@ -12,7 +12,7 @@
    <left>
       <VBox alignment="CENTER" prefHeight="601.0" prefWidth="160.0" style="-fx-background-color: #404040;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="page01" alignment="CENTER" mnemonicParsing="false" onAction="#loadPage01View" prefHeight="30.0" prefWidth="172.0" style="-fx-text-fill: #f0f0f0;" styleClass="bt" stylesheets="@mainpanel.css" text="Start Server" textAlignment="JUSTIFY">
+            <Button fx:id="startSerververId" alignment="CENTER" mnemonicParsing="false" onAction="#startServerAction" prefHeight="30.0" prefWidth="172.0" style="-fx-text-fill: #f0f0f0;" styleClass="bt" stylesheets="@../css/mainpanel.css" text="Start Server" textAlignment="JUSTIFY">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
@@ -20,7 +20,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="page02" mnemonicParsing="false" onAction="#loadPage02View" prefHeight="30.0" prefWidth="168.0" style="-fx-text-fill: #f0f0f0;" styleClass="bt" stylesheets="@mainpanel.css" text="Stop Server" textAlignment="JUSTIFY">
+            <Button fx:id="stopSerververId" mnemonicParsing="false" onAction="#stopServerAction" prefHeight="30.0" prefWidth="168.0" style="-fx-text-fill: #f0f0f0;" styleClass="bt" stylesheets="@../css/mainpanel.css" text="Stop Server" textAlignment="JUSTIFY">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
@@ -34,7 +34,7 @@
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="39.0" prefWidth="1360.0" style="-fx-background-color: #2b2a26;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="logout" mnemonicParsing="false" onAction="#close" prefHeight="18.0" prefWidth="74.0" style="-fx-text-fill: #f0f0f0;" styleClass="bt" stylesheets="@mainpanel.css" text="Log Out" textAlignment="JUSTIFY">
+            <Button fx:id="logout" mnemonicParsing="false" onAction="#close" prefHeight="18.0" prefWidth="74.0" style="-fx-text-fill: #f0f0f0;" styleClass="bt" stylesheets="@../css/mainpanel.css" text="Log Out" textAlignment="JUSTIFY">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
