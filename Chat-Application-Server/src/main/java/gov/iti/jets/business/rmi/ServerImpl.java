@@ -1,5 +1,12 @@
 package gov.iti.jets.business.rmi;
 
+import gov.iti.jets.business.mapper.*;
+import gov.iti.jets.dto.*;
+import gov.iti.jets.interfaces.Client;
+import gov.iti.jets.interfaces.Server;
+import gov.iti.jets.persistence.dao.*;
+import gov.iti.jets.persistence.entities.*;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.Date;
@@ -7,33 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import gov.iti.jets.persistence.dao.GroupImpl;
-import gov.iti.jets.persistence.dao.GroupMembersImpl;
-
-import gov.iti.jets.business.mapper.GroupMapper;
-import gov.iti.jets.business.mapper.UserMapper;
-import gov.iti.jets.business.mapper.UserSignupMapperImpl;
-import gov.iti.jets.dto.ContactDto;
-import gov.iti.jets.dto.CountryDto;
-import gov.iti.jets.dto.GroupDto;
-import gov.iti.jets.dto.MessageDto;
-import gov.iti.jets.dto.RequestDto;
-import gov.iti.jets.dto.UserDto;
-import gov.iti.jets.dto.UserDtoSignup;
-import gov.iti.jets.interfaces.Client;
-import gov.iti.jets.interfaces.Server;
-import gov.iti.jets.persistence.dao.UserImpl;
-import gov.iti.jets.persistence.dao.countryDaoImpl;
-import gov.iti.jets.persistence.entities.Contact;
-import gov.iti.jets.persistence.entities.Group;
-import gov.iti.jets.persistence.entities.GroupMembers;
-import gov.iti.jets.persistence.dao.ContactImpl;
-import gov.iti.jets.persistence.dao.RequestImpl;
-import gov.iti.jets.persistence.entities.Request;
-import gov.iti.jets.persistence.entities.User;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
     List<Client> clients = new ArrayList<>();
@@ -49,18 +29,21 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     public void register(Client client) throws RemoteException {
         System.out.println("register");
-        clients.add(client);
+    //    clients.add(client);
         clientsMap.put(client.getPhoneNumber(), client);
         System.out.println(clientsMap.keySet());
-        System.out.println(client.getPhoneNumber() + " phone");
+        // System.out.println(client.getPhoneNumber() + " phone");
         System.out.println(clientsMap);
         client.helloBack();
     }
 
     public void unregister(Client client) throws RemoteException {
         System.out.println("unregister");
-        clients.remove(client);
-        System.out.println(clients);
+        clientsMap.remove(client.getPhoneNumber());
+        System.out.println(clientsMap.keySet());
+
+        notifyUsersOffline(client);
+        // System.out.println(clients);
     }
 
     @Override
@@ -88,7 +71,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         }
         return groupDto;
     }
-
 
     @Override
     public void send(MessageDto message) throws RemoteException {
@@ -156,6 +138,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         }
 
     }
+       
 
     @Override
     public List<String> getnameOfContacts(String currentUserNumber) throws RemoteException {
@@ -191,6 +174,23 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             if (clientsMap.containsKey(phone)) {
                 try {
                     clientsMap.get(phone).userOnlineNotify(e);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void notifyUsersOffline(Client client) throws RemoteException {
+        // clientsMap.remove(client.getPhoneNumber());
+        ContactImpl contactImpl = new ContactImpl();
+        var listOfContatcs = contactImpl.getContactsForUser(client.getPhoneNumber());
+        listOfContatcs.forEach(e -> {
+            String phone = e.getFriendPhoneNumber();
+            if (clientsMap.containsKey(phone)) {
+                try {
+                    clientsMap.get(phone).userOfflineNotify(e);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -239,6 +239,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         Request request = new Request(sender, currentUser);
         requestImpl.deleteRequest(request);
     }
+
     @Override 
     public ArrayList<CountryDto> getCountriesNames() throws RemoteException{
              return new countryDaoImpl().getCountries();
@@ -258,4 +259,53 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         }
         return new UserSignupMapperImpl().toDto(user);
     }
+
+
+    @Override
+    public boolean isUserOnline(ContactDto user) throws RemoteException {
+        return clientsMap.containsKey(user.getFriendPhoneNumber());
+    }
+
+    @Override
+    public void sendGroupMessage(MessageDto messageDto) throws RemoteException {
+        System.out.println(messageDto);
+        String group = messageDto.getReciver();
+        GroupImpl groupImpl = new GroupImpl();
+        var members = groupImpl.getGroupMember(Integer.parseInt(group));
+        System.out.println(members.size() + " size is ");
+        members.forEach(e -> {
+
+            System.out.println(e +" is and in loop");
+            
+            if (!e.equals(messageDto.getSender())) {
+                System.out.println(e + " hereee");
+                if (clientsMap.containsKey(e)) {
+                    System.out.println(e + " send to");
+                    try {
+                        clientsMap.get(e).reciveMessage(messageDto);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+    public void msgSettings(ContactDto cDto) {
+        ContactImpl contactImpl = new ContactImpl();
+        ContactMapper contactMapper = new ContactMapper();
+        Contact contact = contactMapper.toEntity(cDto);
+        contactImpl.updateMsgSettings(contact);
+
+    }
+    public void msgSettings(GroupsMembersDto gDto) {
+        GroupMembersImpl groupMembersImpl = new GroupMembersImpl();
+        GroupMembersMapper groupMembersMapper = new GroupMembersMapper();
+        GroupMembers group = groupMembersMapper.toEntity(gDto);
+        groupMembersImpl.editGroupMemberStyle(group);
+
+    }
+    public List<GroupsMembersDto> getMyGroupsStyle(String phoneNumber){
+        return new GroupMembersImpl().getGroupMembersByUserPhoneNum(phoneNumber);
+    }
+
 }

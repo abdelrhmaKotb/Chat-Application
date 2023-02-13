@@ -1,8 +1,9 @@
-package gov.iti.jets.persistence.entities;
+package gov.iti.jets.dto;
 
-import java.sql.*;
+import java.io.Serializable;
+import java.sql.Date;
 
-public class GroupMembers {
+public class GroupsMembersDto implements Serializable {
     private int group_id;
     private String memberPhoneNumber;
     private Date join_date;
@@ -14,13 +15,13 @@ public class GroupMembers {
     private boolean isBold;
     private boolean isUnderlined;
     private boolean isItalic;
-    public GroupMembers(int group_id, String memberPhoneNumber, Date join_date) {
+    public GroupsMembersDto(int group_id, String memberPhoneNumber, Date join_date) {
         this.group_id = group_id;
         this.memberPhoneNumber = memberPhoneNumber;
         this.join_date = join_date;
     }
 
-    public GroupMembers(int group_id, String memberPhoneNumber, int fontSize, String fontColor, String fontStyle, String backgroundColor, boolean isBold, boolean isUnderlined, boolean isItalic) {
+    public GroupsMembersDto(int group_id, String memberPhoneNumber, int fontSize, String fontStyle, String fontColor, String backgroundColor, boolean isBold, boolean isUnderlined, boolean isItalic) {
         this.group_id = group_id;
         this.memberPhoneNumber = memberPhoneNumber;
         this.fontSize = fontSize;

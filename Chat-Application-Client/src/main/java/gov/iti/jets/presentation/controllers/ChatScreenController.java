@@ -59,7 +59,8 @@ public class ChatScreenController implements Initializable {
         Tooltip.install(invitationsBtn, new Tooltip("Invitations"));
         ChatCoordinator.getInstance().setGrid(chat);
         NavCoordinator.getInstance().setGrid(nav);
-
+        
+        clkNotifications();
         viewProfile();
 
     }
@@ -70,7 +71,7 @@ public class ChatScreenController implements Initializable {
     }
 
     @FXML
-    private void clkNotifications(MouseEvent event) {
+    private void clkNotifications() {
         NavCoordinator.getInstance().goToNotifications();
     }
 

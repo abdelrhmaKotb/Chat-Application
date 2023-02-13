@@ -1,7 +1,9 @@
 package gov.iti.jets.persistence.dao;
 
+import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.persistence.dao.interfaces.GroupDao;
 import gov.iti.jets.persistence.entities.Group;
+import gov.iti.jets.persistence.entities.GroupMembers;
 import gov.iti.jets.persistence.utils.DBConnecttion;
 
 import java.sql.Connection;
@@ -10,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class GroupImpl implements GroupDao {
@@ -18,24 +21,24 @@ public class GroupImpl implements GroupDao {
     public List<Group> getGroupById(List<Integer> groups_id) {
         List<Group> groups = new ArrayList<>();
 
-
-       try (Connection con = DBConnecttion.getConnection()){
+        try (Connection con = DBConnecttion.getConnection()) {
             String query = "select * from group where group_id = ?";
             for (int i = 0; i < groups_id.size(); i++) {
                 System.out.println(groups_id.get(i));
                 System.out.println(groups_id.size());
-                PreparedStatement statement = con.prepareStatement("select * from chat_application.group where group_id = ?");
+                PreparedStatement statement = con
+                        .prepareStatement("select * from chat_application.group where group_id = ?");
                 //
-                 statement.setInt(1, groups_id.get(i));
+                statement.setInt(1, groups_id.get(i));
                 System.out.println(groups_id.get(i));
                 System.out.println(groups_id.size());
                 ResultSet rs = statement.executeQuery();
                 rs.next();
                 System.out.println(rs.getString(1));
 
-                   groups.add(new Group(groups_id.get(i), rs.getString(2), rs.getDate(3), rs.getString(4)));
+                groups.add(new Group(groups_id.get(i), rs.getString(2), rs.getDate(3), rs.getString(4)));
 
-                //rs.close();
+                // rs.close();
                 statement.close();
             }
         } catch (SQLException e) {
@@ -67,4 +70,30 @@ public class GroupImpl implements GroupDao {
         }
         return generatedKey;
     }
+
+
+    @Override
+    public List<String> getGroupMember(int groupid) {
+        try (Connection con = DBConnecttion.getConnection();) {
+            System.out.println("group id " + groupid);
+            PreparedStatement stmt = con.prepareStatement("""
+                        select * from group_members
+                    where  group_id  = ? """);
+            stmt.setInt(1, groupid);
+
+            ResultSet result = stmt.executeQuery();
+            List<String> list = new ArrayList<>();
+
+            while(result.next()) {
+                list.add(result.getString("phone_number"));
+            }
+
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 }

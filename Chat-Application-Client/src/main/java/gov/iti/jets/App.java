@@ -22,7 +22,9 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        Application.launch(args);
+
+     Application.launch(args);
+      
 
     }
 
@@ -31,7 +33,8 @@ public class App extends Application {
         try {
 
             RMIConnection rmi = RMIConnection.getInstance();
-            rmi.connect("10.145.17.169");
+//            rmi.connect("10.145.18.76");
+             rmi.connect("10.145.18.76");
             // client = new ClientImpl();
 
             // Server serverServices = (Server) Naming.lookup("rmi://localhost:14785/serverService");
@@ -43,5 +46,10 @@ public class App extends Application {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void stop() throws Exception {
+        RMIConnection.getServerServive().unregister(RMIConnection.getInstance().getCurrentClientConnection());
     }
 }

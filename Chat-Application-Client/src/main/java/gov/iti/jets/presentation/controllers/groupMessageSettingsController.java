@@ -4,8 +4,10 @@ import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ChatData;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.ContactsModel;
+import gov.iti.jets.business.models.GroupsModel;
 import gov.iti.jets.business.services.messageSettingsService;
 import gov.iti.jets.dto.ContactDto;
+import gov.iti.jets.dto.GroupsMembersDto;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,15 +16,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -33,7 +36,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MessageSettingsController implements Initializable {
+public class groupMessageSettingsController implements Initializable {
     Stage stage;
     @FXML
     TextField sampleTextfield;
@@ -58,16 +61,15 @@ public class MessageSettingsController implements Initializable {
     boolean isBold;
     boolean isUndelined;
     boolean isItalic;
-    ContactDto chatSet;
+    GroupsMembersDto chatSet;
 
     boolean changed;
 
 
-    public MessageSettingsController(ContactDto dto) {
+    public groupMessageSettingsController(GroupsMembersDto dto) {
         this.chatSet = dto;
 
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -234,14 +236,14 @@ public class MessageSettingsController implements Initializable {
     public void save(MouseEvent mouseEvent) {
         System.out.println("save");
         ChatData chatData= ChatCoordinator.getInstance().getCurrentChat();
-        if(!chatData.isGroup()) {
+        if(chatData.isGroup()) {
 
             messageSettingsService settingsService = new messageSettingsService();
-            settingsService.msgSettings(chatSet);
+            settingsService.msgSettings((GroupsMembersDto) chatSet);
             System.out.println("SAVED");
             ModelsFactory modelsFactory = ModelsFactory.getInstance();
-            ContactsModel contactsModel = modelsFactory.getContactsModel();
-            contactsModel.editContact(chatSet);
+            GroupsModel groupsModel = modelsFactory.getGroups();
+            groupsModel.editGroupStyle((GroupsMembersDto)  chatSet);
         }
         else {
             /*    messageSettingsService settingsService = new messageSettingsService();
