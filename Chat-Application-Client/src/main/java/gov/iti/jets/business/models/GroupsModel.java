@@ -1,19 +1,26 @@
 package gov.iti.jets.business.models;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.dto.GroupsMembersDto;
+import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.print.JobSettings;
 
 public class GroupsModel {
     ObservableList<GroupDto> groups;
     ObservableList<GroupsMembersDto> myGroupsStyle;
+    ObservableMap<Integer,List<UserDto>> membersData;
     public GroupsModel(){
         try {
             List<GroupDto> groupDto  =  RMIConnection.getServerServive().getGroups(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
@@ -21,6 +28,7 @@ public class GroupsModel {
             groups = FXCollections.observableArrayList(groupDto);
         } catch (Exception e) {
            e.printStackTrace();
+           new ShowPopUp().notifyServerDown();
         }
 
         try {
@@ -29,6 +37,7 @@ public class GroupsModel {
             myGroupsStyle = FXCollections.observableArrayList(groupDto);
         } catch (Exception e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
     }
     public ObservableList<GroupDto> getGroups() {
@@ -65,4 +74,27 @@ public class GroupsModel {
             }
         }
     }
+    public ObservableMap<Integer,List<UserDto>> getMembersData() {
+        for (int i=0;i<myGroupsStyle.size();i++) {
+            ContactsModel contactsModel=new ContactsModel();
+            UserDto uDto= contactsModel.getContactDataByNumber(myGroupsStyle.get(i).getMemberPhoneNumber());
+            if(membersData.containsKey(myGroupsStyle.get(i).getGroup_id())) {
+
+                membersData.get(myGroupsStyle.get(i).getGroup_id()).add(uDto);
+            }
+            else {
+                List<UserDto>members=new ArrayList<>();
+                members.add(uDto);
+                membersData.put(myGroupsStyle.get(i).getGroup_id(),members);
+            }
+        }
+        return membersData;
+    }
+    public UserDto getMemberData(int group_id,String userNumber){
+        for(int i=0;i<membersData.get(group_id).size();i++)
+            if(membersData.get(group_id).get(i).equals(userNumber))
+                return membersData.get(group_id).get(i);
+        return null;
+    }
+
 }

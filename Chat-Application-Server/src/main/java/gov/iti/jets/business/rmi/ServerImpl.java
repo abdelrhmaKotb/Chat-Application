@@ -19,7 +19,9 @@ import java.util.Map;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 //    public   List<Client> clients = new ArrayList<>();
+
     public static Map<String, Client> clientsMap = new HashMap<>();
+
 
     public ServerImpl() throws RemoteException {
         super();
@@ -228,6 +230,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             }
         });
         // clientsMap.containsKey(myPhone);
+
+        ChartController.chartController.updatePieChart();
+        ChartController.chartController.updateBarChart();
 
 
 

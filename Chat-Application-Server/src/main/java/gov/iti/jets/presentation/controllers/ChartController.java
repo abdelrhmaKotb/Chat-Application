@@ -75,22 +75,21 @@ public class ChartController implements Initializable {
 
         });
 
-       
     }
 
     public void updateBarChart() {
 
-      
+
+       
         Platform.runLater(new Runnable() {
 
             @Override
             public void run() {
                 bar.setTitle("Countries And Users");
                 bar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
-
-                    ChartsService chartServie = new ChartsService();
-                    bar.setData(getChartData(chartServie.getCountryChart()));
-                    bar.setAnimated(false);
+                ChartsService chartServie = new ChartsService();
+                bar.setData(getChartData(chartServie.getCountryChart()));
+                bar.setAnimated(false);
             }
 
         });

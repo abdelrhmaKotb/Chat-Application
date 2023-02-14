@@ -83,7 +83,7 @@ public class MainPanelController implements Initializable {
     void startServerAction(ActionEvent event) {
         RMIConnection rmi = RMIConnection.getInstance();
         DBConnecttion.getConnection();
-        rmi.connect();
+        rmi.reconnect();
     }
 
    
