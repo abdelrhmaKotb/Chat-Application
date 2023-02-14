@@ -25,7 +25,7 @@
                 <Pane maxWidth="1.7976931348623157E308" prefHeight="15.0" prefWidth="94.0" HBox.hgrow="ALWAYS" />
                 <ImageView fx:id="addgroupBtn" fitHeight="33.0" fitWidth="30.0" onMouseClicked="#clickAddGroupBtn" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../images/addGroup.png" />
+                        <Image url="@../images/addgro.png" />
                     </image>
                     <cursor>
                         <Cursor fx:constant="HAND" />
