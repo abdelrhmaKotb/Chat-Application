@@ -52,6 +52,7 @@ public class ChartController implements Initializable {
 
             @Override
             public void run() {
+
                 ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
 
                 genderPieChart.setData(data);
@@ -74,64 +75,50 @@ public class ChartController implements Initializable {
 
         });
 
-        // new Thread(() -> {
-
-        // while (true) {
-        // Platform.runLater(new Runnable() {
-
-        // @Override
-        // public void run() {
-        // data.clear();
-        // data.addAll(new PieChart.Data("Male", cs.getGenderCharts(0)),
-        // new PieChart.Data("Female", cs.getGenderCharts(1)));
-
-        // male.setText(String.valueOf(String.format("%.2f", (double)
-        // cs.getGenderCharts(0)
-        // / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
-        // female.setText(String.valueOf(String.format("%.2f", (double)
-        // cs.getGenderCharts(1)
-        // / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
-
-        // }
-
-        // });
-
-        // try {
-        // Thread.sleep(1000);
-        // } catch (InterruptedException e) {
-        // e.printStackTrace();
-        // }
-
-        // }
-        // }).start();
+       
     }
 
     public void updateBarChart() {
 
-        bar.setTitle("Countries And Users");
-        bar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
+        // bar.setTitle("Countries And Users");
+        // bar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
 
-        new Thread(() -> {
+        // new Thread(() -> {
 
-            while (true) {
-                Platform.runLater(new Runnable() {
+        //     while (true) {
+        //         Platform.runLater(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        ChartsService chartServie = new ChartsService();
-                        bar.setData(getChartData(chartServie.getCountryChart()));
-                    }
+        //             @Override
+        //             public void run() {
+        //                 ChartsService chartServie = new ChartsService();
+        //                 bar.setData(getChartData(chartServie.getCountryChart()));
+        //             }
 
-                });
+        //         });
 
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        //         try {
+        //             Thread.sleep(1000);
+        //         } catch (InterruptedException e) {
+        //             e.printStackTrace();
+        //         }
 
+        //     }
+        // }).start();
+
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                bar.setTitle("Countries And Users");
+                bar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
+
+                    ChartsService chartServie = new ChartsService();
+                    bar.setData(getChartData(chartServie.getCountryChart()));
+                    bar.setAnimated(false);
             }
-        }).start();
+
+        });
+
     }
 
     private ObservableList<XYChart.Series<String, Double>> getChartData(ArrayList<CountryDto> countryData) {
@@ -168,30 +155,52 @@ public class ChartController implements Initializable {
 
     public void updateOnlineAndOfline() {
 
-        onlineAndOflineBar.setTitle("Online And Ofline");
-        onlineAndOflineBar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
+        // onlineAndOflineBar.setTitle("Online And Ofline");
+        // onlineAndOflineBar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
 
-        new Thread(() -> {
+        // new Thread(() -> {
 
-            while (true) {
+        //     while (true) {
+        //         Platform.runLater(new Runnable() {
+
+        //             @Override
+        //             public void run() {
+
+        //                 onlineAndOflineBar.setData(getOnlineAndOfline());
+        //             }
+
+        //         });
+
+        //         try {
+        //             Thread.sleep(1000);
+        //         } catch (InterruptedException e) {
+        //             e.printStackTrace();
+        //         }
+
+        //     }
+        // }).start();
+
+
+
+
+
                 Platform.runLater(new Runnable() {
 
                     @Override
                     public void run() {
 
+
+                        onlineAndOflineBar.setTitle("Online And Ofline");
+                        onlineAndOflineBar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
+                
+                      
                         onlineAndOflineBar.setData(getOnlineAndOfline());
+                        onlineAndOflineBar.setAnimated(false);
                     }
 
                 });
 
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
+          
     }
 
 }

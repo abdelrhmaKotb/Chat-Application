@@ -288,6 +288,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             return null;
         }
         ChartController.chartController.updatePieChart();
+        ChartController.chartController.updateBarChart();
         return new UserSignupMapperImpl().toDto(user);
     }
 
