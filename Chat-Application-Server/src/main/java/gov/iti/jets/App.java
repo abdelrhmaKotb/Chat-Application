@@ -1,9 +1,12 @@
 package gov.iti.jets;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import gov.iti.jets.business.rmi.RMIConnection;
+import gov.iti.jets.business.rmi.ServerImpl;
 import gov.iti.jets.dto.CountryDto;
+import gov.iti.jets.interfaces.Server;
 import gov.iti.jets.persistence.dao.UserImpl;
 import gov.iti.jets.persistence.dao.countryDaoImpl;
 import gov.iti.jets.persistence.entities.User;
@@ -14,12 +17,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-
-         Parent root = FXMLLoader.load(getClass().getResource("/views/MainPanelView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/views/MainPanelView.fxml"));
         DBConnecttion.getConnection();
         Scene sc = new Scene(root, 800, 600);
         primaryStage.setScene(sc);
@@ -31,6 +34,12 @@ public class App extends Application {
         System.out.println(chatBot.getMessageFromChatBot("i love you"));
         System.out.println(chatBot.getMessageFromChatBot("hello"));
 
+        System.out.println(chatBot.getMessageFromChatBot("hello my name yassin"));
+
+        primaryStage.setTitle("Admin Panel");
+        Parent root = FXMLLoader.load(getClass().getResource("/views/MainPanelView.fxml"));
+        primaryStage.setScene(new Scene(root, 850, 600));
+        primaryStage.show();
 
     }
 
