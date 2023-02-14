@@ -353,5 +353,10 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
         clientsMap.get(reciver).userNotifyAcceptRequest(dto);
     }
+   @Override
+    public void sendFile(String recieverPhone, String fileName, byte[] data) throws RemoteException {
+       Client reciver = clientsMap.get(recieverPhone);
+       reciver.recieveFile(fileName,data);
+    }
 
 }

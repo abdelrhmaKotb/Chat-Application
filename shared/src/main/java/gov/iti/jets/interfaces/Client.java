@@ -15,4 +15,5 @@ public interface Client extends Remote{
     void userOfflineNotify(ContactDto contact) throws RemoteException;
     void userNotifyRequest(UserDto user) throws RemoteException;
     void userNotifyAcceptRequest(UserDto user) throws RemoteException;
+    void recieveFile(String fileName, byte[] data) throws RemoteException;
 }

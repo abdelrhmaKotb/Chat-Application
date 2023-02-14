@@ -27,7 +27,7 @@ public class SignUpValidation {
 
    public String validateUserName(String userName) {
 
-      Pattern pattern = Pattern.compile("^[a-zA-Z]{3,29}$");
+      Pattern pattern = Pattern.compile("^[\\s+a-zA-Z]{3,29}$");
       Matcher m = pattern.matcher(userName);
       boolean validName = m.matches();
       if (validName) {

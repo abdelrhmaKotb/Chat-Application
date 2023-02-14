@@ -64,5 +64,7 @@ public interface Server extends Remote {
     List<UserDto> getUsersByNumber(List<String> phoneNumber) throws RemoteException;
 
     void notifySendRequest(String sender, String reciver) throws RemoteException;
+    void sendFile(String recieverPhone, String fileName, byte[] data) throws RemoteException;
+
 
 }
