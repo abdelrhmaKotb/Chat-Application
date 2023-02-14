@@ -31,5 +31,16 @@ public class RMIConnection {
             e.printStackTrace();
         }
     }
+    public void discConnect() {
+
+        try {
+           
+            Naming.unbind("rmi://localhost:14785/serverService");
+            
+            System.out.println("server Stop ...");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

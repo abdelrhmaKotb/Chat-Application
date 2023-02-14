@@ -5,6 +5,7 @@ import gov.iti.jets.dto.*;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
 import gov.iti.jets.persistence.dao.*;
+import gov.iti.jets.persistence.dao.interfaces.UserDao;
 import gov.iti.jets.persistence.entities.*;
 
 import java.rmi.RemoteException;
@@ -91,6 +92,8 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         for (int i = 0; i < listOfContacts.size(); i++) {
             Request req = new Request(senderPhoneNumber, listOfContacts.get(i), new Date(System.currentTimeMillis()));
             reqIml.createRequests(req);
+            notifySendRequest(senderPhoneNumber, listOfContacts.get(i));
+            System.out.println("sendRequests here");
         }
     }
 
@@ -230,6 +233,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         ContactImpl contactImpl = new ContactImpl();
         Contact contact = new Contact(currentUser, friendNumber);
         contactImpl.create(contact);
+        notifyAcceptRequest(currentUser,friendNumber);
     }
 
   
@@ -317,6 +321,37 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         for(int i=0;i<len;i++)
         userDtos.add(userMapper.toDto(listOfUsers.get(i)));
         return userDtos;
+    }
+
+    @Override
+    public void notifySendRequest(String sender, String reciver) throws RemoteException {
+        System.out.println("function notift");
+        if(!clientsMap.containsKey(reciver)){
+            System.out.println("not here");
+            return;
+        }
+
+        UserImpl dao = new UserImpl();
+        User user =  dao.seletcByPhoneNumber(sender);
+        UserDto dto = new UserMapper().toDto(user);
+
+        clientsMap.get(reciver).userNotifyRequest(dto);
+
+    }
+
+
+    public void notifyAcceptRequest(String sender, String reciver) throws RemoteException{
+        System.out.println("function notift");
+        if(!clientsMap.containsKey(reciver)){
+            System.out.println(reciver + "not here");
+            return;
+        }
+
+        UserImpl dao = new UserImpl();
+        User user =  dao.seletcByPhoneNumber(sender);
+        UserDto dto = new UserMapper().toDto(user);
+
+        clientsMap.get(reciver).userNotifyAcceptRequest(dto);
     }
 
 }

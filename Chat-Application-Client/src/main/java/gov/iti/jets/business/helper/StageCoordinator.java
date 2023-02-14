@@ -113,7 +113,7 @@ public class StageCoordinator {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/chatScreen.fxml"));
                 Parent view = loader.load();
-                Scene chatScene = new Scene(view);
+                Scene chatScene = new Scene(view,1300,700);
                 SceneData logiSceneData = new SceneData(loader, view, chatScene);
                 scenes.put("chat", logiSceneData);
                 primaryStage.setScene(chatScene);

@@ -23,15 +23,15 @@ public class ChartController implements Initializable {
     private PieChart genderPieChart;
     @FXML
     private TextField male, female;
-   
+
     @FXML
     private BarChart<String, Double> bar;
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         updatePieChart();
-         updateBarChart();
+        updateBarChart();
 
     }
 
@@ -40,7 +40,7 @@ public class ChartController implements Initializable {
 
         genderPieChart.setData(data);
         genderPieChart.setTitle("Gender");
-        genderPieChart.setStyle("-fx-font:20 arial;");
+        genderPieChart.setStyle("-fx-font:20 system;-fx-text-fill:black;");
 
         genderPieChart.setLabelLineLength(10);
         ChartsService cs = new ChartsService();
@@ -75,8 +75,9 @@ public class ChartController implements Initializable {
     }
 
     public void updateBarChart() {
-   
-        bar.setTitle("Countries And Users");  
+
+        bar.setTitle("Countries And Users");
+        bar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
 
         new Thread(() -> {
 
