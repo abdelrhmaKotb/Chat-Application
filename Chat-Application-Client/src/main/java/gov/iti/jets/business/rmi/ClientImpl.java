@@ -59,9 +59,9 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                showPopUp.showNotifacation(contact.getUser() + " became online");
+                showPopUp.showNotifacation(contact.getFriendName() + " became online");
                 NavCoordinator.getNotificationController()
-                        .addInListOfNotifications(contact.getUser() + " became online");
+                        .addInListOfNotifications(contact.getFriendName() + " became online");
                 ContactsModel contactsModel = ModelsFactory.getInstance().getContactsModel();
                 ContactDto c = new ContactDto();
                 contactsModel.getContacts().add(c);
@@ -81,9 +81,9 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                showPopUp.showNotifacation(contact.getUser() + " became offline");
+                showPopUp.showNotifacation(contact.getFriendName() + " became offline");
                 NavCoordinator.getNotificationController()
-                        .addInListOfNotifications(contact.getUser() + " became offline");
+                        .addInListOfNotifications(contact.getFriendName() + " became offline");
                 ContactsModel contactsModel = ModelsFactory.getInstance().getContactsModel();
                 ContactDto c = new ContactDto();
 
