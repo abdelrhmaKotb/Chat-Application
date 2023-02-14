@@ -72,7 +72,7 @@ public class SendMsgController implements Initializable {
         msg.setTextAlignment(TextAlignment.JUSTIFY);
         msg.setMaxWidth(250);
         msg.setText(content);
-
+        msg.setMaxHeight( Double.MAX_VALUE );
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         //msg.setText(mDto.getMessage() + "\n[" + sdf.format(timestamp) + "]");

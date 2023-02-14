@@ -150,7 +150,7 @@ public class MessageController implements Initializable {
                 SendMsgController controller = new SendMsgController(messageDto, recieve);
                 loader.setController(controller);
                 HBox hbox = loader.load();
-
+                hbox.setFillHeight(true);
                 msgvBox.getChildren().add(hbox);
             }
         } catch (IOException e) {
