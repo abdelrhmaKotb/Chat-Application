@@ -96,6 +96,7 @@ public class ChartController implements Initializable {
 
         });
 
+       
     }
 
     private ObservableList<XYChart.Series<String, Double>> getChartData(ArrayList<CountryDto> countryData) {
