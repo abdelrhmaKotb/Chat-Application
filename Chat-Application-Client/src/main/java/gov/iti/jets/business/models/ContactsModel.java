@@ -18,14 +18,15 @@ public class ContactsModel {
     public ContactsModel() {
         try {
             List<ContactDto> userContacts = RMIConnection.getServerServive().getUserContacts(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
-            System.out.println(userContacts.size());
+            System.out.println(userContacts.size()); 
             System.out.println(userContacts);
             contacts = FXCollections.observableArrayList(userContacts);
             List<String> list=new ArrayList<>();
             contacts.forEach(e -> list.add(e.getFriendPhoneNumber()));
-          
-            List<UserDto> users =  RMIConnection.getServerServive().getUsersByNumber(list);
-            contactsData = FXCollections.observableArrayList(users);
+            if(list.size() > 0){
+                List<UserDto> users =  RMIConnection.getServerServive().getUsersByNumber(list);
+                contactsData = FXCollections.observableArrayList(users);
+            }
             
         } catch (Exception e) {
             e.printStackTrace();

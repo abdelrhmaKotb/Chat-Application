@@ -16,7 +16,7 @@ public interface Server extends Remote {
 
     UserDto login(String phoneUmber, String password) throws RemoteException;
 
-    public List<GroupDto> getGroups(String phoneNumber) throws RemoteException;
+    List<GroupDto> getGroups(String phoneNumber) throws RemoteException;
 
     void createGroup(String name, String currentUserNumber, List<String> listOfNumbers) throws RemoteException;
 
@@ -34,9 +34,9 @@ public interface Server extends Remote {
 
     boolean isRequestExistInDB(String currentUserNumber, String contactNumber) throws RemoteException;
 
-    public ArrayList<CountryDto> getCountriesNames() throws RemoteException;
+    ArrayList<CountryDto> getCountriesNames() throws RemoteException;
 
-    public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException;
+    UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException;
 
     List<ContactDto> getUserContacts(String phone) throws RemoteException;
 
@@ -61,10 +61,13 @@ public interface Server extends Remote {
     void msgSettings(GroupsMembersDto gDto) throws RemoteException;
 
     List<GroupsMembersDto> getMyGroupsStyle(String phoneNumber) throws RemoteException;
+
     List<UserDto> getUsersByNumber(List<String> phoneNumber) throws RemoteException;
 
     void notifySendRequest(String sender, String reciver) throws RemoteException;
+
     void sendFile(String recieverPhone, String fileName, byte[] data) throws RemoteException;
-    void sendFileGroup(int group_id,String senderPhone ,String fileName, byte[] data) throws RemoteException;
+
+    void sendFileGroup(int group_id, String senderPhone, String fileName, byte[] data) throws RemoteException;
 
 }
