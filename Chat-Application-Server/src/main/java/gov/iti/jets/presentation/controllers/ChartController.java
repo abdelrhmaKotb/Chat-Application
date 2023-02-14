@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import gov.iti.jets.business.rmi.ServerImpl;
 import gov.iti.jets.business.services.ChartsService;
 import gov.iti.jets.dto.CountryDto;
 import javafx.application.Platform;
@@ -27,79 +28,71 @@ public class ChartController implements Initializable {
     @FXML
     private BarChart<String, Double> bar;
 
+    @FXML
+    private BarChart<String, Double> onlineAndOflineBar;
+
+    static public ChartController chartController;
+
+    public ChartController() {
+        chartController = this;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         updatePieChart();
         updateBarChart();
+        updateOnlineAndOfline();
 
     }
 
     public void updatePieChart() {
-        ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
+       
+        Platform.runLater(new Runnable() {
 
-        genderPieChart.setData(data);
-        genderPieChart.setTitle("Gender");
-        genderPieChart.setStyle("-fx-font:20 system;-fx-text-fill:black;");
+            @Override
+            public void run() {
+                ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
 
-        genderPieChart.setLabelLineLength(10);
-        ChartsService cs = new ChartsService();
-        new Thread(() -> {
+                genderPieChart.setData(data);
+                genderPieChart.setTitle("Gender");
+                genderPieChart.setStyle("-fx-font:20 system;-fx-text-fill:black;");
+        
+                genderPieChart.setLabelLineLength(10);
+                ChartsService cs = new ChartsService();
+        
+                data.clear();
+                data.addAll(new PieChart.Data("Male", cs.getGenderCharts(0)),
+                        new PieChart.Data("Female", cs.getGenderCharts(1)));
 
-            while (true) {
-                Platform.runLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        data.clear();
-                        data.addAll(new PieChart.Data("Male", cs.getGenderCharts(0)),
-                                new PieChart.Data("Female", cs.getGenderCharts(1)));
-
-                        male.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(0)
-                                / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
-                        female.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(1)
-                                / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
-
-                    }
-
-                });
-
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                male.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(0)
+                        / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
+                female.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(1)
+                        / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
 
             }
-        }).start();
+
+        });
+
     }
 
     public void updateBarChart() {
 
-        bar.setTitle("Countries And Users");
-        bar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
+       
+        Platform.runLater(new Runnable() {
 
-        new Thread(() -> {
-
-            while (true) {
-                Platform.runLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        ChartsService chartServie = new ChartsService();
-                        bar.setData(getChartData(chartServie.getCountryChart()));
-                    }
-
-                });
-
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
+            @Override
+            public void run() {
+                bar.setTitle("Countries And Users");
+                bar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
+                ChartsService chartServie = new ChartsService();
+                bar.setData(getChartData(chartServie.getCountryChart()));
+                bar.setAnimated(false);
             }
-        }).start();
+
+        });
+
+       
     }
 
     private ObservableList<XYChart.Series<String, Double>> getChartData(ArrayList<CountryDto> countryData) {
@@ -116,6 +109,50 @@ public class ChartController implements Initializable {
         }
 
         return answer;
+    }
+
+    private ObservableList<XYChart.Series<String, Double>> getOnlineAndOfline() {
+
+        ObservableList<XYChart.Series<String, Double>> answer = FXCollections.observableArrayList();
+        answer.clear();
+
+        Series<String, Double> aSeries = new Series<String, Double>();
+        aSeries.setName("Online");
+        aSeries.getData().add(new XYChart.Data(Integer.toString(1), ServerImpl.countOnLine));
+        Series<String, Double> bSeries = new Series<String, Double>();
+        bSeries.setName("Ofline");
+        bSeries.getData().add(new XYChart.Data(Integer.toString(2), ServerImpl.countOfLine));
+        answer.addAll(aSeries, bSeries);
+
+        return answer;
+    }
+
+    public void updateOnlineAndOfline() {
+
+        onlineAndOflineBar.setTitle("Online And Ofline");
+        onlineAndOflineBar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
+
+        new Thread(() -> {
+
+            while (true) {
+                Platform.runLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        onlineAndOflineBar.setData(getOnlineAndOfline());
+                    }
+
+                });
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
     }
 
 }

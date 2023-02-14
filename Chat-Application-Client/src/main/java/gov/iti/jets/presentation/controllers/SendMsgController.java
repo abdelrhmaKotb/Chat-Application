@@ -40,7 +40,8 @@ public class SendMsgController implements Initializable {
     String content;
     boolean recieve;
     MessageDto msgDto;
-
+    @FXML
+    Text senderName;
     public SendMsgController(MessageDto messageDto, boolean recieve) {
         content = (messageDto.getMessage());
         this.recieve = recieve;
@@ -53,10 +54,21 @@ public class SendMsgController implements Initializable {
             hbox.setAlignment(Pos.CENTER_LEFT);
             hbox.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
             ContactsModel contactsModel=new ContactsModel();
-            UserDto uDto= contactsModel.getContactDataByNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+            ChatData chat = ChatCoordinator.getInstance().getCurrentChat();
+            UserDto uDto;
+            if(!chat.isGroup()) {
+                 uDto = contactsModel.getContactDataByNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+                senderName.setVisible(false);
+            }
+            else {
+                uDto = contactsModel.getContactDataByNumber(msgDto.getSender());
+                senderName.setText(uDto.getName());
+            }
             circle.setStroke(null);
             Image userImage = new Image(new ByteArrayInputStream(uDto.getImage()));
             circle.setFill(new ImagePattern(userImage));
+
+
 
         } else {
             hbox.setAlignment(Pos.CENTER_RIGHT);
@@ -72,7 +84,7 @@ public class SendMsgController implements Initializable {
         msg.setTextAlignment(TextAlignment.JUSTIFY);
         msg.setMaxWidth(250);
         msg.setText(content);
-
+        msg.setMaxHeight( Double.MAX_VALUE );
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         //msg.setText(mDto.getMessage() + "\n[" + sdf.format(timestamp) + "]");
