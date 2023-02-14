@@ -68,7 +68,7 @@ public class ContactsController implements Initializable {
         Tooltip.install(addContactBtn, new Tooltip("Invite Contact"));
     }
 
-    private void createConatctsList() {
+    private void createConatctsList() { 
 
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         ContactsModel contactsModel = modelsFactory.getContactsModel();

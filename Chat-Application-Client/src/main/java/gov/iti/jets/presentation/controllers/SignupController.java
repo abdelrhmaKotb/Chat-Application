@@ -94,7 +94,7 @@ public class SignupController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        choiceboxGender.getItems().add("Femal");
+        choiceboxGender.getItems().add("Female");
         choiceboxGender.getItems().add("Male");
         SignupService signupService = new SignupService();
 
