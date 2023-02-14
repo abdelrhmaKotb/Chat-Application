@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
@@ -13,6 +15,7 @@ public class RMIConnection {
     private static RMIConnection instance = null;
     private static Server serverServices = null;
     private static Client currentClientConnection = null;
+    private static Registry registry;
 
     private RMIConnection() {
     }
@@ -27,9 +30,10 @@ public class RMIConnection {
 
     public void connect(String ip) throws RemoteException, NotBoundException, MalformedURLException {
 
-        if (serverServices == null) {
-            serverServices = (Server) Naming.lookup("rmi://" + ip + ":14785/serverService");
-        }
+        registry = LocateRegistry.getRegistry(14785);
+        serverServices = (Server) registry.lookup("rmi://" + ip + ":14785/serverService");
+        // if (serverServices == null) {
+        // }
     }
 
     public void registerClient(){

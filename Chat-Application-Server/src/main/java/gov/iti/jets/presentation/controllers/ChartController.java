@@ -75,50 +75,25 @@ public class ChartController implements Initializable {
 
         });
 
-       
     }
 
     public void updateBarChart() {
 
-        // bar.setTitle("Countries And Users");
-        // bar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
-
-        // new Thread(() -> {
-
-        //     while (true) {
-        //         Platform.runLater(new Runnable() {
-
-        //             @Override
-        //             public void run() {
-        //                 ChartsService chartServie = new ChartsService();
-        //                 bar.setData(getChartData(chartServie.getCountryChart()));
-        //             }
-
-        //         });
-
-        //         try {
-        //             Thread.sleep(1000);
-        //         } catch (InterruptedException e) {
-        //             e.printStackTrace();
-        //         }
-
-        //     }
-        // }).start();
-
+       
         Platform.runLater(new Runnable() {
 
             @Override
             public void run() {
                 bar.setTitle("Countries And Users");
                 bar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
-
-                    ChartsService chartServie = new ChartsService();
-                    bar.setData(getChartData(chartServie.getCountryChart()));
-                    bar.setAnimated(false);
+                ChartsService chartServie = new ChartsService();
+                bar.setData(getChartData(chartServie.getCountryChart()));
+                bar.setAnimated(false);
             }
 
         });
 
+       
     }
 
     private ObservableList<XYChart.Series<String, Double>> getChartData(ArrayList<CountryDto> countryData) {

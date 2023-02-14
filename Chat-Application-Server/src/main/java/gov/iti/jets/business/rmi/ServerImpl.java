@@ -230,6 +230,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         });
         // clientsMap.containsKey(myPhone);
 
+        ChartController.chartController.updatePieChart();
+        ChartController.chartController.updateBarChart();
+
 
 
         return isUpdated;
