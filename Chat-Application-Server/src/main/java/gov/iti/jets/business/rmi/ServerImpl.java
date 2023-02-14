@@ -47,6 +47,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         System.out.println("unregister");
         clientsMap.remove(client.getPhoneNumber());
         System.out.println(clientsMap.keySet());
+        ChartController.chartController.updateOnlineAndOfline();
 
         notifyUsersOffline(client);
         //  System.out.println(clients);
