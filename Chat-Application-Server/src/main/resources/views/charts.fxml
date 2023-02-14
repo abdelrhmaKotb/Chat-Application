@@ -9,26 +9,34 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="883.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ChartController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="449.0" prefWidth="1055.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ChartController">
    <children>
-      <PieChart fx:id="genderPieChart" layoutX="552.0" layoutY="14.0" prefHeight="303.0" prefWidth="331.0" style="-fx-background-color: grey;" />
-      <Label layoutX="752.0" layoutY="325.0" style="-fx-text-fill: black;" text="Female">
+      <PieChart fx:id="genderPieChart" layoutX="458.0" layoutY="38.0" prefHeight="303.0" prefWidth="331.0" style="-fx-background-color: grey;" />
+      <Label layoutX="646.0" layoutY="364.0" style="-fx-text-fill: black;" text="Female">
          <font>
             <Font size="17.0" />
          </font></Label>
-      <Label layoutX="674.0" layoutY="325.0" style="-fx-text-fill: black;" text="Male">
+      <Label layoutX="574.0" layoutY="364.0" style="-fx-text-fill: black;" text="Male">
          <font>
             <Font size="17.0" />
          </font></Label>
-      <TextField fx:id="male" editable="false" layoutX="668.0" layoutY="354.0" prefHeight="25.0" prefWidth="64.0" />
-      <TextField fx:id="female" alignment="BOTTOM_LEFT" editable="false" layoutX="752.0" layoutY="354.0" prefHeight="25.0" prefWidth="64.0" />
-      <BarChart fx:id="bar" layoutX="152.0" layoutY="7.0" prefHeight="429.0" prefWidth="409.0" style="-fx-background-color: grey;">
+      <TextField fx:id="male" editable="false" layoutX="567.0" layoutY="393.0" prefHeight="25.0" prefWidth="64.0" />
+      <TextField fx:id="female" alignment="BOTTOM_LEFT" editable="false" layoutX="641.0" layoutY="393.0" prefHeight="25.0" prefWidth="64.0" />
+      <BarChart fx:id="bar" layoutX="52.0" layoutY="10.0" prefHeight="429.0" prefWidth="409.0" style="-fx-background-color: grey;">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
         <yAxis>
           <NumberAxis side="LEFT" />
         </yAxis>
+      </BarChart>
+      <BarChart fx:id="onlineAndOflineBar" layoutX="738.0" layoutY="38.0" prefHeight="389.0" prefWidth="317.0" style="-fx-background-color: grey;">
+         <xAxis>
+            <CategoryAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis side="LEFT" />
+         </yAxis>
       </BarChart>
    </children>
 </Pane>

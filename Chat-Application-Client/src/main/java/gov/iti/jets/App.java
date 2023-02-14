@@ -24,9 +24,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-
-     Application.launch(args);
-      
+        Application.launch(args);
 
     }
 
@@ -35,8 +33,7 @@ public class App extends Application {
         try {
 
             RMIConnection rmi = RMIConnection.getInstance();
-//            rmi.connect("10.145.18.76");
-             rmi.connect("localhost");
+            rmi.connect("localhost");
             // client = new ClientImpl();
 
             // Server serverServices = (Server) Naming.lookup("rmi://localhost:14785/serverService");

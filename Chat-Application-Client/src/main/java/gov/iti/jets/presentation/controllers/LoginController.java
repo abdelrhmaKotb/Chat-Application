@@ -2,7 +2,9 @@ package gov.iti.jets.presentation.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.Arrays;
+// import java.util.Date;
 import java.util.ResourceBundle;
 import gov.iti.jets.business.services.LoginService;
 import gov.iti.jets.dto.UserDto;
@@ -80,7 +82,7 @@ public class LoginController implements Initializable {
 
                 CurrentUserModel currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
                 currentUserModel.setName(user.getName());
-                
+
                 currentUserModel.setPhoneNumber(user.getPhoneNumber());
                 System.out.println(currentUserModel.getPhoneNumber() + " sfdf phome");
                 currentUserModel.setEmail(user.getEmail());
@@ -88,15 +90,17 @@ public class LoginController implements Initializable {
                 currentUserModel.setStatus(user.getStatus().ordinal());
                 // System.out.println("image" + Arrays.toString(user.getImage()));
                 currentUserModel.setImage(user.getImage());
+                currentUserModel.setCountry(user.getCountry());
+                currentUserModel.setDate(user.getDateOfBirth().toLocalDate());
                 // RMIConnection.getServerServive().register(new ClientImpl());
-                 RMIConnection.getInstance().registerClient();
-                 RMIConnection.getServerServive().notifyUsersOnline(RMIConnection.getInstance().getCurrentClientConnection());
+                RMIConnection.getInstance().registerClient();
+                RMIConnection.getServerServive()
+                        .notifyUsersOnline(RMIConnection.getInstance().getCurrentClientConnection());
                 // currentUserModel.setStatus(user.getStatus());
-                 StageCoordinator coordinator = StageCoordinator.getInstance();
-                 coordinator.moveToChat();
+                StageCoordinator coordinator = StageCoordinator.getInstance();
+                coordinator.moveToChat();
 
-                 System.out.println(user);
-             
+                System.out.println(user);
 
             }
         }
@@ -104,7 +108,7 @@ public class LoginController implements Initializable {
 
     @FXML
     public void handleSignup() throws IOException {
-        
+
         StageCoordinator coordinator = StageCoordinator.getInstance();
         coordinator.moveToSingup();
 
