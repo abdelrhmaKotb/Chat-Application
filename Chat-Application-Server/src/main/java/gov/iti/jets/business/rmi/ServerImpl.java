@@ -7,6 +7,7 @@ import gov.iti.jets.interfaces.Server;
 import gov.iti.jets.persistence.dao.*;
 import gov.iti.jets.persistence.dao.interfaces.UserDao;
 import gov.iti.jets.persistence.entities.*;
+import gov.iti.jets.presentation.controllers.ChartController;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -286,6 +287,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             System.out.println("this user already exist and not created");
             return null;
         }
+        ChartController.chartController.updatePieChart();
         return new UserSignupMapperImpl().toDto(user);
     }
 
