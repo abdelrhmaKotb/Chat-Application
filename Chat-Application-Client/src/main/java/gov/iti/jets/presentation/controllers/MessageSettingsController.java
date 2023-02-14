@@ -1,12 +1,13 @@
 package gov.iti.jets.presentation.controllers;
 
+import gov.iti.jets.business.helper.ChatCoordinator;
+import gov.iti.jets.business.helper.ChatData;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.ContactsModel;
 import gov.iti.jets.business.services.messageSettingsService;
 import gov.iti.jets.dto.ContactDto;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,33 +58,35 @@ public class MessageSettingsController implements Initializable {
     boolean isBold;
     boolean isUndelined;
     boolean isItalic;
-    ContactDto contactDto;
+    ContactDto chatSet;
 
     boolean changed;
 
-    public MessageSettingsController(ContactDto contactDto) {
-        this.contactDto = contactDto;
-        System.out.println("-----------cont" + contactDto.getFriendPhoneNumber() + contactDto.isBold());
+
+    public MessageSettingsController(ContactDto dto) {
+        this.chatSet = dto;
+
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        System.out.println(chatSet.getFontStyle());
         setFontStyle();
-        size = contactDto.getFontSize();
-        style = contactDto.getFontStyle();
-        bgColor = contactDto.getBackgroundColor();
-        color = contactDto.getFontColor();
+        size = chatSet.getFontSize();
+        style = chatSet.getFontStyle();
+        bgColor = chatSet.getBackgroundColor();
+        color = chatSet.getFontColor();
+        System.out.println(chatSet.getFontColor());
+        fontStyleChoice.getSelectionModel().select(chatSet.getFontStyle());
+        System.out.println(chatSet.getFontSize());
+        fontSizechoiceBox.getSelectionModel().select((Integer) chatSet.getFontSize());
 
-        fontStyleChoice.getSelectionModel().select(contactDto.getFontStyle());
-        System.out.println(contactDto.getFontSize());
-        fontSizechoiceBox.getSelectionModel().select((Integer) contactDto.getFontSize());
-        System.out.println(contactDto.getFontColor());
-        fontcolorPicker.setValue(Color.web(contactDto.getFontColor()));
-        bgcolorPicker.setValue(Color.web(contactDto.getBackgroundColor()));
-        isBold = contactDto.isBold();
-        isItalic = contactDto.isItalic();
-        isUndelined = contactDto.isUnderlined();
+        fontcolorPicker.setValue(Color.web(chatSet.getFontColor()));
+        bgcolorPicker.setValue(Color.web(chatSet.getBackgroundColor()));
+        isBold = chatSet.isBold();
+        isItalic = chatSet.isItalic();
+        isUndelined = chatSet.isUnderlined();
         setTextStyle();
         if (isBold)
             boldCheck.setSelected(true);
@@ -98,7 +101,7 @@ public class MessageSettingsController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 style = fontStyleChoice.getSelectionModel().getSelectedItem().toString();
-                contactDto.setFontStyle(style);
+                chatSet.setFontStyle(style);
                 sampleTextfield.setFont(Font.font(style, size));
                 changed = true;
             }
@@ -109,7 +112,7 @@ public class MessageSettingsController implements Initializable {
             public void handle(ActionEvent event) {
                 size = Integer.parseInt(fontSizechoiceBox.getSelectionModel().getSelectedItem().toString());
                 System.out.println(size);
-                contactDto.setFontSize(size);
+                chatSet.setFontSize(size);
                 sampleTextfield.setFont(Font.font(style, size));
                 changed = true;
 
@@ -122,7 +125,7 @@ public class MessageSettingsController implements Initializable {
             public void handle(ActionEvent event) {
 
                 color = "#" + fontcolorPicker.getValue().toString().substring(2, 8);
-                contactDto.setFontColor(color);
+                chatSet.setFontColor(color);
                 changed = true;
                 sampleTextfield.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";");
 
@@ -134,7 +137,7 @@ public class MessageSettingsController implements Initializable {
             public void handle(ActionEvent event) {
 
                 bgColor = "#" + bgcolorPicker.getValue().toString().substring(2, 8);
-                contactDto.setBackgroundColor(bgColor);
+                chatSet.setBackgroundColor(bgColor);
                 changed = true;
                 sampleTextfield.setStyle("-fx-background-color: " + bgColor + ";-fx-text-inner-color: " + color + ";");
 
@@ -213,16 +216,16 @@ public class MessageSettingsController implements Initializable {
 
     }
     public void setTextStyle() {
-        sampleTextfield.setStyle("-fx-background-color: " + contactDto.getBackgroundColor() + "; -fx-font-size:" + contactDto.getFontSize() +
-                "; -fx-background-radius: 3;" + ";-fx-text-inner-color: " + contactDto.getFontColor() + ";" );
-        if (contactDto.isBold())
-            sampleTextfield.setFont(Font.font(contactDto.getFontStyle(), FontWeight.BOLD, contactDto.getFontSize()));
-        else if (contactDto.isItalic() && contactDto.isBold())
-            sampleTextfield.setFont(Font.font(contactDto.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, contactDto.getFontSize()));
-        else if (contactDto.isItalic())
-            sampleTextfield.setFont(Font.font(contactDto.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, contactDto.getFontSize()));
+        sampleTextfield.setStyle("-fx-background-color: " + chatSet.getBackgroundColor() + "; -fx-font-size:" + chatSet.getFontSize() +
+                "; -fx-background-radius: 3;" + ";-fx-text-inner-color: " + chatSet.getFontColor() + ";" );
+        if (chatSet.isBold())
+            sampleTextfield.setFont(Font.font(chatSet.getFontStyle(), FontWeight.BOLD, chatSet.getFontSize()));
+        else if (chatSet.isItalic() && chatSet.isBold())
+            sampleTextfield.setFont(Font.font(chatSet.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, chatSet.getFontSize()));
+        else if (chatSet.isItalic())
+            sampleTextfield.setFont(Font.font(chatSet.getFontStyle(), FontWeight.BOLD, FontPosture.ITALIC, chatSet.getFontSize()));
         else
-            sampleTextfield.setFont(Font.font(contactDto.getFontStyle(), contactDto.getFontSize()));
+            sampleTextfield.setFont(Font.font(chatSet.getFontStyle(), chatSet.getFontSize()));
 
 
     }
@@ -230,78 +233,89 @@ public class MessageSettingsController implements Initializable {
     @FXML
     public void save(MouseEvent mouseEvent) {
         System.out.println("save");
-
+        ChatData chatData= ChatCoordinator.getInstance().getCurrentChat();
+        if(!chatData.isGroup()) {
 
             messageSettingsService settingsService = new messageSettingsService();
-            settingsService.msgSettings(contactDto);
+            settingsService.msgSettings(chatSet);
             System.out.println("SAVED");
             ModelsFactory modelsFactory = ModelsFactory.getInstance();
             ContactsModel contactsModel = modelsFactory.getContactsModel();
-            contactsModel.editContact(contactDto);
-            Stage popup = new Stage();
-            // configure UI for popup etc...
+            contactsModel.editContact(chatSet);
+        }
+        else {
+            /*    messageSettingsService settingsService = new messageSettingsService();
+                settingsService.msgSettings((GroupsMembersDto) chatSet);
+                System.out.println("SAVED");
+                ModelsFactory modelsFactory = ModelsFactory.getInstance();
+                GroupsModel groupsModel = modelsFactory.getGroups();
+                groupsModel.editGroupStyle((GroupsMembersDto)  chatSet);*/
 
-            // hide popup after 3 seconds:
-            PauseTransition delay = new PauseTransition(Duration.seconds(3));
-            delay.setOnFinished(e -> popup.hide());
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("/views/edited.fxml"));
-                popup.setScene(new Scene(root));
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-            popup.show();
-            delay.play();
+        }
+        Stage popup = new Stage();
+        // configure UI for popup etc...
+
+        // hide popup after 3 seconds:
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        delay.setOnFinished(e -> popup.hide());
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/views/edited.fxml"));
+            popup.setScene(new Scene(root));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        popup.show();
+        delay.play();
 
 
 
     }
     public void checkboxs(ActionEvent e) {
 
-                if (boldCheck.isSelected()) {
-                    sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, size));
-                    isBold = true;
-                    System.out.println("bold checked");
-                } else {
-                    sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, size));
-                    isBold = false;
-                }
-                contactDto.setBold(isBold);
-                changed = true;
+        if (boldCheck.isSelected()) {
+            sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, size));
+            isBold = true;
+            System.out.println("bold checked");
+        } else {
+            sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, size));
+            isBold = false;
+        }
+        chatSet.setBold(isBold);
+        changed = true;
 
 
 
 
-                if (italicCheck.isSelected()) {
-                    if(boldCheck.isSelected()) {
-                        sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.ITALIC, size));
-                    }
-                    else {
-                        sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
-                    }
-                    isItalic = true;
-                } else {
-                    if(boldCheck.isSelected()) {
-                        sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.REGULAR, size));
-                    }
-                    else {
-                        sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
-                    }
-                    isItalic = false;
-                }
-                contactDto.setItalic(isItalic);
-                changed = true;
+        if (italicCheck.isSelected()) {
+            if(boldCheck.isSelected()) {
+                sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.ITALIC, size));
+            }
+            else {
+                sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
+            }
+            isItalic = true;
+        } else {
+            if(boldCheck.isSelected()) {
+                sampleTextfield.setFont(Font.font(style, FontWeight.BOLD, FontPosture.REGULAR, size));
+            }
+            else {
+                sampleTextfield.setFont(Font.font(style, FontWeight.NORMAL, FontPosture.ITALIC, size));
+            }
+            isItalic = false;
+        }
+        chatSet.setItalic(isItalic);
+        changed = true;
 
 
-                if (underlineCheck.isSelected()) {
-                    sampleTextfield.lookup(".text").setStyle("-fx-underline: true;");
-                    isUndelined = true;
-                } else {
-                    sampleTextfield.lookup(".text").setStyle("-fx-underline: false;");
-                    isUndelined = false;
-                }
-                contactDto.setUnderlined(isUndelined);
-                changed = true;
+        if (underlineCheck.isSelected()) {
+            sampleTextfield.lookup(".text").setStyle("-fx-underline: true;");
+            isUndelined = true;
+        } else {
+            sampleTextfield.lookup(".text").setStyle("-fx-underline: false;");
+            isUndelined = false;
+        }
+        chatSet.setUnderlined(isUndelined);
+        changed = true;
 
 
 

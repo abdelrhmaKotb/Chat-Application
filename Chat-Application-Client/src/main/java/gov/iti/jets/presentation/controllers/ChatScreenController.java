@@ -30,7 +30,7 @@ public class ChatScreenController implements Initializable {
     ImageView btnContacts;
 
     @FXML
-    ImageView btnSettings;
+    ImageView btnSignOut;
 
     @FXML
     GridPane mainGrid;
@@ -54,12 +54,13 @@ public class ChatScreenController implements Initializable {
         Tooltip.install(btnMessage, new Tooltip("Messages"));
         Tooltip.install(btnGroups, new Tooltip("Groups"));
         Tooltip.install(btnContacts, new Tooltip("Contacts"));
-        Tooltip.install(btnSettings, new Tooltip("Settings"));
+        Tooltip.install(btnSignOut, new Tooltip("Sign Out"));
         Tooltip.install(notificationsBtn, new Tooltip("Notifications"));
         Tooltip.install(invitationsBtn, new Tooltip("Invitations"));
         ChatCoordinator.getInstance().setGrid(chat);
         NavCoordinator.getInstance().setGrid(nav);
-
+        
+        clkNotifications();
         viewProfile();
 
     }
@@ -70,7 +71,7 @@ public class ChatScreenController implements Initializable {
     }
 
     @FXML
-    private void clkNotifications(MouseEvent event) {
+    private void clkNotifications() {
         NavCoordinator.getInstance().goToNotifications();
     }
 

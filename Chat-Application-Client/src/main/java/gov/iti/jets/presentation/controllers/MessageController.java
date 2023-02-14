@@ -4,15 +4,16 @@ import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ChatData;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.ContactsModel;
+import gov.iti.jets.business.models.GroupsModel;
 import gov.iti.jets.business.rmi.RMIConnection;
-import gov.iti.jets.dto.ContactDto;
-import gov.iti.jets.dto.MessageDto;
+import gov.iti.jets.dto.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -46,7 +47,8 @@ public class MessageController implements Initializable {
     Circle circle;
     String messageContent;
     Parent root;
-    MessageSettingsController messageSettingsController;
+    @FXML
+    ScrollPane scroll;
     public static MessageController messageController;
 
     public MessageController() {
@@ -54,7 +56,7 @@ public class MessageController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) { 
 
         staticImage = new ImageView();
         msgTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -66,6 +68,7 @@ public class MessageController implements Initializable {
                 }
             }
         });
+        scroll.vvalueProperty().bind(msgvBox.heightProperty());
 
     }
 
@@ -77,27 +80,40 @@ public class MessageController implements Initializable {
     }
 
     public void send() {
-        // MessageDto msg = new MessageDto();
 
         ChatData chat = ChatCoordinator.getInstance().getCurrentChat();
 
         // msg.setReciver(chat.getIdntifier());
-        ModelsFactory modelsFactory = ModelsFactory.getInstance();
-        ContactsModel contactsModel = modelsFactory.getContactsModel();
-        ContactDto contactDto = contactsModel.getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
-        MessageDto msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
-                msgTextField.getText(), contactDto.getFontSize(), contactDto.getFontStyle(), contactDto.getFontColor(),
-                contactDto.getBackgroundColor(), contactDto.isBold(), contactDto.isUnderlined(), contactDto.isItalic(), chat.getIdntifier());
-        // msg.setReciver(chat);
-        msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
-        msg.setMessage(msgTextField.getText());
+
+        MessageDto msg=null;
 
         try {
             if(chat.isGroup()){
+
+                ModelsFactory modelsFactory = ModelsFactory.getInstance();
+                GroupsModel groupsModel = modelsFactory.getGroups();
+                GroupsMembersDto groupsMembersDto = groupsModel.getGroupByGroup_id(Integer.parseInt(ChatCoordinator.getInstance().getCurrentChatOpen()));
+                 msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
+                        msgTextField.getText(), groupsMembersDto.getFontSize(), groupsMembersDto.getFontStyle(), groupsMembersDto.getFontColor(),
+                        groupsMembersDto.getBackgroundColor(), groupsMembersDto.isBold(), groupsMembersDto.isUnderlined(), groupsMembersDto.isItalic(), chat.getIdntifier());
+                // msg.setReciver(chat);
+                msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
+                msg.setMessage(msgTextField.getText());
                 RMIConnection.getServerServive().sendGroupMessage(msg);
             }else{
+
+                ModelsFactory modelsFactory = ModelsFactory.getInstance();
+                ContactsModel contactsModel = modelsFactory.getContactsModel();
+                ContactDto contactDto = contactsModel.getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+                 msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
+                        msgTextField.getText(), contactDto.getFontSize(), contactDto.getFontStyle(), contactDto.getFontColor(),
+                        contactDto.getBackgroundColor(), contactDto.isBold(), contactDto.isUnderlined(), contactDto.isItalic(), chat.getIdntifier());
+                // msg.setReciver(chat);
+                msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
+                msg.setMessage(msgTextField.getText());
                 RMIConnection.getServerServive().send(msg);
             }
+
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -142,25 +158,59 @@ public class MessageController implements Initializable {
         System.out.println(ChatCoordinator.getInstance().getCurrentChatOpen());
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         ContactsModel contactsModel = modelsFactory.getContactsModel();
-        ContactDto contactDto = contactsModel.getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
-        System.out.println(contactDto.isBold());
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/messageSettings.fxml"));
-            messageSettingsController = new MessageSettingsController(contactDto);
-            fxmlLoader.setController(messageSettingsController);
-            root = fxmlLoader.load();
-            // createGroupCont = fxmlLoader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
+        ChatData chatData = ChatCoordinator.getInstance().getCurrentChat();
+        ContactDto dto = null;
+        GroupsModel groupsModel=new GroupsModel();
+        GroupsMembersDto g=groupsModel.getGroupByGroup_id(1);
+        System.out.println("--------------");
+        System.out.println("------"+ChatCoordinator.getInstance().getCurrentChatOpen());
+
+        if(chatData.isGroup()) {
+            groupMessageSettingsController messageSettingsController=null;
+            System.out.println("--------------");
+
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/messageSettings.fxml"));
+                messageSettingsController = new groupMessageSettingsController(g);
+                fxmlLoader.setController(messageSettingsController);
+                root = fxmlLoader.load();
+                // createGroupCont = fxmlLoader.getController();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Message settings");
+            messageSettingsController.setStage(stage);
+            Scene scene1 = new Scene(root, 501, 400);
+            stage.setScene(scene1);
+            stage.setResizable(false);
+            stage.showAndWait();
         }
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Message settings");
-        messageSettingsController.setStage(stage);
-        Scene scene1 = new Scene(root, 501, 400);
-        stage.setScene(scene1);
-        stage.setResizable(false);
-        stage.showAndWait();
+        else {
+            MessageSettingsController messageSettingsController = null;
+            dto = contactsModel.getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+            System.out.println(dto.getFontColor());
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/messageSettings.fxml"));
+                messageSettingsController = new MessageSettingsController(dto);
+                fxmlLoader.setController(messageSettingsController);
+                root = fxmlLoader.load();
+                // createGroupCont = fxmlLoader.getController();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Message settings");
+            messageSettingsController.setStage(stage);
+            Scene scene1 = new Scene(root, 501, 400);
+            stage.setScene(scene1);
+            stage.setResizable(false);
+            stage.showAndWait();
+        }
     }
 
 }

@@ -4,6 +4,7 @@ import gov.iti.jets.enums.Gender;
 import gov.iti.jets.enums.Mood;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * @author Esraa
@@ -24,6 +25,15 @@ public class ContactDto implements Serializable {
     private boolean isBold;
     private boolean isUnderlined;
     private boolean isItalic;
+    private byte[] image;
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     public ContactDto(String user, String friendPhoneNumber, String friendName, String friendEmail, Gender friendGender,
                       Mood frinMood, String category, boolean isBlocked) {
@@ -135,13 +145,17 @@ public class ContactDto implements Serializable {
     }
 
 
+   
+
     @Override
     public String toString() {
         return "ContactDto [user=" + user + ", friendPhoneNumber=" + friendPhoneNumber + ", friendName=" + friendName
                 + ", friendEmail=" + friendEmail + ", friendGender=" + friendGender + ", frinMood=" + frinMood
-                + ", category=" + category + ", isBlocked=" + isBlocked + "]";
+                + ", category=" + category + ", isBlocked=" + isBlocked + ", fontSize=" + fontSize + ", fontColor="
+                + fontColor + ", fontStyle=" + fontStyle + ", backgroundColor=" + backgroundColor + ", isBold=" + isBold
+                + ", isUnderlined=" + isUnderlined + ", isItalic=" + isItalic + ", image=" 
+                + "]";
     }
-
 
     public int getFontSize() {
         return fontSize;

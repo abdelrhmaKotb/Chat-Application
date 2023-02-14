@@ -3,6 +3,9 @@ package gov.iti.jets.business.helper;
 import java.util.HashMap;
 import java.util.Map;
 
+import gov.iti.jets.presentation.controllers.InviteContactController;
+import gov.iti.jets.presentation.controllers.NotificationController;
+import gov.iti.jets.presentation.controllers.ShowInvitationsController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
@@ -13,6 +16,10 @@ public class NavCoordinator {
     private static NavData currentNav = null;
 
     private static Map<String, NavData> navs = new HashMap<>();
+
+    public static Map<String, NavData> getNavs() {
+        return navs;
+    }
 
     private NavCoordinator() {
     }
@@ -184,7 +191,6 @@ public class NavCoordinator {
         }
     }
 
-
     public void goToInvitations() {
         try {
 
@@ -226,5 +232,17 @@ public class NavCoordinator {
     // public MessageController getCurrentChatController() {
     // return (MessageController) currentChat.getLoader().getController();
     // }
+
+    public static NotificationController getNotificationController() {
+
+        return navs.get("notifications").getLoader().getController();
+
+    }
+
+    public static ShowInvitationsController getShowInvitationsController() {
+
+        return navs.get("showInvitations").getLoader().getController();
+
+    }
 
 }

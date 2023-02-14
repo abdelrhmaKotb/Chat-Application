@@ -197,7 +197,7 @@ public class UserImpl implements UserDao {
     @Override
     public boolean updateUser(User newData) {
         try (Connection con = DBConnecttion.getConnection()) {
-            String query = "update user set name=?, email=?,  country_id=?, date_of_birth=?,bio=? , status_id=? where phone_number=?";
+            String query = "update user set name=?, email=?,  country_id=?, date_of_birth=?,bio=? , status_id=? ,profile_image=? where phone_number=?";
             PreparedStatement statement = con.prepareStatement(query);
             statement.setString(1, newData.getName());
             statement.setString(2, newData.getEmail());
@@ -205,7 +205,8 @@ public class UserImpl implements UserDao {
             statement.setDate(4, newData.getDateOfBirth());
             statement.setString(5, newData.getBio());
             statement.setInt(6, newData.getStatus().ordinal() );
-            statement.setString(7, newData.getPhoneNumber());
+            statement.setBlob(7, ImageConvertor.bytesToBlob(newData.getImage()));
+            statement.setString(8, newData.getPhoneNumber());
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {

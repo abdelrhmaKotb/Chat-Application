@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import gov.iti.jets.business.helper.StageCoordinator;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.interfaces.Client;
+// import gov.iti.jets.presentation.utils.chatBot;
 
 
 public class App extends Application {
@@ -16,14 +17,16 @@ public class App extends Application {
         StageCoordinator coordinator = StageCoordinator.getInstance();
         coordinator.setStage(primaryStage);
         coordinator.moveToLogin();
+        primaryStage.setMinWidth(1315);
+        primaryStage.setMaxHeight(915);
         primaryStage.show();
 
     }
 
     public static void main(String[] args) {
-     Application.launch(args);
-       
 
+     Application.launch(args);
+      
 
     }
 
@@ -32,7 +35,8 @@ public class App extends Application {
         try {
 
             RMIConnection rmi = RMIConnection.getInstance();
-            rmi.connect("localhost");
+//            rmi.connect("10.145.18.76");
+             rmi.connect("localhost");
             // client = new ClientImpl();
 
             // Server serverServices = (Server) Naming.lookup("rmi://localhost:14785/serverService");

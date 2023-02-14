@@ -5,6 +5,7 @@ import gov.iti.jets.enums.EnumsUtil;
 import gov.iti.jets.persistence.dao.interfaces.ContactDao;
 import gov.iti.jets.persistence.entities.Contact;
 import gov.iti.jets.persistence.utils.DBConnecttion;
+import gov.iti.jets.persistence.utils.ImageConvertor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,7 +32,7 @@ public class ContactImpl implements ContactDao {
                     """
                             select c.`user` , c.friend_phone_number , u.name , u.email ,u.gender , u.status_id ,c.is_blocked,c.category_id,
                             c.FontSize, c.FontStyle, c.FontColor, c.BackgroundColor, c.isBold,
-                            c.IsUnderlined, c.IsItalic 
+                            c.IsUnderlined, c.IsItalic , u.profile_image
                             from contacts c
                             join `user` u on u.phone_number  = c.friend_phone_number
                             where user =  ?
@@ -39,19 +40,22 @@ public class ContactImpl implements ContactDao {
             stmt.setString(1, user);
             ResultSet result = stmt.executeQuery();
             while (result.next()) {
-                listOfContacts.add(new ContactDto(
-                        result.getString("user"),
-                        result.getString("friend_phone_number"),
-                        result.getString("name"),
-                        result.getString("email"),
-                        EnumsUtil.fromOrdinalToGender(result.getInt("gender")),
-                        EnumsUtil.fromOrdinalToStatus(result.getInt("status_id")),
-                        result.getString("category_id"),
-                        result.getBoolean("is_blocked"), result.getInt("fontSize"),
-                        result.getString("fontStyle"), result.getString("fontColor"),
-                        result.getString("backgroundColor"), result.getBoolean("isBold"),
-                        result.getBoolean("isUnderlined"), result.getBoolean("isItalic")));
-                System.out.println("contajh");
+                var cont = new ContactDto(
+                    result.getString("user"),
+                    result.getString("friend_phone_number"),
+                    result.getString("name"),
+                    result.getString("email"),
+                    EnumsUtil.fromOrdinalToGender(result.getInt("gender")),
+                    EnumsUtil.fromOrdinalToStatus(result.getInt("status_id")),
+                    result.getString("category_id"),
+                    result.getBoolean("is_blocked"), result.getInt("fontSize"),
+                    result.getString("fontStyle"), result.getString("fontColor"),
+                    result.getString("backgroundColor"), result.getBoolean("isBold"),
+                    result.getBoolean("isUnderlined"), result.getBoolean("isItalic"));
+                    cont.setImage(ImageConvertor.BlobToBytes(result.getBlob("profile_image")));
+                    
+                listOfContacts.add(cont);
+                System.out.println("contajh" + cont); 
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -105,7 +109,8 @@ public class ContactImpl implements ContactDao {
     @Override
     public void updateMsgSettings(Contact contact) {
         try (Connection con = DBConnecttion.getConnection()) {
-            String query = "update contacts c set  c.FontSize=?, c.FontStyle=?, c.FontColor=?, c.BackgroundColor=?, c.isBold=?,\n" +
+            String query = "update contacts c set  c.FontSize=?, c.FontStyle=?, c.FontColor=?, c.BackgroundColor=?, c.isBold=?,\n"
+                    +
                     "                            c.IsUnderlined=?, c.IsItalic=?  where user=? and friend_phone_number=?";
             PreparedStatement statement = con.prepareStatement(query);
             statement.setInt(1, contact.getFontSize());

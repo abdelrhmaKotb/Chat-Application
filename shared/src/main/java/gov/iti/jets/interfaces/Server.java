@@ -33,11 +33,10 @@ public interface Server extends Remote {
     boolean isContactExistInDB(String currentUserNumber, String contactNumber) throws RemoteException;
 
     boolean isRequestExistInDB(String currentUserNumber, String contactNumber) throws RemoteException;
-    
-   public ArrayList<CountryDto> getCountriesNames() throws RemoteException;
-   
-   public  UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException;
 
+    public ArrayList<CountryDto> getCountriesNames() throws RemoteException;
+
+    public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException;
 
     List<ContactDto> getUserContacts(String phone) throws RemoteException;
 
@@ -57,7 +56,13 @@ public interface Server extends Remote {
     boolean isUserOnline(ContactDto user) throws RemoteException;
 
     void sendGroupMessage(MessageDto messageDto) throws RemoteException;
-    
+
     void msgSettings(ContactDto cDto) throws RemoteException;
+
+    void msgSettings(GroupsMembersDto gDto) throws RemoteException;
+
+    List<GroupsMembersDto> getMyGroupsStyle(String phoneNumber) throws RemoteException;
+
+    void notifySendRequest(String sender, String reciver) throws RemoteException;
 
 }

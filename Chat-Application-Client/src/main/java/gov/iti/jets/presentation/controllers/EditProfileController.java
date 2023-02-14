@@ -4,6 +4,8 @@ import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.CurrentUserModel;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.business.services.EditProfileService;
+import gov.iti.jets.business.services.SignupService;
+import gov.iti.jets.dto.CountryDto;
 import gov.iti.jets.dto.UserDto;
 //import gov.iti.jets.persistence.dao.countryDaoImpl;
 //import gov.iti.jets.persistence.entities.Country;
@@ -31,8 +33,10 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -67,13 +71,35 @@ public class EditProfileController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       
+    
         currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
         moodChoiceBox.getItems().add(Mood.AVAILABLE);
         moodChoiceBox.getItems().add(Mood.BUSY);
         moodChoiceBox.getItems().add(Mood.AWAY);
+        SignupService signupService=new SignupService();
+        ArrayList<CountryDto> countriesNames = signupService.getCountries();
+        for (CountryDto c : countriesNames) {
+
+            countryChoiceBox.getItems().add(c.getName());
+            if(currentUserModel.getCountry()==c.getId()) {
+                countryChoiceBox.getSelectionModel().select(c.getName());
+                System.out.println(c.getName());
+            }
+        }
        
         disableComponents();
+
+        imgCircle.setStroke(null);
+
+
+//        System.out.println("dasd");
+
+
+//        System.out.println(Arrays.toString(currentUserModel.getImage()));
+
+
+        Image userImage = new Image(new ByteArrayInputStream(currentUserModel.getImage()));
+        imgCircle.setFill(new ImagePattern(userImage));
         /*
          * country = new ArrayList<>();
          * country = new countryDaoImpl().getCountries();
@@ -96,6 +122,7 @@ public class EditProfileController implements Initializable {
         nameTextField.setText(currentUserModel.getName());
         emailTextField.setText(currentUserModel.getEmail());
         bioTextField.setText(currentUserModel.getBio());
+
         editImgIcon.setVisible(false);
         saveBtn.setVisible(false);
         moodChoiceBox.setDisable(true);
@@ -142,11 +169,20 @@ public class EditProfileController implements Initializable {
 
     @FXML
     public void save(MouseEvent mouseEvent) {
-        if (isValidUserName() && isValidEmail() && isValidBio() && isValidDateOfBirth()) {
-            EditProfileService editProf = new EditProfileService();
-            UserDto userDto = new UserDto(currentUserModel.getPhoneNumber(), nameTextField.getText(),
-                    emailTextField.getText(), null, 1, Date.valueOf(dateOfBirthPicker.getValue()),
-                    bioTextField.getText(), Mood.values()[moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue()], false);
+        UserDto userDto=null;
+        EditProfileService editProf = new EditProfileService();
+        try {
+            if (isValidUserName() && isValidEmail() && isValidBio() && isValidDateOfBirth()) {
+
+                 userDto = new UserDto(currentUserModel.getPhoneNumber(), nameTextField.getText(),
+                        emailTextField.getText(), null, countryChoiceBox.getSelectionModel().selectedIndexProperty().getValue(), Date.valueOf(dateOfBirthPicker.getValue()),
+                        bioTextField.getText(), Mood.values()[moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue()], false, convertImageToBytes(file));
+                System.out.println(file);
+            }
+        }
+        catch (IOException e1) {
+                e1.printStackTrace();
+            }
             boolean isUpdated = editProf.editProfile(userDto);
             System.out.println(isUpdated);
             System.out.println("selected: "+ Mood.values()[currentUserModel.getStatus()]);
@@ -154,7 +190,7 @@ public class EditProfileController implements Initializable {
                 currentUserModel.setName(nameTextField.getText());
                 currentUserModel.setEmail(emailTextField.getText());
                 currentUserModel.setBio(bioTextField.getText());
-                currentUserModel.setStatus(moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue()+1);
+                currentUserModel.setStatus(moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue());
                 
                 System.out.println("selected: "+moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue());
             
@@ -176,7 +212,7 @@ public class EditProfileController implements Initializable {
         }
 
         }
-    }
+
 
     public boolean isValidUserName() {
 
@@ -262,5 +298,10 @@ public class EditProfileController implements Initializable {
             Image img = new Image(file.toURI().toString());
             imgCircle.setFill(new ImagePattern(img));
         }
+    }
+    public static byte[] convertImageToBytes(File file) throws IOException {
+        byte[] data = Files.readAllBytes(file.toPath());
+        return data;
+
     }
 }
