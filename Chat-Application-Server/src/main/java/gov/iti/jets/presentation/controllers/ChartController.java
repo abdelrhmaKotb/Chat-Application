@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import gov.iti.jets.business.rmi.ServerImpl;
 import gov.iti.jets.business.services.ChartsService;
 import gov.iti.jets.dto.CountryDto;
 import javafx.application.Platform;
@@ -27,11 +28,15 @@ public class ChartController implements Initializable {
     @FXML
     private BarChart<String, Double> bar;
 
+    @FXML
+    private BarChart<String, Double>onlineAndOflineBar;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         updatePieChart();
         updateBarChart();
+        updateOnlineAndOfline();
 
     }
 
@@ -118,4 +123,53 @@ public class ChartController implements Initializable {
         return answer;
     }
 
+
+    public void updateOnlineAndOfline() {
+
+        onlineAndOflineBar.setTitle("Online and Ofline Users");
+        onlineAndOflineBar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
+
+        new Thread(() -> {
+
+            while (true) {
+                Platform.runLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        onlineAndOflineBar.setData(getOnlineAndOflineData());
+                    }
+
+                });
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+    }
+    private ObservableList<XYChart.Series<String, Double>> getOnlineAndOflineData() {
+
+        ObservableList<XYChart.Series<String, Double>> answer = FXCollections.observableArrayList();
+        answer.clear();
+
+            Series<String, Double> aSeries = new Series<String, Double>();
+            aSeries.setName("Online");
+            aSeries.getData().add(new XYChart.Data(Integer.toString(1), ServerImpl.numberOnline));
+         
+            Series<String, Double> bSeries = new Series<String, Double>();
+            bSeries.setName("Ofline");
+            bSeries.getData().add(new XYChart.Data(Integer.toString(2), ServerImpl.numberOfline));
+         
+         
+            answer.addAll(aSeries,bSeries);
+
+        
+
+        return answer;
+    }
+
+    
 }

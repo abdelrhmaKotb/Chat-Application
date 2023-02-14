@@ -40,22 +40,19 @@ public class MainPanelController implements Initializable {
     @FXML
     private Button logout;
 
-    @FXML
-    void close(ActionEvent event) {
-
-    }
+   
 
   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-  /*      Parent parent;
+       Parent parent;
         try {
             parent = FXMLLoader.load(getClass().getResource("/views/charts.fxml"));
             borderPane.setCenter(parent);
 
         } catch (IOException ex) {
             Logger.getLogger(MainPanelController.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }
 
  

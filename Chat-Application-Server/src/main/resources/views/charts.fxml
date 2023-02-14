@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="883.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ChartController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="1176.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ChartController">
    <children>
       <PieChart fx:id="genderPieChart" layoutX="552.0" layoutY="14.0" prefHeight="303.0" prefWidth="331.0" style="-fx-background-color: grey;" />
       <Label layoutX="752.0" layoutY="325.0" style="-fx-text-fill: black;" text="Female">
@@ -29,6 +29,14 @@
         <yAxis>
           <NumberAxis side="LEFT" />
         </yAxis>
+      </BarChart>
+      <BarChart fx:id="onlineAndOflineBar" layoutX="805.0" layoutY="7.0" prefHeight="429.0" prefWidth="364.0" style="-fx-background-color: grey;">
+         <xAxis>
+            <CategoryAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis side="LEFT" />
+         </yAxis>
       </BarChart>
    </children>
 </Pane>

@@ -19,17 +19,17 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
 
 
-        //  Parent root = FXMLLoader.load(getClass().getResource("/views/MainPanelView.fxml"));
-        // DBConnecttion.getConnection();
-        // Scene sc = new Scene(root, 800, 600);
-        // primaryStage.setScene(sc);
-        // primaryStage.setTitle("Chat Application");
-        // primaryStage.show();
-        // System.out.println(chatBot.getMessageFromChatBot("hello"));
-        // System.out.println(chatBot.getMessageFromChatBot("how old are you"));
-        // System.out.println(chatBot.getMessageFromChatBot("i live in cairo"));
-        // System.out.println(chatBot.getMessageFromChatBot("i love you"));
-        // System.out.println(chatBot.getMessageFromChatBot("hello"));
+          Parent root = FXMLLoader.load(getClass().getResource("/views/MainPanelView.fxml"));
+         DBConnecttion.getConnection();
+         Scene sc = new Scene(root, 800, 600);
+         primaryStage.setScene(sc);
+         primaryStage.setTitle("Chat Application");
+         primaryStage.show();
+        System.out.println(chatBot.getMessageFromChatBot("hello"));
+        System.out.println(chatBot.getMessageFromChatBot("how old are you"));
+        System.out.println(chatBot.getMessageFromChatBot("i live in cairo"));
+        System.out.println(chatBot.getMessageFromChatBot("i love you"));
+        System.out.println(chatBot.getMessageFromChatBot("hello"));
 
 
     }
