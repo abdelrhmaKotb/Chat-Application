@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
-   public   List<Client> clients = new ArrayList<>();
+//    public   List<Client> clients = new ArrayList<>();
     public  Map<String, Client> clientsMap = new HashMap<>();
     public static int countOfLine=0,countOnLine=0;
 
@@ -31,7 +31,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     public void register(Client client) throws RemoteException {
         System.out.println("register");
-        clients.add(client);
+        // clients.add(client);
         clientsMap.put(client.getPhoneNumber(), client);
         System.out.println(clientsMap.keySet());
          System.out.println(client.getPhoneNumber() + " phone");
@@ -46,7 +46,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         System.out.println(clientsMap.keySet());
 
         notifyUsersOffline(client);
-         System.out.println(clients);
+        //  System.out.println(clients);
          countOnLine--;
          countOfLine++;
     }

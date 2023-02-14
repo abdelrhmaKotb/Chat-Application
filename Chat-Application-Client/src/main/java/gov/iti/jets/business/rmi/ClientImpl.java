@@ -169,11 +169,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                showPopUp.showNotifacation(contactDto.getName() + " change his profile data");
-                NavCoordinator.getNotificationController()
-                        .addInListOfNotifications(contactDto.getName() + " change his profile data");
                 ContactsModel contactsModel = ModelsFactory.getInstance().getContactsModel();
-
                 var contacs = contactsModel.getContacts();
                 int index = -1;
                 for(int i = 0; i < contacs.size(); i++){
@@ -182,6 +178,11 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                         break;
                     }
                 }
+                showPopUp.showNotifacation( contacs.get(index).getFriendName() + " change his profile data");
+                NavCoordinator.getNotificationController()
+                        .addInListOfNotifications( contacs.get(index).getFriendName() + " change his profile data");
+
+              
 
                 if(index > -1){
                     System.out.println("updated");
