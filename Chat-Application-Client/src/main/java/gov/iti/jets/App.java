@@ -2,6 +2,9 @@ package gov.iti.jets;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+
+import java.io.File;
+
 import gov.iti.jets.business.helper.StageCoordinator;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.interfaces.Client;
@@ -18,7 +21,17 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
          StageCoordinator coordinator = StageCoordinator.getInstance();
         coordinator.setStage(primaryStage);
+        
+        File f = new File("D:\\Group3_Chatting Application\\Group3_Chatting Application\\Group3_Chatting Application\\github\\Chat-Application\\Chat-Application-Client\\keypassword.txt");
+
+        if (f.exists())
+
+        coordinator.moveToChat();
+
+        else
         coordinator.moveToLogin();
+
+        
         primaryStage.setMinWidth(1315);
         primaryStage.setMaxHeight(915);
         primaryStage.show();

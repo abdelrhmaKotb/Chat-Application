@@ -69,7 +69,7 @@ public class GenerateEncryptionPassword {
 
           
           try {
-            FileWriter myWriter = new FileWriter("D:\\keypassword.txt");
+            FileWriter myWriter = new FileWriter("D:\\Group3_Chatting Application\\Group3_Chatting Application\\Group3_Chatting Application\\github\\Chat-Application\\Chat-Application-Client\\keypassword.txt");
             myWriter.write("PhoneNumber="+phoneNumber+"\n");
             myWriter.write("Encrypted_Password="+encryptedpwd+"\n");
 
