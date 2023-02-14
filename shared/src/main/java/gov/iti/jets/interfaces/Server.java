@@ -65,6 +65,6 @@ public interface Server extends Remote {
 
     void notifySendRequest(String sender, String reciver) throws RemoteException;
     void sendFile(String recieverPhone, String fileName, byte[] data) throws RemoteException;
-
+    void sendFileGroup(int group_id,String senderPhone ,String fileName, byte[] data) throws RemoteException;
 
 }

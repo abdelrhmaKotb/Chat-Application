@@ -19,8 +19,9 @@ import java.util.Map;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 //    public   List<Client> clients = new ArrayList<>();
-    public  Map<String, Client> clientsMap = new HashMap<>();
-    public static int countOfLine=0,countOnLine=0;
+
+    public static Map<String, Client> clientsMap = new HashMap<>();
+
 
     public ServerImpl() throws RemoteException {
         super();
@@ -37,19 +38,19 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         System.out.println(clientsMap.keySet());
          System.out.println(client.getPhoneNumber() + " phone");
         System.out.println(clientsMap);
+        ChartController.chartController.updateOnlineAndOfline();
+
         client.helloBack();
-        countOnLine++;
     }
 
     public void unregister(Client client) throws RemoteException {
         System.out.println("unregister");
         clientsMap.remove(client.getPhoneNumber());
         System.out.println(clientsMap.keySet());
+        ChartController.chartController.updateOnlineAndOfline();
 
         notifyUsersOffline(client);
         //  System.out.println(clients);
-         countOnLine--;
-         countOfLine++;
     }
 
     @Override
@@ -223,6 +224,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             if (clientsMap.containsKey(phone)) {
                 try {
                     clientsMap.get(phone).userNotifyChangeHisProfile(uDto);
+                    ChartController.chartController.updateBarChart();
+                    ChartController.chartController.updatePieChart();
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -388,6 +392,29 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     public void sendFile(String recieverPhone, String fileName, byte[] data) throws RemoteException {
        Client reciver = clientsMap.get(recieverPhone);
        reciver.recieveFile(fileName,data);
+    }
+    @Override
+    public void sendFileGroup(int group_id,String senderPhone ,String fileName, byte[] data) throws RemoteException {
+        GroupImpl groupImpl = new GroupImpl();
+        var members = groupImpl.getGroupMember(group_id);
+
+
+        members.forEach(e -> {
+
+            System.out.println(e +" is and in loop");
+
+            if (!e.equals(senderPhone)) {
+                System.out.println(e + " hereee");
+                if (clientsMap.containsKey(e)) {
+                    System.out.println(e + " send to");
+                    try {
+                        clientsMap.get(e).recieveFile(fileName,data);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
 }

@@ -11,6 +11,7 @@ import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.dto.GroupsMembersDto;
 import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -27,6 +28,7 @@ public class GroupsModel {
             groups = FXCollections.observableArrayList(groupDto);
         } catch (Exception e) {
            e.printStackTrace();
+           new ShowPopUp().notifyServerDown();
         }
 
         try {
@@ -35,6 +37,7 @@ public class GroupsModel {
             myGroupsStyle = FXCollections.observableArrayList(groupDto);
         } catch (Exception e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
     }
     public ObservableList<GroupDto> getGroups() {

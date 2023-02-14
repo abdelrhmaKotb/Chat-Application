@@ -58,6 +58,15 @@ public class RMIConnection {
             registry.rebind("rmi://localhost:14785/serverService", server);
             UnicastRemoteObject.exportObject(server, 0);
 
+            ServerImpl.clientsMap.keySet().forEach(e -> {
+                try {
+                    var cc = ServerImpl.clientsMap.get(e);
+                    cc.notifyServerAvaliable();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
+
             System.out.println("server Running ...");
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,6 +82,15 @@ public class RMIConnection {
             // Naming.unbind("rmi://localhost:14785/serverService");
             // server = null;
             // registry = null;
+
+            ServerImpl.clientsMap.keySet().forEach(e -> {
+                try {
+                    var cc = ServerImpl.clientsMap.get(e);
+                    cc.notifyServerNotAvalible();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
 
             System.out.println("server Stop ...");
         } catch (Exception e) {

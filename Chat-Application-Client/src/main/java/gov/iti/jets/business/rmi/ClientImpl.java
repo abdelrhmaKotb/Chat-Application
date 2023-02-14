@@ -135,9 +135,9 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
     public void recieveFile(String fileName, byte[] data) throws RemoteException {
 
         File f = new File(fileName);
-        FileOutputStream outputStream = null;
+
         try {
-            outputStream = new FileOutputStream(f);
+            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));
             outputStream.write(data);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -204,5 +204,45 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                 // contacts.get(contacts.indexOf(contact)).setCategory("1");;
             }
         });
+    }
+
+
+    @Override
+    public void notifyServerAvaliable() throws RemoteException {
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ShowPopUp showPopUp = new ShowPopUp();
+                showPopUp.showNotifacation("Server Available Now");
+            }
+        });
+
+        try {
+            RMIConnection.getInstance().connect(RMIConnection.getInstance().getSERVER_IP());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+       
+    }
+
+
+    @Override
+    public void notifyServerNotAvalible() throws RemoteException {
+       
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ShowPopUp showPopUp = new ShowPopUp();
+                showPopUp.showNotifacation("Server Down Now");
+            }
+        });
+    }
+
+
+    @Override
+    public boolean areYouThere() throws RemoteException {
+        return true;
     }
 }

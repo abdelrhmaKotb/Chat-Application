@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.interfaces.Server;
+import gov.iti.jets.presentation.utils.ShowPopUp;
 
 public class EditProfileService
 {
@@ -16,6 +17,7 @@ public class EditProfileService
             isUpdated = ser.editProfile(userDto);
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
         return isUpdated;
     }

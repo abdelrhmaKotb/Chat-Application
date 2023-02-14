@@ -5,6 +5,7 @@ import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.dto.GroupsMembersDto;
 import gov.iti.jets.interfaces.Server;
+import gov.iti.jets.presentation.utils.ShowPopUp;
 
 import java.rmi.RemoteException;
 
@@ -15,6 +16,7 @@ public class messageSettingsService {
             ser.msgSettings(contactDto);
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
     }
     public void msgSettings(GroupsMembersDto groupDto) {
@@ -23,6 +25,7 @@ public class messageSettingsService {
             ser.msgSettings(groupDto);
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
     }
 }
