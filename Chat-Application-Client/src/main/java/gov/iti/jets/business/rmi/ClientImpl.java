@@ -59,9 +59,9 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                showPopUp.showNotifacation(contact.getUser() + " became online");
+                showPopUp.showNotifacation(contact.getFriendName() + " became online");
                 NavCoordinator.getNotificationController()
-                        .addInListOfNotifications(contact.getUser() + " became online");
+                        .addInListOfNotifications(contact.getFriendName() + " became online");
                 ContactsModel contactsModel = ModelsFactory.getInstance().getContactsModel();
                 ContactDto c = new ContactDto();
                 contactsModel.getContacts().add(c);
@@ -81,9 +81,9 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                showPopUp.showNotifacation(contact.getUser() + " became offline");
+                showPopUp.showNotifacation(contact.getFriendName() + " became offline");
                 NavCoordinator.getNotificationController()
-                        .addInListOfNotifications(contact.getUser() + " became offline");
+                        .addInListOfNotifications(contact.getFriendName() + " became offline");
                 ContactsModel contactsModel = ModelsFactory.getInstance().getContactsModel();
                 ContactDto c = new ContactDto();
 
@@ -121,8 +121,8 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                 showPopUp.showNotifacation(user.getName() + " Accepted Your Request");
                 NavCoordinator.getNotificationController()
                         .addInListOfNotifications(user.getName() + " Accepted Your Request");
-                       var c =  new ContactDto(user.getName(), user.getPhoneNumber(), "1", false);
-                       c.setFriendName(user.getName());
+                var c = new ContactDto(user.getName(), user.getPhoneNumber(), "1", false);
+                c.setFriendName(user.getName());
                 ModelsFactory.getInstance().getContactsModel().getContacts()
                         .add(c);
                 System.out.println("user" + user + "send to you request");
@@ -141,22 +141,68 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
             outputStream.write(data);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-       /* ByteBuffer byteBuffer = ByteBuffer.wrap(data);
-
-        try {
-            Path path = Paths.get(fileName);
-            FileChannel channelWrite =FileChannel.open(path,
-                    StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-            channelWrite.write(byteBuffer);
-            channelWrite.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }*/
+        }
 
+        /*
+         * ByteBuffer byteBuffer = ByteBuffer.wrap(data);
+         * 
+         * try {
+         * Path path = Paths.get(fileName);
+         * FileChannel channelWrite =FileChannel.open(path,
+         * StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+         * channelWrite.write(byteBuffer);
+         * channelWrite.close();
+         * } catch (IOException e) {
+         * throw new RuntimeException(e);
+         * }
+         */
+
+    }
+
+    @Override
+    public void userNotifyChangeHisProfile(UserDto contactDto) throws RemoteException {
+        System.out.println("new updated Contatc " + contactDto);
+        // System.out.println(contact.getUser() + " became online");
+        ShowPopUp showPopUp = new ShowPopUp();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ContactsModel contactsModel = ModelsFactory.getInstance().getContactsModel();
+                var contacs = contactsModel.getContacts();
+                int index = -1;
+                for(int i = 0; i < contacs.size(); i++){
+                    if(contactDto.getPhoneNumber().equals(contacs.get(i).getFriendPhoneNumber())){
+                        index = i;
+                        break;
+                    }
+                }
+                showPopUp.showNotifacation( contacs.get(index).getFriendName() + " change his profile data");
+                NavCoordinator.getNotificationController()
+                        .addInListOfNotifications( contacs.get(index).getFriendName() + " change his profile data");
+
+              
+
+                if(index > -1){
+                    System.out.println("updated");
+                    contacs.get(index).setFrinMood(contactDto.getStatus());
+                    contacs.get(index).setFriendName(contactDto.getName());
+                    if(contactDto.getImage() != null){
+                        contacs.get(index).setImage(contactDto.getImage());
+                    }
+                }
+
+                // contactsModel.getContacts().get(contactsModel.getContacts().)
+                ContactDto c = new ContactDto();
+
+                contactsModel.getContacts().add(c);
+                contactsModel.getContacts().remove(c);
+
+                // var contacts = contactsModel.getContacts();
+                // contacts.
+                // contacts.get(contacts.indexOf(contact)).setCategory("1");;
+            }
+        });
     }
 }

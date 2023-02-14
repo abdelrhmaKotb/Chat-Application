@@ -31,6 +31,12 @@ public class ChartController implements Initializable {
     @FXML
     private BarChart<String, Double> onlineAndOflineBar;
 
+    static public ChartController chartController;
+
+    public ChartController() {
+        chartController = this;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -41,42 +47,63 @@ public class ChartController implements Initializable {
     }
 
     public void updatePieChart() {
-        ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
+       
+        Platform.runLater(new Runnable() {
 
-        genderPieChart.setData(data);
-        genderPieChart.setTitle("Gender");
-        genderPieChart.setStyle("-fx-font:20 system;-fx-text-fill:black;");
+            @Override
+            public void run() {
+                ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
 
-        genderPieChart.setLabelLineLength(10);
-        ChartsService cs = new ChartsService();
-        new Thread(() -> {
+                genderPieChart.setData(data);
+                genderPieChart.setTitle("Gender");
+                genderPieChart.setStyle("-fx-font:20 system;-fx-text-fill:black;");
+        
+                genderPieChart.setLabelLineLength(10);
+                ChartsService cs = new ChartsService();
+        
+                data.clear();
+                data.addAll(new PieChart.Data("Male", cs.getGenderCharts(0)),
+                        new PieChart.Data("Female", cs.getGenderCharts(1)));
 
-            while (true) {
-                Platform.runLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        data.clear();
-                        data.addAll(new PieChart.Data("Male", cs.getGenderCharts(0)),
-                                new PieChart.Data("Female", cs.getGenderCharts(1)));
-
-                        male.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(0)
-                                / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
-                        female.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(1)
-                                / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
-
-                    }
-
-                });
-
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                male.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(0)
+                        / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
+                female.setText(String.valueOf(String.format("%.2f", (double) cs.getGenderCharts(1)
+                        / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
 
             }
-        }).start();
+
+        });
+
+        // new Thread(() -> {
+
+        // while (true) {
+        // Platform.runLater(new Runnable() {
+
+        // @Override
+        // public void run() {
+        // data.clear();
+        // data.addAll(new PieChart.Data("Male", cs.getGenderCharts(0)),
+        // new PieChart.Data("Female", cs.getGenderCharts(1)));
+
+        // male.setText(String.valueOf(String.format("%.2f", (double)
+        // cs.getGenderCharts(0)
+        // / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
+        // female.setText(String.valueOf(String.format("%.2f", (double)
+        // cs.getGenderCharts(1)
+        // / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
+
+        // }
+
+        // });
+
+        // try {
+        // Thread.sleep(1000);
+        // } catch (InterruptedException e) {
+        // e.printStackTrace();
+        // }
+
+        // }
+        // }).start();
     }
 
     public void updateBarChart() {
@@ -127,20 +154,18 @@ public class ChartController implements Initializable {
 
         ObservableList<XYChart.Series<String, Double>> answer = FXCollections.observableArrayList();
         answer.clear();
-        
 
-            Series<String, Double> aSeries = new Series<String, Double>();
-            aSeries.setName("Online");
-            aSeries.getData().add(new XYChart.Data(Integer.toString(1), ServerImpl.countOnLine));
-            Series<String, Double> bSeries = new Series<String, Double>();
-            bSeries.setName("Ofline");
-            bSeries.getData().add(new XYChart.Data(Integer.toString(2), ServerImpl.countOfLine));
-            answer.addAll(aSeries,bSeries);
-
-        
+        Series<String, Double> aSeries = new Series<String, Double>();
+        aSeries.setName("Online");
+        aSeries.getData().add(new XYChart.Data(Integer.toString(1), ServerImpl.countOnLine));
+        Series<String, Double> bSeries = new Series<String, Double>();
+        bSeries.setName("Ofline");
+        bSeries.getData().add(new XYChart.Data(Integer.toString(2), ServerImpl.countOfLine));
+        answer.addAll(aSeries, bSeries);
 
         return answer;
     }
+
     public void updateOnlineAndOfline() {
 
         onlineAndOflineBar.setTitle("Online And Ofline");
@@ -153,7 +178,7 @@ public class ChartController implements Initializable {
 
                     @Override
                     public void run() {
-    
+
                         onlineAndOflineBar.setData(getOnlineAndOfline());
                     }
 
@@ -168,7 +193,5 @@ public class ChartController implements Initializable {
             }
         }).start();
     }
-
-
 
 }

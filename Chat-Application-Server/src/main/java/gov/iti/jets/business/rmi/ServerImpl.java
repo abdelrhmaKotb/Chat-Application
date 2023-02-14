@@ -7,6 +7,7 @@ import gov.iti.jets.interfaces.Server;
 import gov.iti.jets.persistence.dao.*;
 import gov.iti.jets.persistence.dao.interfaces.UserDao;
 import gov.iti.jets.persistence.entities.*;
+import gov.iti.jets.presentation.controllers.ChartController;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
-   public   List<Client> clients = new ArrayList<>();
+//    public   List<Client> clients = new ArrayList<>();
     public  Map<String, Client> clientsMap = new HashMap<>();
     public static int countOfLine=0,countOnLine=0;
 
@@ -31,7 +32,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     public void register(Client client) throws RemoteException {
         System.out.println("register");
-        clients.add(client);
+        // clients.add(client);
         clientsMap.put(client.getPhoneNumber(), client);
         System.out.println(clientsMap.keySet());
          System.out.println(client.getPhoneNumber() + " phone");
@@ -46,7 +47,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         System.out.println(clientsMap.keySet());
 
         notifyUsersOffline(client);
-         System.out.println(clients);
+        //  System.out.println(clients);
          countOnLine--;
          countOfLine++;
     }
@@ -210,6 +211,27 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         UserMapper userMapper = new UserMapper();
         User userEntity = userMapper.toEntity(uDto);
         boolean isUpdated = userDao.updateUser(userEntity);
+
+        //notfiy my contats with changes 
+
+        String myPhone =  uDto.getPhoneNumber();
+        ContactImpl contactImpl = new ContactImpl();
+
+        var listOfContatcs = contactImpl.getContactsForUser(myPhone);
+        listOfContatcs.forEach(e -> {
+            String phone = e.getFriendPhoneNumber();
+            if (clientsMap.containsKey(phone)) {
+                try {
+                    clientsMap.get(phone).userNotifyChangeHisProfile(uDto);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        // clientsMap.containsKey(myPhone);
+
+
+
         return isUpdated;
     }
 
@@ -265,6 +287,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             System.out.println("this user already exist and not created");
             return null;
         }
+        ChartController.chartController.updatePieChart();
         return new UserSignupMapperImpl().toDto(user);
     }
 
