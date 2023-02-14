@@ -30,7 +30,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
-      <BarChart fx:id="onlineAndOflineBar" layoutX="828.0" layoutY="7.0" prefHeight="429.0" prefWidth="359.0" style="-fx-background-color: grey;">
+      <BarChart fx:id="onlineAndOflineBar" layoutX="842.0" layoutY="27.0" prefHeight="429.0" prefWidth="359.0" style="-fx-background-color: grey;">
          <xAxis>
             <CategoryAxis side="BOTTOM" />
          </xAxis>
