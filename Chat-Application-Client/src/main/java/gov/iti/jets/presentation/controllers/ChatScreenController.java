@@ -89,4 +89,11 @@ public class ChatScreenController implements Initializable {
     public void viewProfile() {
         NavCoordinator.getInstance().goToEditProfile();
     }
+    
+    @FXML
+    void logoutBtnAction(MouseEvent event) {
+        System.exit(0);
+
+    }
+
 }

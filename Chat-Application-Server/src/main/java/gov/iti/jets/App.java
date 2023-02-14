@@ -29,7 +29,7 @@ public class App extends Application {
         primaryStage.setScene(sc);
         primaryStage.setTitle("Admin Panel");
         primaryStage.show();
-
+       
     }
 
     public static void main(String[] args) {

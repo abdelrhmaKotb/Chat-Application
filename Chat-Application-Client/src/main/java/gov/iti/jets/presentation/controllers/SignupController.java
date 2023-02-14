@@ -233,7 +233,7 @@ public class SignupController implements Initializable {
                  RMIConnection.getServerServive().notifyUsersOnline(RMIConnection.getInstance().getCurrentClientConnection());
                 // currentUserModel.setStatus(user.getStatus());
                  coordinator.moveToChat();
-
+                 
                  System.out.println(user);
              
             } else {

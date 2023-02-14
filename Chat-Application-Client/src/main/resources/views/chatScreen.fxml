@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane fx:id="mainGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ChatScreenController">
+<GridPane fx:id="mainGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ChatScreenController">
   <columnConstraints>
     <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="62.2" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="340.0" minWidth="240.0" />
@@ -71,7 +71,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView id="btnSignOut" fx:id="btnSignOut" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="btnSignOut" fx:id="btnSignOut" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#logoutBtnAction" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/out.png" />
                </image>

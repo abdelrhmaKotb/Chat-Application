@@ -6,6 +6,8 @@ import gov.iti.jets.business.helper.StageCoordinator;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.interfaces.Client;
 // import gov.iti.jets.presentation.utils.chatBot;
+import gov.iti.jets.presentation.utils.GenerateEncryptionPassword;
+import gov.iti.jets.presentation.utils.GeneratePlainPassword;
 
 
 public class App extends Application {
@@ -14,12 +16,15 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        StageCoordinator coordinator = StageCoordinator.getInstance();
+         StageCoordinator coordinator = StageCoordinator.getInstance();
         coordinator.setStage(primaryStage);
         coordinator.moveToLogin();
         primaryStage.setMinWidth(1315);
         primaryStage.setMaxHeight(915);
         primaryStage.show();
+    //    GenerateEncryptionPassword.encrypte("01147775184","Yassin@22");
+    //System.out.println(GeneratePlainPassword.decrypte());
+      
 
     }
 
