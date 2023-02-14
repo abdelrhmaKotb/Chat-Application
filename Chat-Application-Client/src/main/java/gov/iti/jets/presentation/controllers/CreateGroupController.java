@@ -90,6 +90,9 @@ public class CreateGroupController implements Initializable {
         if (groupNameTextField.getText().isEmpty()) {
             showErrorMessageLabel(errorLabel, groupNameTextField, "Invalid Name");
             return false;
+        } else if (groupNameTextField.getText().trim().equals("")) {
+            showErrorMessageLabel(errorLabel, groupNameTextField, "Should not be empty");
+            return false;
         } else if (groupNameTextField.getText().length() > 100) {
             showErrorMessageLabel(errorLabel, groupNameTextField, "Name length must less than 100 character");
             return false;
