@@ -23,6 +23,7 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -44,6 +45,8 @@ public class MainPanelController implements Initializable {
   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        stopSerververId.setDisable(false);
+
         Parent parent;
         try {
             parent = FXMLLoader.load(getClass().getResource("/views/charts.fxml"));
@@ -62,7 +65,12 @@ public class MainPanelController implements Initializable {
         borderPane.setCenter(null);
     }
 
-    
+    @FXML
+    void checkStart(MouseDragEvent event) {
+        
+        System.out.println("yassin");
+    }
+
 
     @FXML
     private void close() throws IOException {
@@ -76,11 +84,15 @@ public class MainPanelController implements Initializable {
     private void stopServerAction(ActionEvent e) {
         RMIConnection rmi = RMIConnection.getInstance();
          rmi.discConnect();
+         stopSerververId.setDisable(true);
+         startSerververId.setDisable(false);
     }
 
     
     @FXML
     void startServerAction(ActionEvent event) {
+        stopSerververId.setDisable(false);
+        startSerververId.setDisable(true);
         RMIConnection rmi = RMIConnection.getInstance();
         DBConnecttion.getConnection();
         rmi.connect();
