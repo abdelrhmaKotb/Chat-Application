@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import gov.iti.jets.dto.CountryDto;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.interfaces.Server;
+import gov.iti.jets.presentation.utils.ShowPopUp;
 
 public class SignupService {
 
@@ -22,6 +23,7 @@ public class SignupService {
 
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
         return null;
     }
@@ -35,6 +37,7 @@ public class SignupService {
             System.out.println(countries.size());
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
         return countries;
         

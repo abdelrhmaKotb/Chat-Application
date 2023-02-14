@@ -9,6 +9,7 @@ import java.rmi.registry.Registry;
 
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
+import gov.iti.jets.presentation.utils.ShowPopUp;
 
 public class RMIConnection {
 
@@ -16,6 +17,15 @@ public class RMIConnection {
     private static Server serverServices = null;
     private static Client currentClientConnection = null;
     private static Registry registry;
+    private static String IP = "localhost";
+
+    public  String getSERVER_IP() {
+        return IP;
+    }
+
+    public  void setSERVER_IP(String sERVER_IP) {
+        IP = sERVER_IP;
+    }
 
     private RMIConnection() {
     }
@@ -36,12 +46,15 @@ public class RMIConnection {
         // }
     }
 
+    
+
     public void registerClient(){
         try {
             currentClientConnection = new ClientImpl();
             serverServices.register(currentClientConnection);
         } catch (Exception e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
     }
 

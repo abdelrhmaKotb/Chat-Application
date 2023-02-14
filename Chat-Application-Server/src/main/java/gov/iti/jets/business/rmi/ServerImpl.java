@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 //    public   List<Client> clients = new ArrayList<>();
-    public  Map<String, Client> clientsMap = new HashMap<>();
+    public  static Map<String, Client> clientsMap = new HashMap<>();
     public static int countOfLine=0,countOnLine=0;
 
     public ServerImpl() throws RemoteException {

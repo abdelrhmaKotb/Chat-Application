@@ -10,6 +10,7 @@ import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.GroupsMembersDto;
 import gov.iti.jets.dto.MessageDto;
+import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -131,14 +132,7 @@ public class MessageController implements Initializable {
 
         } catch (RemoteException e) {
             e.printStackTrace();
-            System.out.println("Not avaliable");
-            try {
-                RMIConnection.getInstance().connect("localhost");
-                System.out.println("connnn");
-            } catch (Exception ee) {
-                System.out.println("dis connnn");
-                ee.printStackTrace();
-            }
+            new ShowPopUp().notifyServerDown();
         }
         chatComponent(false, msg);
     }
@@ -251,6 +245,7 @@ public class MessageController implements Initializable {
                     input.read(data);
                     RMIConnection.getServerServive().sendFile(ChatCoordinator.getInstance().getCurrentChatOpen(), file.getName(), data);
                 } catch (FileNotFoundException e) {
+                    new ShowPopUp().notifyServerDown();
                     throw new RuntimeException(e);
                 } catch (IOException e) {
                     throw new RuntimeException(e);

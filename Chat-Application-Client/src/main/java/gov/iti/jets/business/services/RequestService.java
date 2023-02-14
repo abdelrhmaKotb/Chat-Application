@@ -5,6 +5,7 @@ import java.util.List;
 import java.rmi.RemoteException;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.interfaces.Server;
+import gov.iti.jets.presentation.utils.ShowPopUp;
 
 public class RequestService {
 
@@ -14,6 +15,7 @@ public class RequestService {
             ser.sendRequests(senderPhoneNumber, listOfContacts);
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
     }
 
@@ -24,6 +26,7 @@ public class RequestService {
             errorMsg = ser.chkNumberInDB(currentUserNumber, contactNumber);
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
         return errorMsg;
     }
@@ -35,6 +38,7 @@ public class RequestService {
             isPhoneExist = ser.isUserExistInDB(contactNumber);
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
         return isPhoneExist;
     }
@@ -46,6 +50,7 @@ public class RequestService {
             isContactExist = ser.isContactExistInDB(currentUserNumber, contactNumber);
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
         return isContactExist;
     }
@@ -57,6 +62,7 @@ public class RequestService {
             isRequestExist = ser.isRequestExistInDB(currentUserNumber, contactNumber);
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
         return isRequestExist;
     }
@@ -68,6 +74,7 @@ public class RequestService {
             listOfNamesOfReqSenders = ser.getNamesOfRequestSenders(currentUserNumber);
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
         return listOfNamesOfReqSenders;
     }
@@ -78,6 +85,7 @@ public class RequestService {
             ser.deleteRequest(sender, currentUser);
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
     }
 }

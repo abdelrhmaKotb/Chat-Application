@@ -205,4 +205,44 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
             }
         });
     }
+
+
+    @Override
+    public void notifyServerAvaliable() throws RemoteException {
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ShowPopUp showPopUp = new ShowPopUp();
+                showPopUp.showNotifacation("Server Available Now");
+            }
+        });
+
+        try {
+            RMIConnection.getInstance().connect(RMIConnection.getInstance().getSERVER_IP());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+       
+    }
+
+
+    @Override
+    public void notifyServerNotAvalible() throws RemoteException {
+       
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ShowPopUp showPopUp = new ShowPopUp();
+                showPopUp.showNotifacation("Server Down Now");
+            }
+        });
+    }
+
+
+    @Override
+    public boolean areYouThere() throws RemoteException {
+        return true;
+    }
 }
