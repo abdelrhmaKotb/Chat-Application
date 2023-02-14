@@ -22,11 +22,6 @@
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="417.0" prefWidth="35.0" spacing="25.0" style="-fx-background-color: #ffffff;">
          <children>
-            <ImageView fitHeight="41.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/logo.png" />
-               </image>
-            </ImageView>
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
             <ImageView id="btnUser" fx:id="btnUser" fitHeight="24.0" fitWidth="24.0" onMouseClicked="#viewProfile" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -46,7 +41,7 @@
             </ImageView>
             <ImageView id="btnGroups" fx:id="btnGroups" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#viewGroups" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/groups.png" />
+                  <Image url="@../images/team.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -55,14 +50,6 @@
             <ImageView id="btnContacts" fx:id="btnContacts" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#openContacts" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/contact.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <ImageView id="btnSettings" fx:id="btnSettings" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/services.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -84,12 +71,15 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-            <ImageView fitHeight="41.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="btnSignOut" fx:id="btnSignOut" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/logo.png" />
+                  <Image url="@../images/out.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
+            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
          </children>
          <padding>
             <Insets top="10.0" />
