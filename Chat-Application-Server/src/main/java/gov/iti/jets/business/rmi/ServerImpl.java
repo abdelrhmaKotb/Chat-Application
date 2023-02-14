@@ -210,6 +210,27 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         UserMapper userMapper = new UserMapper();
         User userEntity = userMapper.toEntity(uDto);
         boolean isUpdated = userDao.updateUser(userEntity);
+
+        //notfiy my contats with changes 
+
+        String myPhone =  uDto.getPhoneNumber();
+        ContactImpl contactImpl = new ContactImpl();
+
+        var listOfContatcs = contactImpl.getContactsForUser(myPhone);
+        listOfContatcs.forEach(e -> {
+            String phone = e.getFriendPhoneNumber();
+            if (clientsMap.containsKey(phone)) {
+                try {
+                    clientsMap.get(phone).userNotifyChangeHisProfile(uDto);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        // clientsMap.containsKey(myPhone);
+
+
+
         return isUpdated;
     }
 

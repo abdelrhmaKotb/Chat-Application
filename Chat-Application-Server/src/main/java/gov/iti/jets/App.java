@@ -36,12 +36,12 @@ public class App extends Application {
         // System.out.println(chatBot.getMessageFromChatBot("i live in cairo"));
         // System.out.println(chatBot.getMessageFromChatBot("i love you"));
         // System.out.println(chatBot.getMessageFromChatBot("hello"));
-        Parent root = FXMLLoader.load(getClass().getResource("/views/MainPanelView.fxml"));
-        DBConnecttion.getConnection();
-        Scene sc = new Scene(root, 800, 600);
-        primaryStage.setScene(sc);
-        primaryStage.setTitle("Chat Application");
-        primaryStage.show();
+        // Parent root = FXMLLoader.load(getClass().getResource("/views/MainPanelView.fxml"));
+        // DBConnecttion.getConnection();
+        // Scene sc = new Scene(root, 800, 600);
+        // primaryStage.setScene(sc);
+        // primaryStage.setTitle("Chat Application");
+        // primaryStage.show();
         // System.out.println(chatBot.getMessageFromChatBot("hello"));
         // System.out.println(chatBot.getMessageFromChatBot("how old are you"));
         // System.out.println(chatBot.getMessageFromChatBot("i live in cairo"));
@@ -50,10 +50,10 @@ public class App extends Application {
 
         // System.out.println(chatBot.getMessageFromChatBot("hello my name yassin"));
 
-        primaryStage.setTitle("Admin Panel");
+        // primaryStage.setTitle("Admin Panel");
         // Parent root = FXMLLoader.load(getClass().getResource("/views/MainPanelView.fxml"));
-        primaryStage.setScene(new Scene(root, 850, 600));
-        primaryStage.show();
+        // primaryStage.setScene(new Scene(root, 850, 600));
+        // primaryStage.show();
 
     }
 
