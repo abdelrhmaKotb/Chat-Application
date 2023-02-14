@@ -3,20 +3,29 @@ package gov.iti.jets.business.models;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.ContactDto;
+import gov.iti.jets.dto.UserDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsModel {
     ObservableList<ContactDto> contacts;
-
+    ObservableList<UserDto> contactsData;
     public ContactsModel() {
         try {
             List<ContactDto> userContacts = RMIConnection.getServerServive().getUserContacts(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
             System.out.println(userContacts.size());
             System.out.println(userContacts);
             contacts = FXCollections.observableArrayList(userContacts);
+            List<String> list=new ArrayList<>();
+            contacts.forEach(e -> list.add(e.getFriendPhoneNumber()));
+          
+            List<UserDto> users =  RMIConnection.getServerServive().getUsersByNumber(list);
+            contactsData = FXCollections.observableArrayList(users);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,6 +70,17 @@ public class ContactsModel {
             }
         }
     }
+    public ObservableList<UserDto> getContactsData() {
+        return contactsData;
+    }
+    public UserDto getContactDataByNumber(String phoneNum) {
+        int size=contactsData.size();
+        for(int i=0;i<size;i++) {
+            if(contactsData.get(i).getPhoneNumber().equals(phoneNum))
+                return contactsData.get(i);
 
+        }
+        return null;
+    }
 
 }

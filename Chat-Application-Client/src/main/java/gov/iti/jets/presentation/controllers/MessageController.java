@@ -4,9 +4,12 @@ import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ChatData;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.ContactsModel;
+import gov.iti.jets.business.models.CurrentUserModel;
 import gov.iti.jets.business.models.GroupsModel;
 import gov.iti.jets.business.rmi.RMIConnection;
-import gov.iti.jets.dto.*;
+import gov.iti.jets.dto.ContactDto;
+import gov.iti.jets.dto.GroupsMembersDto;
+import gov.iti.jets.dto.MessageDto;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,11 +27,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
@@ -50,13 +58,14 @@ public class MessageController implements Initializable {
     @FXML
     ScrollPane scroll;
     public static MessageController messageController;
+    CurrentUserModel currentUserModel;
 
     public MessageController() {
         messageController = this;
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { 
+    public void initialize(URL location, ResourceBundle resources) {
 
         staticImage = new ImageView();
         msgTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -85,32 +94,37 @@ public class MessageController implements Initializable {
 
         // msg.setReciver(chat.getIdntifier());
 
-        MessageDto msg=null;
+        MessageDto msg = null;
+
 
         try {
-            if(chat.isGroup()){
+            if (chat.isGroup()) {
 
                 ModelsFactory modelsFactory = ModelsFactory.getInstance();
                 GroupsModel groupsModel = modelsFactory.getGroups();
                 GroupsMembersDto groupsMembersDto = groupsModel.getGroupByGroup_id(Integer.parseInt(ChatCoordinator.getInstance().getCurrentChatOpen()));
-                 msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
+                msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
                         msgTextField.getText(), groupsMembersDto.getFontSize(), groupsMembersDto.getFontStyle(), groupsMembersDto.getFontColor(),
                         groupsMembersDto.getBackgroundColor(), groupsMembersDto.isBold(), groupsMembersDto.isUnderlined(), groupsMembersDto.isItalic(), chat.getIdntifier());
                 // msg.setReciver(chat);
+
                 msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
+                // currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
                 msg.setMessage(msgTextField.getText());
+
                 RMIConnection.getServerServive().sendGroupMessage(msg);
-            }else{
+            } else {
 
                 ModelsFactory modelsFactory = ModelsFactory.getInstance();
                 ContactsModel contactsModel = modelsFactory.getContactsModel();
                 ContactDto contactDto = contactsModel.getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
-                 msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
+                msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
                         msgTextField.getText(), contactDto.getFontSize(), contactDto.getFontStyle(), contactDto.getFontColor(),
                         contactDto.getBackgroundColor(), contactDto.isBold(), contactDto.isUnderlined(), contactDto.isItalic(), chat.getIdntifier());
                 // msg.setReciver(chat);
                 msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
                 msg.setMessage(msgTextField.getText());
+
                 RMIConnection.getServerServive().send(msg);
             }
 
@@ -160,13 +174,13 @@ public class MessageController implements Initializable {
         ContactsModel contactsModel = modelsFactory.getContactsModel();
         ChatData chatData = ChatCoordinator.getInstance().getCurrentChat();
         ContactDto dto = null;
-        GroupsModel groupsModel=new GroupsModel();
-        GroupsMembersDto g=groupsModel.getGroupByGroup_id(1);
+        GroupsModel groupsModel = new GroupsModel();
+        GroupsMembersDto g = groupsModel.getGroupByGroup_id(1);
         System.out.println("--------------");
-        System.out.println("------"+ChatCoordinator.getInstance().getCurrentChatOpen());
+        System.out.println("------" + ChatCoordinator.getInstance().getCurrentChatOpen());
 
-        if(chatData.isGroup()) {
-            groupMessageSettingsController messageSettingsController=null;
+        if (chatData.isGroup()) {
+            groupMessageSettingsController messageSettingsController = null;
             System.out.println("--------------");
 
             try {
@@ -186,8 +200,7 @@ public class MessageController implements Initializable {
             stage.setScene(scene1);
             stage.setResizable(false);
             stage.showAndWait();
-        }
-        else {
+        } else {
             MessageSettingsController messageSettingsController = null;
             dto = contactsModel.getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
             System.out.println(dto.getFontColor());
@@ -211,6 +224,57 @@ public class MessageController implements Initializable {
             stage.setResizable(false);
             stage.showAndWait();
         }
+    }
+
+    @FXML
+    private void attach(MouseEvent event) {
+
+        FileChooser fil_chooser = new FileChooser();
+        File file = fil_chooser.showOpenDialog(null);
+
+        if (file != null) {
+            Runnable sendFileThread = () ->
+            {
+                byte[] data = new byte[(int) file.length()];
+                try {
+                    FileInputStream input = null;
+                    input = new FileInputStream(file);
+                    input.read(data);
+                    RMIConnection.getServerServive().sendFile(ChatCoordinator.getInstance().getCurrentChatOpen(), file.getName(), data);
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            };
+            Thread run = new Thread(sendFileThread);
+
+
+            run.start();
+        }
+      /*  Runnable sendFileThread = () ->
+        {
+            try {
+                FileChannel channelRead = FileChannel.open(file.toPath());
+                int count;
+                do {
+                    ByteBuffer byteBuffer = ByteBuffer.allocate(4096);
+                    count = channelRead.read(byteBuffer);
+                    byte[] byteArray = byteBuffer.array();
+                    RMIConnection.getServerServive().sendFile(ChatCoordinator.getInstance().getCurrentChatOpen(), file.getName(), byteArray);
+                }
+                while (count != -1);
+                channelRead.close();
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        };
+        Thread run = new Thread(sendFileThread);
+
+
+        run.start();*/
+
     }
 
 }

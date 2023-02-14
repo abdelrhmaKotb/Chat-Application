@@ -311,6 +311,17 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     public List<GroupsMembersDto> getMyGroupsStyle(String phoneNumber){
         return new GroupMembersImpl().getGroupMembersByUserPhoneNum(phoneNumber);
     }
+    @Override
+    public List<UserDto> getUsersByNumber(List<String> phoneNumber) {
+        UserImpl userImp = new UserImpl();
+        List<User> listOfUsers = userImp.getUsersByNumbers(phoneNumber);
+        List<UserDto> userDtos=new ArrayList<>();
+        int len=listOfUsers.size();
+        UserMapper userMapper = new UserMapper();
+        for(int i=0;i<len;i++)
+        userDtos.add(userMapper.toDto(listOfUsers.get(i)));
+        return userDtos;
+    }
 
     @Override
     public void notifySendRequest(String sender, String reciver) throws RemoteException {
@@ -341,6 +352,11 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         UserDto dto = new UserMapper().toDto(user);
 
         clientsMap.get(reciver).userNotifyAcceptRequest(dto);
+    }
+   @Override
+    public void sendFile(String recieverPhone, String fileName, byte[] data) throws RemoteException {
+       Client reciver = clientsMap.get(recieverPhone);
+       reciver.recieveFile(fileName,data);
     }
 
 }

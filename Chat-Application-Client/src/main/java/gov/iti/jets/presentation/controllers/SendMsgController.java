@@ -4,20 +4,25 @@ import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ChatData;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.ContactsModel;
+import gov.iti.jets.business.models.CurrentUserModel;
 import gov.iti.jets.business.models.GroupsModel;
 import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.GroupsMembersDto;
 import gov.iti.jets.dto.MessageDto;
+import gov.iti.jets.dto.UserDto;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.*;
 
+import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -47,8 +52,18 @@ public class SendMsgController implements Initializable {
         if (recieve) {
             hbox.setAlignment(Pos.CENTER_LEFT);
             hbox.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+            ContactsModel contactsModel=new ContactsModel();
+            UserDto uDto= contactsModel.getContactDataByNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+            circle.setStroke(null);
+            Image userImage = new Image(new ByteArrayInputStream(uDto.getImage()));
+            circle.setFill(new ImagePattern(userImage));
+
         } else {
             hbox.setAlignment(Pos.CENTER_RIGHT);
+            CurrentUserModel currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
+                circle.setStroke(null);
+                Image userImage = new Image(new ByteArrayInputStream(currentUserModel.getImage()));
+                circle.setFill(new ImagePattern(userImage));
 
         }
 

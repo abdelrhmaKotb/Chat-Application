@@ -16,7 +16,7 @@
 
 <!-- fx:controller="gov.iti.jets.presentation.controllers.MessageController" -->
 
-<VBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" VBox.vgrow="ALWAYS">
+<VBox VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox prefHeight="64.0" prefWidth="607.0">
          <children>
@@ -84,24 +84,13 @@
       <HBox prefHeight="56.0" prefWidth="734.0">
          <children>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <TextField fx:id="msgTextField" prefHeight="88.0" prefWidth="564.0" HBox.hgrow="ALWAYS" />
+            <TextField fx:id="msgTextField" prefHeight="56.0" prefWidth="634.0" HBox.hgrow="ALWAYS" />
             <HBox prefHeight="100.0" prefWidth="229.0" style="-fx-background-color: white;">
                <children>
                   <VBox prefHeight="56.0" prefWidth="43.0">
                      <children>
                         <HBox prefHeight="33.0" prefWidth="34.0" />
-                        <HBox prefHeight="27.0" prefWidth="30.0">
-                           <children>
-                              <ImageView fx:id="textEditorBtn" fitHeight="33.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true"  onMouseClicked="#SetMessage">
-                                 <image>
-                                    <Image url="@../images/icons8-text-50.png" />
-                                 </image>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </ImageView>
-                           </children>
-                        </HBox>
+                        <HBox prefHeight="27.0" prefWidth="30.0" />
                         <HBox prefHeight="33.0" prefWidth="72.0" />
                      </children>
                   </VBox>
@@ -110,9 +99,9 @@
                         <HBox prefHeight="36.0" prefWidth="40.0" />
                         <HBox prefHeight="67.0" prefWidth="30.0">
                            <children>
-                              <ImageView fx:id="attachFileIcon" fitHeight="31.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="textEditorBtn" fitHeight="33.0" fitWidth="27.0" onMouseClicked="#SetMessage" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/attachIcon.png/" />
+                                    <Image url="@../images/icons8-text-50.png" />
                                  </image>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
@@ -128,9 +117,9 @@
                         <HBox prefHeight="23.0" prefWidth="66.0" />
                         <HBox prefHeight="53.0" prefWidth="81.0">
                            <children>
-                              <ImageView fx:id="imageIcon" fitHeight="27.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="attachFileIcon" onMouseClicked="#attach" fitHeight="31.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/imageAttach.png" />
+                                    <Image url="@../images/attachIcon.png/" />
                                  </image>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />

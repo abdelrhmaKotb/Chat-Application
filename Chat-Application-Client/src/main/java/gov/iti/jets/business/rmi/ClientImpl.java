@@ -12,6 +12,12 @@ import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.application.Platform;
 
+import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -122,6 +128,35 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                 System.out.println("user" + user + "send to you request");
             }
         });
+
+    }
+
+    @Override
+    public void recieveFile(String fileName, byte[] data) throws RemoteException {
+
+        File f = new File(fileName);
+        FileOutputStream outputStream = null;
+        try {
+            outputStream = new FileOutputStream(f);
+            outputStream.write(data);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+       /* ByteBuffer byteBuffer = ByteBuffer.wrap(data);
+
+        try {
+            Path path = Paths.get(fileName);
+            FileChannel channelWrite =FileChannel.open(path,
+                    StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            channelWrite.write(byteBuffer);
+            channelWrite.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }*/
 
     }
 }
