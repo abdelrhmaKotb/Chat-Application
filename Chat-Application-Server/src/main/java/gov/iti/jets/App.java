@@ -21,23 +21,13 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-    //    System.out.println(chatBot.getMessageFromChatBot("hello my name yassin"));
-    //    int choice;
-    //    System.out.println("Enter choice");
-    //    Scanner input=new Scanner(System.in);
-    //    choice=input.nextInt();
-    //    while(choice!=0){
+        System.out.println(chatBot.getMessageFromChatBot("hello my name yassin"));
 
-    //     System.out.println(ServerImpl.clients.size());
-    //     System.out.println("Enter choice");
-
-    //     choice=input.nextInt();
-
-    //    }
+       
 
 
-    primaryStage.setTitle("Login");
-         Parent root = FXMLLoader.load(getClass().getResource("/views/charts.fxml"));
+          primaryStage.setTitle("Admin Panel");
+         Parent root = FXMLLoader.load(getClass().getResource("/views/MainPanelView.fxml"));
          primaryStage.setScene(new Scene(root, 850, 600));
          primaryStage.show();
     
