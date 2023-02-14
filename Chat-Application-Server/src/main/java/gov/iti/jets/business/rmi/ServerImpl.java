@@ -19,8 +19,9 @@ import java.util.Map;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 //    public   List<Client> clients = new ArrayList<>();
-    public  static Map<String, Client> clientsMap = new HashMap<>();
-    public static int countOfLine=0,countOnLine=0;
+
+    public static Map<String, Client> clientsMap = new HashMap<>();
+
 
     public ServerImpl() throws RemoteException {
         super();
@@ -38,7 +39,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
          System.out.println(client.getPhoneNumber() + " phone");
         System.out.println(clientsMap);
         client.helloBack();
-        countOnLine++;
     }
 
     public void unregister(Client client) throws RemoteException {
@@ -48,8 +48,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
         notifyUsersOffline(client);
         //  System.out.println(clients);
-         countOnLine--;
-         countOfLine++;
     }
 
     @Override
@@ -223,6 +221,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             if (clientsMap.containsKey(phone)) {
                 try {
                     clientsMap.get(phone).userNotifyChangeHisProfile(uDto);
+                    ChartController.chartController.updateBarChart();
+                    ChartController.chartController.updatePieChart();
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
