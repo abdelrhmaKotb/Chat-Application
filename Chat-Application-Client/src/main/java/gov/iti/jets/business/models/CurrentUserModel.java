@@ -1,6 +1,7 @@
 package gov.iti.jets.business.models;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -17,6 +18,15 @@ public class CurrentUserModel {
     private  StringProperty dateOfBirth=new SimpleStringProperty();
     private StringProperty bio =  new SimpleStringProperty();
     private IntegerProperty status =  new SimpleIntegerProperty();
+    private LocalDate date;
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 
     private byte[] image;
     

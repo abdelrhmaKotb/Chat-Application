@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -68,35 +69,41 @@ public class EditProfileController implements Initializable {
     Circle imgCircle;
     File file;
     CurrentUserModel currentUserModel;
+    ArrayList<CountryDto> countriesNames;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    
+
         currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
         moodChoiceBox.getItems().add(Mood.AVAILABLE);
         moodChoiceBox.getItems().add(Mood.BUSY);
         moodChoiceBox.getItems().add(Mood.AWAY);
-        SignupService signupService=new SignupService();
-        ArrayList<CountryDto> countriesNames = signupService.getCountries();
+        SignupService signupService = new SignupService();
+        countriesNames = signupService.getCountries();
+
+        System.out.println(countriesNames);
+
+        dateOfBirthPicker.setValue(currentUserModel.getDate());
+
         for (CountryDto c : countriesNames) {
 
             countryChoiceBox.getItems().add(c.getName());
-            if(currentUserModel.getCountry()==c.getId()) {
+
+            System.out.println("currentUserModel.getCountry()" + currentUserModel.getCountry());
+            System.out.println("c.getId()" + c.getId());
+            if (currentUserModel.getCountry() == c.getId()) {
                 countryChoiceBox.getSelectionModel().select(c.getName());
-                System.out.println(c.getName());
+                System.out.println("here " + c.getName());
             }
         }
-       
+
         disableComponents();
 
         imgCircle.setStroke(null);
 
+        // System.out.println("dasd");
 
-//        System.out.println("dasd");
-
-
-//        System.out.println(Arrays.toString(currentUserModel.getImage()));
-
+        // System.out.println(Arrays.toString(currentUserModel.getImage()));
 
         Image userImage = new Image(new ByteArrayInputStream(currentUserModel.getImage()));
         imgCircle.setFill(new ImagePattern(userImage));
@@ -112,11 +119,12 @@ public class EditProfileController implements Initializable {
          * }
          */
     }
+
     void disableComponents() {
         editImgIcon.setVisible(false);
         saveBtn.setVisible(false);
         currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
-       
+
         phoneTextField.setText(currentUserModel.getPhoneNumber());
         moodChoiceBox.getSelectionModel().select(Mood.values()[currentUserModel.getStatus()]);
         nameTextField.setText(currentUserModel.getName());
@@ -133,6 +141,7 @@ public class EditProfileController implements Initializable {
         dateOfBirthPicker.setDisable(true);
 
     }
+
     @FXML
     public void EnableEdit(MouseEvent mouseEvent) {
         editImgIcon.setVisible(true);
@@ -169,31 +178,49 @@ public class EditProfileController implements Initializable {
 
     @FXML
     public void save(MouseEvent mouseEvent) {
-        UserDto userDto=null;
+        UserDto userDto = null;
         EditProfileService editProf = new EditProfileService();
         try {
             if (isValidUserName() && isValidEmail() && isValidBio() && isValidDateOfBirth()) {
+                byte[] imagee = null;
+                if (file != null) {
+                    imagee = convertImageToBytes(file);
+                }
 
-                 userDto = new UserDto(currentUserModel.getPhoneNumber(), nameTextField.getText(),
-                        emailTextField.getText(), null, countryChoiceBox.getSelectionModel().selectedIndexProperty().getValue(), Date.valueOf(dateOfBirthPicker.getValue()),
-                        bioTextField.getText(), Mood.values()[moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue()], false, convertImageToBytes(file));
+                System.out.println("country" + countryChoiceBox.getSelectionModel().selectedIndexProperty().getValue());
+
+                int idd = 0;
+
+                for (var d : countriesNames) {
+                    if (d.getName().equals(countryChoiceBox.getValue().toString())) {
+                        idd = d.getId();
+                    }
+                }
+
+
+                userDto = new UserDto(currentUserModel.getPhoneNumber(), nameTextField.getText(),
+                        emailTextField.getText(), null,
+                        idd,
+                        Date.valueOf(dateOfBirthPicker.getValue()),
+                        bioTextField.getText(),
+                        Mood.values()[moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue()], false,
+                        imagee);
                 System.out.println(file);
             }
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
-        catch (IOException e1) {
-                e1.printStackTrace();
-            }
-            boolean isUpdated = editProf.editProfile(userDto);
-            System.out.println(isUpdated);
-            System.out.println("selected: "+ Mood.values()[currentUserModel.getStatus()]);
-            if (isUpdated) {
-                currentUserModel.setName(nameTextField.getText());
-                currentUserModel.setEmail(emailTextField.getText());
-                currentUserModel.setBio(bioTextField.getText());
-                currentUserModel.setStatus(moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue());
-                
-                System.out.println("selected: "+moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue());
-            
+        boolean isUpdated = editProf.editProfile(userDto);
+        System.out.println(isUpdated);
+        System.out.println("selected: " + Mood.values()[currentUserModel.getStatus()]);
+        if (isUpdated) {
+            currentUserModel.setName(nameTextField.getText());
+            currentUserModel.setEmail(emailTextField.getText());
+            currentUserModel.setBio(bioTextField.getText());
+            currentUserModel.setStatus(moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue());
+
+            System.out.println("selected: " + moodChoiceBox.getSelectionModel().selectedIndexProperty().getValue());
+
             Stage popup = new Stage();
             // configure UI for popup etc...
 
@@ -211,8 +238,7 @@ public class EditProfileController implements Initializable {
             disableComponents();
         }
 
-        }
-
+    }
 
     public boolean isValidUserName() {
 
@@ -299,6 +325,7 @@ public class EditProfileController implements Initializable {
             imgCircle.setFill(new ImagePattern(img));
         }
     }
+
     public static byte[] convertImageToBytes(File file) throws IOException {
         byte[] data = Files.readAllBytes(file.toPath());
         return data;
