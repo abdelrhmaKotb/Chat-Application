@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<HBox fx:id="hbox"  xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="hbox" alignment="CENTER_RIGHT" style="-fx-alignment: center-right;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text fx:id="timeText" fill="#736868" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="38.13671803474426">
          <HBox.margin>
