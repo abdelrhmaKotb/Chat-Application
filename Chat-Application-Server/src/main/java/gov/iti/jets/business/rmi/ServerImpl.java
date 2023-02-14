@@ -47,7 +47,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
         notifyUsersOffline(client);
         numberOfline++;
-        numberOnline++;
+        numberOnline--;
         // System.out.println(clients);
     }
 
