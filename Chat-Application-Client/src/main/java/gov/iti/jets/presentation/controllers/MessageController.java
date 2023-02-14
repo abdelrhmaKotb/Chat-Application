@@ -126,10 +126,19 @@ public class MessageController implements Initializable {
                 msg.setMessage(msgTextField.getText());
 
                 RMIConnection.getServerServive().send(msg);
+                System.out.println("Message Sent");
             }
 
         } catch (RemoteException e) {
             e.printStackTrace();
+            System.out.println("Not avaliable");
+            try {
+                RMIConnection.getInstance().connect("localhost");
+                System.out.println("connnn");
+            } catch (Exception ee) {
+                System.out.println("dis connnn");
+                ee.printStackTrace();
+            }
         }
         chatComponent(false, msg);
     }
@@ -145,7 +154,7 @@ public class MessageController implements Initializable {
     private void chatComponent(Boolean recieve, MessageDto messageDto) {
 
         try {
-            if (messageDto.getMessage() != "") {
+            if (!messageDto.getMessage().equals("")) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sendMsg.fxml"));
                 SendMsgController controller = new SendMsgController(messageDto, recieve);
                 loader.setController(controller);
