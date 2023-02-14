@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class ShowPopUp {
-    public void showNotifacation(String msg) {
+    public  void showNotifacation(String msg) {
         Label lbl = new Label(msg);
         lbl.setId("notification");
         StageCoordinator coordinator = StageCoordinator.getInstance();
@@ -23,8 +23,8 @@ public class ShowPopUp {
         Scene popupScene = new Scene(stackPane, 200, 50);
         popupScene.getStylesheets().add(getClass().getResource("/css/stylePopUp.css").toExternalForm());
         Stage popupStage = new Stage();
-        popupStage.setX(coordinator.getStage().getWidth() -200);
-        popupStage.setY(coordinator.getStage().getHeight()-100);
+        popupStage.setX(coordinator.getStage().getWidth() - 200);
+        popupStage.setY(coordinator.getStage().getHeight() - 100);
         popupStage.initStyle(StageStyle.UNDECORATED);
         popupStage.setScene(popupScene);
         popupStage.initModality(Modality.NONE);
@@ -45,4 +45,9 @@ public class ShowPopUp {
         });
         ts.start();
     }
+
+    public void notifyServerDown()
+    {
+        showNotifacation("Server Is Down");
+    }   
 }

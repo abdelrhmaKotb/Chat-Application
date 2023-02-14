@@ -74,64 +74,25 @@ public class ChartController implements Initializable {
 
         });
 
-        // new Thread(() -> {
-
-        // while (true) {
-        // Platform.runLater(new Runnable() {
-
-        // @Override
-        // public void run() {
-        // data.clear();
-        // data.addAll(new PieChart.Data("Male", cs.getGenderCharts(0)),
-        // new PieChart.Data("Female", cs.getGenderCharts(1)));
-
-        // male.setText(String.valueOf(String.format("%.2f", (double)
-        // cs.getGenderCharts(0)
-        // / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
-        // female.setText(String.valueOf(String.format("%.2f", (double)
-        // cs.getGenderCharts(1)
-        // / ((cs.getGenderCharts(0) + cs.getGenderCharts(1))) * 100)) + " %");
-
-        // }
-
-        // });
-
-        // try {
-        // Thread.sleep(1000);
-        // } catch (InterruptedException e) {
-        // e.printStackTrace();
-        // }
-
-        // }
-        // }).start();
     }
 
     public void updateBarChart() {
 
-        bar.setTitle("Countries And Users");
-        bar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
+       
+        Platform.runLater(new Runnable() {
 
-        new Thread(() -> {
-
-            while (true) {
-                Platform.runLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        ChartsService chartServie = new ChartsService();
-                        bar.setData(getChartData(chartServie.getCountryChart()));
-                    }
-
-                });
-
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
+            @Override
+            public void run() {
+                bar.setTitle("Countries And Users");
+                bar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
+                ChartsService chartServie = new ChartsService();
+                bar.setData(getChartData(chartServie.getCountryChart()));
+                bar.setAnimated(false);
             }
-        }).start();
+
+        });
+
+       
     }
 
     private ObservableList<XYChart.Series<String, Double>> getChartData(ArrayList<CountryDto> countryData) {

@@ -12,6 +12,7 @@ import gov.iti.jets.business.models.ContactsModel;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.enums.Mood;
+import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -169,6 +170,7 @@ public class ContactsController implements Initializable {
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
+                            new ShowPopUp().notifyServerDown();
                         }
 
                         namelabel.setText(item.getFriendName());

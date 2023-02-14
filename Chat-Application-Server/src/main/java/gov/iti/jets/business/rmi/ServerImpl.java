@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 //    public   List<Client> clients = new ArrayList<>();
-    public  Map<String, Client> clientsMap = new HashMap<>();
+    public  static Map<String, Client> clientsMap = new HashMap<>();
     public static int countOfLine=0,countOnLine=0;
 
     public ServerImpl() throws RemoteException {
@@ -230,6 +230,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         });
         // clientsMap.containsKey(myPhone);
 
+        ChartController.chartController.updatePieChart();
+        ChartController.chartController.updateBarChart();
+
 
 
         return isUpdated;
@@ -288,6 +291,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             return null;
         }
         ChartController.chartController.updatePieChart();
+        ChartController.chartController.updateBarChart();
         return new UserSignupMapperImpl().toDto(user);
     }
 

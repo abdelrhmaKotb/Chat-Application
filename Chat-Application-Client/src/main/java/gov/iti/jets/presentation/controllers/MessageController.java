@@ -10,6 +10,7 @@ import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.GroupsMembersDto;
 import gov.iti.jets.dto.MessageDto;
+import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -126,10 +127,12 @@ public class MessageController implements Initializable {
                 msg.setMessage(msgTextField.getText());
 
                 RMIConnection.getServerServive().send(msg);
+                System.out.println("Message Sent");
             }
 
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
         chatComponent(false, msg);
     }
@@ -145,7 +148,7 @@ public class MessageController implements Initializable {
     private void chatComponent(Boolean recieve, MessageDto messageDto) {
 
         try {
-            if (messageDto.getMessage() != "") {
+            if (!messageDto.getMessage().equals("")) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sendMsg.fxml"));
                 SendMsgController controller = new SendMsgController(messageDto, recieve);
                 loader.setController(controller);
@@ -242,6 +245,7 @@ public class MessageController implements Initializable {
                     input.read(data);
                     RMIConnection.getServerServive().sendFile(ChatCoordinator.getInstance().getCurrentChatOpen(), file.getName(), data);
                 } catch (FileNotFoundException e) {
+                    new ShowPopUp().notifyServerDown();
                     throw new RuntimeException(e);
                 } catch (IOException e) {
                     throw new RuntimeException(e);

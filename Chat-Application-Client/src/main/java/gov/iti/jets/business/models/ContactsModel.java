@@ -4,6 +4,7 @@ import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -28,6 +29,7 @@ public class ContactsModel {
             
         } catch (Exception e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
     }
 
