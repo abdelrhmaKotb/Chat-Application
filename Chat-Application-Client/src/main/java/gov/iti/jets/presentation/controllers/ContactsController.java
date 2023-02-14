@@ -136,7 +136,7 @@ public class ContactsController implements Initializable {
                         if (item.getImage() != null) {
                             userImage = new Image(new ByteArrayInputStream(item.getImage()));
                         } else {
-                            userImage = new Image(getClass().getResource("/images/sheka.jpg").toString());
+                            userImage = new Image(getClass().getResource("/images/user.png").toString());
                         }
                         {
                             imgCircle.setFill(new ImagePattern(userImage));
