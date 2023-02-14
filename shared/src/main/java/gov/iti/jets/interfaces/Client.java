@@ -14,4 +14,5 @@ public interface Client extends Remote{
     void userOnlineNotify(ContactDto contact) throws RemoteException;
     void userOfflineNotify(ContactDto contact) throws RemoteException;
     void userNotifyRequest(UserDto user) throws RemoteException;
+    void userNotifyAcceptRequest(UserDto user) throws RemoteException;
 }

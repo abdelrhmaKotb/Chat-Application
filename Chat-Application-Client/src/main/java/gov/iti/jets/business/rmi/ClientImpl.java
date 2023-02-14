@@ -41,6 +41,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                 // MessageController.messageController.recive(Message);
                 // String r = Message.getReciver();
                 ChatCoordinator.getInstance().getCurrentChatController().recive(Message);
+                // ChatCoordinator.getInstance().getChatController(Message.getReciver()).recive(Message);
             }
         });
     }
@@ -92,14 +93,35 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 
     @Override
     public void userNotifyRequest(UserDto user) throws RemoteException {
-       
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 ShowPopUp showPopUp = new ShowPopUp();
                 showPopUp.showNotifacation(user.getName() + " Send Friend Request");
-                NavCoordinator.getNotificationController().addInListOfNotifications(user.getName() + " Send Friend Request");
-                System.out.println("user" + user + "send to you request");            }
+                NavCoordinator.getNotificationController()
+                        .addInListOfNotifications(user.getName() + " Send Friend Request");
+                System.out.println("user" + user + "send to you request");
+            }
         });
+    }
+
+    @Override
+    public void userNotifyAcceptRequest(UserDto user) throws RemoteException {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ShowPopUp showPopUp = new ShowPopUp();
+                showPopUp.showNotifacation(user.getName() + " Accepted Your Request");
+                NavCoordinator.getNotificationController()
+                        .addInListOfNotifications(user.getName() + " Accepted Your Request");
+                       var c =  new ContactDto(user.getName(), user.getPhoneNumber(), "1", false);
+                       c.setFriendName(user.getName());
+                ModelsFactory.getInstance().getContactsModel().getContacts()
+                        .add(c);
+                System.out.println("user" + user + "send to you request");
+            }
+        });
+
     }
 }

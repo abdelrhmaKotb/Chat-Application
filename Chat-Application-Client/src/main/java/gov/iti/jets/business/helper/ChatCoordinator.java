@@ -99,7 +99,7 @@ public class ChatCoordinator {
                     loader.setController(c);
                     Parent view = loader.load();
                     c.setReciverName(group.getName());
-                    ChatData chatData = new ChatData(loader, view, String.valueOf(group.getId()),true);
+                    ChatData chatData = new ChatData(loader, view, String.valueOf(group.getId()), true);
                     currentChat = chatData;
                     chats.put(String.valueOf(group.getId()), chatData);
                     grid.getChildren().add(view);
@@ -124,6 +124,26 @@ public class ChatCoordinator {
 
     public MessageController getCurrentChatController() {
         return (MessageController) currentChat.getLoader().getController();
+    }
+
+    public MessageController getChatController(String phone) {
+        if (!chats.containsKey(phone)) {
+            try {
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/message.fxml"));
+                MessageController c = new MessageController();
+
+                loader.setController(c);
+                Parent view = loader.load();
+                c.setReciverName(phone);
+                ChatData chatData = new ChatData(loader, view, phone, false);
+                chats.put(phone, chatData);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return chats.get(phone).getLoader().getController();
     }
 
     public String getCurrentChatOpen() {

@@ -1,5 +1,6 @@
 package gov.iti.jets.presentation.controllers;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -96,23 +97,25 @@ public class ContactsController implements Initializable {
         listContacts.setCellFactory(lv -> {
             ListCell<ContactDto> cell = new ListCell<ContactDto>() {
 
-                private HBox rootHbox = new HBox();
-                private VBox vBoxOfHboxAndNum = new VBox();
-                private HBox hBoxOfNameAndImg = new HBox();
-                Circle imgCircle = new Circle(22);
-                private Label namelabel = new Label();
-                private Label phonelabel = new Label();
-                ImageView imageView = new ImageView();
-                Image userImage = new Image(getClass().getResource("/images/sheka.jpg").toString());
-                {
-                    imgCircle.setFill(new ImagePattern(userImage));
-                    imgCircle.setStroke(Color.BLACK);
-                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-                    rootHbox.setSpacing(3);
-                    hBoxOfNameAndImg.getChildren().addAll(namelabel, imageView);
-                    vBoxOfHboxAndNum.getChildren().addAll(hBoxOfNameAndImg, phonelabel);
-                    rootHbox.getChildren().addAll(imgCircle, vBoxOfHboxAndNum);
-                }
+                // private HBox rootHbox = new HBox();
+                // private VBox vBoxOfHboxAndNum = new VBox();
+                // private HBox hBoxOfNameAndImg = new HBox();
+                // Circle imgCircle = new Circle(22);
+                // private Label namelabel = new Label();
+                // private Label phonelabel = new Label();
+                // ImageView imageView = new ImageView();
+
+                // Image userImage = new
+                // Image(getClass().getResource("/images/sheka.jpg").toString());
+                // {
+                // imgCircle.setFill(new ImagePattern(userImage));
+                // imgCircle.setStroke(Color.BLACK);
+                // setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                // rootHbox.setSpacing(3);
+                // hBoxOfNameAndImg.getChildren().addAll(namelabel, imageView);
+                // vBoxOfHboxAndNum.getChildren().addAll(hBoxOfNameAndImg, phonelabel);
+                // rootHbox.getChildren().addAll(imgCircle, vBoxOfHboxAndNum);
+                // }
 
                 @Override
                 protected void updateItem(ContactDto item, boolean empty) {
@@ -120,6 +123,31 @@ public class ContactsController implements Initializable {
                     if (empty) {
                         setGraphic(null);
                     } else {
+                        HBox rootHbox = new HBox();
+                        VBox vBoxOfHboxAndNum = new VBox();
+                        HBox hBoxOfNameAndImg = new HBox();
+                        Circle imgCircle = new Circle(22);
+                        Label namelabel = new Label();
+                        Label phonelabel = new Label();
+                        ImageView imageView = new ImageView();
+
+                        Image userImage = null;
+
+                        if (item.getImage() != null) {
+                            userImage = new Image(new ByteArrayInputStream(item.getImage()));
+                        } else {
+                            userImage = new Image(getClass().getResource("/images/sheka.jpg").toString());
+                        }
+                        {
+                            imgCircle.setFill(new ImagePattern(userImage));
+                            imgCircle.setStroke(Color.BLACK);
+                            setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                            rootHbox.setSpacing(3);
+                            hBoxOfNameAndImg.getChildren().addAll(namelabel, imageView);
+                            vBoxOfHboxAndNum.getChildren().addAll(hBoxOfNameAndImg, phonelabel);
+                            rootHbox.getChildren().addAll(imgCircle, vBoxOfHboxAndNum);
+                        }
+
                         String image = "";
                         try {
                             if (RMIConnection.getServerServive().isUserOnline(item)) {
