@@ -46,7 +46,7 @@ public class GeneratePlainPassword {
         String password = "";
         Properties prop = new Properties();
         InputStream input = null;
-        input = new FileInputStream("keypassword.txt");
+        input = new FileInputStream("./src/main/resources/keypassword.txt");
 
         System.out.println(input);
          //load a properties file

@@ -56,7 +56,7 @@ public class GenerateEncryptionPassword {
         String encryptedpwd = byteArrayToHexString(encrypted);
 
         try {
-            File myObj = new File("keypassword.txt");
+            File myObj = new File("./src/main/resources/keypassword.txt");
             if (myObj.createNewFile()) {
               System.out.println("File created: " + myObj.getName());
             } else {
@@ -69,7 +69,7 @@ public class GenerateEncryptionPassword {
 
           
           try {
-            FileWriter myWriter = new FileWriter("keypassword.txt");
+            FileWriter myWriter = new FileWriter("./src/main/resources/keypassword.txt");
             myWriter.write("PhoneNumber="+phoneNumber+"\n");
             myWriter.write("Encrypted_Password="+encryptedpwd+"\n");
 

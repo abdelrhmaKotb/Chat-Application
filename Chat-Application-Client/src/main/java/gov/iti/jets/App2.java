@@ -24,7 +24,7 @@ public class App2 extends Application {
         StageCoordinator coordinator = StageCoordinator.getInstance();
         coordinator.setStage(primaryStage);
 
-        File f = new File("keypassword.txt");
+        File f = new File("./src/main/resources/keypassword.txt");
 
         if (f.exists()) {
 
@@ -47,6 +47,7 @@ public class App2 extends Application {
                 currentUserModel.setImage(user.getImage());
                 currentUserModel.setCountry(user.getCountry());
                 currentUserModel.setDate(user.getDateOfBirth().toLocalDate());
+
                 if (user != null)
                     coordinator.moveToChat();
             }
@@ -54,7 +55,6 @@ public class App2 extends Application {
         } else
             coordinator.moveToLogin();
 
-        coordinator.moveToLogin();
         primaryStage.setMinWidth(1315);
         primaryStage.setMaxHeight(915);
         primaryStage.show();
