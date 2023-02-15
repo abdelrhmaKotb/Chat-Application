@@ -44,6 +44,7 @@ public class MainPanelController implements Initializable {
 
     @FXML
     private Button sendMessage;
+    private static boolean  flag=false;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -84,6 +85,10 @@ public class MainPanelController implements Initializable {
         rmi.discConnect();
         stopSerververId.setDisable(true);
         startSerververId.setDisable(false);
+        if(flag)
+         loadFXML("charts");
+         flag=false;
+
     }
 
     @FXML
@@ -93,12 +98,18 @@ public class MainPanelController implements Initializable {
         RMIConnection rmi = RMIConnection.getInstance();
         DBConnecttion.getConnection();
         rmi.reconnect();
+        if(flag)
+        loadFXML("charts");
+        flag=false;
+
+
     }
 
     @FXML
     void sendMessageAction(ActionEvent event) {
 
         loadFXML("chat");
+        flag=true;
 
     }
 
