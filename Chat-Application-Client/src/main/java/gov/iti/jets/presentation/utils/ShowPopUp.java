@@ -20,7 +20,7 @@ public class ShowPopUp {
         lbl.setId("notification");
         StageCoordinator coordinator = StageCoordinator.getInstance();
         StackPane stackPane = new StackPane(lbl);
-        Scene popupScene = new Scene(stackPane, 200, 50);
+        Scene popupScene = new Scene(stackPane, lbl.getWidth(), lbl.getHeight());
         popupScene.getStylesheets().add(getClass().getResource("/css/stylePopUp.css").toExternalForm());
         Stage popupStage = new Stage();
         popupStage.setX(coordinator.getStage().getWidth() - 200);
