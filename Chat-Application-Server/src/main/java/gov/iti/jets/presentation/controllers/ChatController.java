@@ -73,7 +73,7 @@ public class ChatController implements Initializable {
 
         ServerImpl s=new ServerImpl();
         s.serverAnnoncementNotify(msgTextField.getText().trim());
-        msgTextField.getText()="";
+        msgTextField.clear();
     }
 
     @Override
