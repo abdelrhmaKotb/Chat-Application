@@ -138,8 +138,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                // MessageController.messageController.recive(Message);
-                // String r = Message.getReciver();
+
                String path=ChatCoordinator.getInstance().getCurrentChatController().reciveFile(fileName);
                 System.out.println(path +"/"+fileName);
 
