@@ -2,6 +2,7 @@ package gov.iti.jets;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -43,6 +44,7 @@ public class Main extends Application {
         // primaryStage.setMinWidth(1315);
         // primaryStage.setMaxHeight(915);
 
+        primaryStage.getIcons().add(new Image(getClass().getResource("/images/logo.png").toString()));
         primaryStage.show();
 
     }
