@@ -2,6 +2,7 @@ package gov.iti.jets.dto;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class MessageDto implements Serializable {
     private String sender;
@@ -32,7 +33,7 @@ public class MessageDto implements Serializable {
 
     private String reciver;
 
-    private Date messageDate;
+    private Timestamp messageDate;
 
     // public MessageDto(String message, int fontSize, String fontStyle, String
     // fontColor, String backgroundColor,
@@ -47,11 +48,11 @@ public class MessageDto implements Serializable {
     // this.isItalic = isItalic;
     // }
 
-    public Date getMessageDate() {
+    public Timestamp getMessageDate() {
         return messageDate;
     }
 
-    public void setMessageDate(Date messageDate) {
+    public void setMessageDate(Timestamp messageDate) {
         this.messageDate = messageDate;
     }
 

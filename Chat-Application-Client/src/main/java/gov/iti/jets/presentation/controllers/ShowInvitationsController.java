@@ -9,6 +9,8 @@ import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.CurrentUserModel;
 import gov.iti.jets.business.services.ContactService;
 import gov.iti.jets.business.services.RequestService;
+import gov.iti.jets.dto.ContactDto;
+import gov.iti.jets.dto.UserDto;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -87,6 +89,17 @@ public class ShowInvitationsController implements Initializable {
                 public void handle(ActionEvent event) {
                     System.out.println("Accept " + label.getText() + " : " + label.getId());
                     contactService.acceptContact(currentUserNumber, label.getId());
+
+                    var moel = ModelsFactory.getInstance().getContactsModel();
+                    UserDto ud =  moel.getContactDataByNumber(label.getId());
+
+                    ContactDto cc = new ContactDto();
+                    cc.setFriendName(ud.getName());
+                    cc.setFriendPhoneNumber(ud.getPhoneNumber());
+                    cc.setImage(ud.getImage());
+
+                    moel.setContacts(cc);
+
                     requestService.deleteRequest(label.getId(), currentUserNumber);
                     getListView().getItems().remove(getItem());
                 }

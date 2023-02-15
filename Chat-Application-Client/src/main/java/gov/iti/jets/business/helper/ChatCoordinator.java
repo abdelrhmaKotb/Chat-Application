@@ -114,10 +114,19 @@ public class ChatCoordinator {
                     isGroup = false;
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/message.fxml"));
                     MessageController c = new MessageController();
+                    c.setPho(phone);
 
                     loader.setController(c);
                     Parent view = loader.load();
                     c.setReciverName(phone);
+                   
+
+                    c.setReciverName(phone);
+
+                    // c.setNameText(contactDto.getName());
+
+                    // c.setUserDto(contactDto);
+
                     ChatData chatData = new ChatData(loader, view, phone, false);
                     currentChat = chatData;
                     chats.put(phone, chatData);
@@ -151,19 +160,18 @@ public class ChatCoordinator {
                     isGroup = false;
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/message.fxml"));
                     MessageController c = new MessageController();
-
+                    c.setPho(phone);
                     loader.setController(c);
                     Parent view = loader.load();
 
-                    UserDto contactDto = ModelsFactory.getInstance().getContactsModel()
-                            .getContactDataByNumber(phone);
+                    // UserDto contactDto = ModelsFactory.getInstance().getContactsModel()
+                    //         .getContactDataByNumber(phone);
 
-                    c.setReciverName(phone);
+                    // c.setReciverName(phone);
 
                     // c.setNameText(contactDto.getName());
 
-                    c.setUserDto(contactDto);
-
+                    // c.setUserDto(contactDto);
 
                     ChatData chatData = new ChatData(loader, view, phone, false);
                     chats.put(phone, chatData);

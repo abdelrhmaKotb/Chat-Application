@@ -42,6 +42,17 @@ public class SendMsgController implements Initializable {
     MessageDto msgDto;
     @FXML
     Text senderName;
+
+    boolean isOld = false;
+    
+    public boolean isOld() {
+        return isOld;
+    }
+
+    public void setOld(boolean isOld) {
+        this.isOld = isOld;
+    }
+
     public SendMsgController(MessageDto messageDto, boolean recieve) {
         content = (messageDto.getMessage());
         this.recieve = recieve;
@@ -86,21 +97,39 @@ public class SendMsgController implements Initializable {
         msg.setMaxWidth(250);
         msg.setText(content);
         msg.setMaxHeight( Double.MAX_VALUE );
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        if(isOld){
+           var date = msgDto.getMessageDate();
+           final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+           timeText.setText(sdf.format(date));
+           System.out.println("old " + date);
+        }else{
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            timeText.setText(sdf.format(timestamp));
+        }
         //msg.setText(mDto.getMessage() + "\n[" + sdf.format(timestamp) + "]");
-        timeText.setText(sdf.format(timestamp));
         setMsgFormat();
     }
 
     void setMsgFormat() {
-        ContactDto contactDto;
+        ContactDto contactDto = new ContactDto();
         ChatData chat = ChatCoordinator.getInstance().getCurrentChat();
 
             if (!recieve && !chat.isGroup()) {
                 ModelsFactory modelsFactory = ModelsFactory.getInstance();
                 ContactsModel contactsModel = modelsFactory.getContactsModel();
-                contactDto = contactsModel.getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+
+                if(isOld){
+                    contactDto.setBold(msgDto.isBold());
+                    contactDto.setItalic(msgDto.isItalic());
+                    contactDto.setUnderlined(msgDto.isUnderlined());
+                    contactDto.setBackgroundColor(msgDto.getBackgroundColor());
+                    contactDto.setFontColor(msgDto.getFontColor());
+                    contactDto.setFontSize(msgDto.getFontSize());
+                    contactDto.setFontStyle(msgDto.getFontStyle());
+                }else{
+                    contactDto = contactsModel.getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+                }
 
                 System.out.println(contactDto + "contactDto");
                 System.out.println("-fx-background-color: " + contactDto.getBackgroundColor() + "; -fx-font-size:" + contactDto.getFontSize() +

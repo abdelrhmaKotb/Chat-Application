@@ -51,24 +51,28 @@ public class MessageImpl implements MessageDao {
         try (Connection con = DBConnecttion.getConnection();) {
 
             PreparedStatement stmt = con.prepareStatement("""
-                      SELECT * FROM message WHERE sender = ? and reciver = ?
+                      SELECT * FROM message WHERE (sender = ? and reciver = ?) || (sender = ? and reciver = ? ) order by message_date
                     """);
             stmt.setString(1, ssender);
             stmt.setString(2, reciver);
+            stmt.setString(3, reciver);
+            stmt.setString(4, ssender);
 
             ResultSet res = stmt.executeQuery();
 
             while (res.next()) {
-                messages.add(new MessageDto(res.getString("sender"),
-                        res.getString("content"),
-                        res.getInt("fontSize"),
-                        res.getString("fontStyle"),
-                        res.getString("fontColor"),
-                        res.getString("backgroundColor"),
-                        res.getBoolean("isBold"),
-                        res.getBoolean("isUnderlined"),
-                        res.getBoolean("isUnderlined"),
-                        res.getString("reciver")));
+                var message = new MessageDto(res.getString("sender"),
+                res.getString("content"),
+                res.getInt("fontSize"),
+                res.getString("fontStyle"),
+                res.getString("fontColor"),
+                res.getString("backgroundColor"),
+                res.getBoolean("isBold"),
+                res.getBoolean("isUnderlined"),
+                res.getBoolean("isUnderlined"),
+                res.getString("reciver"));
+                message.setMessageDate(res.getTimestamp("message_date"));
+                messages.add(message);
             }
 
             return messages;
