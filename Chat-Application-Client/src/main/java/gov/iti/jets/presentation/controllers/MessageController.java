@@ -70,6 +70,8 @@ public class MessageController implements Initializable {
 
     String pho;
 
+    private boolean chatBotOpen = false;
+
     public String getPho() {
         return pho;
     }
@@ -225,7 +227,9 @@ public class MessageController implements Initializable {
         chatComponent(false, msg, false);
     }
 
-    public void recive(MessageDto mDto) {
+    public void recive(MessageDto mDto) throws Exception {
+
+        
         chatComponent(true, mDto, false);
         ShowPopUp showPopUp = new ShowPopUp();
         showPopUp.showNotifacation(mDto.getSender() + "Sent you new message");
@@ -237,6 +241,15 @@ public class MessageController implements Initializable {
 
         // by setting this property to true, the audio will be played
         mediaPlayer.setAutoPlay(true);
+        if(chatBotOpen){
+              
+              String chatbotResult=chatBot.getMessageFromChatBot(mDto.getMessage());
+              System.out.println("chat result"+chatbotResult);
+
+              chatBotSendMessage(chatbotResult);
+              
+              
+        }
     }
 
     public void setRecievedMsg(String msg) {
@@ -418,60 +431,67 @@ public class MessageController implements Initializable {
         return path;
     }
 
-
     @FXML
     void chatbotAction(MouseEvent event) throws Exception {
 
-            ChatData chat = ChatCoordinator.getInstance().getCurrentChat();
+      chatBotOpen=!chatBotOpen;
+      System.out.println("current state of chatbot"+chatBotOpen);
 
-            // msg.setReciver(chat.getIdntifier());
+    }
 
-            MessageDto msg = null;
+    public void chatBotSendMessage(String txt) throws Exception {
 
-            try {
-                if (chat.isGroup()) {
+        ChatData chat = ChatCoordinator.getInstance().getCurrentChat();
 
-                    ModelsFactory modelsFactory = ModelsFactory.getInstance();
-                    GroupsModel groupsModel = modelsFactory.getGroups();
-                    GroupsMembersDto groupsMembersDto = groupsModel
-                            .getGroupByGroup_id(Integer.parseInt(ChatCoordinator.getInstance().getCurrentChatOpen()));
-                    msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
-                            msgTextField.getText(), groupsMembersDto.getFontSize(), groupsMembersDto.getFontStyle(),
-                            groupsMembersDto.getFontColor(),
-                            groupsMembersDto.getBackgroundColor(), groupsMembersDto.isBold(),
-                            groupsMembersDto.isUnderlined(), groupsMembersDto.isItalic(), chat.getIdntifier());
-                    // msg.setReciver(chat);
+        // msg.setReciver(chat.getIdntifier());
 
-                    msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
-                    // currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
-                    msg.setMessage(chatBot.getMessageFromChatBot("hello"));
+        MessageDto msg = null;
 
-                    RMIConnection.getServerServive().sendGroupMessage(msg);
-                } else {
+        try {
+            if (chat.isGroup()) {
 
-                    ModelsFactory modelsFactory = ModelsFactory.getInstance();
-                    ContactsModel contactsModel = modelsFactory.getContactsModel();
-                    ContactDto contactDto = contactsModel
-                            .getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
-                    msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
-                            msgTextField.getText(), contactDto.getFontSize(), contactDto.getFontStyle(),
-                            contactDto.getFontColor(),
-                            contactDto.getBackgroundColor(), contactDto.isBold(), contactDto.isUnderlined(),
-                            contactDto.isItalic(), chat.getIdntifier());
-                    // msg.setReciver(chat);
-                    msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
-                    msg.setMessage(chatBot.getMessageFromChatBot("hello"));
+                ModelsFactory modelsFactory = ModelsFactory.getInstance();
+                GroupsModel groupsModel = modelsFactory.getGroups();
+                GroupsMembersDto groupsMembersDto = groupsModel
+                        .getGroupByGroup_id(Integer.parseInt(ChatCoordinator.getInstance().getCurrentChatOpen()));
+                msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
+                        txt, groupsMembersDto.getFontSize(), groupsMembersDto.getFontStyle(),
+                        groupsMembersDto.getFontColor(),
+                        groupsMembersDto.getBackgroundColor(), groupsMembersDto.isBold(),
+                        groupsMembersDto.isUnderlined(), groupsMembersDto.isItalic(), chat.getIdntifier());
+                // msg.setReciver(chat);
 
-                    RMIConnection.getServerServive().send(msg);
-                    System.out.println("Message Sent");
-                }
+                msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
+                // currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
+                msg.setMessage(txt);
 
-            } catch (RemoteException e) {
-                e.printStackTrace();
-                new ShowPopUp().notifyServerDown();
+                RMIConnection.getServerServive().sendGroupMessage(msg);
+
+            } else {
+
+                ModelsFactory modelsFactory = ModelsFactory.getInstance();
+                ContactsModel contactsModel = modelsFactory.getContactsModel();
+                ContactDto contactDto = contactsModel
+                        .getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+                msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
+                        txt, contactDto.getFontSize(), contactDto.getFontStyle(),
+                        contactDto.getFontColor(),
+                        contactDto.getBackgroundColor(), contactDto.isBold(), contactDto.isUnderlined(),
+                        contactDto.isItalic(), chat.getIdntifier());
+                // msg.setReciver(chat);
+                msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
+                msg.setMessage(txt);
+
+                RMIConnection.getServerServive().send(msg);
+                System.out.println("Message Sent");
             }
-            chatComponent(false, msg, false);
-        }
 
-    
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
+        }
+        chatComponent(false, msg, false);
+
+    }
+
 }

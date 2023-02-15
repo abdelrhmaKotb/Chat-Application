@@ -44,8 +44,8 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                 // MessageController.messageController.recive(Message);
                 // String r = Message.getReciver();
                 // ChatCoordinator.getInstance().getCurrentChatController().recive(Message);
-                ChatCoordinator.getInstance().getChatController(Message.getSender()).recive(Message);
                 try {
+                    ChatCoordinator.getInstance().getChatController(Message.getSender()).recive(Message);
                     RMIConnection.getServerServive().createMessage(Message);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -64,8 +64,8 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                 // MessageController.messageController.recive(Message);
                 // String r = Message.getReciver();
                 // ChatCoordinator.getInstance().getCurrentChatController().recive(Message);
-                ChatCoordinator.getInstance().getChatController(Message.getReciver()).recive(Message);
                 try {
+                    ChatCoordinator.getInstance().getChatController(Message.getReciver()).recive(Message);
                     RMIConnection.getServerServive().createMessage(Message);
                 } catch (Exception e) {
                     e.printStackTrace();
