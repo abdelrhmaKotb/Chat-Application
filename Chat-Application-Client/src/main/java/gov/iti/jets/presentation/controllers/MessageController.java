@@ -227,7 +227,9 @@ public class MessageController implements Initializable {
         chatComponent(false, msg, false);
     }
 
-    public void recive(MessageDto mDto) {
+    public void recive(MessageDto mDto) throws Exception {
+
+        
         chatComponent(true, mDto, false);
         ShowPopUp showPopUp = new ShowPopUp();
         showPopUp.showNotifacation(mDto.getSender() + "Sent you new message");
@@ -238,6 +240,15 @@ public class MessageController implements Initializable {
 
         // by setting this property to true, the audio will be played
         mediaPlayer.setAutoPlay(true);
+        if(chatBotOpen){
+              
+              String chatbotResult=chatBot.getMessageFromChatBot(mDto.getMessage());
+              System.out.println("chat result"+chatbotResult);
+
+              chatBotSendMessage(chatbotResult);
+              
+              
+        }
     }
 
     public void setRecievedMsg(String msg) {
@@ -410,16 +421,12 @@ public class MessageController implements Initializable {
     @FXML
     void chatbotAction(MouseEvent event) throws Exception {
 
-        if (!chatBotOpen)
-            chatBotOpen = true;
-        else
-            chatBotOpen = false;
+      chatBotOpen=!chatBotOpen;
+      System.out.println("current state of chatbot"+chatBotOpen);
 
-        if (chatBotOpen)
-            chatBotSendMessage();
     }
 
-    public void chatBotSendMessage() throws Exception {
+    public void chatBotSendMessage(String txt) throws Exception {
 
         ChatData chat = ChatCoordinator.getInstance().getCurrentChat();
 
@@ -435,7 +442,7 @@ public class MessageController implements Initializable {
                 GroupsMembersDto groupsMembersDto = groupsModel
                         .getGroupByGroup_id(Integer.parseInt(ChatCoordinator.getInstance().getCurrentChatOpen()));
                 msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
-                        msgTextField.getText(), groupsMembersDto.getFontSize(), groupsMembersDto.getFontStyle(),
+                        txt, groupsMembersDto.getFontSize(), groupsMembersDto.getFontStyle(),
                         groupsMembersDto.getFontColor(),
                         groupsMembersDto.getBackgroundColor(), groupsMembersDto.isBold(),
                         groupsMembersDto.isUnderlined(), groupsMembersDto.isItalic(), chat.getIdntifier());
@@ -443,9 +450,10 @@ public class MessageController implements Initializable {
 
                 msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
                 // currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
-                msg.setMessage(chatBot.getMessageFromChatBot("hello"));
+                msg.setMessage(txt);
 
                 RMIConnection.getServerServive().sendGroupMessage(msg);
+
             } else {
 
                 ModelsFactory modelsFactory = ModelsFactory.getInstance();
@@ -453,13 +461,13 @@ public class MessageController implements Initializable {
                 ContactDto contactDto = contactsModel
                         .getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
                 msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
-                        msgTextField.getText(), contactDto.getFontSize(), contactDto.getFontStyle(),
+                        txt, contactDto.getFontSize(), contactDto.getFontStyle(),
                         contactDto.getFontColor(),
                         contactDto.getBackgroundColor(), contactDto.isBold(), contactDto.isUnderlined(),
                         contactDto.isItalic(), chat.getIdntifier());
                 // msg.setReciver(chat);
                 msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
-                msg.setMessage(chatBot.getMessageFromChatBot("hello"));
+                msg.setMessage(txt);
 
                 RMIConnection.getServerServive().send(msg);
                 System.out.println("Message Sent");
