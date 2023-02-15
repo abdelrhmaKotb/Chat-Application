@@ -16,10 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
-//    public   List<Client> clients = new ArrayList<>();
+    // public List<Client> clients = new ArrayList<>();
 
     public static Map<String, Client> clientsMap = new HashMap<>();
-
 
     public ServerImpl() throws RemoteException {
         super();
@@ -34,7 +33,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         // clients.add(client);
         clientsMap.put(client.getPhoneNumber(), client);
         System.out.println(clientsMap.keySet());
-         System.out.println(client.getPhoneNumber() + " phone");
+        System.out.println(client.getPhoneNumber() + " phone");
         System.out.println(clientsMap);
         ChartController.chartController.updateOnlineAndOfline();
 
@@ -48,7 +47,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         ChartController.chartController.updateOnlineAndOfline();
 
         notifyUsersOffline(client);
-        //  System.out.println(clients);
+        // System.out.println(clients);
     }
 
     @Override
@@ -84,6 +83,10 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         System.out.println(reciverr);
         System.out.println(clientsMap.keySet());
         // System.out.println(impl.getChatMessages(message.getSender(), message.getReciver()));
+        // MessageImpl impl = new MessageImpl();
+        // impl.createMessage(message);
+        // System.out.println(impl.getChatMessages(message.getSender(),
+        // message.getReciver()));
         if (clientsMap.containsKey(reciverr)) {
             System.out.println("yes contains " + clientsMap.size() + " " + clientsMap.get(reciverr).getPhoneNumber());
             Client reciver = clientsMap.get(reciverr);
@@ -153,7 +156,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         }
 
     }
-       
 
     @Override
     public List<String> getnameOfContacts(String currentUserNumber) throws RemoteException {
@@ -224,9 +226,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         User userEntity = userMapper.toEntity(uDto);
         boolean isUpdated = userDao.updateUser(userEntity);
 
-        //notfiy my contats with changes 
+        // notfiy my contats with changes
 
-        String myPhone =  uDto.getPhoneNumber();
+        String myPhone = uDto.getPhoneNumber();
         ContactImpl contactImpl = new ContactImpl();
 
         var listOfContatcs = contactImpl.getContactsForUser(myPhone);
@@ -247,8 +249,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
         ChartController.chartController.updatePieChart();
         ChartController.chartController.updateBarChart();
-
-
 
         return isUpdated;
     }
@@ -277,10 +277,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         ContactImpl contactImpl = new ContactImpl();
         Contact contact = new Contact(currentUser, friendNumber);
         contactImpl.create(contact);
-        notifyAcceptRequest(currentUser,friendNumber);
+        notifyAcceptRequest(currentUser, friendNumber);
     }
 
-  
     @Override
     public void deleteRequest(String sender, String currentUser) throws RemoteException {
         RequestImpl requestImpl = new RequestImpl();
@@ -288,12 +287,12 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         requestImpl.deleteRequest(request);
     }
 
-    @Override 
-    public ArrayList<CountryDto> getCountriesNames() throws RemoteException{
-             return new countryDaoImpl().getCountries();
+    @Override
+    public ArrayList<CountryDto> getCountriesNames() throws RemoteException {
+        return new countryDaoImpl().getCountries();
 
     }
-    
+
     public UserDtoSignup Signup(UserDtoSignup signupDto) throws RemoteException {
         System.out.println("inside function signup");
         UserImpl userDao = new UserImpl();
@@ -310,7 +309,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return new UserSignupMapperImpl().toDto(user);
     }
 
-
     @Override
     public boolean isUserOnline(ContactDto user) throws RemoteException {
         return clientsMap.containsKey(user.getFriendPhoneNumber());
@@ -325,8 +323,8 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         System.out.println(members.size() + " size is ");
         members.forEach(e -> {
 
-            System.out.println(e +" is and in loop");
-            
+            System.out.println(e + " is and in loop");
+
             if (!e.equals(messageDto.getSender())) {
                 System.out.println(e + " hereee");
                 if (clientsMap.containsKey(e)) {
@@ -340,6 +338,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             }
         });
     }
+
     public void msgSettings(ContactDto cDto) {
         ContactImpl contactImpl = new ContactImpl();
         ContactMapper contactMapper = new ContactMapper();
@@ -347,6 +346,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         contactImpl.updateMsgSettings(contact);
 
     }
+
     public void msgSettings(GroupsMembersDto gDto) {
         GroupMembersImpl groupMembersImpl = new GroupMembersImpl();
         GroupMembersMapper groupMembersMapper = new GroupMembersMapper();
@@ -354,72 +354,74 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         groupMembersImpl.editGroupMemberStyle(group);
 
     }
-    public List<GroupsMembersDto> getMyGroupsStyle(String phoneNumber){
+
+    public List<GroupsMembersDto> getMyGroupsStyle(String phoneNumber) {
         return new GroupMembersImpl().getGroupMembersByUserPhoneNum(phoneNumber);
     }
+
     @Override
     public List<UserDto> getUsersByNumber(List<String> phoneNumber) {
         UserImpl userImp = new UserImpl();
         List<User> listOfUsers = userImp.getUsersByNumbers(phoneNumber);
-        List<UserDto> userDtos=new ArrayList<>();
-        int len=listOfUsers.size();
+        List<UserDto> userDtos = new ArrayList<>();
+        int len = listOfUsers.size();
         UserMapper userMapper = new UserMapper();
-        for(int i=0;i<len;i++)
-        userDtos.add(userMapper.toDto(listOfUsers.get(i)));
+        for (int i = 0; i < len; i++)
+            userDtos.add(userMapper.toDto(listOfUsers.get(i)));
         return userDtos;
     }
 
     @Override
     public void notifySendRequest(String sender, String reciver) throws RemoteException {
         System.out.println("function notift");
-        if(!clientsMap.containsKey(reciver)){
+        if (!clientsMap.containsKey(reciver)) {
             System.out.println("not here");
             return;
         }
 
         UserImpl dao = new UserImpl();
-        User user =  dao.seletcByPhoneNumber(sender);
+        User user = dao.seletcByPhoneNumber(sender);
         UserDto dto = new UserMapper().toDto(user);
 
         clientsMap.get(reciver).userNotifyRequest(dto);
 
     }
 
-
-    public void notifyAcceptRequest(String sender, String reciver) throws RemoteException{
+    public void notifyAcceptRequest(String sender, String reciver) throws RemoteException {
         System.out.println("function notift");
-        if(!clientsMap.containsKey(reciver)){
+        if (!clientsMap.containsKey(reciver)) {
             System.out.println(reciver + "not here");
             return;
         }
 
         UserImpl dao = new UserImpl();
-        User user =  dao.seletcByPhoneNumber(sender);
+        User user = dao.seletcByPhoneNumber(sender);
         UserDto dto = new UserMapper().toDto(user);
 
         clientsMap.get(reciver).userNotifyAcceptRequest(dto);
     }
-   @Override
-    public void sendFile(String recieverPhone, String fileName, byte[] data) throws RemoteException {
-       Client reciver = clientsMap.get(recieverPhone);
-       reciver.recieveFile(fileName,data);
-    }
+
     @Override
-    public void sendFileGroup(int group_id,String senderPhone ,String fileName, byte[] data) throws RemoteException {
+    public void sendFile(String recieverPhone, String fileName, byte[] data) throws RemoteException {
+        Client reciver = clientsMap.get(recieverPhone);
+        reciver.recieveFile(fileName, data);
+    }
+
+    @Override
+    public void sendFileGroup(int group_id, String senderPhone, String fileName, byte[] data) throws RemoteException {
         GroupImpl groupImpl = new GroupImpl();
         var members = groupImpl.getGroupMember(group_id);
 
-
         members.forEach(e -> {
 
-            System.out.println(e +" is and in loop");
+            System.out.println(e + " is and in loop");
 
             if (!e.equals(senderPhone)) {
                 System.out.println(e + " hereee");
                 if (clientsMap.containsKey(e)) {
                     System.out.println(e + " send to");
                     try {
-                        clientsMap.get(e).recieveFile(fileName,data);
+                        clientsMap.get(e).recieveFile(fileName, data);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -427,7 +429,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             }
         });
     }
-
 
     @Override
     public List<MessageDto> getMessages(String sender, String Reciver) throws RemoteException {
@@ -439,5 +440,21 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         UserImpl impl = new UserImpl();
         return new UserMapper().toDto(impl.getUser(phone));
     }
+
+   
+    @Override
+    public void serverAnnoncementNotify(String txt) throws RemoteException {
+     
+        for ( String key : clientsMap.keySet() ) {
+            clientsMap.get(key).serverAnnoncementNotify(txt);
+
+        }
+        
+    }
+
+ 
+
+   
+
 
 }
