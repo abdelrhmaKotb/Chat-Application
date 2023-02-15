@@ -31,6 +31,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
 import gov.iti.jets.business.models.GroupsModel;
 import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ModelsFactory;
@@ -131,7 +133,7 @@ public class GroupsController implements Initializable {
          * setText(null);
          * setGraphic(null);
          * 
-         * } else {
+         * } else { 
          * setGraphic(null);
          * setText(item.getName());
          * }
@@ -172,5 +174,14 @@ public class GroupsController implements Initializable {
         stage.setResizable(false);
         stage.showAndWait();
     }
+
+    @FXML
+    public void handelShearch() {
+        groupsListView.setItems(FXCollections.observableArrayList(
+            groupList.stream().filter(e -> e.getName().contains(searchTextField.getText()))
+                        .collect(Collectors.toList())));
+
+    }
+
 
 }

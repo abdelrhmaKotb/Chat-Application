@@ -131,7 +131,7 @@ public class MessageController implements Initializable {
                 userImage = new Image(getClass().getResource("/images/person1.png").toString());
             }
             circle.setFill(new ImagePattern(userImage));
-            nameText.setText(userDto.getName());
+            nameText.setText(userDto.getName()); 
         } else {
             circle.setStroke(null);
             Image userImage = new Image(getClass().getResource("/images/gg.png").toString());
@@ -139,20 +139,21 @@ public class MessageController implements Initializable {
         }
 
         try {
-            System.out.println("current user " + ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber()
-                    + " chat with " + userDto.getPhoneNumber());
+            // System.out.println("current user " + ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber()
+            //         + " chat with " + userDto.getPhoneNumber());
 
-            List<MessageDto> messages = RMIConnection.getServerServive().getMessages(
-                    ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(), userDto.getPhoneNumber());
-
-            messages.forEach(e -> {
-                if (e.getSender().equals(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber())) {
-                    chatComponent(false, e, true);
-                } else {
-                    chatComponent(true, e, true);
-                }
-            });
-            System.out.println(messages);
+            if(!ChatCoordinator.isIsGroup()){
+                List<MessageDto> messages = RMIConnection.getServerServive().getMessages(
+                        ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(), userDto.getPhoneNumber());
+    
+                messages.forEach(e -> {
+                    if (e.getSender().equals(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber())) {
+                        chatComponent(false, e, true);
+                    } else {
+                        chatComponent(true, e, true);
+                    }
+                });
+            }
         } catch (RemoteException ex) {
             ex.printStackTrace();
             new ShowPopUp().notifyServerDown();
@@ -225,6 +226,7 @@ public class MessageController implements Initializable {
         ShowPopUp showPopUp = new ShowPopUp();
         showPopUp.showNotifacation(mDto.getSender() + "Sent you new message");
         Media media = new Media(getClass().getResource("/Audio/notification_tone.mp3").toString());
+
 
         // Instantiating MediaPlayer class
         MediaPlayer mediaPlayer = new MediaPlayer(media);

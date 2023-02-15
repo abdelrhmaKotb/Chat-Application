@@ -21,4 +21,5 @@ public interface Client extends Remote{
     void notifyServerNotAvalible() throws RemoteException;
     void notifyServerAvaliable() throws RemoteException;
     boolean areYouThere() throws RemoteException;
+    void reciveMessageGroup(MessageDto dto) throws RemoteException;
 }
