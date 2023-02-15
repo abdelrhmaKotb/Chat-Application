@@ -46,7 +46,9 @@ public class GeneratePlainPassword {
         String password = "";
         Properties prop = new Properties();
         InputStream input = null;
-        input = new FileInputStream("D:\\Group3_Chatting Application\\Group3_Chatting Application\\Group3_Chatting Application\\github\\Chat-Application\\Chat-Application-Client\\keypassword.txt");
+        input = new FileInputStream("keypassword.txt");
+
+        System.out.println(input);
          //load a properties file
         prop.load(input);
         String phoneNumber = prop.getProperty("PhoneNumber");
