@@ -73,4 +73,6 @@ public interface Server extends Remote {
 
     List<MessageDto> getMessages(String sender,String Reciver) throws RemoteException;
 
+     void sendAnnoncement() throws RemoteException;
+
 }

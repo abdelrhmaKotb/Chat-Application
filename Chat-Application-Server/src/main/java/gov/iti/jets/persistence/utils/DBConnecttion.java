@@ -20,7 +20,7 @@ public class DBConnecttion {
         // dbConnecttion.loadProp();
         try {
             // con = DriverManager.getConnection(prop.getProperty("MYSQL_DB_URL"), prop.getProperty("MYSQL_DB_USERNAME"),
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/chat_application", "root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/chat_application", "root","root");
                     System.out.println("connected");
         } catch (SQLException e) {
             e.printStackTrace();

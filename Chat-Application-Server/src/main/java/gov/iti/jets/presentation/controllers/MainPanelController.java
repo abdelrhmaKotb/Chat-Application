@@ -42,56 +42,50 @@ public class MainPanelController implements Initializable {
     @FXML
     private Button logout;
 
-   
-  
+    @FXML
+    private Button sendMessage;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         stopSerververId.setDisable(false);
         startSerververId.setDisable(true);
 
-        Parent parent;
+   /*      Parent parent;
         try {
             parent = FXMLLoader.load(getClass().getResource("/views/charts.fxml"));
             borderPane.setCenter(parent);
 
         } catch (IOException ex) {
             Logger.getLogger(MainPanelController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
+        loadFXML("charts");
     }
 
     @FXML
     void startHover(DragEvent event) {
-        System.out.println("yassin");
 
     }
 
     @FXML
     private void clear() {
-        
+
         borderPane.setCenter(null);
     }
-
-    
-
 
     @FXML
     private void close() throws IOException {
 
-     System.exit(0);
+        System.exit(0);
     }
-
-   
-  
 
     @FXML
     private void stopServerAction(ActionEvent e) {
         RMIConnection rmi = RMIConnection.getInstance();
-         rmi.discConnect();
-         stopSerververId.setDisable(true);
-         startSerververId.setDisable(false);
+        rmi.discConnect();
+        stopSerververId.setDisable(true);
+        startSerververId.setDisable(false);
     }
 
-    
     @FXML
     void startServerAction(ActionEvent event) {
         stopSerververId.setDisable(false);
@@ -101,5 +95,24 @@ public class MainPanelController implements Initializable {
         rmi.reconnect();
     }
 
-   
+    @FXML
+    void sendMessageAction(ActionEvent event) {
+
+        loadFXML("chat");
+
+    }
+
+    @FXML
+    private void loadFXML(String fileName) {
+        Parent parent;
+        try {
+            parent = FXMLLoader.load(getClass().getResource("/views/" + fileName + ".fxml"));
+            borderPane.setCenter(parent);
+           
+          
+
+        } catch (IOException ex) {
+            Logger.getLogger(MainPanelController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
