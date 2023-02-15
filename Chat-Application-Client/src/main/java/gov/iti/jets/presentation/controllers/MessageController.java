@@ -10,6 +10,7 @@ import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.GroupsMembersDto;
 import gov.iti.jets.dto.MessageDto;
+import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,22 +21,23 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Path;
 import java.rmi.RemoteException;
@@ -58,6 +60,8 @@ public class MessageController implements Initializable {
     Parent root;
     @FXML
     ScrollPane scroll;
+    @FXML
+    Text nameText;
     public static MessageController messageController;
     CurrentUserModel currentUserModel;
 
@@ -79,6 +83,28 @@ public class MessageController implements Initializable {
             }
         });
         scroll.vvalueProperty().bind(msgvBox.heightProperty());
+
+        if (!ChatCoordinator.isIsGroup()) {
+            ModelsFactory modelsFactory = ModelsFactory.getInstance();
+            ContactsModel contactsModel = modelsFactory.getContactsModel();
+            // contactsModel.getContactByPhoneNumber( ChatCoordinator.getCurrentPhone());
+            UserDto userDto = contactsModel.getContactDataByNumber(ChatCoordinator.getCurrentPhone());
+            circle.setStroke(null);
+            Image userImage;
+            try {
+                 userImage = new Image(new ByteArrayInputStream(userDto.getImage()));
+            }
+            catch (Exception e) {
+                userImage=new Image(getClass().getResource("/images/person1.png").toString());
+            }
+            circle.setFill(new ImagePattern(userImage));
+            nameText.setText(userDto.getName());
+        }
+        else {
+            circle.setStroke(null);
+            Image userImage = new Image(getClass().getResource("/images/gg.png").toString());
+            circle.setFill(new ImagePattern(userImage));
+        }
 
     }
 
@@ -139,6 +165,15 @@ public class MessageController implements Initializable {
 
     public void recive(MessageDto mDto) {
         chatComponent(true, mDto);
+        ShowPopUp showPopUp = new ShowPopUp();
+        showPopUp.showNotifacation(mDto.getSender() + "Sent you new message");
+        Media media = new Media(getClass().getResource("/Audio/notification_tone.mp3").toString());
+
+        //Instantiating MediaPlayer class
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+
+        //by setting this property to true, the audio will be played
+        mediaPlayer.setAutoPlay(true);
     }
 
     public void setRecievedMsg(String msg) {
