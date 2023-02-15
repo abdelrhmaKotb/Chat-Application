@@ -6,6 +6,7 @@
 package gov.iti.jets.presentation.controllers;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 import gov.iti.jets.business.rmi.RMIConnection;
@@ -68,15 +69,10 @@ public class ChatController implements Initializable {
     }
 
     @FXML
-    void sendAction(MouseEvent event) {
-        send();
+    void sendAction(MouseEvent event) throws RemoteException {
 
-    }
-
-    public void send() {
-          
-
-        System.out.println("hello");
+        ServerImpl s=new ServerImpl();
+        s.serverAnnoncementNotify(msgTextField.getText().trim());;
     }
 
     @Override

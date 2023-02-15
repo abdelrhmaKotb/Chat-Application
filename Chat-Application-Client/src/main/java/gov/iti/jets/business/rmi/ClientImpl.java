@@ -264,4 +264,23 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
     public boolean areYouThere() throws RemoteException {
         return true;
     }
+
+
+    @Override
+    public void serverAnnoncementNotify(String txt) throws RemoteException {
+     
+
+
+          ShowPopUp showPopUp = new ShowPopUp();
+          Platform.runLater(new Runnable() {
+              @Override
+              public void run() {
+                  showPopUp.showNotifacation(txt);
+                  NavCoordinator.getNotificationController()
+                          .addInListOfNotifications(txt);
+  
+              }
+          });
+        
+    }
 }

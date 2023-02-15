@@ -429,10 +429,18 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return new MessageImpl().getChatMessages(sender, Reciver);
     }
 
+   
     @Override
-    public void sendAnnoncement() throws RemoteException {
+    public void serverAnnoncementNotify(String txt) throws RemoteException {
+     
+        for ( String key : clientsMap.keySet() ) {
+            clientsMap.get(key).serverAnnoncementNotify(txt);
+
+        }
         
     }
+
+ 
 
    
 
