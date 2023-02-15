@@ -66,7 +66,8 @@ public class StageCoordinator {
             SceneData logiSceneData = scenes.get("login");
             primaryStage.setScene(logiSceneData.getScene());
         }
-
+        primaryStage.setWidth(1315);
+        primaryStage.setHeight(915);
         primaryStage.setTitle("login");
 
     }
@@ -97,7 +98,8 @@ public class StageCoordinator {
             SceneData logiSceneData = scenes.get("signup");
             primaryStage.setScene(logiSceneData.getScene());
         }
-
+        primaryStage.setWidth(1315);
+        primaryStage.setHeight(915);
         primaryStage.setTitle("signup");
 
     }
@@ -193,5 +195,35 @@ public class StageCoordinator {
                 }
               }
           });
+    }
+
+    public void moveToIPAddress() {
+        if (primaryStage == null) {
+            throw new RuntimeException("primary stage not set");
+        }
+
+        if (!scenes.containsKey("IPAddress")) {
+            System.out.println("loaded new one");
+            System.out.println(scenes);
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/IPAddress.fxml"));
+                Parent view = loader.load();
+                Scene chatScene = new Scene(view);
+                SceneData logiSceneData = new SceneData(loader, view, chatScene);
+                scenes.put("IPAddress", logiSceneData);
+                primaryStage.setScene(chatScene);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            System.out.println("loaded existing one");
+            SceneData logiSceneData = scenes.get("IPAddress");
+            primaryStage.setScene(logiSceneData.getScene());
+        }
+
+        primaryStage.setTitle("IP Address");
+
     }
 }

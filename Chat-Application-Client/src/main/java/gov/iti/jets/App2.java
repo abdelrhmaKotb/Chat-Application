@@ -71,11 +71,12 @@ public class App2 extends Application {
             }
 
         } else
-            coordinator.moveToLogin();
+            coordinator.moveToIPAddress();
+
 
         primaryStage.setMinWidth(1315);
         primaryStage.setMaxHeight(915);
-        
+       
         primaryStage.show();
 
     }
@@ -87,21 +88,21 @@ public class App2 extends Application {
 
     @Override
     public void init() throws Exception {
-        try {
+        // try {
 
-            RMIConnection rmi = RMIConnection.getInstance();
-            rmi.connect("localhost");
-            // client = new ClientImpl();
+        //     RMIConnection rmi = RMIConnection.getInstance();
+        //     rmi.connect(rmi.getSERVER_IP());
+        //     // client = new ClientImpl();
 
-            // Server serverServices = (Server)
-            // Naming.lookup("rmi://localhost:14785/serverService");
+        //     // Server serverServices = (Server)
+        //     // Naming.lookup("rmi://localhost:14785/serverService");
 
-            // serverServices.register(client);
+        //     // serverServices.register(client);
 
-            // serverServices.sayHello();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //     // serverServices.sayHello();
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+        // }
 
     }
 
