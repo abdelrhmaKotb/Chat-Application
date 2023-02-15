@@ -17,7 +17,7 @@ public class RMIConnection {
     private static Server serverServices = null;
     private static Client currentClientConnection = null;
     private static Registry registry;
-    private static String IP = "localhost";
+    private static String IP ;
 
     public  String getSERVER_IP() {
         return IP;
