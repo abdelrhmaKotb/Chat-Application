@@ -1,13 +1,24 @@
 package gov.iti.jets.presentation.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.Arrays;
 // import java.util.Date;
 import java.util.ResourceBundle;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
 import gov.iti.jets.business.services.LoginService;
 import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.presentation.utils.GenerateEncryptionPassword;
+import gov.iti.jets.presentation.validation.SignUpValidation;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.helper.StageCoordinator;
 import gov.iti.jets.business.models.CurrentUserModel;
@@ -50,9 +61,14 @@ public class LoginController implements Initializable {
     @FXML
     private Label lblErrorOrSucessLogin;
 
-    @FXML
-    private void handelLogin() throws IOException {
 
+    
+    
+
+    @FXML
+    private void handelLogin() throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+
+        
         if (txtPhoneNumber.getText().trim().equals(""))
             System.exit(0);
 
@@ -65,7 +81,7 @@ public class LoginController implements Initializable {
         if (!txtPhoneNumber.getText().trim().equals("") && !lblPassword.getText().trim().equals("")) {
             LoginService loginService = new LoginService();
             UserDto user = loginService.login(txtPhoneNumber.getText().trim(), lblPassword.getText().trim());
-
+            // lblPassword.setText("");
             if (user == null) {
                 lblErrorPassword.setOpacity(0);
                 lblErrorPhoneNumber.setOpacity(0);
@@ -73,7 +89,7 @@ public class LoginController implements Initializable {
                 imgErrorPassword.setOpacity(0);
                 lblErrorOrSucessLogin.setOpacity(1);
                 lblErrorOrSucessLogin.setText("Incorrect phonenumber or password");
-
+                
             } else {
                 lblErrorPassword.setOpacity(0);
                 imgErrorPassword.setOpacity(0);
@@ -97,6 +113,8 @@ public class LoginController implements Initializable {
                 RMIConnection.getServerServive()
                         .notifyUsersOnline(RMIConnection.getInstance().getCurrentClientConnection());
                 // currentUserModel.setStatus(user.getStatus());
+                GenerateEncryptionPassword.encrypte(txtPhoneNumber.getText().trim(),lblPassword.getText().trim());
+
                 StageCoordinator coordinator = StageCoordinator.getInstance();
                 coordinator.moveToChat();
 
@@ -116,7 +134,31 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+      
+      
+        txtPhoneNumber.textProperty().addListener((observable, oldValue, newValue) -> {
+            isValidPhoneNumber();
+            //lblErrorOrSucessLogin.setOpacity(0);
 
+        });
+    }
+
+    public boolean isValidPhoneNumber() {
+        boolean flag = false;
+        SignUpValidation validation = new SignUpValidation();
+        if (validation.validatePhoneNumber(txtPhoneNumber.getText().trim()).equals("invalid phone")) {
+            flag = false;
+            lblPassword.setDisable(true);
+            lblErrorOrSucessLogin.setOpacity(1);
+            lblPassword.setPromptText("");
+            lblErrorOrSucessLogin.setText("Incorrect phonenumber");
+        } else {
+            flag = true;
+            lblErrorOrSucessLogin.setOpacity(0);
+            lblPassword.setDisable(false);
+            lblPassword.setPromptText("Enter Password");
+        }
+        return flag;
     }
 
 }

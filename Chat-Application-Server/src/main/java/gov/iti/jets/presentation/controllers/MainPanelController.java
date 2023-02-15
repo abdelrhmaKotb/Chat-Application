@@ -23,6 +23,7 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -46,6 +47,7 @@ public class MainPanelController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         stopSerververId.setDisable(false);
+        startSerververId.setDisable(true);
 
         Parent parent;
         try {
@@ -57,7 +59,11 @@ public class MainPanelController implements Initializable {
         }
     }
 
- 
+    @FXML
+    void startHover(DragEvent event) {
+        System.out.println("yassin");
+
+    }
 
     @FXML
     private void clear() {
@@ -65,11 +71,7 @@ public class MainPanelController implements Initializable {
         borderPane.setCenter(null);
     }
 
-    @FXML
-    void checkStart(MouseDragEvent event) {
-        
-        System.out.println("yassin");
-    }
+    
 
 
     @FXML
@@ -78,6 +80,7 @@ public class MainPanelController implements Initializable {
      System.exit(0);
     }
 
+   
   
 
     @FXML

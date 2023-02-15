@@ -16,11 +16,11 @@ public class DBConnecttion {
 
     public static Connection getConnection() {
         Connection con = null;
-        DBConnecttion dbConnecttion = new DBConnecttion();
-        dbConnecttion.loadProp();
+        // DBConnecttion dbConnecttion = new DBConnecttion();
+        // dbConnecttion.loadProp();
         try {
-            con = DriverManager.getConnection(prop.getProperty("MYSQL_DB_URL"), prop.getProperty("MYSQL_DB_USERNAME"),
-                    prop.getProperty("MYSQL_DB_PASSWORD"));
+            // con = DriverManager.getConnection(prop.getProperty("MYSQL_DB_URL"), prop.getProperty("MYSQL_DB_USERNAME"),
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/chat_application", "root","");
                     System.out.println("connected");
         } catch (SQLException e) {
             e.printStackTrace();
