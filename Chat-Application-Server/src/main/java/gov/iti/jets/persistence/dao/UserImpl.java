@@ -232,4 +232,34 @@ public class UserImpl implements UserDao {
         }
 
     }
+
+
+
+    public int getNumberOfUsers() {
+        Connection con = DBConnecttion.getConnection();
+      
+
+        String query = new String("select count(*) from user");
+         int number=0;
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+               number=rs.getInt("count(*)");
+            }
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return number;
+
+    }
 }

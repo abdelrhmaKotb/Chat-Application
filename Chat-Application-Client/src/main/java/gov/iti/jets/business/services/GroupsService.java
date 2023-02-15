@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 import gov.iti.jets.business.rmi.RMIConnection;
 import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.interfaces.Server;
+import gov.iti.jets.presentation.utils.ShowPopUp;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ public class GroupsService {
             groupDto = ser.getGroups(phoneNumber);
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
         for (GroupDto groupDto2 : groupDto) {
             System.out.println(groupDto2.getName());
@@ -42,6 +44,7 @@ public class GroupsService {
             ser.createGroup(name, currentUserNumber, listOfNumbers);
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
     }
 
@@ -52,6 +55,7 @@ public class GroupsService {
             listOfNumbers = ser.getnameOfContacts(currentUserNumber);
         } catch (RemoteException e) {
             e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
         return listOfNumbers;
     }

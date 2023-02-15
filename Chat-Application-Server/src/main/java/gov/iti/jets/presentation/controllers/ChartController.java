@@ -17,6 +17,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseDragEvent;
 
 public class ChartController implements Initializable {
 
@@ -46,12 +47,14 @@ public class ChartController implements Initializable {
 
     }
 
+  
     public void updatePieChart() {
        
         Platform.runLater(new Runnable() {
 
             @Override
             public void run() {
+
                 ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
 
                 genderPieChart.setData(data);
@@ -77,6 +80,7 @@ public class ChartController implements Initializable {
     }
 
     public void updateBarChart() {
+
 
        
         Platform.runLater(new Runnable() {
@@ -115,13 +119,14 @@ public class ChartController implements Initializable {
 
         ObservableList<XYChart.Series<String, Double>> answer = FXCollections.observableArrayList();
         answer.clear();
+        ChartsService cs = new ChartsService();
 
         Series<String, Double> aSeries = new Series<String, Double>();
         aSeries.setName("Online");
-        aSeries.getData().add(new XYChart.Data(Integer.toString(1), ServerImpl.countOnLine));
+        aSeries.getData().add(new XYChart.Data(Integer.toString(1), ServerImpl.clientsMap.size()));
         Series<String, Double> bSeries = new Series<String, Double>();
         bSeries.setName("Ofline");
-        bSeries.getData().add(new XYChart.Data(Integer.toString(2), ServerImpl.countOfLine));
+        bSeries.getData().add(new XYChart.Data(Integer.toString(2), cs.getNumberOfUsers()-ServerImpl.clientsMap.size()));
         answer.addAll(aSeries, bSeries);
 
         return answer;
@@ -129,30 +134,28 @@ public class ChartController implements Initializable {
 
     public void updateOnlineAndOfline() {
 
-        onlineAndOflineBar.setTitle("Online And Ofline");
-        onlineAndOflineBar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
+   
 
-        new Thread(() -> {
 
-            while (true) {
+
+
                 Platform.runLater(new Runnable() {
 
                     @Override
                     public void run() {
 
+
+                        onlineAndOflineBar.setTitle("Online And Ofline");
+                        onlineAndOflineBar.setStyle("-fx-font:20 system ;-fx-text-fill:black;");
+                
+                      
                         onlineAndOflineBar.setData(getOnlineAndOfline());
+                        onlineAndOflineBar.setAnimated(false);
                     }
 
                 });
 
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
+          
     }
 
 }

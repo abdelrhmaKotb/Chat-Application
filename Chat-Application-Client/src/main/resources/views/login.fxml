@@ -33,7 +33,7 @@
                   <Font name="SansSerif Regular" size="14.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="lblPassword" alignment="CENTER" layoutX="40.0" layoutY="200.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handelLogin" prefHeight="34.0" prefWidth="325.0" promptText="Enter Password" stylesheets="@/css/fullpackstyling.css">
+            <PasswordField fx:id="lblPassword" alignment="CENTER" disable="true" layoutX="40.0" layoutY="200.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handelLogin" prefHeight="34.0" prefWidth="325.0" stylesheets="@/css/fullpackstyling.css">
                <font>
                   <Font name="SansSerif Regular" size="14.0" />
                </font>
