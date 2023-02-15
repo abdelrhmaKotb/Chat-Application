@@ -66,11 +66,7 @@ public class StageCoordinator {
             SceneData logiSceneData = scenes.get("login");
             primaryStage.setScene(logiSceneData.getScene());
         }
-        primaryStage.setX(80);
-        primaryStage.setY(20);
-        primaryStage.setWidth(1200);
-        primaryStage.setHeight(700);
-        primaryStage.setResizable(false);
+
         primaryStage.setTitle("login");
 
     }
@@ -101,7 +97,7 @@ public class StageCoordinator {
             SceneData logiSceneData = scenes.get("signup");
             primaryStage.setScene(logiSceneData.getScene());
         }
-       
+    
         primaryStage.setTitle("signup");
 
     }
@@ -119,7 +115,7 @@ public class StageCoordinator {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/chatScreen.fxml"));
                 Parent view = loader.load();
-                Scene chatScene = new Scene(view,1300,700);
+                Scene chatScene = new Scene(view);
                 // setlistener(chatScene);
                 SceneData logiSceneData = new SceneData(loader, view, chatScene);
                 scenes.put("chat", logiSceneData);
@@ -141,11 +137,7 @@ public class StageCoordinator {
                 // Save file
             });
         }
-        primaryStage.setX(80);
-        primaryStage.setY(20);
-        primaryStage.setWidth(1200);
-        primaryStage.setHeight(700);
-        primaryStage.setResizable(false);
+
         primaryStage.setTitle("chat");
 
     }
