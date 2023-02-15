@@ -27,17 +27,22 @@
             </Circle>
             <VBox prefHeight="64.0" prefWidth="457.0" HBox.hgrow="ALWAYS">
                <children>
-                  <HBox prefHeight="51.0" prefWidth="200.0" />
-                  <HBox prefHeight="59.0" prefWidth="290.0">
+                  <HBox prefHeight="31.0" prefWidth="518.0" />
+                  <HBox prefHeight="51.0" prefWidth="518.0">
                      <children>
-                        <Text fx:id="recieverNameText" fill="#495057" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="150.385498046875">
-                           <font>
-                              <Font name="SansSerif Regular" size="16.0" />
-                           </font>
-                        </Text>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="187.73673629760742" />
+                              <Text fx:id="recieverNameText" fill="#495057" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="189.5854949951172">
+                                 <font>
+                                    <Font name="SansSerif Regular" size="16.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
-                  <HBox prefHeight="38.0" prefWidth="200.0" />
+                  <HBox prefHeight="31.0" prefWidth="518.0" />
                </children>
             </VBox>
             <VBox prefHeight="64.0" prefWidth="73.0">
@@ -117,7 +122,7 @@
                         <HBox prefHeight="23.0" prefWidth="66.0" />
                         <HBox prefHeight="53.0" prefWidth="81.0">
                            <children>
-                              <ImageView fx:id="attachFileIcon" onMouseClicked="#attach" fitHeight="31.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="attachFileIcon" fitHeight="31.0" fitWidth="35.0" onMouseClicked="#attach" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/attachIcon.png/" />
                                  </image>

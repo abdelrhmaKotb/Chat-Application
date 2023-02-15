@@ -18,6 +18,7 @@ import javax.crypto.NoSuchPaddingException;
 import gov.iti.jets.business.services.LoginService;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.presentation.utils.GenerateEncryptionPassword;
+import gov.iti.jets.presentation.validation.SignUpValidation;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.helper.StageCoordinator;
 import gov.iti.jets.business.models.CurrentUserModel;
@@ -67,6 +68,7 @@ public class LoginController implements Initializable {
     @FXML
     private void handelLogin() throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
 
+        
         if (txtPhoneNumber.getText().trim().equals(""))
             System.exit(0);
 
@@ -134,6 +136,29 @@ public class LoginController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
       
       
+        txtPhoneNumber.textProperty().addListener((observable, oldValue, newValue) -> {
+            isValidPhoneNumber();
+            //lblErrorOrSucessLogin.setOpacity(0);
+
+        });
+    }
+
+    public boolean isValidPhoneNumber() {
+        boolean flag = false;
+        SignUpValidation validation = new SignUpValidation();
+        if (validation.validatePhoneNumber(txtPhoneNumber.getText().trim()).equals("invalid phone")) {
+            flag = false;
+            lblPassword.setDisable(true);
+            lblErrorOrSucessLogin.setOpacity(1);
+            lblPassword.setPromptText("");
+            lblErrorOrSucessLogin.setText("Incorrect phonenumber");
+        } else {
+            flag = true;
+            lblErrorOrSucessLogin.setOpacity(0);
+            lblPassword.setDisable(false);
+            lblPassword.setPromptText("Enter Password");
+        }
+        return flag;
     }
 
 }

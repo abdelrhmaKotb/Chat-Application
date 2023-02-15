@@ -28,6 +28,7 @@ public class NotificationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        addInListOfNotifications("ddddddddd kkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk dfddddddddsad dffffffff fff f fffffff fffff ffffffffffffffffffffff ggggggggggggggg ggg gggg ffffffffffffffffffffffffff ffff fffffff mmmmmm");
     }
 
     public void addInListOfNotifications(String notification) {
@@ -54,10 +55,10 @@ public class NotificationController implements Initializable {
                         setGraphic(null);
                     } else {
                         label.setText(item);
-                        label.setWrapText(true);
-                        label.setTextAlignment(TextAlignment.JUSTIFY);
-                        label.setMaxWidth(150);
-                        hbox.setMaxWidth(150);
+                        //label.setWrapText(true);
+                        //label.setTextAlignment(TextAlignment.LEFT);
+                        //label.setMaxWidth(300);
+                        //hbox.setMaxWidth(300);
                         setGraphic(hbox);
                     }
                 }

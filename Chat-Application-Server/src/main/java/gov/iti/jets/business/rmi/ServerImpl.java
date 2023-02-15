@@ -19,7 +19,9 @@ import java.util.Map;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 //    public   List<Client> clients = new ArrayList<>();
+
     public static Map<String, Client> clientsMap = new HashMap<>();
+
 
     public ServerImpl() throws RemoteException {
         super();
@@ -232,6 +234,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         });
         // clientsMap.containsKey(myPhone);
 
+        ChartController.chartController.updatePieChart();
+        ChartController.chartController.updateBarChart();
+
 
 
         return isUpdated;
@@ -387,6 +392,29 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     public void sendFile(String recieverPhone, String fileName, byte[] data) throws RemoteException {
        Client reciver = clientsMap.get(recieverPhone);
        reciver.recieveFile(fileName,data);
+    }
+    @Override
+    public void sendFileGroup(int group_id,String senderPhone ,String fileName, byte[] data) throws RemoteException {
+        GroupImpl groupImpl = new GroupImpl();
+        var members = groupImpl.getGroupMember(group_id);
+
+
+        members.forEach(e -> {
+
+            System.out.println(e +" is and in loop");
+
+            if (!e.equals(senderPhone)) {
+                System.out.println(e + " hereee");
+                if (clientsMap.containsKey(e)) {
+                    System.out.println(e + " send to");
+                    try {
+                        clientsMap.get(e).recieveFile(fileName,data);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
 }

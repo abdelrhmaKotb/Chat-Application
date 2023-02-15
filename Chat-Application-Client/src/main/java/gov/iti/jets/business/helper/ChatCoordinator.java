@@ -22,6 +22,12 @@ public class ChatCoordinator {
     // private static Map<Integer, GroupChatData> groupChats = new HashMap<>();
     private static String currentPhone;
 
+    public static boolean isIsGroup() {
+        return isGroup;
+    }
+
+    private static boolean isGroup;
+
     private ChatCoordinator() {
     }
 
@@ -32,6 +38,10 @@ public class ChatCoordinator {
         }
 
         return instance;
+    }
+
+    public static String getCurrentPhone() {
+        return currentPhone;
     }
 
     public void setGrid(VBox gridd) {
@@ -52,6 +62,7 @@ public class ChatCoordinator {
 
             if (!chats.containsKey(phone)) {
                 try {
+                    isGroup=false;
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/message.fxml"));
                     MessageController c = new MessageController();
 
@@ -93,6 +104,7 @@ public class ChatCoordinator {
 
             if (!chats.containsKey(String.valueOf(group.getId()))) {
                 try {
+                    isGroup=true;
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/message.fxml"));
                     MessageController c = new MessageController();
 

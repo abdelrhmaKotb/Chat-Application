@@ -98,7 +98,7 @@ public class MainPanelController implements Initializable {
         startSerververId.setDisable(true);
         RMIConnection rmi = RMIConnection.getInstance();
         DBConnecttion.getConnection();
-        rmi.connect();
+        rmi.reconnect();
     }
 
    
