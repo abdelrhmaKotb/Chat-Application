@@ -18,6 +18,7 @@ public class ShowPopUp {
     public  void showNotifacation(String msg) {
         Label lbl = new Label(msg);
         lbl.setId("notification");
+        lbl.setPadding(new Insets(10));
         StageCoordinator coordinator = StageCoordinator.getInstance();
         StackPane stackPane = new StackPane(lbl);
         Scene popupScene = new Scene(stackPane,(lbl.getPrefWidth()), lbl.getPrefHeight());
