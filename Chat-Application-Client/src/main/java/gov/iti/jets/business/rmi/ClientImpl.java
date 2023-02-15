@@ -76,6 +76,11 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
     }
 
     @Override
+    public String getName() throws RemoteException {
+        return ModelsFactory.getInstance().getCurrentUserModel().getName();
+    }
+
+    @Override
     public void userOfflineNotify(ContactDto contact) throws RemoteException {
         // System.out.println(contact.getUser() + " became online");
         ShowPopUp showPopUp = new ShowPopUp();

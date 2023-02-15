@@ -41,6 +41,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.file.Path;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MessageController implements Initializable {
@@ -63,6 +64,16 @@ public class MessageController implements Initializable {
     @FXML
     Text nameText;
 
+    String pho;
+
+    public String getPho() {
+        return pho;
+    }
+
+    public void setPho(String pho) {
+        this.pho = pho;
+    }
+
     UserDto userDto;
 
     public UserDto getUserDto() {
@@ -70,6 +81,7 @@ public class MessageController implements Initializable {
     }
 
     public void setUserDto(UserDto userDto) {
+        System.out.println("setting user dto " + userDto);
         this.userDto = userDto;
     }
 
@@ -90,7 +102,7 @@ public class MessageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        
         staticImage = new ImageView();
         msgTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -104,10 +116,13 @@ public class MessageController implements Initializable {
         scroll.vvalueProperty().bind(msgvBox.heightProperty());
 
         if (!ChatCoordinator.isIsGroup()) {
-            ModelsFactory modelsFactory = ModelsFactory.getInstance();
-            ContactsModel contactsModel = modelsFactory.getContactsModel();
+            // ModelsFactory modelsFactory = ModelsFactory.getInstance();
+            // ContactsModel contactsModel = modelsFactory.getContactsModel();
             // contactsModel.getContactByPhoneNumber( ChatCoordinator.getCurrentPhone());
-            userDto = contactsModel.getContactDataByNumber(ChatCoordinator.getCurrentPhone());
+            // userDto =
+            // contactsModel.getContactDataByNumber(ChatCoordinator.getCurrentPhone());
+            userDto = ModelsFactory.getInstance().getContactsModel()
+                .getContactDataByNumber(pho);
             circle.setStroke(null);
             Image userImage;
             try {
@@ -121,6 +136,26 @@ public class MessageController implements Initializable {
             circle.setStroke(null);
             Image userImage = new Image(getClass().getResource("/images/gg.png").toString());
             circle.setFill(new ImagePattern(userImage));
+        }
+
+        try {
+            System.out.println("current user " + ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber()
+                    + " chat with " + userDto.getPhoneNumber());
+
+            List<MessageDto> messages = RMIConnection.getServerServive().getMessages(
+                    ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(), userDto.getPhoneNumber());
+
+            messages.forEach(e -> {
+                if (e.getSender().equals(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber())) {
+                    chatComponent(false, e, true);
+                } else {
+                    chatComponent(true, e, true);
+                }
+            });
+            System.out.println(messages);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+            new ShowPopUp().notifyServerDown();
         }
 
     }
@@ -182,11 +217,11 @@ public class MessageController implements Initializable {
             e.printStackTrace();
             new ShowPopUp().notifyServerDown();
         }
-        chatComponent(false, msg);
+        chatComponent(false, msg, false);
     }
 
     public void recive(MessageDto mDto) {
-        chatComponent(true, mDto);
+        chatComponent(true, mDto, false);
         ShowPopUp showPopUp = new ShowPopUp();
         showPopUp.showNotifacation(mDto.getSender() + "Sent you new message");
         Media media = new Media(getClass().getResource("/Audio/notification_tone.mp3").toString());
@@ -202,12 +237,13 @@ public class MessageController implements Initializable {
 
     }
 
-    private void chatComponent(Boolean recieve, MessageDto messageDto) {
+    private void chatComponent(Boolean recieve, MessageDto messageDto, boolean isOld) {
 
         try {
             if (!messageDto.getMessage().equals("")) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/sendMsg.fxml"));
                 SendMsgController controller = new SendMsgController(messageDto, recieve);
+                controller.setOld(isOld);
                 loader.setController(controller);
                 HBox hbox = loader.load();
                 hbox.setFillHeight(true);
