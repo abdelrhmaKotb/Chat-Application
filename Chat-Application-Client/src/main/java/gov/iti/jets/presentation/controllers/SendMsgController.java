@@ -57,7 +57,8 @@ public class SendMsgController implements Initializable {
             ChatData chat = ChatCoordinator.getInstance().getCurrentChat();
             UserDto uDto;
             if(!chat.isGroup()) {
-                 uDto = contactsModel.getContactDataByNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+                // uDto = contactsModel.getContactDataByNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+                uDto = contactsModel.getContactDataByNumber(msgDto.getSender());
                 senderName.setVisible(false);
             }
             else {

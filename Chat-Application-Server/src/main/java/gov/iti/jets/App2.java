@@ -13,6 +13,7 @@ import gov.iti.jets.persistence.entities.User;
 import gov.iti.jets.persistence.utils.DBConnecttion;
 import gov.iti.jets.persistence.utils.chatBot;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -31,6 +32,12 @@ public class App2 extends Application {
         primaryStage.setTitle("Admin Panel");
         primaryStage.show();
 
+    }
+
+
+    @Override
+    public void stop() throws Exception {
+        Platform.exit();
     }
 
     public static void main(String[] args) {

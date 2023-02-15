@@ -85,6 +85,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         String reciverr = message.getReciver();
         System.out.println(reciverr);
         System.out.println(clientsMap.keySet());
+        MessageImpl impl = new MessageImpl();
+        impl.createMessage(message);
+        System.out.println(impl.getChatMessages(message.getSender(), message.getReciver()));
         if (clientsMap.containsKey(reciverr)) {
             System.out.println("yes contains " + clientsMap.size() + " " + clientsMap.get(reciverr).getPhoneNumber());
             Client reciver = clientsMap.get(reciverr);

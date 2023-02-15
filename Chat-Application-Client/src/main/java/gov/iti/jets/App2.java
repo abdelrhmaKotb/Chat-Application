@@ -1,6 +1,7 @@
 package gov.iti.jets;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -40,9 +41,10 @@ public class App2 extends Application {
           });
     
 
-        File f = new File("./src/main/resources/keypassword.txt");
-
-        if (f.exists()) {
+        File f = new File("keypassword.txt");
+          boolean p = false;
+        // if (f.exists()) {
+        if (p) {
 
             String[] userData = GeneratePlainPassword.decrypte();
             System.out.println(userData[0] + "  " + userData[1]);
@@ -105,5 +107,6 @@ public class App2 extends Application {
     @Override
     public void stop() throws Exception {
         RMIConnection.getServerServive().unregister(RMIConnection.getInstance().getCurrentClientConnection());
+        Platform.exit();
     }
 }
