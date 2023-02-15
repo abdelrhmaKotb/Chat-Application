@@ -38,43 +38,11 @@ public class Main extends Application {
             }
         });
 
-        File f = new File("keypassword.txt");
-        // boolean p = false;
-        if (f.exists()) {
-        // if (p) {
-
-            String[] userData = GeneratePlainPassword.decrypte();
-            System.out.println(userData[0] + "  " + userData[1]);
-            if (!userData[0].equals("") && !userData[1].equals("")) {
-                LoginService loginService = new LoginService();
-
-                UserDto user = loginService.login(userData[0], userData[1]);
-
-                CurrentUserModel currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
-                currentUserModel.setName(user.getName());
-
-                currentUserModel.setPhoneNumber(user.getPhoneNumber());
-                System.out.println(currentUserModel.getPhoneNumber() + " sfdf phome");
-                currentUserModel.setEmail(user.getEmail());
-                currentUserModel.setBio(user.getBio());
-                currentUserModel.setStatus(user.getStatus().ordinal());
-                // System.out.println("image" + Arrays.toString(user.getImage()));
-                currentUserModel.setImage(user.getImage());
-                currentUserModel.setCountry(user.getCountry());
-                currentUserModel.setDate(user.getDateOfBirth().toLocalDate());
-
-                if (user != null)
-                    coordinator.moveToChat();
-            }
-
-        } else
-            coordinator.moveToIPAddress();
-
+        coordinator.moveToIPAddress();
 
         // primaryStage.setMinWidth(1315);
         // primaryStage.setMaxHeight(915);
 
-       
         primaryStage.show();
 
     }
@@ -88,18 +56,18 @@ public class Main extends Application {
     public void init() throws Exception {
         // try {
 
-        //     RMIConnection rmi = RMIConnection.getInstance();
-        //     rmi.connect(rmi.getSERVER_IP());
-        //     // client = new ClientImpl();
+        // RMIConnection rmi = RMIConnection.getInstance();
+        // rmi.connect(rmi.getSERVER_IP());
+        // // client = new ClientImpl();
 
-        //     // Server serverServices = (Server)
-        //     // Naming.lookup("rmi://localhost:14785/serverService");
+        // // Server serverServices = (Server)
+        // // Naming.lookup("rmi://localhost:14785/serverService");
 
-        //     // serverServices.register(client);
+        // // serverServices.register(client);
 
-        //     // serverServices.sayHello();
+        // // serverServices.sayHello();
         // } catch (Exception e) {
-        //     e.printStackTrace();
+        // e.printStackTrace();
         // }
 
     }

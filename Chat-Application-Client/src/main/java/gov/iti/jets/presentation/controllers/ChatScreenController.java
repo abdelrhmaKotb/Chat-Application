@@ -98,7 +98,7 @@ public class ChatScreenController implements Initializable {
     @FXML
     void logoutBtnAction(MouseEvent event) {
 
-        File f = new File("./src/main/resources/keypassword.txt");
+        File f = new File("keypassword.txt");
         if (f.delete()) {
             System.out.println("File deleted successfully");
             var currentt = ModelsFactory.getInstance().getCurrentUserModel();

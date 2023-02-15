@@ -18,6 +18,7 @@ import javax.crypto.NoSuchPaddingException;
 import gov.iti.jets.business.services.LoginService;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.presentation.utils.GenerateEncryptionPassword;
+import gov.iti.jets.presentation.utils.GeneratePlainPassword;
 import gov.iti.jets.presentation.validation.SignUpValidation;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.helper.StageCoordinator;
@@ -61,14 +62,10 @@ public class LoginController implements Initializable {
     @FXML
     private Label lblErrorOrSucessLogin;
 
-
-    
-    
-
     @FXML
-    private void handelLogin() throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+    private void handelLogin() throws IOException, InvalidKeyException, NoSuchAlgorithmException,
+            NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
 
-        
         if (txtPhoneNumber.getText().trim().equals(""))
             System.exit(0);
 
@@ -89,7 +86,7 @@ public class LoginController implements Initializable {
                 imgErrorPassword.setOpacity(0);
                 lblErrorOrSucessLogin.setOpacity(1);
                 lblErrorOrSucessLogin.setText("Incorrect phonenumber or password");
-                
+
             } else {
                 lblErrorPassword.setOpacity(0);
                 imgErrorPassword.setOpacity(0);
@@ -113,7 +110,7 @@ public class LoginController implements Initializable {
                 RMIConnection.getServerServive()
                         .notifyUsersOnline(RMIConnection.getInstance().getCurrentClientConnection());
                 // currentUserModel.setStatus(user.getStatus());
-                GenerateEncryptionPassword.encrypte(txtPhoneNumber.getText().trim(),lblPassword.getText().trim());
+                GenerateEncryptionPassword.encrypte(txtPhoneNumber.getText().trim(), lblPassword.getText().trim());
 
                 StageCoordinator coordinator = StageCoordinator.getInstance();
                 coordinator.moveToChat();
@@ -134,11 +131,9 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-      
-      
         txtPhoneNumber.textProperty().addListener((observable, oldValue, newValue) -> {
             isValidPhoneNumber();
-            //lblErrorOrSucessLogin.setOpacity(0);
+            // lblErrorOrSucessLogin.setOpacity(0);
 
         });
     }

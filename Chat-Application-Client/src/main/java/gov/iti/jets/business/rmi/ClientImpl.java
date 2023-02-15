@@ -172,8 +172,8 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 
                 File f = new File(path +"/"+fileName);
 
-                try {
-                    BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));
+                try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));){
+                   
                     outputStream.write(data);
 
                 } catch (FileNotFoundException e) {

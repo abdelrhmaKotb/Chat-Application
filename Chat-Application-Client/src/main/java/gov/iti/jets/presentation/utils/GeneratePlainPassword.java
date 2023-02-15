@@ -62,6 +62,7 @@ public class GeneratePlainPassword {
         String OriginalPassword = new String(decrypted);
         data[0]=phoneNumber;
         data[1]=OriginalPassword;
+        input.close();
         return data;
 
     }

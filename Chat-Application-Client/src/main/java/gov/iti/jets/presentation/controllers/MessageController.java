@@ -349,9 +349,8 @@ public class MessageController implements Initializable {
         if (file != null) {
             Runnable sendFileThread = () -> {
                 byte[] data = new byte[(int) file.length()];
-                try {
-                    FileInputStream input = null;
-                    input = new FileInputStream(file);
+                try (FileInputStream input = new FileInputStream(file);){
+                    
                     input.read(data);
                     ChatData chatData = ChatCoordinator.getInstance().getCurrentChat();
                     if(!chatData.isGroup())

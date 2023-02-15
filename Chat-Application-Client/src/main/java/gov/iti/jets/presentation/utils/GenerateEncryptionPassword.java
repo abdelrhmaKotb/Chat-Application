@@ -55,7 +55,7 @@ public class GenerateEncryptionPassword {
         byte[] encrypted = cipher.doFinal(password.getBytes());
         String encryptedpwd = byteArrayToHexString(encrypted);
 
-        try {
+        try  {
             File myObj = new File("keypassword.txt");
             if (myObj.createNewFile()) {
               System.out.println("File created: " + myObj.getName());
@@ -68,12 +68,12 @@ public class GenerateEncryptionPassword {
           }
 
           
-          try {
-            FileWriter myWriter = new FileWriter("keypassword.txt");
+          try (FileWriter myWriter = new FileWriter("keypassword.txt");){
+            
             myWriter.write("PhoneNumber="+phoneNumber+"\n");
             myWriter.write("Encrypted_Password="+encryptedpwd+"\n");
 
-            myWriter.close();
+            // myWriter.close();
           } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
