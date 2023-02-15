@@ -6,6 +6,7 @@ import java.util.Map;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -102,11 +103,7 @@ public class StageCoordinator {
             SceneData logiSceneData = scenes.get("signup");
             primaryStage.setScene(logiSceneData.getScene());
         }
-        // primaryStage.setX(80);
-        // primaryStage.setY(20);
-        // primaryStage.setWidth(1200);
-        // primaryStage.setHeight(700);
-        // primaryStage.setResizable(false);
+
         primaryStage.setTitle("signup");
 
     }
@@ -233,7 +230,7 @@ public class StageCoordinator {
             SceneData logiSceneData = scenes.get("IPAddress");
             primaryStage.setScene(logiSceneData.getScene());
         }
-
+        
         primaryStage.setTitle("IP Address");
 
     }
