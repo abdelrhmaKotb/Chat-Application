@@ -41,7 +41,7 @@ public class ReceiveFileController implements Initializable {
     public void accept(MouseEvent mouseEvent) {
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setInitialDirectory(new File("src"));
+        directoryChooser.setInitialDirectory(new File("c:\\"));
         Stage stage = (Stage) acceptbtn.getScene().getWindow();
 
 

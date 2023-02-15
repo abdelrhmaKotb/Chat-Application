@@ -67,7 +67,7 @@
                      <children>
                         <ImageView fx:id="videoIcon" fitHeight="36.0" fitWidth="58.0" layoutX="3.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/videoIcon.png/" />
+                              <Image url="@../images/videoIcon.png" />
                            </image>
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -124,7 +124,7 @@
                            <children>
                               <ImageView fx:id="attachFileIcon" fitHeight="31.0" fitWidth="35.0" onMouseClicked="#attach" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/attachIcon.png/" />
+                                    <Image url="@../images/attachIcon.png" />
                                  </image>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
