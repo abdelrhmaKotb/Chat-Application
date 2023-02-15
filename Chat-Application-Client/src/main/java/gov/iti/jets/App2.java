@@ -1,10 +1,13 @@
 package gov.iti.jets;
 
 import javafx.application.Application;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.File;
 
+import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.helper.StageCoordinator;
 import gov.iti.jets.business.models.CurrentUserModel;
@@ -23,6 +26,19 @@ public class App2 extends Application {
     public void start(Stage primaryStage) throws Exception {
         StageCoordinator coordinator = StageCoordinator.getInstance();
         coordinator.setStage(primaryStage);
+        primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, new javafx.event.EventHandler<KeyEvent>
+        () {
+      
+              @Override
+              public void handle(KeyEvent t) {
+                if(t.getCode()==KeyCode.ESCAPE)
+                {
+                    System.out.println("here");
+                    ChatCoordinator.getInstance().openChat("home");
+                }
+              }
+          });
+    
 
         File f = new File("./src/main/resources/keypassword.txt");
 

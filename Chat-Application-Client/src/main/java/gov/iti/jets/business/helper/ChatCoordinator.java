@@ -7,6 +7,9 @@ import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.presentation.controllers.MessageController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
 import java.util.HashMap;
@@ -49,6 +52,49 @@ public class ChatCoordinator {
             grid = gridd;
         }
     }
+
+    public void openHome(String phone) {
+        try {
+
+            if (!grid.getChildren().isEmpty()) {
+                grid.getChildren().removeAll(grid.getChildren());
+
+            }
+            currentPhone = "";
+            System.out.println(grid.getChildren().isEmpty());
+
+            if (!chats.containsKey(phone)) {
+                try {
+                    isGroup=false;
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/home.fxml"));
+                    // MessageController c = new MessageController();
+
+                    // loader.setController(c);
+                    Parent view = loader.load();
+                    // c.setReciverName(phone);
+                    ChatData chatData = new ChatData(loader, view, phone, false);
+                    currentChat = chatData;
+                    chats.put(phone, chatData);
+                    grid.getChildren().add(view);
+
+                    System.out.println("new chat");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                var chat = chats.get(phone);
+                Parent view = chat.getView();
+                currentChat = chat;
+                grid.getChildren().add(view);
+                System.out.println("old chat");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void openChat(String phone) {
         try {
@@ -166,4 +212,8 @@ public class ChatCoordinator {
         return currentChat;
         // return currentPhone;
     }
+
+
+
+    
 }

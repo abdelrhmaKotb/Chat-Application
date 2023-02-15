@@ -81,7 +81,7 @@ public class LoginController implements Initializable {
         if (!txtPhoneNumber.getText().trim().equals("") && !lblPassword.getText().trim().equals("")) {
             LoginService loginService = new LoginService();
             UserDto user = loginService.login(txtPhoneNumber.getText().trim(), lblPassword.getText().trim());
-
+            // lblPassword.setText("");
             if (user == null) {
                 lblErrorPassword.setOpacity(0);
                 lblErrorPhoneNumber.setOpacity(0);
@@ -89,7 +89,7 @@ public class LoginController implements Initializable {
                 imgErrorPassword.setOpacity(0);
                 lblErrorOrSucessLogin.setOpacity(1);
                 lblErrorOrSucessLogin.setText("Incorrect phonenumber or password");
-
+                
             } else {
                 lblErrorPassword.setOpacity(0);
                 imgErrorPassword.setOpacity(0);

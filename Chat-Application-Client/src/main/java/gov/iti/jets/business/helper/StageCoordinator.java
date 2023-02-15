@@ -6,6 +6,8 @@ import java.util.Map;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class StageCoordinator {
@@ -114,6 +116,7 @@ public class StageCoordinator {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/chatScreen.fxml"));
                 Parent view = loader.load();
                 Scene chatScene = new Scene(view,1300,700);
+                // setlistener(chatScene);
                 SceneData logiSceneData = new SceneData(loader, view, chatScene);
                 scenes.put("chat", logiSceneData);
                 primaryStage.setScene(chatScene);
@@ -174,5 +177,21 @@ public class StageCoordinator {
 
         primaryStage.setTitle("Charts");
 
+    }
+
+    public void setlistener(Scene scene)
+    {
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, new javafx.event.EventHandler<KeyEvent>
+        () {
+      
+              @Override
+              public void handle(KeyEvent t) {
+                if(t.getCode()==KeyCode.ESCAPE)
+                {
+                    System.out.println("here");
+                    ChatCoordinator.getInstance().openChat("home");
+                }
+              }
+          });
     }
 }
