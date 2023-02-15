@@ -85,14 +85,19 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         String reciverr = message.getReciver();
         System.out.println(reciverr);
         System.out.println(clientsMap.keySet());
-        MessageImpl impl = new MessageImpl();
-        impl.createMessage(message);
-        System.out.println(impl.getChatMessages(message.getSender(), message.getReciver()));
+        // System.out.println(impl.getChatMessages(message.getSender(), message.getReciver()));
         if (clientsMap.containsKey(reciverr)) {
             System.out.println("yes contains " + clientsMap.size() + " " + clientsMap.get(reciverr).getPhoneNumber());
             Client reciver = clientsMap.get(reciverr);
             reciver.reciveMessage(message);
         }
+    }
+
+    @Override
+    public void createMessage(MessageDto dto) throws RemoteException {
+        MessageImpl impl = new MessageImpl();
+        impl.createMessage(dto);
+        
     }
 
     @Override
@@ -180,12 +185,15 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     @Override
     public void notifyUsersOnline(Client client) throws RemoteException {
         ContactImpl contactImpl = new ContactImpl();
+        System.out.println("phone pjone " + client.getPhoneNumber());
         var listOfContatcs = contactImpl.getContactsForUser(client.getPhoneNumber());
         listOfContatcs.forEach(e -> {
             String phone = e.getFriendPhoneNumber();
             if (clientsMap.containsKey(phone)) {
                 try {
-                    clientsMap.get(phone).userOnlineNotify(e);
+                    ContactDto c = new ContactDto();
+                    c.setFriendName(client.getName());
+                    clientsMap.get(phone).userOnlineNotify(c);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -202,7 +210,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             String phone = e.getFriendPhoneNumber();
             if (clientsMap.containsKey(phone)) {
                 try {
-                    clientsMap.get(phone).userOfflineNotify(e);
+                    ContactDto c = new ContactDto();
+                    c.setFriendName(client.getName());
+                    clientsMap.get(phone).userOfflineNotify(c);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -418,6 +428,18 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
                 }
             }
         });
+    }
+
+
+    @Override
+    public List<MessageDto> getMessages(String sender, String Reciver) throws RemoteException {
+        return new MessageImpl().getChatMessages(sender, Reciver);
+    }
+
+    @Override
+    public UserDto getUserByPhone(String phone) throws RemoteException {
+        UserImpl impl = new UserImpl();
+        return new UserMapper().toDto(impl.getUser(phone));
     }
 
 }

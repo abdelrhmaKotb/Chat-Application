@@ -48,6 +48,11 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                 // String r = Message.getReciver();
                 // ChatCoordinator.getInstance().getCurrentChatController().recive(Message);
                 ChatCoordinator.getInstance().getChatController(Message.getSender()).recive(Message);
+                try {
+                    RMIConnection.getServerServive().createMessage(Message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 // ChatCoordinator.getInstance().getChatController(Message.getReciver()).recive(Message);
             }
         });
@@ -73,6 +78,11 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                 // contacts.get(contacts.indexOf(contact)).setCategory("1");;
             }
         });
+    }
+
+    @Override
+    public String getName() throws RemoteException {
+        return ModelsFactory.getInstance().getCurrentUserModel().getName();
     }
 
     @Override
@@ -124,6 +134,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                         .addInListOfNotifications(user.getName() + " Accepted Your Request");
                 var c = new ContactDto(user.getName(), user.getPhoneNumber(), "1", false);
                 c.setFriendName(user.getName());
+                c.setImage(user.getImage());
                 ModelsFactory.getInstance().getContactsModel().getContacts()
                         .add(c);
                 System.out.println("user" + user + "send to you request");
@@ -135,16 +146,28 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
     @Override
     public void recieveFile(String fileName, byte[] data) throws RemoteException {
 
-        File f = new File(fileName);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
 
-        try {
-            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));
-            outputStream.write(data);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+               String path=ChatCoordinator.getInstance().getCurrentChatController().reciveFile(fileName);
+                System.out.println(path +"/"+fileName);
+
+                File f = new File(path +"/"+fileName);
+
+                try {
+                    BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));
+                    outputStream.write(data);
+
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                // ChatCoordinator.getInstance().getChatController(Message.getReciver()).recive(Message);
+            }
+        });
+
 
         /*
          * ByteBuffer byteBuffer = ByteBuffer.wrap(data);
