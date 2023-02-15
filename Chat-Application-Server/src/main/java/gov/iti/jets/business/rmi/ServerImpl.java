@@ -85,14 +85,19 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         String reciverr = message.getReciver();
         System.out.println(reciverr);
         System.out.println(clientsMap.keySet());
-        MessageImpl impl = new MessageImpl();
         // System.out.println(impl.getChatMessages(message.getSender(), message.getReciver()));
         if (clientsMap.containsKey(reciverr)) {
             System.out.println("yes contains " + clientsMap.size() + " " + clientsMap.get(reciverr).getPhoneNumber());
             Client reciver = clientsMap.get(reciverr);
             reciver.reciveMessage(message);
         }
-        impl.createMessage(message);
+    }
+
+    @Override
+    public void createMessage(MessageDto dto) throws RemoteException {
+        MessageImpl impl = new MessageImpl();
+        impl.createMessage(dto);
+        
     }
 
     @Override

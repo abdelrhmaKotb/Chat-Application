@@ -61,16 +61,18 @@ public class MessageImpl implements MessageDao {
             ResultSet res = stmt.executeQuery();
 
             while (res.next()) {
-                messages.add(new MessageDto(res.getString("sender"),
-                        res.getString("content"),
-                        res.getInt("fontSize"),
-                        res.getString("fontStyle"),
-                        res.getString("fontColor"),
-                        res.getString("backgroundColor"),
-                        res.getBoolean("isBold"),
-                        res.getBoolean("isUnderlined"),
-                        res.getBoolean("isUnderlined"),
-                        res.getString("reciver")));
+                var message = new MessageDto(res.getString("sender"),
+                res.getString("content"),
+                res.getInt("fontSize"),
+                res.getString("fontStyle"),
+                res.getString("fontColor"),
+                res.getString("backgroundColor"),
+                res.getBoolean("isBold"),
+                res.getBoolean("isUnderlined"),
+                res.getBoolean("isUnderlined"),
+                res.getString("reciver"));
+                message.setMessageDate(res.getTimestamp("message_date"));
+                messages.add(message);
             }
 
             return messages;

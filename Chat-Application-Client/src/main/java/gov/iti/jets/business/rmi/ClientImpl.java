@@ -48,6 +48,11 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                 // String r = Message.getReciver();
                 // ChatCoordinator.getInstance().getCurrentChatController().recive(Message);
                 ChatCoordinator.getInstance().getChatController(Message.getSender()).recive(Message);
+                try {
+                    RMIConnection.getServerServive().createMessage(Message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 // ChatCoordinator.getInstance().getChatController(Message.getReciver()).recive(Message);
             }
         });
