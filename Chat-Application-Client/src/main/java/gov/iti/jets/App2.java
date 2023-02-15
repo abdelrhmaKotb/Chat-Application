@@ -27,22 +27,19 @@ public class App2 extends Application {
     public void start(Stage primaryStage) throws Exception {
         StageCoordinator coordinator = StageCoordinator.getInstance();
         coordinator.setStage(primaryStage);
-        primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, new javafx.event.EventHandler<KeyEvent>
-        () {
-      
-              @Override
-              public void handle(KeyEvent t) {
-                if(t.getCode()==KeyCode.ESCAPE)
-                {
+        primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, new javafx.event.EventHandler<KeyEvent>() {
+
+            @Override
+            public void handle(KeyEvent t) {
+                if (t.getCode() == KeyCode.ESCAPE) {
                     System.out.println("here");
                     ChatCoordinator.getInstance().openChat("home");
                 }
-              }
-          });
-    
+            }
+        });
 
         File f = new File("keypassword.txt");
-          boolean p = false;
+        boolean p = false;
         // if (f.exists()) {
         if (p) {
 
@@ -73,8 +70,6 @@ public class App2 extends Application {
         } else
             coordinator.moveToIPAddress();
 
-        // primaryStage.setMinWidth(1315);
-        // primaryStage.setMaxHeight(915);
        
         primaryStage.show();
 
