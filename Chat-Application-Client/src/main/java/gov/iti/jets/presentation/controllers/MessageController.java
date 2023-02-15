@@ -381,8 +381,14 @@ public class MessageController implements Initializable {
          */
 
     }
-    public String reciveFile(String fileName) {
 
+    public static String getFileName() {
+        return fileName;
+    }
+
+    private static String fileName;
+    public String reciveFile(String fileName) {
+        this.fileName=fileName;
         ReceiveFileController receiveFileController =null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/recievedFile.fxml"));
