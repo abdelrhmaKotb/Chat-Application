@@ -1,5 +1,6 @@
 package gov.iti.jets.presentation.controllers;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -92,6 +93,15 @@ public class ChatScreenController implements Initializable {
     
     @FXML
     void logoutBtnAction(MouseEvent event) {
+        
+        File f = new File(
+                "D:\\Group3_Chatting Application\\Group3_Chatting Application\\Group3_Chatting Application\\github\\Chat-Application\\Chat-Application-Client\\keypassword.txt");
+                if (f.delete()) {
+                    System.out.println("File deleted successfully");
+                }
+                else {
+                    System.out.println("Failed to delete the file");
+                }
         System.exit(0);
 
     }

@@ -40,8 +40,8 @@ public class GeneratePlainPassword {
         return b;
     }
 
-    public static String decrypte() throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, FileNotFoundException, IOException {
-
+    public static String[] decrypte() throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, FileNotFoundException, IOException {
+          String []data=new String[2];
         String tempkey = "F21E2A7FB6C68037FAEAA55222E320F7";
         String password = "";
         Properties prop = new Properties();
@@ -58,7 +58,9 @@ public class GeneratePlainPassword {
         cipher.init(Cipher.DECRYPT_MODE, sks);
         byte[] decrypted = cipher.doFinal(hexStringToByteArray(password));
         String OriginalPassword = new String(decrypted);
-        return (OriginalPassword);
+        data[0]=phoneNumber;
+        data[1]=OriginalPassword;
+        return data;
 
     }
 }

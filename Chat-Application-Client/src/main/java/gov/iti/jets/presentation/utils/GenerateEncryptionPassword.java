@@ -56,7 +56,7 @@ public class GenerateEncryptionPassword {
         String encryptedpwd = byteArrayToHexString(encrypted);
 
         try {
-            File myObj = new File("D:\\keypassword.txt");
+            File myObj = new File("D:\\Group3_Chatting Application\\Group3_Chatting Application\\Group3_Chatting Application\\github\\Chat-Application\\Chat-Application-Client\\keypassword.txt");
             if (myObj.createNewFile()) {
               System.out.println("File created: " + myObj.getName());
             } else {

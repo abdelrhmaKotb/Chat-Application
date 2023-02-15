@@ -7,11 +7,12 @@ import java.io.File;
 
 import gov.iti.jets.business.helper.StageCoordinator;
 import gov.iti.jets.business.rmi.RMIConnection;
+import gov.iti.jets.business.services.LoginService;
+import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.interfaces.Client;
 // import gov.iti.jets.presentation.utils.chatBot;
 import gov.iti.jets.presentation.utils.GenerateEncryptionPassword;
 import gov.iti.jets.presentation.utils.GeneratePlainPassword;
-
 
 public class App extends Application {
 
@@ -19,25 +20,30 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-         StageCoordinator coordinator = StageCoordinator.getInstance();
+        StageCoordinator coordinator = StageCoordinator.getInstance();
         coordinator.setStage(primaryStage);
-        
-        File f = new File("D:\\Group3_Chatting Application\\Group3_Chatting Application\\Group3_Chatting Application\\github\\Chat-Application\\Chat-Application-Client\\keypassword.txt");
 
-        if (f.exists())
+        File f = new File(
+                "D:\\Group3_Chatting Application\\Group3_Chatting Application\\Group3_Chatting Application\\github\\Chat-Application\\Chat-Application-Client\\keypassword.txt");
 
-        coordinator.moveToChat();
+        if (f.exists()) {
 
-        else
-        coordinator.moveToLogin();
+            String[] userData = GeneratePlainPassword.decrypte();
+            System.out.println(userData[0] + "  " + userData[1]);
+            if (!userData[0].equals("") && !userData[1].equals("")) {
+                LoginService loginService = new LoginService();
 
-        
+                UserDto user = loginService.login(userData[0], userData[1]);
+                if (user != null)
+                    coordinator.moveToChat();
+            }
+
+        } else
+            coordinator.moveToLogin();
+
         primaryStage.setMinWidth(1315);
         primaryStage.setMaxHeight(915);
         primaryStage.show();
-    //    GenerateEncryptionPassword.encrypte("01147775184","Yassin@22");
-    //System.out.println(GeneratePlainPassword.decrypte());
-      
 
     }
 
@@ -54,7 +60,8 @@ public class App extends Application {
             rmi.connect("localhost");
             // client = new ClientImpl();
 
-            // Server serverServices = (Server) Naming.lookup("rmi://localhost:14785/serverService");
+            // Server serverServices = (Server)
+            // Naming.lookup("rmi://localhost:14785/serverService");
 
             // serverServices.register(client);
 
