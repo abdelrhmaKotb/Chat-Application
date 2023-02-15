@@ -28,6 +28,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -163,6 +165,15 @@ public class MessageController implements Initializable {
 
     public void recive(MessageDto mDto) {
         chatComponent(true, mDto);
+        ShowPopUp showPopUp = new ShowPopUp();
+        showPopUp.showNotifacation(mDto.getSender() + "Sent you new message");
+        Media media = new Media(getClass().getResource("/Audio/notification_tone.mp3").toString());
+
+        //Instantiating MediaPlayer class
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+
+        //by setting this property to true, the audio will be played
+        mediaPlayer.setAutoPlay(true);
     }
 
     public void setRecievedMsg(String msg) {
