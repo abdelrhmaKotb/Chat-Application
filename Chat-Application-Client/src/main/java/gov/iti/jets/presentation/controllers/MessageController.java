@@ -335,8 +335,15 @@ public class MessageController implements Initializable {
                     FileInputStream input = null;
                     input = new FileInputStream(file);
                     input.read(data);
-                    RMIConnection.getServerServive().sendFile(ChatCoordinator.getInstance().getCurrentChatOpen(),
+                    ChatData chatData = ChatCoordinator.getInstance().getCurrentChat();
+                    if(!chatData.isGroup())
+                        RMIConnection.getServerServive().sendFile(ChatCoordinator.getInstance().getCurrentChatOpen(),
                             file.getName(), data);
+                    else {
+                        CurrentUserModel currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
+                        RMIConnection.getServerServive().sendFileGroup(Integer.parseInt(ChatCoordinator.getInstance().getCurrentChatOpen()),
+                                currentUserModel.getPhoneNumber(), file.getName(), data);
+                    }
                 } catch (FileNotFoundException e) {
                     new ShowPopUp().notifyServerDown();
                     throw new RuntimeException(e);
