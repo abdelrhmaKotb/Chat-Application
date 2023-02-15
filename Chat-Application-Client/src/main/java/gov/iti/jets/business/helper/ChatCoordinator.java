@@ -3,20 +3,14 @@ package gov.iti.jets.business.helper;
 import java.util.HashMap;
 import java.util.Map;
 
-import gov.iti.jets.business.rmi.RMIConnection;
-import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.GroupDto;
-import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.presentation.controllers.MessageController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+
 import javafx.scene.layout.VBox;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class ChatCoordinator {
 

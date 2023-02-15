@@ -101,11 +101,7 @@ public class StageCoordinator {
             SceneData logiSceneData = scenes.get("signup");
             primaryStage.setScene(logiSceneData.getScene());
         }
-        primaryStage.setX(80);
-        primaryStage.setY(20);
-        primaryStage.setWidth(1200);
-        primaryStage.setHeight(700);
-        primaryStage.setResizable(false);
+       
         primaryStage.setTitle("signup");
 
     }

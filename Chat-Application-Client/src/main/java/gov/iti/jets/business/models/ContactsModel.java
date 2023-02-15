@@ -7,7 +7,6 @@ import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
