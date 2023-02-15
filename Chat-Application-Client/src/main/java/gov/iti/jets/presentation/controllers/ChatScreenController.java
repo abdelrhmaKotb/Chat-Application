@@ -1,10 +1,13 @@
 package gov.iti.jets.presentation.controllers;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import gov.iti.jets.business.helper.ChatCoordinator;
+import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.helper.NavCoordinator;
+import gov.iti.jets.business.helper.StageCoordinator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -59,9 +62,11 @@ public class ChatScreenController implements Initializable {
         Tooltip.install(invitationsBtn, new Tooltip("Invitations"));
         ChatCoordinator.getInstance().setGrid(chat);
         NavCoordinator.getInstance().setGrid(nav);
-        
+
         clkNotifications();
         viewProfile();
+        ChatCoordinator.getInstance().openHome("home");
+        
 
     }
 
@@ -89,4 +94,28 @@ public class ChatScreenController implements Initializable {
     public void viewProfile() {
         NavCoordinator.getInstance().goToEditProfile();
     }
+
+    @FXML
+    void logoutBtnAction(MouseEvent event) {
+
+        File f = new File("./src/main/resources/keypassword.txt");
+        if (f.delete()) {
+            System.out.println("File deleted successfully");
+            var currentt = ModelsFactory.getInstance().getCurrentUserModel();
+            currentt.setBio(null);
+            currentt.setCountry(0);
+            currentt.setEmail(null);
+            currentt.setGender(null);
+            currentt.setImage(null);
+            currentt.setPhoneNumber(null);
+            currentt.setName(null);
+
+            System.out.println(ModelsFactory.getInstance().getCurrentUserModel().getName());
+        } else {
+            System.out.println("Failed to delete the file");
+        }
+        StageCoordinator.getInstance().moveToLogin();
+
+    }
+
 }

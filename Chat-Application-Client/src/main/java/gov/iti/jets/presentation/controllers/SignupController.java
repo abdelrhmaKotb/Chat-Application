@@ -11,8 +11,15 @@ import java.util.ResourceBundle;
 import java.net.URL;
 import java.nio.file.Files;
 import java.rmi.RemoteException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.regex.*;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.helper.StageCoordinator;
@@ -38,6 +45,7 @@ import gov.iti.jets.dto.CountryDto;
 import gov.iti.jets.dto.UserDtoSignup;
 import gov.iti.jets.enums.Gender;
 import gov.iti.jets.enums.Mood;
+import gov.iti.jets.presentation.utils.GenerateEncryptionPassword;
 import gov.iti.jets.presentation.validation.SignUpValidation;
 
 import java.io.File;
@@ -172,7 +180,7 @@ public class SignupController implements Initializable {
     }
 
     @FXML
-    void clickBtnSignup(ActionEvent event) throws RemoteException {
+    void clickBtnSignup(ActionEvent event) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, IOException {
         if (validatePassword() && confirmPass()
                 && isValidGeneder() && isValidCountry()
                 && isValidPhoneNumber() && isValidUserName()
@@ -232,8 +240,10 @@ public class SignupController implements Initializable {
                  RMIConnection.getInstance().registerClient();
                  RMIConnection.getServerServive().notifyUsersOnline(RMIConnection.getInstance().getCurrentClientConnection());
                 // currentUserModel.setStatus(user.getStatus());
-                 coordinator.moveToChat();
+                GenerateEncryptionPassword.encrypte(txtPhoneNumber.getText().trim(),txtPassword.getText().trim());
 
+                 coordinator.moveToChat();
+                 
                  System.out.println(user);
              
             } else {

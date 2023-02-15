@@ -62,6 +62,25 @@ public class MessageController implements Initializable {
     ScrollPane scroll;
     @FXML
     Text nameText;
+
+    UserDto userDto;
+
+    public UserDto getUserDto() {
+        return userDto;
+    }
+
+    public void setUserDto(UserDto userDto) {
+        this.userDto = userDto;
+    }
+
+    public Text getNameText() {
+        return nameText;
+    }
+
+    public void setNameText(String nameText) {
+        this.nameText.setText(nameText);
+    }
+
     public static MessageController messageController;
     CurrentUserModel currentUserModel;
 
@@ -88,19 +107,17 @@ public class MessageController implements Initializable {
             ModelsFactory modelsFactory = ModelsFactory.getInstance();
             ContactsModel contactsModel = modelsFactory.getContactsModel();
             // contactsModel.getContactByPhoneNumber( ChatCoordinator.getCurrentPhone());
-            UserDto userDto = contactsModel.getContactDataByNumber(ChatCoordinator.getCurrentPhone());
+            userDto = contactsModel.getContactDataByNumber(ChatCoordinator.getCurrentPhone());
             circle.setStroke(null);
             Image userImage;
             try {
-                 userImage = new Image(new ByteArrayInputStream(userDto.getImage()));
-            }
-            catch (Exception e) {
-                userImage=new Image(getClass().getResource("/images/person1.png").toString());
+                userImage = new Image(new ByteArrayInputStream(userDto.getImage()));
+            } catch (Exception e) {
+                userImage = new Image(getClass().getResource("/images/person1.png").toString());
             }
             circle.setFill(new ImagePattern(userImage));
             nameText.setText(userDto.getName());
-        }
-        else {
+        } else {
             circle.setStroke(null);
             Image userImage = new Image(getClass().getResource("/images/gg.png").toString());
             circle.setFill(new ImagePattern(userImage));
@@ -123,16 +140,18 @@ public class MessageController implements Initializable {
 
         MessageDto msg = null;
 
-
         try {
             if (chat.isGroup()) {
 
                 ModelsFactory modelsFactory = ModelsFactory.getInstance();
                 GroupsModel groupsModel = modelsFactory.getGroups();
-                GroupsMembersDto groupsMembersDto = groupsModel.getGroupByGroup_id(Integer.parseInt(ChatCoordinator.getInstance().getCurrentChatOpen()));
+                GroupsMembersDto groupsMembersDto = groupsModel
+                        .getGroupByGroup_id(Integer.parseInt(ChatCoordinator.getInstance().getCurrentChatOpen()));
                 msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
-                        msgTextField.getText(), groupsMembersDto.getFontSize(), groupsMembersDto.getFontStyle(), groupsMembersDto.getFontColor(),
-                        groupsMembersDto.getBackgroundColor(), groupsMembersDto.isBold(), groupsMembersDto.isUnderlined(), groupsMembersDto.isItalic(), chat.getIdntifier());
+                        msgTextField.getText(), groupsMembersDto.getFontSize(), groupsMembersDto.getFontStyle(),
+                        groupsMembersDto.getFontColor(),
+                        groupsMembersDto.getBackgroundColor(), groupsMembersDto.isBold(),
+                        groupsMembersDto.isUnderlined(), groupsMembersDto.isItalic(), chat.getIdntifier());
                 // msg.setReciver(chat);
 
                 msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
@@ -144,10 +163,13 @@ public class MessageController implements Initializable {
 
                 ModelsFactory modelsFactory = ModelsFactory.getInstance();
                 ContactsModel contactsModel = modelsFactory.getContactsModel();
-                ContactDto contactDto = contactsModel.getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+                ContactDto contactDto = contactsModel
+                        .getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
                 msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
-                        msgTextField.getText(), contactDto.getFontSize(), contactDto.getFontStyle(), contactDto.getFontColor(),
-                        contactDto.getBackgroundColor(), contactDto.isBold(), contactDto.isUnderlined(), contactDto.isItalic(), chat.getIdntifier());
+                        msgTextField.getText(), contactDto.getFontSize(), contactDto.getFontStyle(),
+                        contactDto.getFontColor(),
+                        contactDto.getBackgroundColor(), contactDto.isBold(), contactDto.isUnderlined(),
+                        contactDto.isItalic(), chat.getIdntifier());
                 // msg.setReciver(chat);
                 msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
                 msg.setMessage(msgTextField.getText());
@@ -169,10 +191,10 @@ public class MessageController implements Initializable {
         showPopUp.showNotifacation(mDto.getSender() + "Sent you new message");
         Media media = new Media(getClass().getResource("/Audio/notification_tone.mp3").toString());
 
-        //Instantiating MediaPlayer class
+        // Instantiating MediaPlayer class
         MediaPlayer mediaPlayer = new MediaPlayer(media);
 
-        //by setting this property to true, the audio will be played
+        // by setting this property to true, the audio will be played
         mediaPlayer.setAutoPlay(true);
     }
 
@@ -252,7 +274,6 @@ public class MessageController implements Initializable {
                 e.printStackTrace();
             }
 
-
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Message settings");
@@ -271,14 +292,14 @@ public class MessageController implements Initializable {
         File file = fil_chooser.showOpenDialog(null);
 
         if (file != null) {
-            Runnable sendFileThread = () ->
-            {
+            Runnable sendFileThread = () -> {
                 byte[] data = new byte[(int) file.length()];
                 try {
                     FileInputStream input = null;
                     input = new FileInputStream(file);
                     input.read(data);
-                    RMIConnection.getServerServive().sendFile(ChatCoordinator.getInstance().getCurrentChatOpen(), file.getName(), data);
+                    RMIConnection.getServerServive().sendFile(ChatCoordinator.getInstance().getCurrentChatOpen(),
+                            file.getName(), data);
                 } catch (FileNotFoundException e) {
                     new ShowPopUp().notifyServerDown();
                     throw new RuntimeException(e);
@@ -288,31 +309,33 @@ public class MessageController implements Initializable {
             };
             Thread run = new Thread(sendFileThread);
 
-
             run.start();
         }
-      /*  Runnable sendFileThread = () ->
-        {
-            try {
-                FileChannel channelRead = FileChannel.open(file.toPath());
-                int count;
-                do {
-                    ByteBuffer byteBuffer = ByteBuffer.allocate(4096);
-                    count = channelRead.read(byteBuffer);
-                    byte[] byteArray = byteBuffer.array();
-                    RMIConnection.getServerServive().sendFile(ChatCoordinator.getInstance().getCurrentChatOpen(), file.getName(), byteArray);
-                }
-                while (count != -1);
-                channelRead.close();
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        };
-        Thread run = new Thread(sendFileThread);
-
-
-        run.start();*/
+        /*
+         * Runnable sendFileThread = () ->
+         * {
+         * try {
+         * FileChannel channelRead = FileChannel.open(file.toPath());
+         * int count;
+         * do {
+         * ByteBuffer byteBuffer = ByteBuffer.allocate(4096);
+         * count = channelRead.read(byteBuffer);
+         * byte[] byteArray = byteBuffer.array();
+         * RMIConnection.getServerServive().sendFile(ChatCoordinator.getInstance().
+         * getCurrentChatOpen(), file.getName(), byteArray);
+         * }
+         * while (count != -1);
+         * channelRead.close();
+         * 
+         * } catch (IOException e) {
+         * throw new RuntimeException(e);
+         * }
+         * };
+         * Thread run = new Thread(sendFileThread);
+         * 
+         * 
+         * run.start();
+         */
 
     }
 

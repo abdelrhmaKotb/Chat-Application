@@ -3,10 +3,16 @@ package gov.iti.jets.business.helper;
 import java.util.HashMap;
 import java.util.Map;
 
+import gov.iti.jets.business.rmi.RMIConnection;
+import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.GroupDto;
+import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.presentation.controllers.MessageController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
 import java.util.HashMap;
@@ -50,7 +56,50 @@ public class ChatCoordinator {
         }
     }
 
+    public void openHome(String phone) {
+        try {
+
+            if (!grid.getChildren().isEmpty()) {
+                grid.getChildren().removeAll(grid.getChildren());
+
+            }
+            currentPhone = "";
+            System.out.println(grid.getChildren().isEmpty());
+
+            if (!chats.containsKey(phone)) {
+                try {
+                    isGroup = false;
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/home.fxml"));
+                    // MessageController c = new MessageController();
+
+                    // loader.setController(c);
+                    Parent view = loader.load();
+                    // c.setReciverName(phone);
+                    ChatData chatData = new ChatData(loader, view, phone, false);
+                    currentChat = chatData;
+                    chats.put(phone, chatData);
+                    grid.getChildren().add(view);
+
+                    System.out.println("new chat");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                var chat = chats.get(phone);
+                Parent view = chat.getView();
+                currentChat = chat;
+                grid.getChildren().add(view);
+                System.out.println("old chat");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void openChat(String phone) {
+        System.out.println("phone in openChat " + phone);
         try {
 
             if (!grid.getChildren().isEmpty()) {
@@ -62,7 +111,7 @@ public class ChatCoordinator {
 
             if (!chats.containsKey(phone)) {
                 try {
-                    isGroup=false;
+                    isGroup = false;
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/message.fxml"));
                     MessageController c = new MessageController();
 
@@ -87,9 +136,52 @@ public class ChatCoordinator {
                 System.out.println("old chat");
             }
 
+            System.out.println("chats" + chats);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void createChat(String phone) {
+        try {
+
+            if (!chats.containsKey(phone)) {
+                try {
+                    isGroup = false;
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/message.fxml"));
+                    MessageController c = new MessageController();
+
+                    loader.setController(c);
+                    Parent view = loader.load();
+
+                    UserDto contactDto = ModelsFactory.getInstance().getContactsModel()
+                            .getContactDataByNumber(phone);
+
+                    c.setReciverName(phone);
+
+                    // c.setNameText(contactDto.getName());
+
+                    c.setUserDto(contactDto);
+
+
+                    ChatData chatData = new ChatData(loader, view, phone, false);
+                    chats.put(phone, chatData);
+
+                    System.out.println("chat " + phone + " created");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("createion faild");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(chats);
     }
 
     public void openGroupChat(GroupDto group) {
@@ -104,7 +196,7 @@ public class ChatCoordinator {
 
             if (!chats.containsKey(String.valueOf(group.getId()))) {
                 try {
-                    isGroup=true;
+                    isGroup = true;
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/message.fxml"));
                     MessageController c = new MessageController();
 
@@ -140,20 +232,8 @@ public class ChatCoordinator {
 
     public MessageController getChatController(String phone) {
         if (!chats.containsKey(phone)) {
-            try {
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/message.fxml"));
-                MessageController c = new MessageController();
-
-                loader.setController(c);
-                Parent view = loader.load();
-                c.setReciverName(phone);
-                ChatData chatData = new ChatData(loader, view, phone, false);
-                chats.put(phone, chatData);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            System.out.println("controller from created");
+            createChat(phone);
         }
         return chats.get(phone).getLoader().getController();
     }
@@ -166,4 +246,5 @@ public class ChatCoordinator {
         return currentChat;
         // return currentPhone;
     }
+
 }

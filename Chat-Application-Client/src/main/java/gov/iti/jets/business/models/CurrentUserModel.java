@@ -12,12 +12,12 @@ public class CurrentUserModel {
 
     private StringProperty phoneNumber = new SimpleStringProperty();
     private StringProperty name = new SimpleStringProperty();
-    private StringProperty email =  new SimpleStringProperty();
-    private StringProperty gender=new SimpleStringProperty();
-    private IntegerProperty country=new SimpleIntegerProperty();
-    private  StringProperty dateOfBirth=new SimpleStringProperty();
-    private StringProperty bio =  new SimpleStringProperty();
-    private IntegerProperty status =  new SimpleIntegerProperty();
+    private StringProperty email = new SimpleStringProperty();
+    private StringProperty gender = new SimpleStringProperty();
+    private IntegerProperty country = new SimpleIntegerProperty();
+    private StringProperty dateOfBirth = new SimpleStringProperty();
+    private StringProperty bio = new SimpleStringProperty();
+    private IntegerProperty status = new SimpleIntegerProperty();
     private LocalDate date;
 
     public LocalDate getDate() {
@@ -29,9 +29,6 @@ public class CurrentUserModel {
     }
 
     private byte[] image;
-    
-    
-
 
     public byte[] getImage() {
         return image;
@@ -53,9 +50,6 @@ public class CurrentUserModel {
         return phoneNumber.get();
     }
 
-
-
-
     public StringProperty nameProperty() {
         return name;
     }
@@ -67,9 +61,6 @@ public class CurrentUserModel {
     public String getName() {
         return name.get();
     }
-
-
-
 
     public StringProperty emailProperty() {
         return email;
@@ -83,8 +74,6 @@ public class CurrentUserModel {
         return email.get();
     }
 
-
-
     public IntegerProperty statusProperty() {
         return status;
     }
@@ -96,7 +85,7 @@ public class CurrentUserModel {
     public int getStatus() {
         return status.get();
     }
-   
+
     public void setBio(String b) {
         this.bio.set(b);
     }
@@ -104,16 +93,14 @@ public class CurrentUserModel {
     public String getBio() {
         return bio.get();
     }
+
     public StringProperty bProperty() {
         return bio;
     }
-    
 
     public IntegerProperty getCountryProperty() {
         return country;
     }
-
-
 
     public int getCountry() {
         return country.get();
