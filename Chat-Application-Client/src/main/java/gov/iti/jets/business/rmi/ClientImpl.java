@@ -11,6 +11,8 @@ import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.application.Platform;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -268,14 +270,20 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 
     @Override
     public void serverAnnoncementNotify(String txt) throws RemoteException {
-     
-
+    
 
           ShowPopUp showPopUp = new ShowPopUp();
           Platform.runLater(new Runnable() {
               @Override
               public void run() {
                   showPopUp.showNotifacation(txt);
+                  Media media = new Media(getClass().getResource("/Audio/notification_tone.mp3").toString());
+
+                  // Instantiating MediaPlayer class
+                  MediaPlayer mediaPlayer = new MediaPlayer(media);
+          
+                  // by setting this property to true, the audio will be played
+                  mediaPlayer.setAutoPlay(true);
                   NavCoordinator.getNotificationController()
                           .addInListOfNotifications(txt);
   

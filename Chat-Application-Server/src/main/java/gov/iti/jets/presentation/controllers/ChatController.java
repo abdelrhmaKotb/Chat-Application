@@ -71,9 +71,12 @@ public class ChatController implements Initializable {
     @FXML
     void sendAction(MouseEvent event) throws RemoteException {
 
+
+     if(!msgTextField.getText().trim().equals("")){
         ServerImpl s=new ServerImpl();
         s.serverAnnoncementNotify(msgTextField.getText().trim());
         msgTextField.clear();
+     }
     }
 
     @Override
