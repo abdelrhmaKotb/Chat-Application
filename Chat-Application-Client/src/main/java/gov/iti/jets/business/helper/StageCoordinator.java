@@ -23,7 +23,8 @@ public class StageCoordinator {
 
     public static StageCoordinator getInstance() {
         if (instance == null) {
-            return new StageCoordinator();
+               instance = new StageCoordinator();
+               return instance;
         }
 
         return instance;
@@ -66,11 +67,11 @@ public class StageCoordinator {
             SceneData logiSceneData = scenes.get("login");
             primaryStage.setScene(logiSceneData.getScene());
         }
-        primaryStage.setX(80);
-        primaryStage.setY(20);
-        primaryStage.setWidth(1200);
-        primaryStage.setHeight(700);
-        primaryStage.setResizable(false);
+        // primaryStage.setX(80);
+        // primaryStage.setY(20);
+        // primaryStage.setWidth(1200);
+        // primaryStage.setHeight(700);
+        // primaryStage.setResizable(false);
         primaryStage.setTitle("login");
 
     }
@@ -101,7 +102,11 @@ public class StageCoordinator {
             SceneData logiSceneData = scenes.get("signup");
             primaryStage.setScene(logiSceneData.getScene());
         }
-       
+        // primaryStage.setX(80);
+        // primaryStage.setY(20);
+        // primaryStage.setWidth(1200);
+        // primaryStage.setHeight(700);
+        // primaryStage.setResizable(false);
         primaryStage.setTitle("signup");
 
     }
@@ -141,12 +146,12 @@ public class StageCoordinator {
                 // Save file
             });
         }
-        primaryStage.setX(80);
-        primaryStage.setY(20);
-        primaryStage.setWidth(1200);
-        primaryStage.setHeight(700);
-        primaryStage.setResizable(false);
-        primaryStage.setTitle("chat");
+        // primaryStage.setX(80);
+        // primaryStage.setY(20);
+        // primaryStage.setWidth(1200);
+        // primaryStage.setHeight(700);
+        // primaryStage.setResizable(false);
+        // primaryStage.setTitle("chat");
 
     }
     public void moveToCharts() {
