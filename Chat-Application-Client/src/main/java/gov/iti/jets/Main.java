@@ -19,7 +19,7 @@ import gov.iti.jets.interfaces.Client;
 // import gov.iti.jets.presentation.utils.chatBot;
 import gov.iti.jets.presentation.utils.GeneratePlainPassword;
 
-public class App2 extends Application {
+public class Main extends Application {
 
     static Client client;
 
@@ -39,9 +39,9 @@ public class App2 extends Application {
         });
 
         File f = new File("keypassword.txt");
-        boolean p = false;
-        // if (f.exists()) {
-        if (p) {
+        // boolean p = false;
+        if (f.exists()) {
+        // if (p) {
 
             String[] userData = GeneratePlainPassword.decrypte();
             System.out.println(userData[0] + "  " + userData[1]);
