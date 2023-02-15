@@ -51,10 +51,12 @@ public class MessageImpl implements MessageDao {
         try (Connection con = DBConnecttion.getConnection();) {
 
             PreparedStatement stmt = con.prepareStatement("""
-                      SELECT * FROM message WHERE sender = ? and reciver = ?
+                      SELECT * FROM message WHERE (sender = ? and reciver = ?) || (sender = ? and reciver = ? ) order by message_date
                     """);
             stmt.setString(1, ssender);
             stmt.setString(2, reciver);
+            stmt.setString(3, reciver);
+            stmt.setString(4, ssender);
 
             ResultSet res = stmt.executeQuery();
 

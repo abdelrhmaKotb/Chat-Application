@@ -17,7 +17,6 @@ import gov.iti.jets.persistence.utils.PasswordHashing;
 
 public class UserImpl implements UserDao {
 
-  
     @Override
     public User createUser(User user) {
 
@@ -71,7 +70,7 @@ public class UserImpl implements UserDao {
 
     public User seletcByPhoneNumber(String phoneNum) {
         Connection con = DBConnecttion.getConnection();
-         User user = null;
+        User user = null;
         if (con == null)
             return null;
 
@@ -96,7 +95,6 @@ public class UserImpl implements UserDao {
                 user.setImage(ImageConvertor.BlobToBytes(rs.getBlob("profile_image")));
 
             }
-
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -197,7 +195,7 @@ public class UserImpl implements UserDao {
     @Override
     public boolean updateUser(User newData) {
         try (Connection con = DBConnecttion.getConnection()) {
-            if(newData.getImage() == null){
+            if (newData.getImage() == null) {
                 System.out.println("here no image");
                 String query = "update user set name=?, email=?,  country_id=?, date_of_birth=?,bio=? , status_id=?  where phone_number=?";
                 PreparedStatement statement = con.prepareStatement(query);
@@ -206,7 +204,7 @@ public class UserImpl implements UserDao {
                 statement.setInt(3, newData.getCountry());
                 statement.setDate(4, newData.getDateOfBirth());
                 statement.setString(5, newData.getBio());
-                statement.setInt(6, newData.getStatus().ordinal() );
+                statement.setInt(6, newData.getStatus().ordinal());
                 // statement.setBlob(7, ImageConvertor.bytesToBlob(newData.getImage()));
                 statement.setString(7, newData.getPhoneNumber());
                 statement.executeUpdate();
@@ -221,7 +219,7 @@ public class UserImpl implements UserDao {
             statement.setInt(3, newData.getCountry());
             statement.setDate(4, newData.getDateOfBirth());
             statement.setString(5, newData.getBio());
-            statement.setInt(6, newData.getStatus().ordinal() );
+            statement.setInt(6, newData.getStatus().ordinal());
             statement.setBlob(7, ImageConvertor.bytesToBlob(newData.getImage()));
             statement.setString(8, newData.getPhoneNumber());
             statement.executeUpdate();
@@ -233,20 +231,16 @@ public class UserImpl implements UserDao {
 
     }
 
-
-
     public int getNumberOfUsers() {
         Connection con = DBConnecttion.getConnection();
-      
 
         String query = new String("select count(*) from user");
-         int number=0;
+        int number = 0;
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-               number=rs.getInt("count(*)");
+                number = rs.getInt("count(*)");
             }
-
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -261,5 +255,34 @@ public class UserImpl implements UserDao {
 
         return number;
 
+    }
+
+    @Override
+    public User getUser(String phone) {
+        try (Connection con = DBConnecttion.getConnection();) {
+            PreparedStatement stm = con.prepareStatement("SELECT * FROM user WHERE phone_number = ?");
+
+            stm.setString(1, phone);
+
+            ResultSet result = stm.executeQuery();
+            if (result.next()) {
+                return new User(
+                        result.getString("phone_number"),
+                        result.getString("name"),
+                        result.getString("email"),
+                        result.getString("password"),
+                        EnumsUtil.fromOrdinalToGender(result.getInt("gender")),
+                        result.getInt("country_id"),
+                        result.getDate("date_of_birth"),
+                        result.getString("bio"),
+                        result.getBoolean("is_admin"),
+                        result.getBoolean("is_deleted"),
+                        EnumsUtil.fromOrdinalToStatus(result.getInt("status_id")),
+                        ImageConvertor.BlobToBytes(result.getBlob("profile_image")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

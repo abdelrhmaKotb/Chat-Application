@@ -19,4 +19,6 @@ public interface UserDao {
     List<User> getUsersByNumbers(List<String> listOfNumbers);
     
     boolean updateUser(User newData);
+
+    User getUser(String phone);
 }
