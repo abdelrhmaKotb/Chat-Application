@@ -76,6 +76,11 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
     }
 
     @Override
+    public String getName() throws RemoteException {
+        return ModelsFactory.getInstance().getCurrentUserModel().getName();
+    }
+
+    @Override
     public void userOfflineNotify(ContactDto contact) throws RemoteException {
         // System.out.println(contact.getUser() + " became online");
         ShowPopUp showPopUp = new ShowPopUp();
@@ -135,16 +140,29 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
     @Override
     public void recieveFile(String fileName, byte[] data) throws RemoteException {
 
-        File f = new File(fileName);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                // MessageController.messageController.recive(Message);
+                // String r = Message.getReciver();
+               String path=ChatCoordinator.getInstance().getCurrentChatController().reciveFile(fileName);
+                System.out.println(path +"/"+fileName);
 
-        try {
-            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));
-            outputStream.write(data);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+                File f = new File(path +"/"+fileName);
+
+                try {
+                    BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));
+                    outputStream.write(data);
+
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                // ChatCoordinator.getInstance().getChatController(Message.getReciver()).recive(Message);
+            }
+        });
+
 
         /*
          * ByteBuffer byteBuffer = ByteBuffer.wrap(data);

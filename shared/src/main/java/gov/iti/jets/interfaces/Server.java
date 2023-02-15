@@ -71,4 +71,6 @@ public interface Server extends Remote {
 
     void sendFileGroup(int group_id, String senderPhone, String fileName, byte[] data) throws RemoteException;
 
+    List<MessageDto> getMessages(String sender,String Reciver) throws RemoteException;
+
 }
