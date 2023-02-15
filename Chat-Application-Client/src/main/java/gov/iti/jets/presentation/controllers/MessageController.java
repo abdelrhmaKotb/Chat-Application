@@ -62,6 +62,7 @@ public class MessageController implements Initializable {
     ScrollPane scroll;
     @FXML
     Text nameText;
+    public static String path;
     public static MessageController messageController;
     CurrentUserModel currentUserModel;
 
@@ -273,6 +274,7 @@ public class MessageController implements Initializable {
         if (file != null) {
             Runnable sendFileThread = () ->
             {
+
                 byte[] data = new byte[(int) file.length()];
                 try {
                     FileInputStream input = null;
@@ -314,6 +316,32 @@ public class MessageController implements Initializable {
 
         run.start();*/
 
+    }
+    public String reciveFile(String fileName) {
+
+        ReceiveFileController receiveFileController =null;
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/recievedFile.fxml"));
+            receiveFileController = new ReceiveFileController();
+            fxmlLoader.setController(receiveFileController);
+            root = fxmlLoader.load();
+            // createGroupCont = fxmlLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Message settings");
+        receiveFileController.setStage(stage);
+        Scene scene1 = new Scene(root, 501, 400);
+        stage.setScene(scene1);
+        stage.setResizable(false);
+        stage.showAndWait();
+        path=ReceiveFileController.getPath();
+        return path;
     }
 
 }
