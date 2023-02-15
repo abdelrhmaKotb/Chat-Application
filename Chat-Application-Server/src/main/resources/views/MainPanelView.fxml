@@ -20,7 +20,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="stopSerververId" disable="true" mnemonicParsing="false" onAction="#stopServerAction" onMouseDragOver="#checkStart" prefHeight="30.0" prefWidth="168.0" style="-fx-text-fill: #f0f0f0;" styleClass="bt" stylesheets="@../css/mainpanel.css" text="Stop Server" textAlignment="JUSTIFY">
+            <Button fx:id="stopSerververId" disable="true" mnemonicParsing="false" onAction="#stopServerAction" prefHeight="30.0" prefWidth="168.0" style="-fx-text-fill: #f0f0f0;" styleClass="bt" stylesheets="@../css/mainpanel.css" text="Stop Server" textAlignment="JUSTIFY">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>

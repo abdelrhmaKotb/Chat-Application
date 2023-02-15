@@ -117,6 +117,10 @@ public class StageCoordinator {
                 SceneData logiSceneData = new SceneData(loader, view, chatScene);
                 scenes.put("chat", logiSceneData);
                 primaryStage.setScene(chatScene);
+                primaryStage.setOnCloseRequest(event -> {
+                    System.out.println("Chat Stage is closing");
+                   
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -125,6 +129,10 @@ public class StageCoordinator {
             System.out.println("loaded existing one");
             SceneData logiSceneData = scenes.get("chat");
             primaryStage.setScene(logiSceneData.getScene());
+            primaryStage.setOnCloseRequest(event -> {
+                System.out.println("Chat Stage is closing");
+                // Save file
+            });
         }
 
         primaryStage.setTitle("chat");
@@ -146,6 +154,10 @@ public class StageCoordinator {
                 SceneData logiSceneData = new SceneData(loader, view, chatScene);
                 scenes.put("login", logiSceneData);
                 primaryStage.setScene(chatScene);
+                primaryStage.setOnCloseRequest(event -> {
+                    System.out.println("Stage is closing");
+                    // Save file
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -154,6 +166,10 @@ public class StageCoordinator {
             System.out.println("loaded existing one");
             SceneData logiSceneData = scenes.get("charts");
             primaryStage.setScene(logiSceneData.getScene());
+            primaryStage.setOnCloseRequest(event -> {
+                System.out.println("Stage is closing");
+                // Save file
+            });
         }
 
         primaryStage.setTitle("Charts");
