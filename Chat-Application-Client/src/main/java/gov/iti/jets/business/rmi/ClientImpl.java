@@ -48,6 +48,11 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                 // String r = Message.getReciver();
                 // ChatCoordinator.getInstance().getCurrentChatController().recive(Message);
                 ChatCoordinator.getInstance().getChatController(Message.getSender()).recive(Message);
+                try {
+                    RMIConnection.getServerServive().createMessage(Message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 // ChatCoordinator.getInstance().getChatController(Message.getReciver()).recive(Message);
             }
         });
@@ -129,6 +134,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                         .addInListOfNotifications(user.getName() + " Accepted Your Request");
                 var c = new ContactDto(user.getName(), user.getPhoneNumber(), "1", false);
                 c.setFriendName(user.getName());
+                c.setImage(user.getImage());
                 ModelsFactory.getInstance().getContactsModel().getContacts()
                         .add(c);
                 System.out.println("user" + user + "send to you request");

@@ -18,13 +18,13 @@ public class ContactDto implements Serializable {
     private Mood frinMood;
     private String category;
     private boolean isBlocked;
-    private int fontSize;
-    private String fontColor;
-    private String fontStyle;
-    private String backgroundColor;
-    private boolean isBold;
-    private boolean isUnderlined;
-    private boolean isItalic;
+    private int fontSize = 12;
+    private String fontColor = "white";
+    private String fontStyle ="System";
+    private String backgroundColor = "'#7269EF'";
+    private boolean isBold = false;
+    private boolean isUnderlined = false;
+    private boolean isItalic = false;
     private byte[] image;
 
     public byte[] getImage() {
@@ -32,6 +32,7 @@ public class ContactDto implements Serializable {
     }
 
     public void setImage(byte[] image) {
+
         this.image = image;
     }
 
@@ -162,7 +163,9 @@ public class ContactDto implements Serializable {
     }
 
     public void setFontSize(int fontSize) {
-        this.fontSize = fontSize;
+        if(fontSize != 0){
+            this.fontSize = fontSize;
+        }
     }
 
     public String getFontColor() {
@@ -170,7 +173,10 @@ public class ContactDto implements Serializable {
     }
 
     public void setFontColor(String fontColor) {
-        this.fontColor = fontColor;
+        if(fontColor != null)
+        {
+            this.fontColor = fontColor;
+        }
     }
 
     public String getFontStyle() {
@@ -178,7 +184,10 @@ public class ContactDto implements Serializable {
     }
 
     public void setFontStyle(String fontStyle) {
-        this.fontStyle = fontStyle;
+        if(fontStyle != null)
+        {
+            this.fontStyle = fontStyle;
+        }
     }
 
     public String getBackgroundColor() {
@@ -186,7 +195,10 @@ public class ContactDto implements Serializable {
     }
 
     public void setBackgroundColor(String backgroundColor) {
-        this.backgroundColor = backgroundColor;
+        if(backgroundColor != null)
+        {
+            this.backgroundColor = backgroundColor;
+        }
     }
 
     public boolean isBold() {

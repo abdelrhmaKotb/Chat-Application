@@ -97,10 +97,17 @@ public class SendMsgController implements Initializable {
         msg.setMaxWidth(250);
         msg.setText(content);
         msg.setMaxHeight( Double.MAX_VALUE );
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        if(isOld){
+           var date = msgDto.getMessageDate();
+           final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+           timeText.setText(sdf.format(date));
+           System.out.println("old " + date);
+        }else{
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            timeText.setText(sdf.format(timestamp));
+        }
         //msg.setText(mDto.getMessage() + "\n[" + sdf.format(timestamp) + "]");
-        timeText.setText(sdf.format(timestamp));
         setMsgFormat();
     }
 

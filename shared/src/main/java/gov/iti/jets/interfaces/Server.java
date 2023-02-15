@@ -72,4 +72,9 @@ public interface Server extends Remote {
 
     List<MessageDto> getMessages(String sender,String Reciver) throws RemoteException;
 
+    UserDto getUserByPhone(String phone) throws RemoteException;
+
+
+    void createMessage(MessageDto dto) throws RemoteException;
+
 }
