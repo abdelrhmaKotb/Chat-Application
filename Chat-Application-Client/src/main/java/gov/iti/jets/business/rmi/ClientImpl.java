@@ -54,6 +54,26 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
     }
 
     @Override
+    public void reciveMessageGroup (MessageDto Message) throws RemoteException {
+        System.out.println(Message);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                // MessageController.messageController.recive(Message);
+                // String r = Message.getReciver();
+                // ChatCoordinator.getInstance().getCurrentChatController().recive(Message);
+                ChatCoordinator.getInstance().getChatController(Message.getReciver()).recive(Message);
+                try {
+                    RMIConnection.getServerServive().createMessage(Message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // ChatCoordinator.getInstance().getChatController(Message.getReciver()).recive(Message);
+            }
+        });
+    }
+
+    @Override
     public void userOnlineNotify(ContactDto contact) throws RemoteException {
         // System.out.println(contact.getUser() + " became online");
         ShowPopUp showPopUp = new ShowPopUp();

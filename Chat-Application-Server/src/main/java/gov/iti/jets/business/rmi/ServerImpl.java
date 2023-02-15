@@ -5,10 +5,8 @@ import gov.iti.jets.dto.*;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.interfaces.Server;
 import gov.iti.jets.persistence.dao.*;
-import gov.iti.jets.persistence.dao.interfaces.UserDao;
 import gov.iti.jets.persistence.entities.*;
 import gov.iti.jets.presentation.controllers.ChartController;
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.Date;
@@ -334,7 +332,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
                 if (clientsMap.containsKey(e)) {
                     System.out.println(e + " send to");
                     try {
-                        clientsMap.get(e).reciveMessage(messageDto);
+                        clientsMap.get(e).reciveMessageGroup(messageDto);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

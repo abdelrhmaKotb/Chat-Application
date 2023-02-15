@@ -151,7 +151,7 @@ public class ChatCoordinator {
 
             if (!chats.containsKey(phone)) {
                 try {
-                    isGroup = false;
+                    // isGroup = false;
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/message.fxml"));
                     MessageController c = new MessageController();
                     c.setPho(phone);
@@ -161,7 +161,7 @@ public class ChatCoordinator {
                     // UserDto contactDto = ModelsFactory.getInstance().getContactsModel()
                     //         .getContactDataByNumber(phone);
 
-                    // c.setReciverName(phone);
+                    c.setReciverName(phone);
 
                     // c.setNameText(contactDto.getName());
 
