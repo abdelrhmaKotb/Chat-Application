@@ -70,10 +70,6 @@ public class App2 extends Application {
         } else
             coordinator.moveToIPAddress();
 
-
-        // primaryStage.setMinWidth(1315);
-        // primaryStage.setMaxHeight(915);
-
        
         primaryStage.show();
 

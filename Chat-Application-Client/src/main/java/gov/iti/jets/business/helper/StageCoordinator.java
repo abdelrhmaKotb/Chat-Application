@@ -66,8 +66,11 @@ public class StageCoordinator {
             SceneData logiSceneData = scenes.get("login");
             primaryStage.setScene(logiSceneData.getScene());
         }
-        primaryStage.setWidth(1315);
-        primaryStage.setHeight(915);
+        primaryStage.setX(80);
+        primaryStage.setY(20);
+        primaryStage.setWidth(1200);
+        primaryStage.setHeight(700);
+        primaryStage.setResizable(false);
         primaryStage.setTitle("login");
 
     }
@@ -98,8 +101,11 @@ public class StageCoordinator {
             SceneData logiSceneData = scenes.get("signup");
             primaryStage.setScene(logiSceneData.getScene());
         }
-        primaryStage.setWidth(1315);
-        primaryStage.setHeight(915);
+        primaryStage.setX(80);
+        primaryStage.setY(20);
+        primaryStage.setWidth(1200);
+        primaryStage.setHeight(700);
+        primaryStage.setResizable(false);
         primaryStage.setTitle("signup");
 
     }
@@ -139,7 +145,11 @@ public class StageCoordinator {
                 // Save file
             });
         }
-
+        primaryStage.setX(80);
+        primaryStage.setY(20);
+        primaryStage.setWidth(1200);
+        primaryStage.setHeight(700);
+        primaryStage.setResizable(false);
         primaryStage.setTitle("chat");
 
     }
