@@ -153,6 +153,11 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             GroupMembers groupMember = new GroupMembers(groupId, listOfNumbers.get(i),
                     new Date(System.currentTimeMillis()));
             groupMembersImpl.addMember(groupMember);
+            if (clientsMap.containsKey(groupMember.getMemberPhoneNumber())) {
+                Client reciver = clientsMap.get(groupMember.getMemberPhoneNumber());
+                GroupImpl impl = new GroupImpl();
+                reciver.updateGroupList(new GroupDto(impl.getNextGroupId(), name));
+            }
         }
 
     }
@@ -451,7 +456,12 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         }
         
     }
-
+    @Override
+    public int getNextGroupId() {
+        GroupImpl groupImpl = new GroupImpl();
+        System.out.println(groupImpl.getNextGroupId());
+        return groupImpl.getNextGroupId();
+    }
  
 
    

@@ -95,5 +95,17 @@ public class GroupImpl implements GroupDao {
 
         return null;
     }
+    public int getNextGroupId() {
+        try (Connection con = DBConnecttion.getConnection();) {
 
+            PreparedStatement stmt = con.prepareStatement("select max(group_id) from chat_application.group");
+            ResultSet result = stmt.executeQuery();
+            result.next();
+            System.out.println(result.getInt(1));
+            return  result.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
 }

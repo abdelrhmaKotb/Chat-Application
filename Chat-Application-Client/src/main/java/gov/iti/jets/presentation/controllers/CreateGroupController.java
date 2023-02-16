@@ -5,9 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import gov.iti.jets.business.models.ContactsModel;
+import gov.iti.jets.business.models.GroupsModel;
 import gov.iti.jets.business.services.GroupsService;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.models.CurrentUserModel;
+import gov.iti.jets.dto.ContactDto;
+import gov.iti.jets.dto.GroupDto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -82,6 +86,7 @@ public class CreateGroupController implements Initializable {
             }
             listOfNumbers.add(currentUserNumber);
             groupsService.createGroup(groupNameTextField.getText(), currentUserNumber, listOfNumbers);
+
             stage.close();
         }
     }
