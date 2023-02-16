@@ -5,23 +5,22 @@ import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.helper.NavCoordinator;
 import gov.iti.jets.business.models.ContactsModel;
 import gov.iti.jets.business.models.CurrentUserModel;
-import gov.iti.jets.dto.ContactDto;
-import gov.iti.jets.dto.MessageDto;
-import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.business.models.GroupsModel;
+import gov.iti.jets.business.services.GroupsService;
+import gov.iti.jets.dto.*;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
-public class ClientImpl extends UnicastRemoteObject implements Client {
+public class ClientImpl  extends UnicastRemoteObject implements Client {
     static CurrentUserModel currentUser = ModelsFactory.getInstance().getCurrentUserModel();
 
     public ClientImpl() throws RemoteException {
@@ -47,7 +46,32 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                 // MessageController.messageController.recive(Message);
                 // String r = Message.getReciver();
                 // ChatCoordinator.getInstance().getCurrentChatController().recive(Message);
-                ChatCoordinator.getInstance().getChatController(Message.getSender()).recive(Message);
+                try {
+                    ChatCoordinator.getInstance().getChatController(Message.getSender()).recive(Message);
+                    RMIConnection.getServerServive().createMessage(Message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // ChatCoordinator.getInstance().getChatController(Message.getReciver()).recive(Message);
+            }
+        });
+    }
+
+    @Override
+    public void reciveMessageGroup (MessageDto Message) throws RemoteException {
+        System.out.println(Message);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                // MessageController.messageController.recive(Message);
+                // String r = Message.getReciver();
+                // ChatCoordinator.getInstance().getCurrentChatController().recive(Message);
+                try {
+                    ChatCoordinator.getInstance().getChatController(Message.getReciver()).recive(Message);
+                    RMIConnection.getServerServive().createMessage(Message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 // ChatCoordinator.getInstance().getChatController(Message.getReciver()).recive(Message);
             }
         });
@@ -113,6 +137,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                 showPopUp.showNotifacation(user.getName() + " Send Friend Request");
                 NavCoordinator.getNotificationController()
                         .addInListOfNotifications(user.getName() + " Send Friend Request");
+                ModelsFactory.getInstance().getInvitationsModel().getObservableInvitationsList().add(user.getName()+" : "+user.getPhoneNumber());        
                 System.out.println("user" + user + "send to you request");
             }
         });
@@ -129,6 +154,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                         .addInListOfNotifications(user.getName() + " Accepted Your Request");
                 var c = new ContactDto(user.getName(), user.getPhoneNumber(), "1", false);
                 c.setFriendName(user.getName());
+                c.setImage(user.getImage());
                 ModelsFactory.getInstance().getContactsModel().getContacts()
                         .add(c);
                 System.out.println("user" + user + "send to you request");
@@ -143,15 +169,14 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                // MessageController.messageController.recive(Message);
-                // String r = Message.getReciver();
+
                String path=ChatCoordinator.getInstance().getCurrentChatController().reciveFile(fileName);
                 System.out.println(path +"/"+fileName);
 
                 File f = new File(path +"/"+fileName);
 
-                try {
-                    BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));
+                try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));){
+                   
                     outputStream.write(data);
 
                 } catch (FileNotFoundException e) {
@@ -263,5 +288,51 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
     @Override
     public boolean areYouThere() throws RemoteException {
         return true;
+    }
+
+
+    @Override
+    public void serverAnnoncementNotify(String txt) throws RemoteException {
+    
+
+          ShowPopUp showPopUp = new ShowPopUp();
+          Platform.runLater(new Runnable() {
+              @Override
+              public void run() {
+                  showPopUp.showNotifacation(txt);
+                  Media media = new Media(getClass().getResource("/Audio/notification_tone.mp3").toString());
+
+                  // Instantiating MediaPlayer class
+                  MediaPlayer mediaPlayer = new MediaPlayer(media);
+          
+                  // by setting this property to true, the audio will be played
+                  mediaPlayer.setAutoPlay(true);
+                  NavCoordinator.getNotificationController()
+                          .addInListOfNotifications(txt);
+  
+              }
+          });
+        
+    }
+
+    @Override
+    public void updateGroupList(GroupDto groupDto) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ModelsFactory modelsFactory = ModelsFactory.getInstance();
+                GroupsModel groupsModel = modelsFactory.getGroups();
+                groupsModel.getGroups().add(groupDto);
+                List<GroupsMembersDto> groupDto  = null;
+                try {
+                    groupDto = RMIConnection.getServerServive().getMyGroupsStyle(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
+                    groupsModel.setMyGroupsStyle(FXCollections.observableArrayList(groupDto));
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println(groupDto.size());
+
+            }
+        });
     }
 }

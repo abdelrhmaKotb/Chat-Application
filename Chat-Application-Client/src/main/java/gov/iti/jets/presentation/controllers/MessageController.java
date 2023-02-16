@@ -12,6 +12,7 @@ import gov.iti.jets.dto.GroupsMembersDto;
 import gov.iti.jets.dto.MessageDto;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.presentation.utils.ShowPopUp;
+import gov.iti.jets.presentation.utils.chatBot;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,7 +40,6 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
-import java.nio.file.Path;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -65,7 +65,12 @@ public class MessageController implements Initializable {
     Text nameText;
     public static String path;
 
+    @FXML
+    private ImageView chatbottd;
+
     String pho;
+
+    private boolean chatBotOpen = false;
 
     public String getPho() {
         return pho;
@@ -103,7 +108,7 @@ public class MessageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+
         staticImage = new ImageView();
         msgTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -123,7 +128,7 @@ public class MessageController implements Initializable {
             // userDto =
             // contactsModel.getContactDataByNumber(ChatCoordinator.getCurrentPhone());
             userDto = ModelsFactory.getInstance().getContactsModel()
-                .getContactDataByNumber(pho);
+                    .getContactDataByNumber(pho);
             circle.setStroke(null);
             Image userImage;
             try {
@@ -132,7 +137,7 @@ public class MessageController implements Initializable {
                 userImage = new Image(getClass().getResource("/images/person1.png").toString());
             }
             circle.setFill(new ImagePattern(userImage));
-            nameText.setText(userDto.getName());
+            nameText.setText(userDto.getName()); 
         } else {
             circle.setStroke(null);
             Image userImage = new Image(getClass().getResource("/images/gg.png").toString());
@@ -140,20 +145,21 @@ public class MessageController implements Initializable {
         }
 
         try {
-            System.out.println("current user " + ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber()
-                    + " chat with " + userDto.getPhoneNumber());
+            // System.out.println("current user " + ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber()
+            //         + " chat with " + userDto.getPhoneNumber());
 
-            List<MessageDto> messages = RMIConnection.getServerServive().getMessages(
-                    ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(), userDto.getPhoneNumber());
-
-            messages.forEach(e -> {
-                if (e.getSender().equals(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber())) {
-                    chatComponent(false, e, true);
-                } else {
-                    chatComponent(true, e, true);
-                }
-            });
-            System.out.println(messages);
+            if(!ChatCoordinator.isIsGroup()){
+                List<MessageDto> messages = RMIConnection.getServerServive().getMessages(
+                        ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(), userDto.getPhoneNumber());
+    
+                messages.forEach(e -> {
+                    if (e.getSender().equals(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber())) {
+                        chatComponent(false, e, true);
+                    } else {
+                        chatComponent(true, e, true);
+                    }
+                });
+            }
         } catch (RemoteException ex) {
             ex.printStackTrace();
             new ShowPopUp().notifyServerDown();
@@ -221,17 +227,29 @@ public class MessageController implements Initializable {
         chatComponent(false, msg, false);
     }
 
-    public void recive(MessageDto mDto) {
+    public void recive(MessageDto mDto) throws Exception {
+
+        
         chatComponent(true, mDto, false);
         ShowPopUp showPopUp = new ShowPopUp();
         showPopUp.showNotifacation(mDto.getSender() + "Sent you new message");
         Media media = new Media(getClass().getResource("/Audio/notification_tone.mp3").toString());
+
 
         // Instantiating MediaPlayer class
         MediaPlayer mediaPlayer = new MediaPlayer(media);
 
         // by setting this property to true, the audio will be played
         mediaPlayer.setAutoPlay(true);
+        if(chatBotOpen){
+              
+              String chatbotResult=chatBot.getMessageFromChatBot(mDto.getMessage());
+              System.out.println("chat result"+chatbotResult);
+
+              chatBotSendMessage(chatbotResult);
+              
+              
+        }
     }
 
     public void setRecievedMsg(String msg) {
@@ -331,12 +349,18 @@ public class MessageController implements Initializable {
         if (file != null) {
             Runnable sendFileThread = () -> {
                 byte[] data = new byte[(int) file.length()];
-                try {
-                    FileInputStream input = null;
-                    input = new FileInputStream(file);
+                try (FileInputStream input = new FileInputStream(file);){
+                    
                     input.read(data);
-                    RMIConnection.getServerServive().sendFile(ChatCoordinator.getInstance().getCurrentChatOpen(),
+                    ChatData chatData = ChatCoordinator.getInstance().getCurrentChat();
+                    if(!chatData.isGroup())
+                        RMIConnection.getServerServive().sendFile(ChatCoordinator.getInstance().getCurrentChatOpen(),
                             file.getName(), data);
+                    else {
+                        CurrentUserModel currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
+                        RMIConnection.getServerServive().sendFileGroup(Integer.parseInt(ChatCoordinator.getInstance().getCurrentChatOpen()),
+                                currentUserModel.getPhoneNumber(), file.getName(), data);
+                    }
                 } catch (FileNotFoundException e) {
                     new ShowPopUp().notifyServerDown();
                     throw new RuntimeException(e);
@@ -375,8 +399,14 @@ public class MessageController implements Initializable {
          */
 
     }
-    public String reciveFile(String fileName) {
 
+    public static String getFileName() {
+        return fileName;
+    }
+
+    private static String fileName;
+    public String reciveFile(String fileName) {
+        this.fileName=fileName;
         ReceiveFileController receiveFileController =null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/recievedFile.fxml"));
@@ -388,8 +418,6 @@ public class MessageController implements Initializable {
             e.printStackTrace();
         }
 
-
-
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Message settings");
@@ -398,8 +426,71 @@ public class MessageController implements Initializable {
         stage.setScene(scene1);
         stage.setResizable(false);
         stage.showAndWait();
-        path=ReceiveFileController.getPath();
+        path = ReceiveFileController.getPath();
         return path;
+    }
+
+    @FXML
+    void chatbotAction(MouseEvent event) throws Exception {
+
+      chatBotOpen=!chatBotOpen;
+      System.out.println("current state of chatbot"+chatBotOpen);
+
+    }
+
+    public void chatBotSendMessage(String txt) throws Exception {
+
+        ChatData chat = ChatCoordinator.getInstance().getCurrentChat();
+
+        // msg.setReciver(chat.getIdntifier());
+
+        MessageDto msg = null;
+
+        try {
+            if (chat.isGroup()) {
+
+                ModelsFactory modelsFactory = ModelsFactory.getInstance();
+                GroupsModel groupsModel = modelsFactory.getGroups();
+                GroupsMembersDto groupsMembersDto = groupsModel
+                        .getGroupByGroup_id(Integer.parseInt(ChatCoordinator.getInstance().getCurrentChatOpen()));
+                msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
+                        txt, groupsMembersDto.getFontSize(), groupsMembersDto.getFontStyle(),
+                        groupsMembersDto.getFontColor(),
+                        groupsMembersDto.getBackgroundColor(), groupsMembersDto.isBold(),
+                        groupsMembersDto.isUnderlined(), groupsMembersDto.isItalic(), chat.getIdntifier());
+                // msg.setReciver(chat);
+
+                msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
+                // currentUserModel = ModelsFactory.getInstance().getCurrentUserModel();
+                msg.setMessage(txt);
+
+                RMIConnection.getServerServive().sendGroupMessage(msg);
+
+            } else {
+
+                ModelsFactory modelsFactory = ModelsFactory.getInstance();
+                ContactsModel contactsModel = modelsFactory.getContactsModel();
+                ContactDto contactDto = contactsModel
+                        .getContactByPhoneNumber(ChatCoordinator.getInstance().getCurrentChatOpen());
+                msg = new MessageDto(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber(),
+                        txt, contactDto.getFontSize(), contactDto.getFontStyle(),
+                        contactDto.getFontColor(),
+                        contactDto.getBackgroundColor(), contactDto.isBold(), contactDto.isUnderlined(),
+                        contactDto.isItalic(), chat.getIdntifier());
+                // msg.setReciver(chat);
+                msg.setSender(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
+                msg.setMessage(txt);
+
+                RMIConnection.getServerServive().send(msg);
+                System.out.println("Message Sent");
+            }
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            new ShowPopUp().notifyServerDown();
+        }
+        chatComponent(false, msg, false);
+
     }
 
 }

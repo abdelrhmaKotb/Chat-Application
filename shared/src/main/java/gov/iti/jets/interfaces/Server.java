@@ -51,7 +51,6 @@ public interface Server extends Remote {
     void acceptContact(String currentUser, String friendNumber) throws RemoteException;
 
     void deleteRequest(String sender, String currentUser) throws RemoteException;
-    
 
     boolean isUserOnline(ContactDto user) throws RemoteException;
 
@@ -71,6 +70,12 @@ public interface Server extends Remote {
 
     void sendFileGroup(int group_id, String senderPhone, String fileName, byte[] data) throws RemoteException;
 
-    List<MessageDto> getMessages(String sender,String Reciver) throws RemoteException;
+    List<MessageDto> getMessages(String sender, String Reciver) throws RemoteException;
 
+    UserDto getUserByPhone(String phone) throws RemoteException;
+
+    void createMessage(MessageDto dto) throws RemoteException;
+
+    void serverAnnoncementNotify(String txt) throws RemoteException;
+    int getNextGroupId()throws RemoteException;
 }

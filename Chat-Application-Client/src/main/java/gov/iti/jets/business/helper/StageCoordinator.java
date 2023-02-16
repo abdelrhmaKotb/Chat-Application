@@ -6,6 +6,7 @@ import java.util.Map;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -23,7 +24,8 @@ public class StageCoordinator {
 
     public static StageCoordinator getInstance() {
         if (instance == null) {
-            return new StageCoordinator();
+               instance = new StageCoordinator();
+               return instance;
         }
 
         return instance;
@@ -66,7 +68,11 @@ public class StageCoordinator {
             SceneData logiSceneData = scenes.get("login");
             primaryStage.setScene(logiSceneData.getScene());
         }
-
+        // primaryStage.setX(80);
+        // primaryStage.setY(20);
+        // primaryStage.setWidth(1200);
+        // primaryStage.setHeight(700);
+        // primaryStage.setResizable(false);
         primaryStage.setTitle("login");
 
     }
@@ -137,8 +143,12 @@ public class StageCoordinator {
                 // Save file
             });
         }
-
-        primaryStage.setTitle("chat");
+        // primaryStage.setX(80);
+        // primaryStage.setY(20);
+        // primaryStage.setWidth(1200);
+        // primaryStage.setHeight(700);
+        // primaryStage.setResizable(false);
+        // primaryStage.setTitle("chat");
 
     }
     public void moveToCharts() {
@@ -193,5 +203,35 @@ public class StageCoordinator {
                 }
               }
           });
+    }
+
+    public void moveToIPAddress() {
+        if (primaryStage == null) {
+            throw new RuntimeException("primary stage not set");
+        }
+
+        if (!scenes.containsKey("IPAddress")) {
+            System.out.println("loaded new one");
+            System.out.println(scenes);
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/IPAddress.fxml"));
+                Parent view = loader.load();
+                Scene chatScene = new Scene(view);
+                SceneData logiSceneData = new SceneData(loader, view, chatScene);
+                scenes.put("IPAddress", logiSceneData);
+                primaryStage.setScene(chatScene);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            System.out.println("loaded existing one");
+            SceneData logiSceneData = scenes.get("IPAddress");
+            primaryStage.setScene(logiSceneData.getScene());
+        }
+        
+        primaryStage.setTitle("IP Address");
+
     }
 }

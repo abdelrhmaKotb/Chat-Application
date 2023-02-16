@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
@@ -10,21 +9,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <!-- fx:controller="gov.iti.jets.presentation.controllers.MessageController" -->
 
-<VBox VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ChatController">
    <children>
       <HBox prefHeight="64.0" prefWidth="607.0">
          <children>
-            <Circle fx:id="circle" fill="DODGERBLUE" radius="22.0" stroke="BLACK" strokeType="INSIDE">
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </HBox.margin>
-            </Circle>
             <VBox prefHeight="64.0" prefWidth="457.0" HBox.hgrow="ALWAYS">
                <children>
                   <HBox prefHeight="31.0" prefWidth="518.0" />
@@ -47,34 +40,12 @@
             </VBox>
             <VBox prefHeight="64.0" prefWidth="73.0">
                <children>
-                  <Pane prefHeight="64.0" prefWidth="69.0">
-                     <children>
-                        <ImageView fx:id="chatbottd" fitHeight="36.0" fitWidth="58.0" layoutX="24.0" layoutY="18.0" onMouseClicked="#chatbotAction" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/chatboot2.png" />
-                           </image>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ImageView>
-                     </children>
-                  </Pane>
+                  <Pane prefHeight="64.0" prefWidth="69.0" />
                </children>
             </VBox>
             <VBox prefHeight="64.0" prefWidth="78.0">
                <children>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <ImageView fx:id="videoIcon" fitHeight="36.0" fitWidth="58.0" layoutX="3.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/videoIcon.png" />
-                           </image>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ImageView>
-                     </children>
-                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0" />
                </children>
             </VBox>
          </children>
@@ -124,7 +95,7 @@
                            <children>
                               <ImageView fx:id="attachFileIcon" fitHeight="31.0" fitWidth="35.0" onMouseClicked="#attach" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/attachIcon.png" />
+                                    <Image url="@../images/attachIcon.png/" />
                                  </image>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />

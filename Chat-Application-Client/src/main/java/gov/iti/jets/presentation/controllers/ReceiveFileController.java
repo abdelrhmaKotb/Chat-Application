@@ -3,6 +3,7 @@ package gov.iti.jets.presentation.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -18,6 +19,10 @@ public class ReceiveFileController implements Initializable {
     @FXML
     Button acceptbtn;
     static String path;
+    @FXML
+    Label fileNamelbl;
+    @FXML
+    Label fromLbl;
     public  static String getPath() {
         return path;
     }
@@ -25,7 +30,7 @@ public class ReceiveFileController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        fileNamelbl.setText(MessageController.getFileName());
     }
 
     public void setStage(Stage popUp) {
@@ -36,7 +41,7 @@ public class ReceiveFileController implements Initializable {
     public void accept(MouseEvent mouseEvent) {
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setInitialDirectory(new File("src"));
+        directoryChooser.setInitialDirectory(new File("c:\\"));
         Stage stage = (Stage) acceptbtn.getScene().getWindow();
 
 

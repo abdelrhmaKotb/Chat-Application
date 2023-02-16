@@ -12,5 +12,5 @@ public interface GroupDao {
 
 
     List<String> getGroupMember(int groupid) ;
-
+    int getNextGroupId();
 }

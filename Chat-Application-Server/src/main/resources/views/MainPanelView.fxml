@@ -28,6 +28,14 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Button fx:id="sendMessage" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#sendMessageAction" prefHeight="64.0" prefWidth="160.0" style="-fx-text-fill: #f0f0f0;" styleClass="bt" stylesheets="@../css/mainpanel.css" text="Send Announcement" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </VBox>
    </left>

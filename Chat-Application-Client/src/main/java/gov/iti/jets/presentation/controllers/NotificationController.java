@@ -28,7 +28,6 @@ public class NotificationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        addInListOfNotifications("ddddddddd kkkkkk kkkkkkkk kkkkkkk kkkkkkkkkkk dfddddddddsad dffffffff fff f fffffff fffff ffffffffffffffffffffff ggggggggggggggg ggg gggg ffffffffffffffffffffffffff ffff fffffff mmmmmm");
     }
 
     public void addInListOfNotifications(String notification) {

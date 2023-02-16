@@ -3,20 +3,14 @@ package gov.iti.jets.business.helper;
 import java.util.HashMap;
 import java.util.Map;
 
-import gov.iti.jets.business.rmi.RMIConnection;
-import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.GroupDto;
-import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.presentation.controllers.MessageController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+
 import javafx.scene.layout.VBox;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class ChatCoordinator {
 
@@ -157,7 +151,7 @@ public class ChatCoordinator {
 
             if (!chats.containsKey(phone)) {
                 try {
-                    isGroup = false;
+                    // isGroup = false;
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/message.fxml"));
                     MessageController c = new MessageController();
                     c.setPho(phone);
@@ -167,7 +161,7 @@ public class ChatCoordinator {
                     // UserDto contactDto = ModelsFactory.getInstance().getContactsModel()
                     //         .getContactDataByNumber(phone);
 
-                    // c.setReciverName(phone);
+                    c.setReciverName(phone);
 
                     // c.setNameText(contactDto.getName());
 
@@ -210,7 +204,8 @@ public class ChatCoordinator {
 
                     loader.setController(c);
                     Parent view = loader.load();
-                    c.setReciverName(group.getName());
+                    c.setNameText(group.getName());
+                    c.setReciverName("");
                     ChatData chatData = new ChatData(loader, view, String.valueOf(group.getId()), true);
                     currentChat = chatData;
                     chats.put(String.valueOf(group.getId()), chatData);

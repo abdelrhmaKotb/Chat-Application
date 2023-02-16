@@ -7,33 +7,35 @@ import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsModel {
     ObservableList<ContactDto> contacts;
     ObservableList<UserDto> contactsData;
+
     public ContactsModel() {
         try {
-            List<ContactDto> userContacts = RMIConnection.getServerServive().getUserContacts(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
-            System.out.println(userContacts.size()); 
+            List<ContactDto> userContacts = RMIConnection.getServerServive()
+                    .getUserContacts(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
+            System.out.println(userContacts.size());
             System.out.println(userContacts);
             contacts = FXCollections.observableArrayList(userContacts);
-            List<String> list=new ArrayList<>();
+            List<String> list = new ArrayList<>();
             contacts.forEach(e -> list.add(e.getFriendPhoneNumber()));
-            if(list.size() > 0){
-                List<UserDto> users =  RMIConnection.getServerServive().getUsersByNumber(list);
-                contactsData = FXCollections.observableArrayList(users);
+            List<UserDto> users = new ArrayList<>();
+            if (list.size() > 0) {
+                users = RMIConnection.getServerServive().getUsersByNumber(list);
             }
-            
+            contactsData = FXCollections.observableArrayList(users);
+
         } catch (Exception e) {
             e.printStackTrace();
             new ShowPopUp().notifyServerDown();
         }
     }
-
 
     public ObservableList<ContactDto> getContacts() {
         return contacts;
@@ -73,16 +75,25 @@ public class ContactsModel {
             }
         }
     }
+
     public ObservableList<UserDto> getContactsData() {
         return contactsData;
     }
-    public UserDto getContactDataByNumber(String phoneNum) {
-        int size=contactsData.size();
-        for(int i=0;i<size;i++) {
-            if(contactsData.get(i).getPhoneNumber().equals(phoneNum))
-                return contactsData.get(i);
 
+    public UserDto getContactDataByNumber(String phoneNum) {
+        // int size = contactsData.size();
+        // for (int i = 0; i < size; i++) {
+        //     if (contactsData.get(i).getPhoneNumber().equals(phoneNum))
+        //         return contactsData.get(i);
+
+        // }
+        // return null;
+        try{
+            return RMIConnection.getServerServive().getUserByPhone(phoneNum);
+        }catch(RemoteException ex){
+            ex.printStackTrace();
         }
+
         return null;
     }
 
