@@ -19,7 +19,7 @@ public class Main extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("/views/MainPanelView.fxml"));
         DBConnecttion.getConnection();
-        Scene sc = new Scene(root, 1400, 600);
+        Scene sc = new Scene(root, 1400, 700);
         primaryStage.setScene(sc);
         primaryStage.setTitle("Admin Panel");
         primaryStage.setResizable(false);
