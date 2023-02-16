@@ -204,7 +204,8 @@ public class ChatCoordinator {
 
                     loader.setController(c);
                     Parent view = loader.load();
-                    c.setReciverName(group.getName());
+                    c.setNameText(group.getName());
+                    c.setReciverName("");
                     ChatData chatData = new ChatData(loader, view, String.valueOf(group.getId()), true);
                     currentChat = chatData;
                     chats.put(String.valueOf(group.getId()), chatData);
