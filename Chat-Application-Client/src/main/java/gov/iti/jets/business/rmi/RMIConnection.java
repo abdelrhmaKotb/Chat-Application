@@ -41,6 +41,9 @@ public class RMIConnection {
     public void connect(String ip) throws RemoteException, NotBoundException, MalformedURLException {
 
         registry = LocateRegistry.getRegistry(14785);
+        System.out.println("ip in connnect fn  " + ip);
+        // ip = "10.145.17.169";
+        // System.setProperty("java.rmi.server.hostname", ip);
         serverServices = (Server) registry.lookup("rmi://" + ip + ":14785/serverService");
         // if (serverServices == null) {
         // }

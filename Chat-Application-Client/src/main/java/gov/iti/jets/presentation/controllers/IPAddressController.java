@@ -57,6 +57,8 @@ public class IPAddressController implements Initializable {
             RMIConnection.getInstance().setSERVER_IP(IPAddressTextField.getText());
             try {
                 RMIConnection rmi = RMIConnection.getInstance();
+                System.out.println("from connect to server " + IPAddressTextField.getText());
+                System.out.println("from connect to getSERVER_IP " + RMIConnection.getInstance().getSERVER_IP());
                 rmi.connect(IPAddressTextField.getText());
                 StageCoordinator coordinator = StageCoordinator.getInstance();
                 File f = new File("keypassword.txt");

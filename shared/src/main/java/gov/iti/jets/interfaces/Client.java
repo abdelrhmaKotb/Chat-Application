@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import gov.iti.jets.dto.ContactDto;
+import gov.iti.jets.dto.GroupDto;
 import gov.iti.jets.dto.MessageDto;
 import gov.iti.jets.dto.UserDto;
 
@@ -37,5 +38,7 @@ public interface Client extends Remote {
     void reciveMessageGroup(MessageDto dto) throws RemoteException;
 
     void serverAnnoncementNotify(String txt) throws RemoteException;
+
+    void updateGroupList(GroupDto groupDto) throws RemoteException;
 
 }
