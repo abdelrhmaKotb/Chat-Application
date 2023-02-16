@@ -59,4 +59,13 @@ public class GroupsService {
         }
         return listOfNumbers;
     }
+    public int getNextGroupId(){
+        Server ser = RMIConnection.getServerServive();
+        try {
+            return ser.getNextGroupId();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

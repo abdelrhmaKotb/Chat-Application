@@ -451,7 +451,12 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         }
         
     }
-
+    @Override
+    public int getNextGroupId() {
+        GroupImpl groupImpl = new GroupImpl();
+        System.out.println(groupImpl.getNextGroupId());
+        return groupImpl.getNextGroupId();
+    }
  
 
    

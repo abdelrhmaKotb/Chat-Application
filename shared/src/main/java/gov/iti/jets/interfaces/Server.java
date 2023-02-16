@@ -77,5 +77,5 @@ public interface Server extends Remote {
     void createMessage(MessageDto dto) throws RemoteException;
 
     void serverAnnoncementNotify(String txt) throws RemoteException;
-
+    int getNextGroupId()throws RemoteException;
 }
