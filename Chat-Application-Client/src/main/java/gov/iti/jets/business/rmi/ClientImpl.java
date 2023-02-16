@@ -5,20 +5,22 @@ import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.helper.NavCoordinator;
 import gov.iti.jets.business.models.ContactsModel;
 import gov.iti.jets.business.models.CurrentUserModel;
-import gov.iti.jets.dto.ContactDto;
-import gov.iti.jets.dto.MessageDto;
-import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.business.models.GroupsModel;
+import gov.iti.jets.business.services.GroupsService;
+import gov.iti.jets.dto.*;
 import gov.iti.jets.interfaces.Client;
 import gov.iti.jets.presentation.utils.ShowPopUp;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
-public class ClientImpl extends UnicastRemoteObject implements Client {
+public class ClientImpl  extends UnicastRemoteObject implements Client {
     static CurrentUserModel currentUser = ModelsFactory.getInstance().getCurrentUserModel();
 
     public ClientImpl() throws RemoteException {
@@ -310,5 +312,26 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
               }
           });
         
+    }
+
+    @Override
+    public void updateGroupList(GroupDto groupDto) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ModelsFactory modelsFactory = ModelsFactory.getInstance();
+                GroupsModel groupsModel = modelsFactory.getGroups();
+                groupsModel.getGroups().add(groupDto);
+                List<GroupsMembersDto> groupDto  = null;
+                try {
+                    groupDto = RMIConnection.getServerServive().getMyGroupsStyle(ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
+                    groupsModel.setMyGroupsStyle(FXCollections.observableArrayList(groupDto));
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println(groupDto.size());
+
+            }
+        });
     }
 }
