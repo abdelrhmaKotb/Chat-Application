@@ -19,6 +19,11 @@ import javafx.print.JobSettings;
 
 public class GroupsModel {
     ObservableList<GroupDto> groups;
+
+    public void setMyGroupsStyle(ObservableList<GroupsMembersDto> myGroupsStyle) {
+        this.myGroupsStyle = myGroupsStyle;
+    }
+
     ObservableList<GroupsMembersDto> myGroupsStyle;
     ObservableMap<Integer,List<UserDto>> membersData;
     public GroupsModel(){

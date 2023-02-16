@@ -86,12 +86,7 @@ public class CreateGroupController implements Initializable {
             }
             listOfNumbers.add(currentUserNumber);
             groupsService.createGroup(groupNameTextField.getText(), currentUserNumber, listOfNumbers);
-            ModelsFactory modelsFactory = ModelsFactory.getInstance();
-            GroupsModel groupsModel = modelsFactory.getGroups();
 
-            GroupDto g = new GroupDto(groupsService.getNextGroupId(),groupNameTextField.getText());
-            //System.out.println(groupsService.getNextGroupId());
-            groupsModel.getGroups().add(g);
             stage.close();
         }
     }
