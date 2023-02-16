@@ -135,6 +135,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
                 showPopUp.showNotifacation(user.getName() + " Send Friend Request");
                 NavCoordinator.getNotificationController()
                         .addInListOfNotifications(user.getName() + " Send Friend Request");
+                ModelsFactory.getInstance().getInvitationsModel().getObservableInvitationsList().add(user.getName()+" : "+user.getPhoneNumber());        
                 System.out.println("user" + user + "send to you request");
             }
         });

@@ -10,49 +10,55 @@ public class ModelsFactory {
     private ContactsModel contactsModel;
     private static CurrentUserModel currentUserModel;
     private static GroupsModel groupsModel;
-    private ModelsFactory(){}
+    private InvitationsModel invitationsModel;
 
+    private ModelsFactory() {
+    }
 
-    public static  ModelsFactory getInstance()
-    {
-        if(instance == null)
-        {
-            instance =  new ModelsFactory();
+    public static ModelsFactory getInstance() {
+        if (instance == null) {
+            instance = new ModelsFactory();
 
             return instance;
         }
         return instance;
     }
 
+    public ContactsModel getContactsModel() {
 
-    public ContactsModel getContactsModel(){
-
-        if(contactsModel == null)
-        {
-            contactsModel =  new ContactsModel();
+        if (contactsModel == null) {
+            contactsModel = new ContactsModel();
             return contactsModel;
         }
 
         return contactsModel;
     }
 
-
-    public CurrentUserModel getCurrentUserModel(){
-        if(currentUserModel == null)
-        {
-            currentUserModel =  new CurrentUserModel();
+    public CurrentUserModel getCurrentUserModel() {
+        if (currentUserModel == null) {
+            currentUserModel = new CurrentUserModel();
             return currentUserModel;
         }
 
         return currentUserModel;
     }
-    public GroupsModel getGroups(){
-        if(groupsModel == null)
-        {
-            groupsModel =  new GroupsModel();
+
+    public GroupsModel getGroups() {
+        if (groupsModel == null) {
+            groupsModel = new GroupsModel();
             return groupsModel;
         }
 
         return groupsModel;
+    }
+
+    public InvitationsModel getInvitationsModel() {
+
+        if (invitationsModel == null) {
+            invitationsModel = new InvitationsModel();
+            return invitationsModel;
+        }
+
+        return invitationsModel;
     }
 }
