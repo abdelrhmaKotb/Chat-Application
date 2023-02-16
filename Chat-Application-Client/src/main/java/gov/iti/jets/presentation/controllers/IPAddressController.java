@@ -82,6 +82,8 @@ public class IPAddressController implements Initializable {
                             currentUserModel.setBio(user.getBio());
                             currentUserModel.setStatus(user.getStatus().ordinal());
                             // System.out.println("image" + Arrays.toString(user.getImage()));
+                            currentUserModel.setDate(user.getDateOfBirth().toLocalDate());
+
                             currentUserModel.setImage(user.getImage());
                             currentUserModel.setCountry(user.getCountry());
                             currentUserModel.setDate(user.getDateOfBirth().toLocalDate());
@@ -94,7 +96,7 @@ public class IPAddressController implements Initializable {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }else{
+                } else {
                     coordinator.moveToLogin();
                 }
             } catch (Exception e) {

@@ -8,6 +8,7 @@ import gov.iti.jets.business.helper.ChatCoordinator;
 import gov.iti.jets.business.helper.ModelsFactory;
 import gov.iti.jets.business.helper.NavCoordinator;
 import gov.iti.jets.business.helper.StageCoordinator;
+import gov.iti.jets.business.rmi.RMIConnection;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -102,6 +103,12 @@ public class ChatScreenController implements Initializable {
         if (f.delete()) {
             System.out.println("File deleted successfully");
             var currentt = ModelsFactory.getInstance().getCurrentUserModel();
+
+            try {
+             RMIConnection.getServerServive().unregister(RMIConnection.getInstance().getCurrentClientConnection());   
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             currentt.setBio(null);
             currentt.setCountry(0);
             currentt.setEmail(null);

@@ -22,6 +22,7 @@ public class Main extends Application {
         Scene sc = new Scene(root, 1400, 600);
         primaryStage.setScene(sc);
         primaryStage.setTitle("Admin Panel");
+        primaryStage.setResizable(false);
         primaryStage.show();
 
     }
