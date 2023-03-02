@@ -20,3 +20,15 @@
 - Cleverbot chatbot
 - Upadte Message Formate(Font Size,Colors)
 
+### Technologies
+- Maven
+- JDBC
+- Sockets
+- RMI
+- JavaFX
+- Css
+- IO / NIO
+- JDBC
+- Cleverbot Chatbot
+
+
