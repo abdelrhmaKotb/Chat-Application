@@ -32,7 +32,7 @@
 - IO / NIO
 - JDBC
 - Cleverbot Chatbot
-
+- Design pattern (singleton, observer, factory, MVC)
  ### Run the project
    - mvn clean compile exec:java
    
