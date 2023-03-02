@@ -18,4 +18,5 @@
 - Server statistics (online and offline,countries,genders)
 - Server announcement
 - Cleverbot chatbot
+- Upadte Message Formate(Font Size,Colors)
 
