@@ -19,7 +19,9 @@
 - Server announcement
 - Cleverbot chatbot
 - Upadte Message Formate(Font Size,Colors)
-
+- Contact invitation
+- Update Profile status (away, active, busy)
+- Notifications
 ### Technologies
 - Maven
 - JDBC
@@ -33,6 +35,7 @@
 
  ### Run the project
    - mvn clean compile exec:java
+   
   ### Contributors
   - Ahned Yassin https://github.com/aahmedYassin
   - Abdelrhman Kotb https://github.com/abdelrhmaKotb
