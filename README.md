@@ -3,7 +3,7 @@
 #About:
   A desktop chatting application built using JavaFX,RMI,JDBC and CSS. 
  
-#Architecture
+#Architecture:
 This project was built using a layered architecture.
 ![1](https://user-images.githubusercontent.com/45315700/222584897-de2bf415-cd84-4c6c-a394-759ebc1df57f.PNG)
 ![2](https://user-images.githubusercontent.com/45315700/222584903-6c2c028d-0eec-4146-b312-c2918f83b8c9.PNG)
