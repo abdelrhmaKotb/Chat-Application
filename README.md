@@ -46,8 +46,8 @@ https://user-images.githubusercontent.com/45315700/222606645-0d6a1f20-3bf0-4e82-
   ### Contributors
   - Ahned Yassin https://github.com/aahmedYassin
   - Abdelrhman Kotb https://github.com/abdelrhmaKotb
-  - Esraa Abdelnase https://github.com/Esraa-Abdelnaser
-  - Omina Ayman https://github.com/omniayman
+  - Esraa Abdelnaser https://github.com/Esraa-Abdelnaser
+  - Omnia Ayman https://github.com/omniayman
 
 
 
