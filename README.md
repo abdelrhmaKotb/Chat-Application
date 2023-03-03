@@ -22,6 +22,8 @@
 - Contact invitation
 - Update Profile status (away, active, busy)
 - Notifications
+-Cash user name,password
+
 ### Technologies
 - Maven
 - JDBC
